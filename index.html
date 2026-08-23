@@ -2,1578 +2,2496 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Khan's Restaurant</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Khan's Restaurant POS</title>
 
 <style>
 *{box-sizing:border-box}
 body{
-margin:0;
-font-family:Arial,sans-serif;
-background:#f3f4f6;
-color:#111827;
-padding-bottom:80px
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f4f5f7;
+  color:#171717;
 }
-.hidden{display:none!important}
-.login{
-min-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-padding:20px;
-background:#111827
-}
-.loginbox{
-background:white;
-padding:25px;
-border-radius:20px;
-width:100%;
-max-width:380px;
-text-align:center
-}
-input,button,select{
-width:100%;
-padding:12px;
-margin:6px 0;
-border-radius:10px;
-border:1px solid #ddd;
-font-size:15px
+button,input,select{
+  font:inherit;
 }
 button{
-background:#111827;
-color:white;
-border:0;
-font-weight:bold
+  cursor:pointer;
 }
-.header{
-background:#111827;
-color:white;
-padding:22px 18px;
-border-radius:0 0 20px 20px
+.hidden{display:none!important}
+
+.login{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#171717;
+  padding:20px;
 }
-.header h1{margin:0}
+.login-box{
+  width:100%;
+  max-width:400px;
+  background:#fff;
+  border-radius:20px;
+  padding:30px;
+  text-align:center;
+}
+.login-box h1{margin-bottom:5px}
+.login-box input{
+  width:100%;
+  padding:13px;
+  margin:7px 0;
+  border:1px solid #ddd;
+  border-radius:10px;
+}
+.primary{
+  background:#171717;
+  color:#fff;
+  border:0;
+  padding:13px 18px;
+  border-radius:10px;
+}
+.danger{
+  background:#dc2626!important;
+  color:#fff!important;
+}
+.green{
+  background:#15803d!important;
+  color:#fff!important;
+}
+
+.app-header{
+  background:#171717;
+  color:white;
+  padding:18px;
+  position:sticky;
+  top:0;
+  z-index:20;
+}
+.header-inner{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+}
+.header-inner h1{margin:0;font-size:23px}
+.header-inner small{color:#ddd}
+
 .container{
-max-width:900px;
-margin:auto;
-padding:16px
+  max-width:1200px;
+  margin:auto;
+  padding:18px;
 }
+
 .page{display:none}
 .page.active{display:block}
+
+.nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  height:70px;
+  background:#fff;
+  border-top:1px solid #ddd;
+  display:flex;
+  justify-content:center;
+  z-index:50;
+}
+.nav button{
+  border:0;
+  background:white;
+  color:#555;
+  min-width:90px;
+  font-size:12px;
+}
+.nav button span{
+  display:block;
+  font-size:21px;
+  margin-bottom:3px;
+}
+
 .cards{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
 }
 .card{
-background:white;
-padding:15px;
-border-radius:15px;
-box-shadow:0 2px 8px #0001
+  background:#fff;
+  padding:18px;
+  border-radius:15px;
+  box-shadow:0 2px 8px #0000000c;
 }
 .card small{color:#777}
-.value{
-font-size:21px;
-font-weight:bold;
-margin-top:7px
+.card strong{
+  display:block;
+  font-size:22px;
+  margin-top:8px;
 }
-.title{
-font-size:18px;
-font-weight:bold;
-margin:20px 0 10px
+
+.section-title{
+  margin:25px 0 12px;
+  font-size:19px;
+  font-weight:bold;
 }
+
 .quick{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
 }
 .quick button{
-background:white;
-color:#111827;
-padding:20px 5px;
-box-shadow:0 2px 8px #0001
+  background:white;
+  border:0;
+  border-radius:15px;
+  padding:25px 10px;
+  box-shadow:0 2px 8px #0000000c;
 }
-.quick span{
-display:block;
-font-size:25px;
-margin-bottom:5px
+.quick button span{
+  display:block;
+  font-size:28px;
+  margin-bottom:8px;
 }
+
+.panel{
+  background:#fff;
+  border-radius:15px;
+  padding:18px;
+  margin-bottom:15px;
+  box-shadow:0 2px 8px #0000000c;
+}
+
+input,select{
+  border:1px solid #ddd;
+  border-radius:9px;
+  padding:11px;
+  background:#fff;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+.form-grid input,
+.form-grid select{
+  width:100%;
+}
+
+.category-tabs{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding-bottom:8px;
+}
+.category-tabs button{
+  white-space:nowrap;
+  border:0;
+  padding:10px 15px;
+  border-radius:20px;
+  background:#e5e7eb;
+}
+.category-tabs button.active{
+  background:#171717;
+  color:white;
+}
+
+.menu-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+.menu-item{
+  background:white;
+  border:1px solid #eee;
+  border-radius:12px;
+  padding:15px;
+}
+.menu-item h3{
+  margin:0 0 7px;
+  font-size:16px;
+}
+.menu-item .price{
+  font-weight:bold;
+  margin-bottom:10px;
+}
+.menu-item button{
+  width:100%;
+  border:0;
+  background:#171717;
+  color:white;
+  padding:9px;
+  border-radius:8px;
+}
+
 .tables{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:8px
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:10px;
 }
-.table{
-background:#dcfce7;
-color:#166534
+.table-btn{
+  background:#dcfce7;
+  color:#166534;
+  border:0;
+  padding:18px 5px;
+  border-radius:12px;
+  font-weight:bold;
 }
-.food{
-background:white;
-padding:13px;
-border-radius:12px;
-margin-bottom:8px;
-display:flex;
-justify-content:space-between;
-align-items:center
+.order-layout{
+  display:grid;
+  grid-template-columns:1.5fr 1fr;
+  gap:15px;
 }
-.food button{
-width:auto;
-padding:8px 12px
+.order-box{
+  background:#fff;
+  border-radius:15px;
+  padding:18px;
 }
-.cart{
-background:white;
-padding:15px;
-border-radius:15px;
-margin-top:12px
+.cart-row{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  padding:10px 0;
+  border-bottom:1px solid #eee;
 }
-.cartrow{
-display:flex;
-justify-content:space-between;
-padding:9px 0;
-border-bottom:1px solid #eee
+.qty button{
+  width:30px;
+  height:30px;
+  border:0;
+  border-radius:6px;
+  margin-left:3px;
 }
-.payments{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:6px
+.total{
+  font-size:24px;
+  font-weight:bold;
+  padding:15px 0;
 }
-.payment{
-background:#e5e7eb;
-color:#111827
+.payment-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
 }
-.payment.selected{
-background:#111827;
-color:white
+.payment-btn{
+  background:#e5e7eb;
+  color:#111;
+  border:0;
+  border-radius:9px;
+  padding:12px;
 }
-.bottom{
-position:fixed;
-bottom:0;
-left:0;
-right:0;
-height:68px;
-background:white;
-display:flex;
-justify-content:space-around;
-align-items:center;
-border-top:1px solid #ddd;
-z-index:99
+.payment-btn.selected{
+  background:#171717;
+  color:white;
 }
-.nav{
-background:none;
-color:#555;
-font-size:11px;
-padding:5px
+
+.till-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:13px;
+  margin:7px 0;
+  background:#fff;
+  border-radius:10px;
 }
-.nav span{
-display:block;
-font-size:21px
+.till-row input{
+  width:180px;
+  text-align:right;
 }
-.record{
-background:white;
-padding:13px;
-border-radius:12px;
-margin:8px 0;
-display:flex;
-justify-content:space-between
+.till-total{
+  background:#171717;
+  color:white;
+  border-radius:15px;
+  padding:18px;
+  margin-top:15px;
 }
-.green{color:#15803d}
-.red{color:#b91c1c}
+.till-total div{
+  display:flex;
+  justify-content:space-between;
+  padding:7px 0;
+}
+
+.report-select{
+  width:100%;
+  max-width:350px;
+  margin-bottom:15px;
+}
+
+.expense-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px;
+  background:white;
+  border-radius:10px;
+  margin-bottom:8px;
+}
+
+.small{
+  font-size:12px;
+  color:#777;
+}
+
+.actions{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+.actions button{
+  border:0;
+  border-radius:7px;
+  padding:7px 10px;
+}
+
+@media(max-width:800px){
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .quick{grid-template-columns:repeat(2,1fr)}
+  .menu-grid{grid-template-columns:repeat(2,1fr)}
+  .order-layout{grid-template-columns:1fr}
+  .tables{grid-template-columns:repeat(3,1fr)}
+  .form-grid{grid-template-columns:1fr}
+}
+
+@media(max-width:500px){
+  .container{padding:12px}
+  .cards{gap:8px}
+  .card{padding:13px}
+  .card strong{font-size:18px}
+  .menu-grid{grid-template-columns:1fr}
+  .tables{grid-template-columns:repeat(3,1fr)}
+  .header-inner h1{font-size:19px}
+}
 </style>
 </head>
 
 <body>
 
 <!-- LOGIN -->
-
 <div id="loginPage" class="login">
+  <div class="login-box">
+    <h1>🍽️ Khan's Restaurant</h1>
+    <p>Restaurant POS & Management</p>
 
-<div class="loginbox">
+    <input id="loginEmail" type="email" placeholder="Admin Email">
+    <input id="loginPassword" type="password" placeholder="Password">
 
-<h1>🍽️ Khan's Restaurant</h1>
+    <button class="primary" style="width:100%" onclick="login()">
+      Login
+    </button>
 
-<p>Restaurant Management</p>
-
-<input
-id="email"
-type="email"
-placeholder="Admin Email">
-
-<input
-id="password"
-type="password"
-placeholder="Password">
-
-<button onclick="login()">
-Login
-</button>
-
-<p id="loginError"></p>
-
-</div>
+    <p id="loginError"></p>
+  </div>
 </div>
 
 
 <!-- APP -->
-
 <div id="app" class="hidden">
+
+<header class="app-header">
+  <div class="header-inner">
+    <div>
+      <h1>🍽️ Khan's Restaurant</h1>
+      <small id="headerDate"></small>
+    </div>
+    <button class="primary" onclick="logout()">Logout</button>
+  </div>
+</header>
 
 
 <!-- HOME -->
-
-<section id="home" class="page active">
-
-<div class="header">
-
-<h1>🍽️ Khan's Restaurant</h1>
-
-<p id="today"></p>
-
-</div>
-
+<section id="homePage" class="page active">
 <div class="container">
 
-<div class="title">
-Today's Dashboard
-</div>
+  <div class="section-title">Today's Dashboard</div>
 
-<div class="cards">
+  <div class="cards">
+    <div class="card">
+      <small>Today's Sales</small>
+      <strong id="dashSales">£0.00</strong>
+    </div>
 
-<div class="card">
-<small>Today's Sales</small>
-<div id="sales" class="value">£0.00</div>
-</div>
+    <div class="card">
+      <small>Orders</small>
+      <strong id="dashOrders">0</strong>
+    </div>
 
-<div class="card">
-<small>Today's Orders</small>
-<div id="orders" class="value">0</div>
-</div>
+    <div class="card">
+      <small>Cash</small>
+      <strong id="dashCash">£0.00</strong>
+    </div>
 
-<div class="card">
-<small>Cash</small>
-<div id="cash" class="value">£0.00</div>
-</div>
+    <div class="card">
+      <small>Card</small>
+      <strong id="dashCard">£0.00</strong>
+    </div>
 
-<div class="card">
-<small>Card</small>
-<div id="card" class="value">£0.00</div>
-</div>
+    <div class="card">
+      <small>QR</small>
+      <strong id="dashQR">£0.00</strong>
+    </div>
 
-<div class="card">
-<small>QR</small>
-<div id="qr" class="value">£0.00</div>
-</div>
+    <div class="card">
+      <small>Delivery</small>
+      <strong id="dashDelivery">£0.00</strong>
+    </div>
 
-<div class="card">
-<small>Delivery</small>
-<div id="delivery" class="value">£0.00</div>
-</div>
+    <div class="card">
+      <small>Expenses</small>
+      <strong id="dashExpenses">£0.00</strong>
+    </div>
 
-</div>
+    <div class="card">
+      <small>Estimated Profit</small>
+      <strong id="dashProfit">£0.00</strong>
+    </div>
+  </div>
 
 
-<div class="title">
-Quick Actions
-</div>
+  <div class="section-title">Quick Access</div>
 
-<div class="quick">
+  <div class="quick">
+    <button onclick="showPage('posPage')">
+      <span>🧾</span>POS
+    </button>
 
-<button onclick="show('pos')">
-<span>🧾</span>
-POS
-</button>
+    <button onclick="showPage('menuPage')">
+      <span>🍛</span>Menu
+    </button>
 
-<button onclick="show('till')">
-<span>💷</span>
-Daily Till
-</button>
+    <button onclick="showPage('tillPage')">
+      <span>💷</span>Daily Till
+    </button>
 
-<button onclick="show('expenses')">
-<span>💸</span>
-Expenses
-</button>
-
-<button onclick="show('reports')">
-<span>📊</span>
-Reports
-</button>
-
-</div>
+    <button onclick="showPage('expensePage')">
+      <span>💸</span>Expenses
+    </button>
+  </div>
 
 </div>
+</section>
 
+
+<!-- MENU MANAGEMENT -->
+<section id="menuPage" class="page">
+<div class="container">
+
+  <div class="section-title">🍛 Menu Management</div>
+
+  <div class="panel">
+    <h3>Add / Edit Category</h3>
+
+    <div class="form-grid">
+      <input id="categoryName" placeholder="Category name">
+
+      <button class="primary" onclick="saveCategory()">
+        Save Category
+      </button>
+
+      <button class="danger" onclick="deleteCurrentCategory()">
+        Delete Category
+      </button>
+    </div>
+  </div>
+
+
+  <div class="panel">
+
+    <h3>Add New Dish</h3>
+
+    <div class="form-grid">
+
+      <input id="dishName" placeholder="Dish name">
+
+      <input id="dishPrice"
+             type="number"
+             step="0.01"
+             placeholder="Price £">
+
+      <select id="dishCategory"></select>
+
+    </div>
+
+    <button class="primary" onclick="saveDish()">
+      ➕ Add Dish
+    </button>
+
+  </div>
+
+
+  <div class="panel">
+
+    <h3>Categories</h3>
+
+    <div id="managementCategories"
+         class="category-tabs">
+    </div>
+
+  </div>
+
+
+  <div id="managementMenu"
+       class="menu-grid">
+  </div>
+
+</div>
 </section>
 
 
 <!-- POS -->
-
-<section id="pos" class="page">
-
-<div class="header">
-
-<h1>🧾 POS</h1>
-
-<p>30 Tables</p>
-
-</div>
-
+<section id="posPage" class="page">
 <div class="container">
 
-<div id="tableScreen">
+  <div class="section-title">🧾 POS</div>
 
-<div class="title">
-Select Table
+  <div id="posTableSelection">
+
+    <div class="panel">
+      <h3>Select Table</h3>
+
+      <div id="tableButtons"
+           class="tables">
+      </div>
+    </div>
+
+    <div class="panel">
+
+      <h3>Other Orders</h3>
+
+      <div class="quick">
+
+        <button onclick="startOrder('Takeaway')">
+          🥡 Takeaway
+        </button>
+
+        <button onclick="startOrder('Delivery')">
+          🛵 Delivery
+        </button>
+
+        <button onclick="startOrder('Uber')">
+          🚗 Uber
+        </button>
+
+        <button onclick="startOrder('Deliveroo')">
+          🛵 Deliveroo
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div id="posOrder" class="hidden">
+
+    <button class="primary"
+            onclick="backToTables()">
+      ← Back
+    </button>
+
+    <h3 id="currentOrderTitle"></h3>
+
+    <div class="order-layout">
+
+      <!-- FOOD -->
+      <div class="order-box">
+
+        <div id="posCategories"
+             class="category-tabs">
+        </div>
+
+        <div id="posMenu"
+             class="menu-grid">
+        </div>
+
+      </div>
+
+
+      <!-- CART -->
+      <div class="order-box">
+
+        <h3>Current Order</h3>
+
+        <div id="cart"></div>
+
+        <div class="total">
+          Total:
+          <span id="cartTotal">£0.00</span>
+        </div>
+
+        <h4>Payment Method</h4>
+
+        <div class="payment-grid">
+
+          <button class="payment-btn selected"
+                  onclick="setPayment('Cash',this)">
+            💷 Cash
+          </button>
+
+          <button class="payment-btn"
+                  onclick="setPayment('Card',this)">
+            💳 Card
+          </button>
+
+          <button class="payment-btn"
+                  onclick="setPayment('QR',this)">
+            📱 QR
+          </button>
+
+        </div>
+
+        <button class="green"
+                style="width:100%;padding:15px;border:0;border-radius:10px;margin-top:12px"
+                onclick="completeSale()">
+          ✅ COMPLETE SALE
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
 </div>
-
-<div id="tables" class="tables"></div>
-
-<div class="title">
-Other Orders
-</div>
-
-<div class="quick">
-
-<button onclick="openPOS('Takeaway')">
-🥡 Takeaway
-</button>
-
-<button onclick="openPOS('Delivery')">
-🛵 Delivery
-</button>
-
-<button onclick="openPOS('Uber')">
-🚗 Uber
-</button>
-
-<button onclick="openPOS('Deliveroo')">
-🛵 Deliveroo
-</button>
-
-</div>
-
-</div>
-
-
-<div id="orderScreen" style="display:none">
-
-<button onclick="backTables">
-← Back
-</button>
-
-<h2 id="orderTitle"></h2>
-
-<div class="title">
-Menu
-</div>
-
-<div id="menu"></div>
-
-<div class="title">
-Order
-</div>
-
-<div id="cart" class="cart"></div>
-
-<div class="cart">
-
-<p>
-Subtotal:
-<b id="subtotal">£0.00</b>
-</p>
-
-<p>
-VAT:
-<b id="vat">£0.00</b>
-</p>
-
-<h2>
-Total:
-<span id="total">£0.00</span>
-</h2>
-
-<div class="title">
-Payment
-</div>
-
-<div class="payments">
-
-<button
-class="payment selected"
-onclick="payment('Cash',this)">
-💷 Cash
-</button>
-
-<button
-class="payment"
-onclick="payment('Card',this)">
-💳 Card
-</button>
-
-<button
-class="payment"
-onclick="payment('QR',this)">
-📱 QR
-</button>
-
-</div>
-
-<button onclick="completeOrder()">
-✅ Complete Sale
-</button>
-
-</div>
-
-</div>
-
-</div>
-
 </section>
 
 
 <!-- TILL -->
-
-<section id="till" class="page">
-
-<div class="header">
-
-<h1>💷 Daily Till</h1>
-
-<p>Automatic POS totals</p>
-
-</div>
-
+<section id="tillPage" class="page">
 <div class="container">
 
-<div id="tillData"></div>
+  <div class="section-title">💷 Daily Till</div>
+
+  <div class="panel">
+
+    <div class="till-row">
+      <div>
+        <b>Day / Date</b>
+        <div class="small">Automatic</div>
+      </div>
+
+      <b id="tillDate"></b>
+    </div>
+
+
+    <h3>Manual Entries</h3>
+
+    <div class="till-row">
+      <span>Main Till</span>
+      <input id="mainTill"
+             type="number"
+             step="0.01"
+             oninput="calculateTill()">
+    </div>
+
+    <div class="till-row">
+      <span>Petty Cash</span>
+      <input id="pettyCash"
+             type="number"
+             step="0.01"
+             oninput="calculateTill()">
+    </div>
+
+
+    <h3>Automatic POS</h3>
+
+    <div class="till-row">
+      <span>Cash</span>
+      <b id="tillCash">£0.00</b>
+    </div>
+
+    <div class="till-row">
+      <span>Card</span>
+      <b id="tillCard">£0.00</b>
+    </div>
+
+    <div class="till-row">
+      <span>QR</span>
+      <b id="tillQR">£0.00</b>
+    </div>
+
+    <div class="till-row">
+      <span>Uber</span>
+      <b id="tillUber">£0.00</b>
+    </div>
+
+    <div class="till-row">
+      <span>Deliveroo</span>
+      <b id="tillDeliveroo">£0.00</b>
+    </div>
+
+    <div class="till-row">
+      <span>Delivery Cash</span>
+      <b id="tillDeliveryCash">£0.00</b>
+    </div>
+
+    <div class="till-row">
+      <span>Delivery Card</span>
+      <b id="tillDeliveryCard">£0.00</b>
+    </div>
+
+    <div class="till-row">
+      <span>Delivery QR</span>
+      <b id="tillDeliveryQR">£0.00</b>
+    </div>
+
+
+    <h3>Cash Closing</h3>
+
+    <div class="till-row">
+      <span>Cash Taken</span>
+      <input id="cashTaken"
+             type="number"
+             step="0.01"
+             oninput="calculateTill()">
+    </div>
+
+    <div class="till-row">
+      <span>Physical Closing Cash</span>
+      <input id="physicalCash"
+             type="number"
+             step="0.01"
+             oninput="calculateTill()">
+    </div>
+
+
+    <div class="till-total">
+
+      <div>
+        <span>POS Total</span>
+        <b id="tillPOSTotal">£0.00</b>
+      </div>
+
+      <div>
+        <span>Expected Closing Cash</span>
+        <b id="expectedClosing">£0.00</b>
+      </div>
+
+      <div>
+        <span>Actual Closing Cash</span>
+        <b id="actualClosing">£0.00</b>
+      </div>
+
+      <div>
+        <span>Cash Difference</span>
+        <b id="cashDifference">£0.00</b>
+      </div>
+
+    </div>
+
+    <button class="primary"
+            style="width:100%;margin-top:12px"
+            onclick="saveTill()">
+      💾 Save Daily Till
+    </button>
+
+    <p id="tillMessage"></p>
+
+  </div>
 
 </div>
-
 </section>
 
 
 <!-- EXPENSES -->
-
-<section id="expenses" class="page">
-
-<div class="header">
-
-<h1>💸 Expenses</h1>
-
-<p>Restaurant Expenses</p>
-
-</div>
-
+<section id="expensePage" class="page">
 <div class="container">
 
-<button onclick="addExpense()">
-＋ Add Expense
-</button>
+  <div class="section-title">💸 Expenses</div>
 
-<div id="expenseList"></div>
+  <div class="panel">
+
+    <div class="form-grid">
+
+      <select id="expenseCategory">
+        <option>Food / Ingredients</option>
+        <option>Salary</option>
+        <option>Rent</option>
+        <option>Electricity</option>
+        <option>Gas</option>
+        <option>Repairs</option>
+        <option>Cleaning</option>
+        <option>Transport</option>
+        <option>Other</option>
+      </select>
+
+      <input id="expenseAmount"
+             type="number"
+             step="0.01"
+             placeholder="Amount £">
+
+      <input id="expenseNote"
+             placeholder="Description">
+
+    </div>
+
+    <button class="primary"
+            onclick="addExpense()">
+      ➕ Add Expense
+    </button>
+
+  </div>
+
+  <div id="expenseList"></div>
 
 </div>
-
 </section>
 
 
 <!-- REPORTS -->
-
-<section id="reports" class="page">
-
-<div class="header">
-
-<h1>📊 Reports</h1>
-
-<p>Sales Reports</p>
-
-</div>
-
+<section id="reportPage" class="page">
 <div class="container">
 
-<select id="period" onchange="renderReports()">
+  <div class="section-title">📊 Reports</div>
 
-<option value="daily">
-Daily
-</option>
+  <div class="panel">
 
-<option value="weekly">
-Weekly
-</option>
+    <select id="reportPeriod"
+            class="report-select"
+            onchange="renderReport()">
 
-<option value="monthly">
-Monthly
-</option>
+      <option value="daily">Daily</option>
+      <option value="weekly">Weekly</option>
+      <option value="monthly">Monthly</option>
+      <option value="quarterly">Quarterly</option>
+      <option value="sixmonths">6 Months</option>
+      <option value="yearly">Yearly</option>
 
-<option value="quarterly">
-Quarterly
-</option>
+    </select>
 
-<option value="six">
-6 Months
-</option>
+    <div id="reportResult"></div>
 
-<option value="yearly">
-Yearly
-</option>
-
-</select>
-
-<div id="report"></div>
+  </div>
 
 </div>
-
 </section>
 
 
-<!-- NAV -->
+<!-- NAVIGATION -->
+<nav class="nav">
 
-<div class="bottom">
-
-<button
-class="nav"
-onclick="show('home')">
-
-<span>🏠</span>
-Home
-
+<button onclick="showPage('homePage')">
+<span>🏠</span>Home
 </button>
 
-<button
-class="nav"
-onclick="show('pos')">
-
-<span>🧾</span>
-POS
-
+<button onclick="showPage('posPage')">
+<span>🧾</span>POS
 </button>
 
-<button
-class="nav"
-onclick="show('till')">
-
-<span>💷</span>
-Till
-
+<button onclick="showPage('menuPage')">
+<span>🍛</span>Menu
 </button>
 
-<button
-class="nav"
-onclick="show('expenses')">
-
-<span>💸</span>
-Expenses
-
+<button onclick="showPage('tillPage')">
+<span>💷</span>Till
 </button>
 
-<button
-class="nav"
-onclick="show('reports')">
-
-<span>📊</span>
-Reports
-
+<button onclick="showPage('expensePage')">
+<span>💸</span>Expenses
 </button>
 
-</div>
+<button onclick="showPage('reportPage')">
+<span>📊</span>Reports
+</button>
+
+</nav>
 
 </div>
 
 
 <script type="module">
 
-import {
-initializeApp
-}
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
-getAuth,
-signInWithEmailAndPassword,
-onAuthStateChanged,
-signOut
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
 }
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import {
-getFirestore,
-collection,
-addDoc,
-getDocs
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+  deleteDoc
 }
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+
+/* FIREBASE */
 
 const firebaseConfig={
-
-apiKey:
-"AIzaSyBsmbLMNMFNoI2OpR0maR97XAlDZ39yxkg",
-
-authDomain:
-"khans-restaurant-46083.firebaseapp.com",
-
-projectId:
-"khans-restaurant-46083",
-
-storageBucket:
-"khans-restaurant-46083.firebasestorage.app",
-
-messagingSenderId:
-"788410298373",
-
-appId:
-"1:788410298373:web:9f9806e6566d7911bc6c6c",
-
-measurementId:
-"G-8WJLEE7684"
-
+  apiKey:"AIzaSyBsmbLMNMFNoI2OpR0maR97XAlDZ39yxkg",
+  authDomain:"khans-restaurant-46083.firebaseapp.com",
+  projectId:"khans-restaurant-46083",
+  storageBucket:"khans-restaurant-46083.firebasestorage.app",
+  messagingSenderId:"788410298373",
+  appId:"1:788410298373:web:9f9806e6566d7911bc6c6c",
+  measurementId:"G-8WJLEE7684"
 };
 
-
 const app=initializeApp(firebaseConfig);
-
 const auth=getAuth(app);
-
 const db=getFirestore(app);
 
 
+/* VARIABLES */
+
+let categories=[];
+let dishes=[];
 let orders=[];
 let expenses=[];
 
-let cart=[];
-let orderType="";
-let payMethod="Cash";
+let selectedCategory="";
+let editingDishId=null;
+
+let currentOrder=[];
+let currentOrderType="";
+let paymentMethod="Cash";
 
 
-const menuItems=[
+/* DEFAULT MENU */
 
-{
-name:"Chicken Biryani",
-price:12
-},
+const defaultCategories=[
+  "Starters",
+  "Main Course",
+  "Biryani & Rice",
+  "Breads",
+  "Drinks",
+  "Desserts"
+];
 
-{
-name:"Mutton Biryani",
-price:15
-},
-
-{
-name:"Chicken Curry",
-price:11
-},
-
-{
-name:"Mutton Curry",
-price:14
-},
-
-{
-name:"Butter Chicken",
-price:12
-},
-
-{
-name:"Naan",
-price:3
-},
-
-{
-name:"Garlic Naan",
-price:4
-},
-
-{
-name:"Rice",
-price:4
-},
-
-{
-name:"Tea",
-price:2.5
-},
-
-{
-name:"Coffee",
-price:3
-}
-
+const defaultDishes=[
+  {name:"Samosa",price:3.50,category:"Starters"},
+  {name:"Chicken Tikka",price:8.50,category:"Starters"},
+  {name:"Chicken Biryani",price:12,category:"Biryani & Rice"},
+  {name:"Mutton Biryani",price:15,category:"Biryani & Rice"},
+  {name:"Chicken Curry",price:11,category:"Main Course"},
+  {name:"Mutton Curry",price:14,category:"Main Course"},
+  {name:"Butter Chicken",price:12,category:"Main Course"},
+  {name:"Naan",price:3,category:"Breads"},
+  {name:"Garlic Naan",price:4,category:"Breads"},
+  {name:"Rice",price:4,category:"Biryani & Rice"},
+  {name:"Tea",price:2.50,category:"Drinks"},
+  {name:"Coffee",price:3,category:"Drinks"},
+  {name:"Soft Drink",price:2.50,category:"Drinks"},
+  {name:"Gulab Jamun",price:4,category:"Desserts"}
 ];
 
 
-function money(x){
+/* HELPERS */
 
-return "£"+Number(x||0).toFixed(2);
-
+function money(value){
+  return "£"+Number(value||0).toFixed(2);
 }
-
 
 function today(){
+  const d=new Date();
 
-const d=new Date();
+  return d.getFullYear()+"-"+
+    String(d.getMonth()+1).padStart(2,"0")+"-"+
+    String(d.getDate()).padStart(2,"0");
+}
 
-return d.getFullYear()+"-"+
-String(d.getMonth()+1).padStart(2,"0")+"-"+
-String(d.getDate()).padStart(2,"0");
+function showPage(id){
+
+  document.querySelectorAll(".page")
+    .forEach(p=>p.classList.remove("active"));
+
+  document.getElementById(id)
+    .classList.add("active");
+
+  window.scrollTo(0,0);
+
+  if(id==="menuPage")renderMenuManagement();
+  if(id==="posPage")renderTables();
+  if(id==="tillPage")loadTill();
+  if(id==="expensePage")renderExpenses();
+  if(id==="reportPage")renderReport();
 
 }
 
+window.showPage=showPage;
+
+
+/* AUTH */
 
 window.login=async function(){
 
-const email=
-document.getElementById("email").value;
+  const email=
+    document.getElementById("loginEmail").value.trim();
 
-const password=
-document.getElementById("password").value;
+  const password=
+    document.getElementById("loginPassword").value;
 
-try{
+  try{
 
-await signInWithEmailAndPassword(
-auth,
-email,
-password
-);
+    await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
 
-}catch(e){
+  }catch(error){
 
-document.getElementById("loginError")
-.innerText=
-"Invalid email or password.";
+    document.getElementById("loginError").innerText=
+      "Login failed. Please check your email and password.";
 
-}
+  }
 
 };
 
+window.logout=function(){
+  signOut(auth);
+};
 
-onAuthStateChanged(
-auth,
-async user=>{
 
-if(user){
+onAuthStateChanged(auth,async user=>{
 
-document
-.getElementById("loginPage")
-.classList.add("hidden");
+  if(user){
 
-document
-.getElementById("app")
-.classList.remove("hidden");
+    document.getElementById("loginPage")
+      .classList.add("hidden");
 
-await loadData();
+    document.getElementById("app")
+      .classList.remove("hidden");
 
-}else{
+    document.getElementById("headerDate").innerText=
+      new Date().toLocaleDateString("en-GB",{
+        weekday:"long",
+        day:"2-digit",
+        month:"long",
+        year:"numeric"
+      });
 
-document
-.getElementById("loginPage")
-.classList.remove("hidden");
+    await loadAll();
 
-document
-.getElementById("app")
-.classList.add("hidden");
+  }else{
 
-}
+    document.getElementById("loginPage")
+      .classList.remove("hidden");
+
+    document.getElementById("app")
+      .classList.add("hidden");
+
+  }
 
 });
 
 
-async function loadData(){
+/* LOAD DATA */
 
-const orderSnap=
-await getDocs(
-collection(db,"orders")
-);
+async function loadAll(){
 
-orders=[];
+  await loadCategories();
+  await loadDishes();
+  await loadOrders();
+  await loadExpenses();
 
-orderSnap.forEach(
-d=>orders.push(d.data())
-);
-
-
-const expenseSnap=
-await getDocs(
-collection(db,"expenses")
-);
-
-expenses=[];
-
-expenseSnap.forEach(
-d=>expenses.push(d.data())
-);
-
-
-document.getElementById("today")
-.innerText=
-new Date().toLocaleDateString(
-"en-GB",
-{
-weekday:"long",
-day:"2-digit",
-month:"long",
-year:"numeric"
-}
-);
-
-renderDashboard();
-
-renderTables();
-
-renderExpenses();
-
-renderReports();
-
-renderTill();
+  renderMenuManagement();
+  renderTables();
+  renderDashboard();
+  renderExpenses();
+  loadTill();
+  renderReport();
 
 }
 
 
-window.show=function(id){
+/* CATEGORIES */
 
-document
-.querySelectorAll(".page")
-.forEach(
-p=>p.classList.remove("active")
-);
+async function loadCategories(){
 
-document
-.getElementById(id)
-.classList.add("active");
+  const snap=
+    await getDocs(collection(db,"menuCategories"));
 
-if(id==="pos")
-renderTables();
+  categories=[];
 
-if(id==="till")
-renderTill();
+  snap.forEach(d=>{
+    categories.push({
+      id:d.id,
+      ...d.data()
+    });
+  });
 
-if(id==="reports")
-renderReports();
+  if(categories.length===0){
 
-window.scrollTo(0,0);
+    for(const name of defaultCategories){
+
+      const ref=
+        await addDoc(
+          collection(db,"menuCategories"),
+          {name}
+        );
+
+      categories.push({
+        id:ref.id,
+        name
+      });
+
+    }
+
+  }
+
+  if(!selectedCategory && categories.length){
+    selectedCategory=categories[0].name;
+  }
+
+}
+
+
+async function saveCategory(){
+
+  const input=
+    document.getElementById("categoryName");
+
+  const name=input.value.trim();
+
+  if(!name){
+    alert("Enter category name.");
+    return;
+  }
+
+  if(categories.some(c=>c.name.toLowerCase()===name.toLowerCase())){
+
+    alert("Category already exists.");
+    return;
+
+  }
+
+  const ref=
+    await addDoc(
+      collection(db,"menuCategories"),
+      {name}
+    );
+
+  categories.push({
+    id:ref.id,
+    name
+  });
+
+  selectedCategory=name;
+
+  input.value="";
+
+  renderMenuManagement();
+
+}
+
+
+async function deleteCurrentCategory(){
+
+  if(!selectedCategory)return;
+
+  const category=
+    categories.find(c=>c.name===selectedCategory);
+
+  if(!category)return;
+
+  const hasDishes=
+    dishes.some(d=>d.category===selectedCategory);
+
+  if(hasDishes){
+
+    alert(
+      "Remove the dishes from this category first."
+    );
+
+    return;
+
+  }
+
+  if(!confirm(
+    "Delete "+selectedCategory+"?"
+  ))return;
+
+  await deleteDoc(
+    doc(db,"menuCategories",category.id)
+  );
+
+  categories=
+    categories.filter(c=>c.id!==category.id);
+
+  selectedCategory=
+    categories.length?
+    categories[0].name:"";
+
+  renderMenuManagement();
+
+}
+
+
+/* DISHES */
+
+async function loadDishes(){
+
+  const snap=
+    await getDocs(collection(db,"menuDishes"));
+
+  dishes=[];
+
+  snap.forEach(d=>{
+    dishes.push({
+      id:d.id,
+      ...d.data()
+    });
+  });
+
+  if(dishes.length===0){
+
+    for(const item of defaultDishes){
+
+      const ref=
+        await addDoc(
+          collection(db,"menuDishes"),
+          item
+        );
+
+      dishes.push({
+        id:ref.id,
+        ...item
+      });
+
+    }
+
+  }
+
+}
+
+
+window.saveDish=async function(){
+
+  const name=
+    document.getElementById("dishName")
+      .value.trim();
+
+  const price=
+    Number(
+      document.getElementById("dishPrice").value
+    );
+
+  const category=
+    document.getElementById("dishCategory").value;
+
+  if(!name || !category || price<0){
+
+    alert("Enter dish name, price and category.");
+
+    return;
+  }
+
+
+  if(editingDishId){
+
+    await updateDoc(
+      doc(db,"menuDishes",editingDishId),
+      {
+        name,
+        price,
+        category
+      }
+    );
+
+    const item=
+      dishes.find(d=>d.id===editingDishId);
+
+    if(item){
+
+      item.name=name;
+      item.price=price;
+      item.category=category;
+
+    }
+
+    editingDishId=null;
+
+  }else{
+
+    const ref=
+      await addDoc(
+        collection(db,"menuDishes"),
+        {
+          name,
+          price,
+          category
+        }
+      );
+
+    dishes.push({
+      id:ref.id,
+      name,
+      price,
+      category
+    });
+
+  }
+
+
+  document.getElementById("dishName").value="";
+  document.getElementById("dishPrice").value="";
+
+  renderMenuManagement();
 
 };
 
 
-function renderDashboard(){
+window.editDish=function(id){
 
-const date=today();
+  const item=
+    dishes.find(d=>d.id===id);
 
-const list=
-orders.filter(
-o=>o.date===date
-);
+  if(!item)return;
 
-const total=
-list.reduce(
-(s,o)=>s+Number(o.total||0),
-0
-);
+  document.getElementById("dishName").value=
+    item.name;
 
-let cash=0;
-let card=0;
-let qr=0;
-let delivery=0;
+  document.getElementById("dishPrice").value=
+    item.price;
 
-list.forEach(o=>{
+  document.getElementById("dishCategory").value=
+    item.category;
 
-if(o.payment==="Cash")
-cash+=Number(o.total||0);
+  editingDishId=id;
 
-if(o.payment==="Card")
-card+=Number(o.total||0);
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 
-if(o.payment==="QR")
-qr+=Number(o.total||0);
-
-if(
-o.type==="Delivery"||
-o.type==="Uber"||
-o.type==="Deliveroo"
-)
-delivery+=Number(o.total||0);
-
-});
+};
 
 
-document.getElementById("sales")
-.innerText=money(total);
+window.deleteDish=async function(id){
 
-document.getElementById("orders")
-.innerText=list.length;
+  if(!confirm("Delete this dish?"))return;
 
-document.getElementById("cash")
-.innerText=money(cash);
+  await deleteDoc(
+    doc(db,"menuDishes",id)
+  );
 
-document.getElementById("card")
-.innerText=money(card);
+  dishes=
+    dishes.filter(d=>d.id!==id);
 
-document.getElementById("qr")
-.innerText=money(qr);
+  renderMenuManagement();
 
-document.getElementById("delivery")
-.innerText=money(delivery);
+};
+
+
+function renderMenuManagement(){
+
+  const cats=
+    document.getElementById("managementCategories");
+
+  cats.innerHTML=
+    categories.map(c=>`
+
+      <button
+        class="${selectedCategory===c.name?'active':''}"
+        onclick="selectManagementCategory('${escapeQuote(c.name)}')">
+
+        ${escapeHtml(c.name)}
+
+      </button>
+
+    `).join("");
+
+
+  const select=
+    document.getElementById("dishCategory");
+
+  select.innerHTML=
+    categories.map(c=>`
+
+      <option value="${escapeHtml(c.name)}">
+        ${escapeHtml(c.name)}
+      </option>
+
+    `).join("");
+
+
+  if(selectedCategory){
+
+    document.getElementById("categoryName").value=
+      selectedCategory;
+
+    select.value=selectedCategory;
+
+  }
+
+
+  const list=
+    dishes.filter(
+      d=>d.category===selectedCategory
+    );
+
+
+  document.getElementById("managementMenu")
+    .innerHTML=
+      list.map(d=>`
+
+        <div class="menu-item">
+
+          <h3>${escapeHtml(d.name)}</h3>
+
+          <div class="price">
+            ${money(d.price)}
+          </div>
+
+          <div class="actions">
+
+            <button
+              onclick="editDish('${d.id}')">
+              ✏️ Edit
+            </button>
+
+            <button
+              class="danger"
+              onclick="deleteDish('${d.id}')">
+              🗑️ Delete
+            </button>
+
+          </div>
+
+        </div>
+
+      `).join("");
 
 }
 
+
+window.selectManagementCategory=function(name){
+
+  selectedCategory=name;
+
+  renderMenuManagement();
+
+};
+
+
+function escapeHtml(text){
+
+  return String(text)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+function escapeQuote(text){
+  return String(text)
+    .replaceAll("\\","\\\\")
+    .replaceAll("'","\\'");
+}
+
+
+/* POS TABLES */
 
 function renderTables(){
 
-let html="";
+  let html="";
 
-for(let i=1;i<=30;i++){
+  for(let i=1;i<=30;i++){
 
-const name=
-"Table "+String(i).padStart(2,"0");
+    const table=
+      "Table "+String(i).padStart(2,"0");
 
-html+=`
+    html+=`
 
-<button
-class="table"
-onclick="openPOS('${name}')">
+      <button
+        class="table-btn"
+        onclick="startOrder('${table}')">
 
-🪑 ${name}
+        🪑 ${table}
 
-</button>
+      </button>
 
-`;
+    `;
+
+  }
+
+  document.getElementById("tableButtons")
+    .innerHTML=html;
 
 }
 
-document.getElementById("tables")
-.innerHTML=html;
 
-}
+window.startOrder=function(type){
 
+  currentOrderType=type;
+  currentOrder=[];
 
-window.openPOS=function(type){
+  paymentMethod="Cash";
 
-orderType=type;
+  document.getElementById("posTableSelection")
+    .classList.add("hidden");
 
-cart=[];
+  document.getElementById("posOrder")
+    .classList.remove("hidden");
 
-document
-.getElementById("tableScreen")
-.style.display="none";
+  document.getElementById("currentOrderTitle")
+    .innerText=
+      "Order: "+type;
 
-document
-.getElementById("orderScreen")
-.style.display="block";
+  renderPOSCategories();
 
-document
-.getElementById("orderTitle")
-.innerText=type;
+  renderPOSMenu();
 
-renderMenu();
-
-renderCart();
+  renderCart();
 
 };
 
 
-window.backTables=function(){
+window.backToTables=function(){
 
-document
-.getElementById("tableScreen")
-.style.display="block";
+  document.getElementById("posTableSelection")
+    .classList.remove("hidden");
 
-document
-.getElementById("orderScreen")
-.style.display="none";
+  document.getElementById("posOrder")
+    .classList.add("hidden");
 
-};
-
-
-function renderMenu(){
-
-document.getElementById("menu")
-.innerHTML=
-menuItems.map(
-(item,i)=>`
-
-<div class="food">
-
-<div>
-
-<b>${item.name}</b>
-
-<br>
-
-£${item.price.toFixed(2)}
-
-</div>
-
-<button
-onclick="addItem(${i})">
-ADD
-</button>
-
-</div>
-
-`
-).join("");
-
-}
-
-
-window.addItem=function(i){
-
-const item=menuItems[i];
-
-const found=
-cart.find(
-x=>x.name===item.name
-);
-
-if(found){
-
-found.qty++;
-
-}else{
-
-cart.push({
-
-name:item.name,
-price:item.price,
-qty:1
-
-});
-
-}
-
-renderCart();
+  currentOrder=[];
 
 };
 
 
-window.changeQty=function(i,n){
+function renderPOSCategories(){
 
-cart[i].qty+=n;
+  document.getElementById("posCategories")
+    .innerHTML=
+      categories.map(c=>`
 
-if(cart[i].qty<=0)
-cart.splice(i,1);
+        <button
+          class="${selectedCategory===c.name?'active':''}"
+          onclick="selectPOSCategory('${escapeQuote(c.name)}')">
 
-renderCart();
+          ${escapeHtml(c.name)}
+
+        </button>
+
+      `).join("");
+
+}
+
+
+window.selectPOSCategory=function(name){
+
+  selectedCategory=name;
+
+  renderPOSCategories();
+
+  renderPOSMenu();
+
+};
+
+
+function renderPOSMenu(){
+
+  const list=
+    dishes.filter(
+      d=>d.category===selectedCategory
+    );
+
+  document.getElementById("posMenu")
+    .innerHTML=
+      list.map(d=>`
+
+        <div class="menu-item">
+
+          <h3>${escapeHtml(d.name)}</h3>
+
+          <div class="price">
+            ${money(d.price)}
+          </div>
+
+          <button
+            onclick="addToOrder('${d.id}')">
+            ADD
+          </button>
+
+        </div>
+
+      `).join("");
+
+}
+
+
+window.addToOrder=function(id){
+
+  const dish=
+    dishes.find(d=>d.id===id);
+
+  if(!dish)return;
+
+  const existing=
+    currentOrder.find(
+      x=>x.dishId===id
+    );
+
+  if(existing){
+
+    existing.qty++;
+
+  }else{
+
+    currentOrder.push({
+      dishId:dish.id,
+      name:dish.name,
+      price:Number(dish.price),
+      qty:1
+    });
+
+  }
+
+  renderCart();
+
+};
+
+
+window.changeQty=function(index,change){
+
+  if(!currentOrder[index])return;
+
+  currentOrder[index].qty+=change;
+
+  if(currentOrder[index].qty<=0){
+    currentOrder.splice(index,1);
+  }
+
+  renderCart();
 
 };
 
 
 function renderCart(){
 
-let subtotal=
-cart.reduce(
-(s,x)=>s+x.price*x.qty,
-0
-);
+  const cart=
+    document.getElementById("cart");
 
-const vat=
-subtotal*0.20;
+  if(currentOrder.length===0){
 
-const total=
-subtotal+vat;
+    cart.innerHTML=
+      "<p>No items added.</p>";
 
+    document.getElementById("cartTotal")
+      .innerText="£0.00";
 
-document.getElementById("cart")
-.innerHTML=
-cart.length?
+    return;
 
-cart.map(
-(x,i)=>`
-
-<div class="cartrow">
-
-<span>
-${x.name}
-× ${x.qty}
-</span>
-
-<span>
-
-£${(
-x.price*x.qty
-).toFixed(2)}
-
-<button
-onclick="changeQty(${i},-1)"
-style="width:auto">
-−
-</button>
-
-<button
-onclick="changeQty(${i},1)"
-style="width:auto">
-+
-</button>
-
-</span>
-
-</div>
-
-`
-).join("")
-
-:
-
-"<p>No items added.</p>";
+  }
 
 
-document.getElementById("subtotal")
-.innerText=money(subtotal);
+  cart.innerHTML=
+    currentOrder.map((item,index)=>`
 
-document.getElementById("vat")
-.innerText=money(vat);
+      <div class="cart-row">
 
-document.getElementById("total")
-.innerText=money(total);
+        <div>
+          <b>${escapeHtml(item.name)}</b><br>
+          ${money(item.price)}
+        </div>
+
+        <div class="qty">
+
+          <b>${money(item.price*item.qty)}</b>
+
+          <button
+            onclick="changeQty(${index},-1)">
+            −
+          </button>
+
+          <span>${item.qty}</span>
+
+          <button
+            onclick="changeQty(${index},1)">
+            +
+          </button>
+
+        </div>
+
+      </div>
+
+    `).join("");
+
+
+  const total=
+    currentOrder.reduce(
+      (sum,item)=>
+        sum+(item.price*item.qty),
+      0
+    );
+
+  document.getElementById("cartTotal")
+    .innerText=money(total);
 
 }
 
 
-window.payment=function(type,btn){
+window.setPayment=function(method,button){
 
-payMethod=type;
+  paymentMethod=method;
 
-document
-.querySelectorAll(".payment")
-.forEach(
-b=>b.classList.remove("selected")
-);
+  document.querySelectorAll(".payment-btn")
+    .forEach(b=>b.classList.remove("selected"));
 
-btn.classList.add("selected");
+  button.classList.add("selected");
 
 };
 
 
-window.completeOrder=async function(){
+/* COMPLETE SALE */
 
-if(cart.length===0){
+window.completeSale=async function(){
 
-alert("Add food items first.");
+  if(currentOrder.length===0){
 
-return;
+    alert("Please add dishes to the order.");
 
-}
+    return;
 
-
-const subtotal=
-cart.reduce(
-(s,x)=>s+x.price*x.qty,
-0
-);
-
-const vat=
-subtotal*0.20;
-
-const total=
-subtotal+vat;
+  }
 
 
-await addDoc(
-collection(db,"orders"),
-{
-
-date:today(),
-
-type:orderType,
-
-payment:payMethod,
-
-items:cart,
-
-subtotal:subtotal,
-
-vat:vat,
-
-total:total,
-
-createdAt:
-new Date().toISOString()
-
-}
-);
+  const total=
+    currentOrder.reduce(
+      (sum,item)=>
+        sum+(item.price*item.qty),
+      0
+    );
 
 
-alert(
-"Sale saved!\nTotal: "+
-money(total)
-);
+  const sale={
+
+    date:today(),
+
+    orderType:currentOrderType,
+
+    payment:paymentMethod,
+
+    items:currentOrder,
+
+    subtotal:total,
+
+    total:total,
+
+    createdAt:new Date().toISOString(),
+
+    orderNumber:
+      "KH-"+Date.now()
+
+  };
 
 
-await loadData();
+  try{
 
-backTables();
+    await addDoc(
+      collection(db,"orders"),
+      sale
+    );
+
+    alert(
+      "SALE COMPLETED\n\n"+
+      "Order: "+sale.orderNumber+
+      "\nTotal: "+money(total)
+    );
+
+    currentOrder=[];
+
+    await loadOrders();
+
+    renderDashboard();
+
+    loadTill();
+
+    backToTables();
+
+  }catch(error){
+
+    alert(
+      "Sale could not be saved.\n"+
+      error.message
+    );
+
+  }
 
 };
 
 
-function renderTill(){
+/* ORDERS */
 
-const date=today();
+async function loadOrders(){
 
-const list=
-orders.filter(
-o=>o.date===date
-);
+  const snap=
+    await getDocs(
+      collection(db,"orders")
+    );
 
-let cash=0;
-let card=0;
-let qr=0;
-let uber=0;
-let deliveroo=0;
-let deliveryCash=0;
-let deliveryCard=0;
-let deliveryQR=0;
+  orders=[];
 
-list.forEach(o=>{
+  snap.forEach(d=>{
 
-const amount=
-Number(o.total||0);
+    orders.push({
+      id:d.id,
+      ...d.data()
+    });
 
-if(o.type==="Uber")
-uber+=amount;
-
-else if(o.type==="Deliveroo")
-deliveroo+=amount;
-
-else if(o.type==="Delivery"){
-
-if(o.payment==="Cash")
-deliveryCash+=amount;
-
-if(o.payment==="Card")
-deliveryCard+=amount;
-
-if(o.payment==="QR")
-deliveryQR+=amount;
+  });
 
 }
 
-else{
 
-if(o.payment==="Cash")
-cash+=amount;
+/* DASHBOARD */
 
-if(o.payment==="Card")
-card+=amount;
+function renderDashboard(){
 
-if(o.payment==="QR")
-qr+=amount;
+  const date=today();
+
+  const todayOrders=
+    orders.filter(
+      o=>o.date===date
+    );
+
+
+  const sales=
+    todayOrders.reduce(
+      (s,o)=>s+Number(o.total||0),
+      0
+    );
+
+
+  let cash=0;
+  let card=0;
+  let qr=0;
+  let delivery=0;
+
+
+  todayOrders.forEach(o=>{
+
+    const amount=
+      Number(o.total||0);
+
+    if(o.payment==="Cash")cash+=amount;
+    if(o.payment==="Card")card+=amount;
+    if(o.payment==="QR")qr+=amount;
+
+    if(
+      ["Delivery","Uber","Deliveroo"]
+      .includes(o.orderType)
+    ){
+      delivery+=amount;
+    }
+
+  });
+
+
+  const expensesToday=
+    expenses.filter(
+      e=>e.date===date
+    ).reduce(
+      (s,e)=>s+Number(e.amount||0),
+      0
+    );
+
+
+  document.getElementById("dashSales")
+    .innerText=money(sales);
+
+  document.getElementById("dashOrders")
+    .innerText=todayOrders.length;
+
+  document.getElementById("dashCash")
+    .innerText=money(cash);
+
+  document.getElementById("dashCard")
+    .innerText=money(card);
+
+  document.getElementById("dashQR")
+    .innerText=money(qr);
+
+  document.getElementById("dashDelivery")
+    .innerText=money(delivery);
+
+  document.getElementById("dashExpenses")
+    .innerText=money(expensesToday);
+
+  document.getElementById("dashProfit")
+    .innerText=money(sales-expensesToday);
 
 }
 
-});
+
+/* TILL */
+
+async function getTill(){
+
+  const ref=
+    doc(db,"dailyTills",today());
+
+  const snap=
+    await getDoc(ref);
+
+  if(snap.exists()){
+    return snap.data();
+  }
+
+  return {
+    mainTill:0,
+    pettyCash:0,
+    cashTaken:0,
+    physicalCash:0
+  };
+
+}
 
 
-const total=
-cash+
-card+
-qr+
-uber+
-deliveroo+
-deliveryCash+
-deliveryCard+
-deliveryQR;
+function getTodayPOS(){
+
+  const list=
+    orders.filter(
+      o=>o.date===today()
+    );
 
 
-document.getElementById("tillData")
-.innerHTML=`
+  let cash=0;
+  let card=0;
+  let qr=0;
+  let uber=0;
+  let deliveroo=0;
+  let deliveryCash=0;
+  let deliveryCard=0;
+  let deliveryQR=0;
 
-<div class="record">
-<span>Day / Date</span>
-<b>${new Date().toLocaleDateString("en-GB")}</b>
-</div>
 
-<div class="record">
-<span>Main Till</span>
-<b>£0.00</b>
-</div>
+  list.forEach(o=>{
 
-<div class="record">
-<span>Petty Cash</span>
-<b>£0.00</b>
-</div>
+    const amount=
+      Number(o.total||0);
 
-<div class="record">
-<span>Cash</span>
-<b>${money(cash)}</b>
-</div>
 
-<div class="record">
-<span>Card</span>
-<b>${money(card)}</b>
-</div>
+    if(o.orderType==="Uber"){
 
-<div class="record">
-<span>QR</span>
-<b>${money(qr)}</b>
-</div>
+      uber+=amount;
 
-<div class="record">
-<span>Uber</span>
-<b>${money(uber)}</b>
-</div>
+    }else if(o.orderType==="Deliveroo"){
 
-<div class="record">
-<span>Deliveroo</span>
-<b>${money(deliveroo)}</b>
-</div>
+      deliveroo+=amount;
 
-<div class="record">
-<span>Delivery Cash</span>
-<b>${money(deliveryCash)}</b>
-</div>
+    }else if(o.orderType==="Delivery"){
 
-<div class="record">
-<span>Delivery Card</span>
-<b>${money(deliveryCard)}</b>
-</div>
+      if(o.payment==="Cash")
+        deliveryCash+=amount;
 
-<div class="record">
-<span>Delivery QR</span>
-<b>${money(deliveryQR)}</b>
-</div>
+      if(o.payment==="Card")
+        deliveryCard+=amount;
 
-<div class="record">
-<span>Cash Taken</span>
-<b>£0.00</b>
-</div>
+      if(o.payment==="QR")
+        deliveryQR+=amount;
 
-<div class="record">
+    }else{
 
-<span>
-<b>POS Total</b>
-</span>
+      if(o.payment==="Cash")
+        cash+=amount;
 
-<b>${money(total)}</b>
+      if(o.payment==="Card")
+        card+=amount;
 
-</div>
+      if(o.payment==="QR")
+        qr+=amount;
 
-<div class="record">
+    }
 
-<span>
-<b>Actual Closing Cash</b>
-</span>
+  });
 
-<b>£0.00</b>
 
-</div>
+  return {
+    cash,
+    card,
+    qr,
+    uber,
+    deliveroo,
+    deliveryCash,
+    deliveryCard,
+    deliveryQR
+  };
 
-`;
+}
 
+
+async function loadTill(){
+
+  const manual=
+    await getTill();
+
+  const pos=
+    getTodayPOS();
+
+
+  document.getElementById("tillDate")
+    .innerText=
+      new Date().toLocaleDateString("en-GB");
+
+
+  document.getElementById("mainTill")
+    .value=
+      Number(manual.mainTill||0).toFixed(2);
+
+  document.getElementById("pettyCash")
+    .value=
+      Number(manual.pettyCash||0).toFixed(2);
+
+  document.getElementById("cashTaken")
+    .value=
+      Number(manual.cashTaken||0).toFixed(2);
+
+  document.getElementById("physicalCash")
+    .value=
+      Number(manual.physicalCash||0).toFixed(2);
+
+
+  document.getElementById("tillCash")
+    .innerText=money(pos.cash);
+
+  document.getElementById("tillCard")
+    .innerText=money(pos.card);
+
+  document.getElementById("tillQR")
+    .innerText=money(pos.qr);
+
+  document.getElementById("tillUber")
+    .innerText=money(pos.uber);
+
+  document.getElementById("tillDeliveroo")
+    .innerText=money(pos.deliveroo);
+
+  document.getElementById("tillDeliveryCash")
+    .innerText=money(pos.deliveryCash);
+
+  document.getElementById("tillDeliveryCard")
+    .innerText=money(pos.deliveryCard);
+
+  document.getElementById("tillDeliveryQR")
+    .innerText=money(pos.deliveryQR);
+
+
+  calculateTill();
+
+}
+
+
+window.calculateTill=function(){
+
+  const mainTill=
+    Number(
+      document.getElementById("mainTill").value
+    )||0;
+
+  const petty=
+    Number(
+      document.getElementById("pettyCash").value
+    )||0;
+
+  const cashTaken=
+    Number(
+      document.getElementById("cashTaken").value
+    )||0;
+
+  const physical=
+    Number(
+      document.getElementById("physicalCash").value
+    )||0;
+
+
+  const cash=
+    Number(
+      document.getElementById("tillCash")
+        .innerText.replace("£","")
+    )||0;
+
+
+  const posTotal=
+    ["tillCash","tillCard","tillQR",
+     "tillUber","tillDeliveroo",
+     "tillDeliveryCash","tillDeliveryCard",
+     "tillDeliveryQR"]
+    .reduce((sum,id)=>{
+
+      return sum+
+        (Number(
+          document.getElementById(id)
+            .innerText.replace("£","")
+        )||0);
+
+    },0);
+
+
+  const expected=
+    mainTill+
+    petty+
+    cash-
+    cashTaken;
+
+
+  const difference=
+    physical-
+    expected;
+
+
+  document.getElementById("tillPOSTotal")
+    .innerText=money(posTotal);
+
+  document.getElementById("expectedClosing")
+    .innerText=money(expected);
+
+  document.getElementById("actualClosing")
+    .innerText=money(physical);
+
+  document.getElementById("cashDifference")
+    .innerText=money(difference);
+
+};
+
+
+window.saveTill=async function(){
+
+  const data={
+
+    date:today(),
+
+    mainTill:
+      Number(
+        document.getElementById("mainTill").value
+      )||0,
+
+    pettyCash:
+      Number(
+        document.getElementById("pettyCash").value
+      )||0,
+
+    cashTaken:
+      Number(
+        document.getElementById("cashTaken").value
+      )||0,
+
+    physicalCash:
+      Number(
+        document.getElementById("physicalCash").value
+      )||0,
+
+    updatedAt:new Date().toISOString()
+
+  };
+
+
+  await setDoc(
+    doc(db,"dailyTills",today()),
+    data,
+    {merge:true}
+  );
+
+
+  document.getElementById("tillMessage")
+    .innerText=
+      "✅ Daily Till saved successfully.";
+
+};
+
+
+/* EXPENSES */
+
+async function loadExpenses(){
+
+  const snap=
+    await getDocs(
+      collection(db,"expenses")
+    );
+
+  expenses=[];
+
+  snap.forEach(d=>{
+
+    expenses.push({
+      id:d.id,
+      ...d.data()
+    });
+
+  });
 
 }
 
 
 window.addExpense=async function(){
 
-const category=
-prompt(
-"Expense type:\nRent / Electricity / Gas / Salary / Miscellaneous"
-);
+  const category=
+    document.getElementById("expenseCategory")
+      .value;
 
-if(!category)return;
+  const amount=
+    Number(
+      document.getElementById("expenseAmount")
+        .value
+    );
 
-const amount=
-Number(
-prompt("Amount £:")
-);
-
-if(isNaN(amount)||amount<=0)
-return;
-
-
-await addDoc(
-collection(db,"expenses"),
-{
-
-date:today(),
-
-category:category,
-
-amount:amount,
-
-createdAt:
-new Date().toISOString()
-
-}
-);
+  const note=
+    document.getElementById("expenseNote")
+      .value.trim();
 
 
-await loadData();
+  if(!amount || amount<=0){
+
+    alert("Enter expense amount.");
+
+    return;
+
+  }
+
+
+  await addDoc(
+    collection(db,"expenses"),
+    {
+      date:today(),
+      category,
+      amount,
+      note,
+      createdAt:new Date().toISOString()
+    }
+  );
+
+
+  document.getElementById("expenseAmount")
+    .value="";
+
+  document.getElementById("expenseNote")
+    .value="";
+
+
+  await loadExpenses();
+
+  renderExpenses();
+
+  renderDashboard();
 
 };
 
 
 function renderExpenses(){
 
-document.getElementById("expenseList")
-.innerHTML=
-expenses.length?
-
-expenses.map(
-e=>`
-
-<div class="record">
-
-<span>
-${e.category}
-<br>
-<small>${e.date}</small>
-</span>
-
-<b>${money(e.amount)}</b>
-
-</div>
-
-`
-).join("")
-
-:
-
-"<p>No expenses yet.</p>";
-
-}
+  const list=
+    document.getElementById("expenseList");
 
 
-window.renderReports=function(){
+  list.innerHTML=
+    expenses
+      .sort(
+        (a,b)=>
+          String(b.createdAt)
+          .localeCompare(
+            String(a.createdAt)
+          )
+      )
+      .map(e=>`
 
-const period=
-document.getElementById("period")
-.value;
+        <div class="expense-row">
 
-const now=new Date();
+          <div>
 
-let start=new Date();
+            <b>${escapeHtml(e.category)}</b>
 
-if(period==="daily"){
+            <div class="small">
+              ${escapeHtml(e.note||"")}
+            </div>
 
-start=new Date(now);
+            <div class="small">
+              ${escapeHtml(e.date)}
+            </div>
 
-start.setHours(0,0,0,0);
+          </div>
 
-}
+          <b>${money(e.amount)}</b>
 
-if(period==="weekly"){
+        </div>
 
-start.setDate(
-now.getDate()-6
-);
-
-}
-
-if(period==="monthly"){
-
-start=new Date(
-now.getFullYear(),
-now.getMonth(),
-1
-);
-
-}
-
-if(period==="quarterly"){
-
-start=new Date(
-now.getFullYear(),
-Math.floor(now.getMonth()/3)*3,
-1
-);
-
-}
-
-if(period==="six"){
-
-start=new Date(
-now.getFullYear(),
-now.getMonth()-5,
-1
-);
-
-}
-
-if(period==="yearly"){
-
-start=new Date(
-now.getFullYear(),
-0,
-1
-);
+      `).join("");
 
 }
 
 
-const list=
-orders.filter(
-o=>
-new Date(o.date)>=start
-);
+/* REPORTS */
+
+window.renderReport=function(){
+
+  const period=
+    document.getElementById("reportPeriod")
+      .value;
+
+  const now=new Date();
+
+  let start=new Date(now);
 
 
-const total=
-list.reduce(
-(s,o)=>s+Number(o.total||0),
-0
-);
+  if(period==="daily"){
+
+    start=new Date(now);
+    start.setHours(0,0,0,0);
+
+  }
+
+  if(period==="weekly"){
+
+    start.setDate(
+      now.getDate()-6
+    );
+
+  }
+
+  if(period==="monthly"){
+
+    start=new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      1
+    );
+
+  }
+
+  if(period==="quarterly"){
+
+    start=new Date(
+      now.getFullYear(),
+      Math.floor(now.getMonth()/3)*3,
+      1
+    );
+
+  }
+
+  if(period==="sixmonths"){
+
+    start=new Date(
+      now.getFullYear(),
+      now.getMonth()-5,
+      1
+    );
+
+  }
+
+  if(period==="yearly"){
+
+    start=new Date(
+      now.getFullYear(),
+      0,
+      1
+    );
+
+  }
 
 
-const exp=
-expenses
-.filter(
-e=>
-new Date(e.date)>=start
-)
-.reduce(
-(s,e)=>s+Number(e.amount||0),
-0
-);
+  const sales=
+    orders.filter(
+      o=>new Date(o.date)>=start
+    );
 
 
-document.getElementById("report")
-.innerHTML=`
+  const totalSales=
+    sales.reduce(
+      (s,o)=>
+        s+Number(o.total||0),
+      0
+    );
 
-<div class="cards">
 
-<div class="card">
+  const totalExpenses=
+    expenses.filter(
+      e=>new Date(e.date)>=start
+    ).reduce(
+      (s,e)=>
+        s+Number(e.amount||0),
+      0
+    );
 
-<small>Sales</small>
 
-<div class="value">
-${money(total)}
-</div>
+  const cash=
+    sales
+      .filter(o=>o.payment==="Cash")
+      .reduce(
+        (s,o)=>s+Number(o.total||0),
+        0
+      );
 
-</div>
 
-<div class="card">
+  const card=
+    sales
+      .filter(o=>o.payment==="Card")
+      .reduce(
+        (s,o)=>s+Number(o.total||0),
+        0
+      );
 
-<small>Orders</small>
 
-<div class="value">
-${list.length}
-</div>
+  const qr=
+    sales
+      .filter(o=>o.payment==="QR")
+      .reduce(
+        (s,o)=>s+Number(o.total||0),
+        0
+      );
 
-</div>
 
-<div class="card">
+  const profit=
+    totalSales-totalExpenses;
 
-<small>Expenses</small>
 
-<div class="value">
-${money(exp)}
-</div>
+  document.getElementById("reportResult")
+    .innerHTML=`
 
-</div>
+      <div class="cards">
 
-<div class="card">
+        <div class="card">
+          <small>Total Sales</small>
+          <strong>${money(totalSales)}</strong>
+        </div>
 
-<small>Profit</small>
+        <div class="card">
+          <small>Total Orders</small>
+          <strong>${sales.length}</strong>
+        </div>
 
-<div class="value green">
-${money(total-exp)}
-</div>
+        <div class="card">
+          <small>Total Expenses</small>
+          <strong>${money(totalExpenses)}</strong>
+        </div>
 
-</div>
+        <div class="card">
+          <small>Estimated Profit</small>
+          <strong>${money(profit)}</strong>
+        </div>
 
-</div>
+        <div class="card">
+          <small>Cash Sales</small>
+          <strong>${money(cash)}</strong>
+        </div>
 
-`;
+        <div class="card">
+          <small>Card Sales</small>
+          <strong>${money(card)}</strong>
+        </div>
+
+        <div class="card">
+          <small>QR Sales</small>
+          <strong>${money(qr)}</strong>
+        </div>
+
+      </div>
+
+    `;
 
 };
 
