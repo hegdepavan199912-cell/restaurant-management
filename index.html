@@ -2,305 +2,307 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#111827">
 <title>Khan's Restaurant</title>
 
 <style>
 *{box-sizing:border-box}
 body{
- margin:0;
- font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial;
- background:#f3f4f6;
- color:#111827;
- padding-bottom:80px
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+    background:#f3f4f6;
+    color:#111827;
 }
 button,input,select{font:inherit}
 button{cursor:pointer}
 input,select{
- width:100%;
- padding:12px;
- margin:5px 0 10px;
- border:1px solid #d1d5db;
- border-radius:10px;
- background:white
+    width:100%;
+    padding:12px;
+    border:1px solid #d1d5db;
+    border-radius:10px;
+    background:#fff;
+    margin:5px 0 10px;
 }
 .hidden{display:none!important}
 
 .login{
- min-height:100vh;
- display:flex;
- align-items:center;
- justify-content:center;
- background:#111827;
- padding:20px
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:#111827;
 }
 .login-box{
- background:white;
- padding:30px;
- width:100%;
- max-width:380px;
- border-radius:22px;
- text-align:center
+    background:white;
+    width:100%;
+    max-width:390px;
+    padding:30px;
+    border-radius:22px;
+    text-align:center;
 }
 .login-box h1{margin-top:0}
 
-.btn{
- width:100%;
- padding:13px;
- border:0;
- border-radius:11px;
- background:#111827;
- color:white;
- font-weight:700
-}
-.btn.red{background:#991b1b}
-.btn.green{background:#166534}
-
 .header{
- background:#111827;
- color:white;
- padding:23px 18px;
- border-radius:0 0 22px 22px
+    background:#111827;
+    color:white;
+    padding:22px 18px;
+    border-radius:0 0 22px 22px;
 }
 .header h1{margin:0;font-size:23px}
-.header p{margin:5px 0 0;color:#cbd5e1}
+.header p{margin:6px 0 0;color:#cbd5e1}
 
-.container{padding:17px}
-
+.container{padding:17px;max-width:900px;margin:auto}
 .page{display:none}
 .page.active{display:block}
 
 .cards{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:12px
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
 }
 .card{
- background:white;
- padding:16px;
- border-radius:17px;
- box-shadow:0 2px 10px #0000000a
+    background:#fff;
+    padding:16px;
+    border-radius:17px;
+    box-shadow:0 2px 10px #0000000b;
 }
-.card h4{margin:0;color:#6b7280}
+.card h4{
+    margin:0;
+    color:#6b7280;
+    font-size:13px;
+}
 .value{
- font-size:21px;
- font-weight:700;
- margin-top:7px
-}
-
-.quick{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:10px
-}
-.quick button{
- background:white;
- border:0;
- border-radius:15px;
- padding:18px 5px;
- font-weight:700;
- box-shadow:0 2px 10px #0000000a
-}
-.quick span{
- display:block;
- font-size:25px;
- margin-bottom:5px
+    font-size:21px;
+    font-weight:800;
+    margin-top:7px;
 }
 
 .title{
- font-size:18px;
- font-weight:700;
- margin:18px 0 12px
+    font-size:18px;
+    font-weight:800;
+    margin:20px 0 12px;
 }
+
+.btn{
+    width:100%;
+    padding:13px;
+    border:0;
+    border-radius:11px;
+    background:#111827;
+    color:white;
+    font-weight:700;
+}
+.btn.green{background:#166534}
+.btn.red{background:#991b1b}
+.btn.orange{background:#c2410c}
 
 .add{
- width:100%;
- padding:13px;
- background:#111827;
- color:white;
- border:0;
- border-radius:11px;
- margin-bottom:12px;
- font-weight:700
+    width:100%;
+    padding:13px;
+    background:#111827;
+    color:white;
+    border:0;
+    border-radius:11px;
+    margin-bottom:10px;
+    font-weight:700;
 }
 
-.bottom{
- position:fixed;
- bottom:0;
- left:0;
- right:0;
- height:73px;
- background:white;
- border-top:1px solid #ddd;
- display:flex;
- justify-content:space-around;
- align-items:center;
- z-index:99
+.quick{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
 }
-.nav{
- background:none;
- border:0;
- color:#777;
- font-size:10px
+.quick button{
+    background:white;
+    border:0;
+    border-radius:15px;
+    padding:18px 5px;
+    font-weight:700;
+    box-shadow:0 2px 10px #0000000b;
 }
-.nav span{
- display:block;
- font-size:21px
-}
-.nav.active{
- color:#111827;
- font-weight:700
+.quick span{
+    display:block;
+    font-size:25px;
+    margin-bottom:5px;
 }
 
 .table-grid{
- display:grid;
- grid-template-columns:repeat(3,1fr);
- gap:9px
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:9px;
 }
 .table{
- border:0;
- padding:15px 3px;
- border-radius:13px;
- background:#dcfce7;
- color:#166534;
- font-weight:700
+    border:0;
+    padding:15px 3px;
+    border-radius:13px;
+    background:#dcfce7;
+    color:#166534;
+    font-weight:700;
 }
 .table.busy{
- background:#ffedd5;
- color:#c2410c
+    background:#ffedd5;
+    color:#c2410c;
 }
 
 .item,.record{
- background:white;
- border-radius:14px;
- padding:14px;
- margin-bottom:9px;
- display:flex;
- justify-content:space-between;
- align-items:center
+    background:white;
+    border-radius:14px;
+    padding:14px;
+    margin-bottom:9px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 }
-
 .small{
- border:0;
- padding:7px 9px;
- border-radius:8px;
- background:#e5e7eb;
- margin-left:3px
+    border:0;
+    padding:7px 9px;
+    border-radius:8px;
+    background:#e5e7eb;
+    margin-left:3px;
 }
 
 .pos-item{
- background:white;
- padding:13px;
- border-radius:13px;
- margin-bottom:8px;
- display:flex;
- justify-content:space-between;
- align-items:center
-}
-
-.modal{
- position:fixed;
- inset:0;
- background:#0008;
- display:none;
- align-items:flex-end;
- z-index:200
-}
-.modal-box{
- width:100%;
- max-height:92vh;
- overflow:auto;
- background:white;
- padding:20px;
- border-radius:23px 23px 0 0
-}
-.modal-actions{
- display:flex;
- gap:8px;
- margin-top:10px
-}
-.modal-actions button{
- flex:1;
- padding:12px;
- border:0;
- border-radius:10px;
- font-weight:700
+    background:white;
+    padding:13px;
+    border-radius:13px;
+    margin-bottom:8px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 }
 
 .cart{
- background:white;
- border-radius:14px;
- padding:12px;
- margin-top:12px
+    background:white;
+    border-radius:14px;
+    padding:12px;
+    margin-top:12px;
 }
 .cart-row{
- display:flex;
- justify-content:space-between;
- padding:10px 0;
- border-bottom:1px solid #eee
+    display:flex;
+    justify-content:space-between;
+    padding:10px 0;
+    border-bottom:1px solid #eee;
 }
 
 .payments{
- display:grid;
- grid-template-columns:repeat(4,1fr);
- gap:6px;
- margin:10px 0
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:7px;
+    margin:10px 0;
 }
 .payment{
- border:0;
- background:#e5e7eb;
- padding:10px 3px;
- border-radius:9px;
- font-size:12px
+    border:0;
+    background:#e5e7eb;
+    padding:11px 3px;
+    border-radius:9px;
+    font-size:12px;
+    font-weight:700;
 }
 .payment.selected{
- background:#111827;
- color:white
+    background:#111827;
+    color:white;
 }
 
 .till{
- background:white;
- padding:16px;
- border-radius:17px;
- margin-bottom:13px
+    background:white;
+    padding:16px;
+    border-radius:17px;
+    margin-bottom:13px;
 }
 .till-row{
- display:flex;
- justify-content:space-between;
- padding:8px 0;
- border-bottom:1px solid #eee
+    display:flex;
+    justify-content:space-between;
+    padding:9px 0;
+    border-bottom:1px solid #eee;
 }
 .till-total{
- background:#111827;
- color:white;
- padding:14px;
- border-radius:13px;
- margin-top:12px
+    background:#111827;
+    color:white;
+    padding:14px;
+    border-radius:13px;
+    margin-top:12px;
 }
-.till-total .till-row{
- border-color:#ffffff33
-}
+.till-total .till-row{border-color:#ffffff33}
 
 .alert{
- background:#fff7ed;
- border:1px solid #fed7aa;
- padding:13px;
- border-radius:12px;
- margin-top:14px
+    background:#fff7ed;
+    border:1px solid #fed7aa;
+    padding:13px;
+    border-radius:12px;
+    margin-top:14px;
+}
+.empty{text-align:center;color:#777;padding:25px}
+.green-text{color:#15803d}
+.red-text{color:#b91c1c}
+
+.filter-box{
+    background:white;
+    padding:15px;
+    border-radius:15px;
+    margin-bottom:12px;
 }
 
-.empty{
- text-align:center;
- color:#777;
- padding:25px
+.bottom{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    height:72px;
+    background:white;
+    border-top:1px solid #ddd;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    z-index:99;
+}
+.nav{
+    background:none;
+    border:0;
+    color:#777;
+    font-size:10px;
+}
+.nav span{
+    display:block;
+    font-size:21px;
+}
+.nav.active{
+    color:#111827;
+    font-weight:700;
 }
 
-.green{color:#15803d}
-.redtext{color:#b91c1c}
+.modal{
+    position:fixed;
+    inset:0;
+    background:#0008;
+    display:none;
+    align-items:flex-end;
+    z-index:200;
+}
+.modal-box{
+    width:100%;
+    max-height:92vh;
+    overflow:auto;
+    background:white;
+    padding:20px;
+    border-radius:23px 23px 0 0;
+}
+.modal-actions{
+    display:flex;
+    gap:8px;
+    margin-top:10px;
+}
+.modal-actions button{
+    flex:1;
+    padding:12px;
+    border:0;
+    border-radius:10px;
+    font-weight:700;
+}
 
 @media(max-width:380px){
- .payments{grid-template-columns:1fr 1fr}
+    .payments{grid-template-columns:1fr 1fr}
 }
 </style>
 </head>
@@ -308,32 +310,30 @@ input,select{
 <body>
 
 <!-- LOGIN -->
-<div id="login" class="login">
-<div class="login-box">
-<h1>🍽️ Khan's Restaurant</h1>
-<p>Restaurant Management System</p>
+<div id="loginPage" class="login">
+    <div class="login-box">
+        <h1>🍽️ Khan's Restaurant</h1>
+        <p>Restaurant Management System</p>
 
-<input id="username" placeholder="Username">
-<input id="password" type="password" placeholder="Password">
+        <input id="loginEmail" type="email" placeholder="Admin Email">
+        <input id="loginPassword" type="password" placeholder="Password">
 
-<button class="btn" onclick="login()">Login</button>
+        <button class="btn" onclick="loginUser()">Login</button>
 
-<p style="font-size:12px;color:#777;margin-top:15px">
-Username: admin<br>
-Password: 1234
-</p>
-</div>
+        <p id="loginMessage" style="color:#b91c1c;font-size:13px"></p>
+    </div>
 </div>
 
 
+<!-- APPLICATION -->
 <div id="app" class="hidden">
 
 <!-- HOME -->
 <section id="home" class="page active">
 
 <div class="header">
-<h1>🍽️ Khan's Restaurant</h1>
-<p id="todayText"></p>
+    <h1>🍽️ Khan's Restaurant</h1>
+    <p id="homeDate"></p>
 </div>
 
 <div class="container">
@@ -344,53 +344,61 @@ Password: 1234
 
 <div class="card">
 <h4>Today's Sales</h4>
-<div class="value" id="homeSales">£0.00</div>
+<div class="value" id="dashSales">£0.00</div>
 </div>
 
 <div class="card">
 <h4>Today's Orders</h4>
-<div class="value" id="homeOrders">0</div>
+<div class="value" id="dashOrders">0</div>
 </div>
 
 <div class="card">
 <h4>Today's Expenses</h4>
-<div class="value" id="homeExpenses">£0.00</div>
+<div class="value" id="dashExpenses">£0.00</div>
 </div>
 
 <div class="card">
 <h4>Today's Profit</h4>
-<div class="value" id="homeProfit">£0.00</div>
+<div class="value" id="dashProfit">£0.00</div>
 </div>
 
 </div>
 
-
-<div class="title">Today's Till</div>
+<div class="title">Today's Payment Summary</div>
 
 <div class="cards">
 
 <div class="card">
-<h4>Main Till</h4>
-<div class="value" id="homeMainTill">£0.00</div>
-</div>
-
-<div class="card">
-<h4>Petty Cash</h4>
-<div class="value" id="homePetty">£0.00</div>
-</div>
-
-<div class="card">
 <h4>Cash</h4>
-<div class="value" id="homeCash">£0.00</div>
+<div class="value" id="dashCash">£0.00</div>
 </div>
 
 <div class="card">
 <h4>Card</h4>
-<div class="value" id="homeCard">£0.00</div>
+<div class="value" id="dashCard">£0.00</div>
+</div>
+
+<div class="card">
+<h4>QR</h4>
+<div class="value" id="dashQR">£0.00</div>
+</div>
+
+<div class="card">
+<h4>Uber</h4>
+<div class="value" id="dashUber">£0.00</div>
+</div>
+
+<div class="card">
+<h4>Deliveroo</h4>
+<div class="value" id="dashDeliveroo">£0.00</div>
+</div>
+
+<div class="card">
+<h4>Delivery</h4>
+<div class="value" id="dashDelivery">£0.00</div>
 </div>
 
 </div>
-
 
 <div class="title">Quick Actions</div>
 
@@ -404,6 +412,14 @@ Password: 1234
 <span>💷</span>Daily Till
 </button>
 
+<button onclick="go('expenses')">
+<span>💸</span>Expenses
+</button>
+
+<button onclick="go('reports')">
+<span>📊</span>Reports
+</button>
+
 <button onclick="go('menu')">
 <span>🍔</span>Menu
 </button>
@@ -412,17 +428,7 @@ Password: 1234
 <span>📦</span>Inventory
 </button>
 
-<button onclick="go('petty')">
-<span>💰</span>Petty Cash
-</button>
-
-<button onclick="go('reports')">
-<span>📊</span>Reports
-</button>
-
 </div>
-
-<div id="stockAlert"></div>
 
 </div>
 </section>
@@ -433,16 +439,16 @@ Password: 1234
 
 <div class="header">
 <h1>🧾 POS Billing</h1>
-<p>Table / Takeaway / Delivery</p>
+<p>30 Tables + Takeaway + Delivery</p>
 </div>
 
 <div class="container">
 
 <div id="tableScreen">
 
-<div class="title">30 Tables</div>
+<div class="title">Tables</div>
 
-<div class="table-grid" id="tables"></div>
+<div id="tables" class="table-grid"></div>
 
 <div class="title">Other Orders</div>
 
@@ -471,7 +477,7 @@ Password: 1234
 
 <div id="orderScreen" style="display:none">
 
-<button class="small" onclick="backTables()">← Back</button>
+<button class="small" onclick="backToTables()">← Back</button>
 
 <h2 id="orderTitle"></h2>
 
@@ -485,33 +491,35 @@ Password: 1234
 
 <div class="cart">
 
-<p>Subtotal: <b id="subtotal">£0.00</b></p>
-<p>VAT: <b id="vat">£0.00</b></p>
+<p>Subtotal:
+<b id="posSubtotal">£0.00</b>
+</p>
 
-<h2>Total: <span id="total">£0.00</span></h2>
+<p>VAT:
+<b id="posVAT">£0.00</b>
+</p>
 
-<div class="title">Payment</div>
+<h2>Total:
+<span id="posTotal">£0.00</span>
+</h2>
+
+<div class="title">Payment Method</div>
 
 <div class="payments">
 
 <button class="payment selected"
-onclick="payment('Cash',this)">
-Cash
+onclick="setPayment('Cash',this)">
+💷 Cash
 </button>
 
 <button class="payment"
-onclick="payment('Card',this)">
-Card
+onclick="setPayment('Card',this)">
+💳 Card
 </button>
 
 <button class="payment"
-onclick="payment('QR',this)">
-QR
-</button>
-
-<button class="payment"
-onclick="payment('Other',this)">
-Other
+onclick="setPayment('QR',this)">
+📱 QR
 </button>
 
 </div>
@@ -534,12 +542,12 @@ onclick="completeOrder()">
 
 <div class="header">
 <h1>💷 Daily Till</h1>
-<p>Automatic POS + Manual Till Control</p>
+<p>Automatic POS + Manual Closing</p>
 </div>
 
 <div class="container">
 
-<div id="dailyRecord"></div>
+<div id="dailyTill"></div>
 
 </div>
 </section>
@@ -550,12 +558,14 @@ onclick="completeOrder()">
 
 <div class="header">
 <h1>🍔 Menu Management</h1>
-<p>Food Items & Prices</p>
+<p>Food Items and Prices</p>
 </div>
 
 <div class="container">
 
-<button class="add" onclick="addMenu()">＋ Add Food Item</button>
+<button class="add" onclick="addMenuItem()">
+＋ Add Food Item
+</button>
 
 <div id="menuList"></div>
 
@@ -573,28 +583,8 @@ onclick="completeOrder()">
 
 <div class="container">
 
-<div class="cards">
-
-<div class="card">
-<h4>Total Items</h4>
-<div class="value" id="itemCount">0</div>
-</div>
-
-<div class="card">
-<h4>Low Stock</h4>
-<div class="value" id="lowCount">0</div>
-</div>
-
-</div>
-
-<br>
-
-<button class="add" onclick="stockChange(1)">
-＋ Stock In
-</button>
-
-<button class="add" onclick="stockChange(-1)">
-− Stock Out
+<button class="add" onclick="addInventoryItem()">
+＋ Add Stock Item
 </button>
 
 <div id="inventoryList"></div>
@@ -603,7 +593,7 @@ onclick="completeOrder()">
 </section>
 
 
-<!-- EXPENSE -->
+<!-- EXPENSES -->
 <section id="expenses" class="page">
 
 <div class="header">
@@ -612,6 +602,17 @@ onclick="completeOrder()">
 </div>
 
 <div class="container">
+
+<div class="cards">
+
+<div class="card">
+<h4>Total Expenses</h4>
+<div class="value" id="expenseTotal">£0.00</div>
+</div>
+
+</div>
+
+<br>
 
 <button class="add" onclick="addExpense()">
 ＋ Add Expense
@@ -623,7 +624,7 @@ onclick="completeOrder()">
 </section>
 
 
-<!-- PETTY -->
+<!-- PETTY CASH -->
 <section id="petty" class="page">
 
 <div class="header">
@@ -682,11 +683,31 @@ Set Opening Petty Cash
 
 <div class="header">
 <h1>📊 Reports</h1>
-<p>Sales & Financial Summary</p>
+<p>Sales, Expenses and Profit</p>
 </div>
 
-<div class="container" id="reportsData"></div>
+<div class="container">
 
+<div class="filter-box">
+
+<label>Report Period</label>
+
+<select id="reportPeriod" onchange="renderReports()">
+
+<option value="daily">Today</option>
+<option value="weekly">This Week</option>
+<option value="monthly">This Month</option>
+<option value="quarterly">This Quarter</option>
+<option value="sixmonths">Last 6 Months</option>
+<option value="yearly">This Year</option>
+
+</select>
+
+</div>
+
+<div id="reportResults"></div>
+
+</div>
 </section>
 
 
@@ -695,7 +716,7 @@ Set Opening Petty Cash
 
 <div class="header">
 <h1>⚙️ Settings</h1>
-<p>Restaurant Settings</p>
+<p>Khan's Restaurant</p>
 </div>
 
 <div class="container">
@@ -703,10 +724,13 @@ Set Opening Petty Cash
 <div class="card">
 
 <label>Restaurant Name</label>
-<input id="restaurantName" value="Khan's Restaurant">
+<input id="restaurantName">
+
+<label>Currency</label>
+<input value="GBP (£)" readonly>
 
 <label>VAT %</label>
-<input id="vatRate" type="number" value="20">
+<input id="vatRate" type="number">
 
 <button class="btn" onclick="saveSettings()">
 Save Settings
@@ -716,11 +740,7 @@ Save Settings
 
 <br>
 
-<button class="add" onclick="backup()">
-💾 Backup Data
-</button>
-
-<button class="btn red" onclick="logout()">
+<button class="btn red" onclick="logoutUser()">
 Logout
 </button>
 
@@ -728,7 +748,7 @@ Logout
 </section>
 
 
-<!-- BOTTOM NAV -->
+<!-- NAVIGATION -->
 <div class="bottom">
 
 <button class="nav active" onclick="go('home',this)">
@@ -743,8 +763,8 @@ Logout
 <span>💷</span>Till
 </button>
 
-<button class="nav" onclick="go('menu',this)">
-<span>🍔</span>Menu
+<button class="nav" onclick="go('expenses',this)">
+<span>💸</span>Expenses
 </button>
 
 <button class="nav" onclick="go('reports',this)">
@@ -756,74 +776,34 @@ Logout
 </div>
 
 
-<!-- DAILY EDIT MODAL -->
-<div id="dailyModal" class="modal">
+<!-- DAILY TILL EDIT MODAL -->
+<div id="tillModal" class="modal">
 
 <div class="modal-box">
 
-<h2>Edit Daily Till</h2>
-
-<label>Day</label>
-<input id="editDay" readonly>
-
-<label>Date</label>
-<input id="editDate" readonly>
+<h2>✏️ Edit Daily Till</h2>
 
 <label>Main Till</label>
 <input id="editMainTill" type="number" step="0.01">
 
 <label>Petty Cash</label>
-<input id="editPetty" type="number" step="0.01">
-
-<label>Cash</label>
-<input id="editCash" type="number" step="0.01">
-
-<label>Uber</label>
-<input id="editUber" type="number" step="0.01">
-
-<label>Deliveroo</label>
-<input id="editDeliveroo" type="number" step="0.01">
-
-<label>Delivery Cash</label>
-<input id="editDeliveryCash" type="number" step="0.01">
-
-<label>Delivery Card</label>
-<input id="editDeliveryCard" type="number" step="0.01">
+<input id="editPettyCash" type="number" step="0.01">
 
 <label>Cash Taken</label>
 <input id="editCashTaken" type="number" step="0.01">
 
 <label>Actual Closing Cash</label>
-<input id="editActual" type="number" step="0.01">
-
-<div class="till-total">
-
-<div class="till-row">
-<span>Total Sales</span>
-<b id="editSales">£0.00</b>
-</div>
-
-<div class="till-row">
-<span>Expected Closing</span>
-<b id="editExpected">£0.00</b>
-</div>
-
-<div class="till-row">
-<span>Difference</span>
-<b id="editDifference">£0.00</b>
-</div>
-
-</div>
+<input id="editActualClosing" type="number" step="0.01">
 
 <div class="modal-actions">
 
-<button onclick="closeDaily()">
+<button onclick="closeTillModal()">
 Cancel
 </button>
 
 <button style="background:#111827;color:white"
-onclick="saveDailyEdit()">
-Save Changes
+onclick="saveTillEdit()">
+Save
 </button>
 
 </div>
@@ -832,1521 +812,2118 @@ Save Changes
 </div>
 
 
-<script>
+<!-- FIREBASE -->
+<script type="module">
 
-/* ================================
-DATA
-================================ */
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-let menu=JSON.parse(
-localStorage.getItem("KR_menu")||"null"
-)||[
-{name:"Chicken Biryani",category:"Main Course",price:12,stock:30},
-{name:"Butter Chicken",category:"Main Course",price:14,stock:30},
-{name:"Fresh Juice",category:"Drinks",price:5,stock:30}
-];
+import {
+    getAuth,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-let orders=JSON.parse(
-localStorage.getItem("KR_orders")||"[]"
-);
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    getDocs,
+    getDoc,
+    setDoc,
+    updateDoc,
+    deleteDoc,
+    doc,
+    query,
+    where,
+    orderBy
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-let expenses=JSON.parse(
-localStorage.getItem("KR_expenses")||"[]"
-);
 
-let petty=JSON.parse(
-localStorage.getItem("KR_petty")||"[]"
-);
+/* ==========================================
+FIREBASE CONFIG
+========================================== */
 
-let pettyOpening=Number(
-localStorage.getItem("KR_pettyOpening")||0
-);
+const firebaseConfig = {
 
-let daily=JSON.parse(
-localStorage.getItem("KR_daily")||"{}"
-);
+    apiKey:
+    "AIzaSyBsmbLMNMFNoI2OpR0maR97XAlDZ39yxkg",
 
-let vatRate=Number(
-localStorage.getItem("KR_vat")||20
-);
+    authDomain:
+    "khans-restaurant-46083.firebaseapp.com",
+
+    projectId:
+    "khans-restaurant-46083",
+
+    storageBucket:
+    "khans-restaurant-46083.firebasestorage.app",
+
+    messagingSenderId:
+    "788410298373",
+
+    appId:
+    "1:788410298373:web:9f9806e6566d7911bc6c6c",
+
+    measurementId:
+    "G-8WJLEE7684"
+};
+
+
+/* ==========================================
+INITIALIZE FIREBASE
+========================================== */
+
+const app=initializeApp(firebaseConfig);
+
+const auth=getAuth(app);
+
+const db=getFirestore(app);
+
+
+/* ==========================================
+GLOBAL VARIABLES
+========================================== */
+
+let currentUser=null;
+
+let menu=[];
+let orders=[];
+let expenses=[];
+let inventory=[];
+let pettyTransactions=[];
 
 let currentOrder=[];
 let currentType="";
 let currentPayment="Cash";
-let editingDaily=false;
+
+let settings={
+    restaurantName:"Khan's Restaurant",
+    currency:"GBP",
+    vatRate:20
+};
 
 
-/* ================================
-SAVE
-================================ */
+/* ==========================================
+HELPERS
+========================================== */
 
-function save(){
+window.money=function(value){
 
-localStorage.setItem("KR_menu",JSON.stringify(menu));
-localStorage.setItem("KR_orders",JSON.stringify(orders));
-localStorage.setItem("KR_expenses",JSON.stringify(expenses));
-localStorage.setItem("KR_petty",JSON.stringify(petty));
-localStorage.setItem("KR_pettyOpening",pettyOpening);
-localStorage.setItem("KR_daily",JSON.stringify(daily));
-localStorage.setItem("KR_vat",vatRate);
-
-}
-
-
-/* ================================
-DATE
-================================ */
-
-function today(){
-
-let d=new Date();
-
-let date=d.toISOString().slice(0,10);
-
-let day=d.toLocaleDateString(
-"en-GB",{weekday:"long"}
-);
-
-return {date,day};
-
-}
-
-
-/* ================================
-AUTOMATIC DAILY RECORD
-================================ */
-
-function getToday(){
-
-let t=today();
-
-if(!daily[t.date]){
-
-/*
-Automatically create today's record.
-*/
-
-let previousDates=Object.keys(daily)
-.sort();
-
-let previous=
-previousDates.length
-?daily[previousDates[previousDates.length-1]]
-:null;
-
-daily[t.date]={
-
-day:t.day,
-date:t.date,
-
-mainTill:
-previous
-?Number(previous.actualClosing||previous.mainTill||0)
-:0,
-
-pettyCash:getPettyBalance(),
-
-cash:0,
-uber:0,
-deliveroo:0,
-deliveryCash:0,
-deliveryCard:0,
-cashTaken:0,
-actualClosing:0
+    return "£"+Number(value||0).toFixed(2);
 
 };
 
-save();
+
+window.today=function(){
+
+    const d=new Date();
+
+    const date=
+    d.getFullYear()+"-"+
+    String(d.getMonth()+1).padStart(2,"0")+"-"+
+    String(d.getDate()).padStart(2,"0");
+
+    const day=
+    d.toLocaleDateString(
+        "en-GB",
+        {weekday:"long"}
+    );
+
+    return {date,day};
+
+};
+
+
+window.formatDate=function(date){
+
+    if(!date)return "";
+
+    const p=date.split("-");
+
+    return p[2]+"/"+p[1]+"/"+p[0];
+
+};
+
+
+function startOfWeek(){
+
+    const d=new Date();
+
+    const day=d.getDay();
+
+    const diff=d.getDate()-day+(day===0?-6:1);
+
+    d.setDate(diff);
+
+    d.setHours(0,0,0,0);
+
+    return d;
 
 }
 
-return daily[t.date];
+
+function dateObject(dateString){
+
+    return new Date(dateString+"T00:00:00");
 
 }
 
 
-/* ================================
-UPDATE AUTOMATIC DAILY SALES
-================================ */
+/* ==========================================
+AUTH
+========================================== */
 
-function rebuildTodaySales(){
+window.loginUser=async function(){
 
-let t=today();
+    const email=
+    document.getElementById("loginEmail").value.trim();
 
-let d=getToday();
+    const password=
+    document.getElementById("loginPassword").value;
 
-d.cash=0;
-d.uber=0;
-d.deliveroo=0;
-d.deliveryCash=0;
-d.deliveryCard=0;
+    const message=
+    document.getElementById("loginMessage");
 
-orders.forEach(o=>{
+    message.innerText="";
 
-if(o.date!==t.date)return;
+    if(!email||!password){
 
-let amount=Number(o.total||0);
+        message.innerText=
+        "Please enter email and password.";
 
-if(o.type==="Uber"){
+        return;
 
-d.uber+=amount;
+    }
 
-}
+    try{
 
-else if(o.type==="Deliveroo"){
+        await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
 
-d.deliveroo+=amount;
+    }catch(error){
 
-}
+        console.error(error);
 
-else if(o.type==="Delivery"){
+        message.innerText=
+        "Login failed. Please check email and password.";
 
-if(o.payment==="Cash")
-d.deliveryCash+=amount;
-else
-d.deliveryCard+=amount;
+    }
 
-}
+};
 
-else{
 
-if(o.payment==="Cash")
-d.cash+=amount;
+window.logoutUser=async function(){
 
-}
+    await signOut(auth);
+
+};
+
+
+onAuthStateChanged(auth,async user=>{
+
+    if(user){
+
+        currentUser=user;
+
+        document
+        .getElementById("loginPage")
+        .classList.add("hidden");
+
+        document
+        .getElementById("app")
+        .classList.remove("hidden");
+
+        await loadAllData();
+
+    }else{
+
+        currentUser=null;
+
+        document
+        .getElementById("app")
+        .classList.add("hidden");
+
+        document
+        .getElementById("loginPage")
+        .classList.remove("hidden");
+
+    }
 
 });
 
-d.pettyCash=getPettyBalance();
 
-save();
+/* ==========================================
+LOAD SETTINGS
+========================================== */
 
-}
+async function loadSettings(){
 
+    const ref=
+    doc(db,"restaurants","settings");
 
-/* ================================
-LOGIN
-================================ */
+    const snap=
+    await getDoc(ref);
 
-function login(){
+    if(snap.exists()){
 
-let u=document.getElementById("username").value;
-let p=document.getElementById("password").value;
+        settings={
+            ...settings,
+            ...snap.data()
+        };
 
-if(u==="admin"&&p==="1234"){
+    }else{
 
-document.getElementById("login")
-.classList.add("hidden");
+        await setDoc(
+            ref,
+            settings
+        );
 
-document.getElementById("app")
-.classList.remove("hidden");
+    }
 
-initialize();
+    document.getElementById("restaurantName").value=
+    settings.restaurantName;
 
-}else{
-
-alert("Wrong username or password");
-
-}
-
-}
-
-function logout(){
-
-document.getElementById("app")
-.classList.add("hidden");
-
-document.getElementById("login")
-.classList.remove("hidden");
+    document.getElementById("vatRate").value=
+    settings.vatRate;
 
 }
 
 
-/* ================================
+/* ==========================================
+LOAD MENU
+========================================== */
+
+async function loadMenu(){
+
+    const snap=
+    await getDocs(
+        collection(db,"menu")
+    );
+
+    menu=[];
+
+    snap.forEach(d=>{
+
+        menu.push({
+            id:d.id,
+            ...d.data()
+        });
+
+    });
+
+}
+
+
+/* ==========================================
+LOAD ORDERS
+========================================== */
+
+async function loadOrders(){
+
+    const snap=
+    await getDocs(
+        collection(db,"orders")
+    );
+
+    orders=[];
+
+    snap.forEach(d=>{
+
+        orders.push({
+            id:d.id,
+            ...d.data()
+        });
+
+    });
+
+}
+
+
+/* ==========================================
+LOAD EXPENSES
+========================================== */
+
+async function loadExpenses(){
+
+    const snap=
+    await getDocs(
+        collection(db,"expenses")
+    );
+
+    expenses=[];
+
+    snap.forEach(d=>{
+
+        expenses.push({
+            id:d.id,
+            ...d.data()
+        });
+
+    });
+
+}
+
+
+/* ==========================================
+LOAD INVENTORY
+========================================== */
+
+async function loadInventory(){
+
+    const snap=
+    await getDocs(
+        collection(db,"inventory")
+    );
+
+    inventory=[];
+
+    snap.forEach(d=>{
+
+        inventory.push({
+            id:d.id,
+            ...d.data()
+        });
+
+    });
+
+}
+
+
+/* ==========================================
+LOAD PETTY CASH
+========================================== */
+
+async function loadPetty(){
+
+    const snap=
+    await getDocs(
+        collection(db,"pettyCash")
+    );
+
+    pettyTransactions=[];
+
+    snap.forEach(d=>{
+
+        pettyTransactions.push({
+            id:d.id,
+            ...d.data()
+        });
+
+    });
+
+}
+
+
+/* ==========================================
+LOAD EVERYTHING
+========================================== */
+
+async function loadAllData(){
+
+    try{
+
+        await loadSettings();
+        await loadMenu();
+        await loadOrders();
+        await loadExpenses();
+        await loadInventory();
+        await loadPetty();
+
+        renderHome();
+        renderTables();
+        renderMenu();
+        renderInventory();
+        renderExpenses();
+        renderPetty();
+        renderDailyTill();
+        renderReports();
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "Unable to load cloud data. Please check Firebase settings."
+        );
+
+    }
+
+}
+
+
+/* ==========================================
 NAVIGATION
-================================ */
+========================================== */
 
-function go(id,button){
+window.go=function(id,button){
 
-document.querySelectorAll(".page")
-.forEach(x=>x.classList.remove("active"));
+    document
+    .querySelectorAll(".page")
+    .forEach(p=>p.classList.remove("active"));
 
-document.getElementById(id)
-.classList.add("active");
+    document
+    .getElementById(id)
+    .classList.add("active");
 
-document.querySelectorAll(".nav")
-.forEach(x=>x.classList.remove("active"));
+    document
+    .querySelectorAll(".nav")
+    .forEach(n=>n.classList.remove("active"));
 
-if(button)
-button.classList.add("active");
+    if(button)
+    button.classList.add("active");
 
-if(id==="home")renderHome();
-if(id==="pos")renderTables();
-if(id==="daily")renderDaily();
-if(id==="menu")renderMenu();
-if(id==="inventory")renderInventory();
-if(id==="expenses")renderExpenses();
-if(id==="petty")renderPetty();
-if(id==="reports")renderReports();
+    if(id==="home")renderHome();
+    if(id==="pos")renderTables();
+    if(id==="daily")renderDailyTill();
+    if(id==="menu")renderMenu();
+    if(id==="inventory")renderInventory();
+    if(id==="expenses")renderExpenses();
+    if(id==="petty")renderPetty();
+    if(id==="reports")renderReports();
 
-window.scrollTo(0,0);
+    window.scrollTo(0,0);
+
+};
+
+
+/* ==========================================
+GET TODAY'S SALES
+========================================== */
+
+function getTodayOrders(){
+
+    const t=today();
+
+    return orders.filter(
+        o=>o.date===t.date
+    );
 
 }
 
 
-/* ================================
+function paymentTotals(list){
+
+    const result={
+        cash:0,
+        card:0,
+        qr:0,
+        uber:0,
+        deliveroo:0,
+        deliveryCash:0,
+        deliveryCard:0,
+        deliveryQR:0
+    };
+
+    list.forEach(o=>{
+
+        const amount=
+        Number(o.total||0);
+
+        if(o.type==="Uber"){
+
+            result.uber+=amount;
+
+        }
+        else if(o.type==="Deliveroo"){
+
+            result.deliveroo+=amount;
+
+        }
+        else if(o.type==="Delivery"){
+
+            if(o.payment==="Cash")
+            result.deliveryCash+=amount;
+
+            if(o.payment==="Card")
+            result.deliveryCard+=amount;
+
+            if(o.payment==="QR")
+            result.deliveryQR+=amount;
+
+        }
+        else{
+
+            if(o.payment==="Cash")
+            result.cash+=amount;
+
+            if(o.payment==="Card")
+            result.card+=amount;
+
+            if(o.payment==="QR")
+            result.qr+=amount;
+
+        }
+
+    });
+
+    return result;
+
+}
+
+
+/* ==========================================
 HOME
-================================ */
+========================================== */
 
 function renderHome(){
 
-let d=getToday();
+    const t=today();
 
-rebuildTodaySales();
+    const list=getTodayOrders();
 
-let sales=
-d.cash+
-d.uber+
-d.deliveroo+
-d.deliveryCash+
-d.deliveryCard;
+    const p=paymentTotals(list);
 
-let exp=
-expenses
-.filter(x=>x.date===today().date)
-.reduce((s,x)=>s+x.amount,0);
+    const sales=list.reduce(
+        (s,o)=>s+Number(o.total||0),0
+    );
 
-document.getElementById("todayText")
-.innerText=
-d.day+" • "+formatDate(d.date);
+    const exp=expenses
+    .filter(e=>e.date===t.date)
+    .reduce(
+        (s,e)=>s+Number(e.amount||0),0
+    );
 
-document.getElementById("homeSales")
-.innerText=money(sales);
+    document.getElementById("homeDate")
+    .innerText=
+    t.day+" • "+formatDate(t.date);
 
-document.getElementById("homeOrders")
-.innerText=
-orders.filter(x=>x.date===today().date).length;
+    document.getElementById("dashSales")
+    .innerText=money(sales);
 
-document.getElementById("homeExpenses")
-.innerText=money(exp);
+    document.getElementById("dashOrders")
+    .innerText=list.length;
 
-document.getElementById("homeProfit")
-.innerText=money(sales-exp);
+    document.getElementById("dashExpenses")
+    .innerText=money(exp);
 
-document.getElementById("homeMainTill")
-.innerText=money(d.mainTill);
+    document.getElementById("dashProfit")
+    .innerText=money(sales-exp);
 
-document.getElementById("homePetty")
-.innerText=money(getPettyBalance());
+    document.getElementById("dashCash")
+    .innerText=money(p.cash+p.deliveryCash);
 
-document.getElementById("homeCash")
-.innerText=money(d.cash+d.deliveryCash);
+    document.getElementById("dashCard")
+    .innerText=money(p.card+p.deliveryCard);
 
-document.getElementById("homeCard")
-.innerText=money(d.deliveryCard);
+    document.getElementById("dashQR")
+    .innerText=money(p.qr+p.deliveryQR);
 
-let low=menu.filter(x=>x.stock<=5);
+    document.getElementById("dashUber")
+    .innerText=money(p.uber);
 
-document.getElementById("stockAlert")
-.innerHTML=low.length?
-`<div class="alert">
-⚠️ <b>Low Stock:</b>
-${low.map(x=>x.name+" ("+x.stock+")").join(", ")}
-</div>`:"";
+    document.getElementById("dashDeliveroo")
+    .innerText=money(p.deliveroo);
+
+    document.getElementById("dashDelivery")
+    .innerText=
+    money(p.deliveryCash+p.deliveryCard+p.deliveryQR);
 
 }
 
 
-/* ================================
-POS TABLES
-================================ */
+/* ==========================================
+TABLES
+========================================== */
 
 function renderTables(){
 
-let box=document.getElementById("tables");
+    const box=
+    document.getElementById("tables");
 
-box.innerHTML="";
+    box.innerHTML="";
 
-for(let i=1;i<=30;i++){
+    for(let i=1;i<=30;i++){
 
-let name="Table "+String(i).padStart(2,"0");
+        const name=
+        "Table "+String(i).padStart(2,"0");
 
-let open=
-orders.some(x=>x.openTable===name);
+        const open=
+        orders.some(
+            o=>
+            o.openTable===name &&
+            !o.closed
+        );
 
-box.innerHTML+=`
+        box.innerHTML+=`
 
-<button class="table ${open?"busy":""}"
-onclick="openOrder('${name}')">
+        <button
+        class="table ${open?"busy":""}"
+        onclick="openOrder('${name}')">
 
-🪑 ${name}
+        🪑 ${name}
 
-<small>
-${open?"Order Open":"Available"}
-</small>
+        </button>
 
-</button>
+        `;
 
-`;
-
-}
-
-}
-
-
-function openOrder(type){
-
-currentType=type;
-currentOrder=[];
-currentPayment="Cash";
-
-document.getElementById("tableScreen")
-.style.display="none";
-
-document.getElementById("orderScreen")
-.style.display="block";
-
-document.getElementById("orderTitle")
-.innerText="🧾 "+type;
-
-renderPOSMenu();
-renderCart();
+    }
 
 }
 
 
-function backTables(){
+/* ==========================================
+OPEN POS
+========================================== */
 
-document.getElementById("tableScreen")
-.style.display="block";
+window.openOrder=function(type){
 
-document.getElementById("orderScreen")
-.style.display="none";
+    currentType=type;
+    currentOrder=[];
+    currentPayment="Cash";
 
-renderTables();
+    document.getElementById("tableScreen")
+    .style.display="none";
 
-}
+    document.getElementById("orderScreen")
+    .style.display="block";
 
+    document.getElementById("orderTitle")
+    .innerText="🧾 "+type;
+
+    renderPOSMenu();
+    renderCart();
+
+};
+
+
+window.backToTables=function(){
+
+    document.getElementById("tableScreen")
+    .style.display="block";
+
+    document.getElementById("orderScreen")
+    .style.display="none";
+
+    renderTables();
+
+};
+
+
+/* ==========================================
+POS MENU
+========================================== */
 
 function renderPOSMenu(){
 
-document.getElementById("posMenu").innerHTML=
+    document.getElementById("posMenu")
+    .innerHTML=
 
-menu.map((x,i)=>`
+    menu.map((item,index)=>`
 
-<div class="pos-item">
+    <div class="pos-item">
 
-<div>
-<b>${x.name}</b><br>
-<small>
-${x.category} • £${x.price.toFixed(2)}
-• Stock ${x.stock}
-</small>
-</div>
+        <div>
+            <b>${item.name}</b><br>
+            <small>
+            ${item.category||""}
+            • ${money(item.price)}
+            </small>
+        </div>
 
-<button class="small"
-onclick="addItem(${i})">
-ADD
-</button>
+        <button
+        class="small"
+        onclick="addToCart(${index})">
+        ADD
+        </button>
 
-</div>
+    </div>
 
-`).join("");
-
-}
-
-
-function addItem(i){
-
-if(menu[i].stock<=0){
-
-alert("Item is out of stock");
-return;
+    `).join("");
 
 }
 
-let found=currentOrder.find(
-x=>x.name===menu[i].name
-);
 
-if(found)
-found.qty++;
-else
-currentOrder.push({...menu[i],qty:1});
+window.addToCart=function(index){
 
-renderCart();
+    const item=menu[index];
 
-}
+    if(!item)return;
+
+    const found=
+    currentOrder.find(
+        x=>x.menuId===item.id
+    );
+
+    if(found){
+
+        found.qty++;
+
+    }else{
+
+        currentOrder.push({
+
+            menuId:item.id,
+            name:item.name,
+            price:Number(item.price||0),
+            qty:1
+
+        });
+
+    }
+
+    renderCart();
+
+};
+
+
+window.changeQty=function(index,amount){
+
+    currentOrder[index].qty+=amount;
+
+    if(currentOrder[index].qty<=0)
+    currentOrder.splice(index,1);
+
+    renderCart();
+
+};
 
 
 function renderCart(){
 
-let box=document.getElementById("cart");
+    const box=
+    document.getElementById("cart");
 
-if(!currentOrder.length){
+    if(!currentOrder.length){
 
-box.innerHTML=
-'<div class="empty">No items added</div>';
+        box.innerHTML=
+        '<div class="empty">No items added</div>';
 
-document.getElementById("subtotal")
-.innerText="£0.00";
+        document.getElementById("posSubtotal")
+        .innerText="£0.00";
 
-document.getElementById("vat")
-.innerText="£0.00";
+        document.getElementById("posVAT")
+        .innerText="£0.00";
 
-document.getElementById("total")
-.innerText="£0.00";
+        document.getElementById("posTotal")
+        .innerText="£0.00";
 
-return;
+        return;
 
-}
+    }
 
-let subtotal=currentOrder.reduce(
-(s,x)=>s+x.price*x.qty,0
-);
+    let subtotal=
+    currentOrder.reduce(
+        (s,x)=>s+x.price*x.qty,
+        0
+    );
 
-let vat=subtotal*vatRate/100;
+    let vat=
+    subtotal*Number(settings.vatRate||0)/100;
 
-let total=subtotal+vat;
+    let total=subtotal+vat;
 
-box.innerHTML=currentOrder.map((x,i)=>`
+    box.innerHTML=
+    currentOrder.map((x,i)=>`
 
-<div class="cart-row">
+    <div class="cart-row">
 
-<span>
-<b>${x.name}</b><br>
-£${x.price.toFixed(2)} × ${x.qty}
-</span>
+        <span>
+        <b>${x.name}</b><br>
+        ${money(x.price)}
+        × ${x.qty}
+        </span>
 
-<span>
-<button class="small"
-onclick="qty(${i},-1)">−</button>
+        <span>
+        <button
+        class="small"
+        onclick="changeQty(${i},-1)">
+        −
+        </button>
 
-<button class="small"
-onclick="qty(${i},1)">+</button>
-</span>
+        <button
+        class="small"
+        onclick="changeQty(${i},1)">
+        +
+        </button>
+        </span>
 
-</div>
+    </div>
 
-`).join("");
+    `).join("");
 
-document.getElementById("subtotal")
-.innerText=money(subtotal);
+    document.getElementById("posSubtotal")
+    .innerText=money(subtotal);
 
-document.getElementById("vat")
-.innerText=money(vat);
+    document.getElementById("posVAT")
+    .innerText=money(vat);
 
-document.getElementById("total")
-.innerText=money(total);
-
-}
-
-
-function qty(i,n){
-
-currentOrder[i].qty+=n;
-
-if(currentOrder[i].qty<=0)
-currentOrder.splice(i,1);
-
-renderCart();
-
-}
-
-
-function payment(type,button){
-
-currentPayment=type;
-
-document.querySelectorAll(".payment")
-.forEach(x=>x.classList.remove("selected"));
-
-button.classList.add("selected");
+    document.getElementById("posTotal")
+    .innerText=money(total);
 
 }
 
 
-/* ================================
-COMPLETE POS ORDER
-================================ */
+window.setPayment=function(type,button){
 
-function completeOrder(){
+    currentPayment=type;
 
-if(!currentOrder.length){
+    document
+    .querySelectorAll(".payment")
+    .forEach(b=>b.classList.remove("selected"));
 
-alert("Please add food items");
-return;
+    button.classList.add("selected");
 
-}
-
-let subtotal=currentOrder.reduce(
-(s,x)=>s+x.price*x.qty,0
-);
-
-let vat=subtotal*vatRate/100;
-
-let total=subtotal+vat;
+};
 
 
-/*
-Reduce stock
-*/
+/* ==========================================
+COMPLETE ORDER
+========================================== */
 
-currentOrder.forEach(x=>{
+window.completeOrder=async function(){
 
-let item=menu.find(
-m=>m.name===x.name
-);
+    if(!currentOrder.length){
 
-if(item)
-item.stock=Math.max(
-0,item.stock-x.qty
-);
+        alert("Please add food items.");
 
-});
+        return;
+
+    }
+
+    const t=today();
+
+    const subtotal=
+    currentOrder.reduce(
+        (s,x)=>s+x.price*x.qty,
+        0
+    );
+
+    const vat=
+    subtotal*Number(settings.vatRate||0)/100;
+
+    const total=subtotal+vat;
+
+    const order={
+
+        date:t.date,
+        day:t.day,
+
+        type:currentType,
+
+        openTable:
+        currentType.startsWith("Table")
+        ?currentType
+        :"",
+
+        payment:currentPayment,
+
+        subtotal:subtotal,
+
+        vat:vat,
+
+        total:total,
+
+        items:currentOrder,
+
+        createdAt:new Date().toISOString(),
+
+        createdBy:currentUser.email
+
+    };
+
+    try{
+
+        await addDoc(
+            collection(db,"orders"),
+            order
+        );
+
+        alert(
+            "Payment completed!\n\n"+
+            "Total: "+money(total)
+        );
+
+        currentOrder=[];
+
+        await loadOrders();
+
+        renderHome();
+        renderDailyTill();
+        renderReports();
+        renderTables();
+
+        backToTables();
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "Could not save the order to the cloud."
+        );
+
+    }
+
+};
 
 
-let t=today();
-
-orders.push({
-
-id:"ORD-"+Date.now(),
-
-date:t.date,
-
-day:t.day,
-
-type:currentType,
-
-payment:currentPayment,
-
-subtotal:subtotal,
-
-vat:vat,
-
-total:total,
-
-items:currentOrder
-
-});
-
-save();
-
-/*
-Rebuild Daily Till automatically.
-*/
-
-rebuildTodaySales();
-
-alert(
-"Payment completed!\n\n"+
-"Order: "+currentType+
-"\nPayment: "+currentPayment+
-"\nTotal: "+money(total)
-);
-
-currentOrder=[];
-
-backTables();
-
-renderHome();
-
-}
-
-
-/* ================================
+/* ==========================================
 DAILY TILL
-================================ */
+========================================== */
 
-function renderDaily(){
+async function getTill(){
 
-let d=getToday();
+    const t=today();
 
-rebuildTodaySales();
+    const ref=
+    doc(db,"dailyTill",t.date);
 
-d=getToday();
+    const snap=
+    await getDoc(ref);
 
-let totalSales=
-d.cash+
-d.uber+
-d.deliveroo+
-d.deliveryCash+
-d.deliveryCard;
+    if(snap.exists()){
 
-let expected=
-d.mainTill+
-d.cash+
-d.deliveryCash-
-d.cashTaken;
+        return {
+            id:snap.id,
+            ...snap.data()
+        };
 
-let difference=
-d.actualClosing-expected;
+    }
 
-document.getElementById("dailyRecord").innerHTML=`
+    let previousClosing=0;
 
-<div class="till">
+    const all=
+    await getDocs(
+        collection(db,"dailyTill")
+    );
 
-<div style="display:flex;justify-content:space-between">
+    let records=[];
 
-<b>${d.day}</b>
-<b>${formatDate(d.date)}</b>
+    all.forEach(d=>{
 
-</div>
+        records.push({
+            id:d.id,
+            ...d.data()
+        });
 
-<hr>
+    });
 
-<div class="till-row">
-<span>Day</span>
-<b>${d.day}</b>
-</div>
+    records.sort(
+        (a,b)=>
+        String(a.date).localeCompare(String(b.date))
+    );
 
-<div class="till-row">
-<span>Date</span>
-<b>${formatDate(d.date)}</b>
-</div>
+    if(records.length){
 
-<div class="till-row">
-<span>Main Till</span>
-<b>${money(d.mainTill)}</b>
-</div>
+        previousClosing=
+        Number(
+            records[records.length-1]
+            .actualClosingCash||0
+        );
 
-<div class="till-row">
-<span>Petty Cash</span>
-<b>${money(d.pettyCash)}</b>
-</div>
+    }
 
-<div class="till-row">
-<span>Cash</span>
-<b>${money(d.cash)}</b>
-</div>
+    const newTill={
 
-<div class="till-row">
-<span>Uber</span>
-<b>${money(d.uber)}</b>
-</div>
+        day:t.day,
+        date:t.date,
 
-<div class="till-row">
-<span>Deliveroo</span>
-<b>${money(d.deliveroo)}</b>
-</div>
+        mainTill:previousClosing,
 
-<div class="till-row">
-<span>Delivery Cash</span>
-<b>${money(d.deliveryCash)}</b>
-</div>
+        pettyCash:getPettyBalance(),
 
-<div class="till-row">
-<span>Delivery Card</span>
-<b>${money(d.deliveryCard)}</b>
-</div>
+        cashTaken:0,
 
-<div class="till-row">
-<span>Cash Taken</span>
-<b>${money(d.cashTaken)}</b>
-</div>
+        actualClosingCash:0,
 
-<div class="till-row">
-<span>Actual Closing Cash</span>
-<b>${money(d.actualClosing)}</b>
-</div>
+        createdAt:new Date().toISOString()
 
-<div class="till-total">
+    };
 
-<div class="till-row">
-<span>Total Sales</span>
-<b>${money(totalSales)}</b>
-</div>
+    await setDoc(
+        ref,
+        newTill
+    );
 
-<div class="till-row">
-<span>Expected Closing</span>
-<b>${money(expected)}</b>
-</div>
-
-<div class="till-row">
-<span>Difference</span>
-<b class="${Math.abs(difference)<0.01?"":"redtext"}">
-${money(difference)}
-</b>
-</div>
-
-</div>
-
-<br>
-
-<button class="btn"
-onclick="editDaily()">
-✏️ Edit Daily Till
-</button>
-
-<br><br>
-
-<button class="btn red"
-onclick="deleteTodayData()">
-🗑️ Delete Today's Till
-</button>
-
-</div>
-
-<div class="alert">
-
-<b>Automatic from POS:</b><br>
-
-Cash, Uber, Deliveroo,
-Delivery Cash and Delivery Card
-are automatically calculated from today's POS orders.
-
-<br><br>
-
-<b>Manual:</b><br>
-
-Main Till, Petty Cash,
-Cash Taken and Actual Closing Cash
-can be edited.
-
-</div>
-
-`;
+    return {
+        id:t.date,
+        ...newTill
+    };
 
 }
 
 
-/* ================================
-EDIT DAILY
-================================ */
+function getPettyBalance(){
 
-function editDaily(){
+    const opening=
+    pettyTransactions
+    .filter(x=>x.type==="opening")
+    .reduce(
+        (s,x)=>s+Number(x.amount||0),
+        0
+    );
 
-let d=getToday();
+    const cashIn=
+    pettyTransactions
+    .filter(x=>x.type==="in")
+    .reduce(
+        (s,x)=>s+Number(x.amount||0),
+        0
+    );
 
-document.getElementById("editDay").value=d.day;
-document.getElementById("editDate").value=d.date;
+    const cashOut=
+    pettyTransactions
+    .filter(x=>x.type==="out")
+    .reduce(
+        (s,x)=>s+Number(x.amount||0),
+        0
+    );
 
-document.getElementById("editMainTill").value=d.mainTill;
-document.getElementById("editPetty").value=d.pettyCash;
-document.getElementById("editCash").value=d.cash;
-document.getElementById("editUber").value=d.uber;
-document.getElementById("editDeliveroo").value=d.deliveroo;
-document.getElementById("editDeliveryCash").value=d.deliveryCash;
-document.getElementById("editDeliveryCard").value=d.deliveryCard;
-document.getElementById("editCashTaken").value=d.cashTaken;
-document.getElementById("editActual").value=d.actualClosing;
-
-updateEditCalculation();
-
-document.getElementById("dailyModal")
-.style.display="flex";
-
-}
-
-
-function updateEditCalculation(){
-
-let main=Number(
-document.getElementById("editMainTill").value||0
-);
-
-let cash=Number(
-document.getElementById("editCash").value||0
-);
-
-let uber=Number(
-document.getElementById("editUber").value||0
-);
-
-let deliveroo=Number(
-document.getElementById("editDeliveroo").value||0
-);
-
-let dc=Number(
-document.getElementById("editDeliveryCash").value||0
-);
-
-let dcard=Number(
-document.getElementById("editDeliveryCard").value||0
-);
-
-let taken=Number(
-document.getElementById("editCashTaken").value||0
-);
-
-let actual=Number(
-document.getElementById("editActual").value||0
-);
-
-let sales=
-cash+uber+deliveroo+dc+dcard;
-
-let expected=
-main+cash+dc-taken;
-
-let difference=
-actual-expected;
-
-document.getElementById("editSales")
-.innerText=money(sales);
-
-document.getElementById("editExpected")
-.innerText=money(expected);
-
-document.getElementById("editDifference")
-.innerText=money(difference);
+    return opening+cashIn-cashOut;
 
 }
 
 
-/*
-Live calculation while editing
-*/
+async function renderDailyTill(){
 
-document.addEventListener("input",e=>{
+    const t=today();
 
-if(e.target.id.startsWith("edit"))
-updateEditCalculation();
+    const till=await getTill();
 
-});
+    const list=
+    orders.filter(
+        o=>o.date===t.date
+    );
 
+    const p=paymentTotals(list);
 
-function saveDailyEdit(){
+    const totalSales=
+    list.reduce(
+        (s,o)=>s+Number(o.total||0),
+        0
+    );
 
-let t=today();
-let d=daily[t.date];
+    /*
+    Physical cash expected:
+    Main Till + Cash + Delivery Cash
+    - Cash Taken
+    */
 
-d.mainTill=Number(
-document.getElementById("editMainTill").value||0
-);
+    const expectedCash=
+    Number(till.mainTill||0)+
+    p.cash+
+    p.deliveryCash-
+    Number(till.cashTaken||0);
 
-d.pettyCash=Number(
-document.getElementById("editPetty").value||0
-);
+    const difference=
+    Number(till.actualClosingCash||0)-
+    expectedCash;
 
-d.cash=Number(
-document.getElementById("editCash").value||0
-);
+    document.getElementById("dailyTill")
+    .innerHTML=`
 
-d.uber=Number(
-document.getElementById("editUber").value||0
-);
+    <div class="till">
 
-d.deliveroo=Number(
-document.getElementById("editDeliveroo").value||0
-);
+    <div class="till-row">
+    <span>Day</span>
+    <b>${till.day}</b>
+    </div>
 
-d.deliveryCash=Number(
-document.getElementById("editDeliveryCash").value||0
-);
+    <div class="till-row">
+    <span>Date</span>
+    <b>${formatDate(till.date)}</b>
+    </div>
 
-d.deliveryCard=Number(
-document.getElementById("editDeliveryCard").value||0
-);
+    <div class="till-row">
+    <span>Main Till</span>
+    <b>${money(till.mainTill)}</b>
+    </div>
 
-d.cashTaken=Number(
-document.getElementById("editCashTaken").value||0
-);
+    <div class="till-row">
+    <span>Petty Cash</span>
+    <b>${money(getPettyBalance())}</b>
+    </div>
 
-d.actualClosing=Number(
-document.getElementById("editActual").value||0
-);
+    <div class="till-row">
+    <span>Cash</span>
+    <b>${money(p.cash)}</b>
+    </div>
 
-save();
+    <div class="till-row">
+    <span>Card</span>
+    <b>${money(p.card)}</b>
+    </div>
 
-closeDaily();
+    <div class="till-row">
+    <span>QR</span>
+    <b>${money(p.qr)}</b>
+    </div>
 
-renderDaily();
-renderHome();
-renderReports();
+    <div class="till-row">
+    <span>Uber</span>
+    <b>${money(p.uber)}</b>
+    </div>
 
-alert("Daily Till updated successfully.");
+    <div class="till-row">
+    <span>Deliveroo</span>
+    <b>${money(p.deliveroo)}</b>
+    </div>
+
+    <div class="till-row">
+    <span>Delivery Cash</span>
+    <b>${money(p.deliveryCash)}</b>
+    </div>
+
+    <div class="till-row">
+    <span>Delivery Card</span>
+    <b>${money(p.deliveryCard)}</b>
+    </div>
+
+    <div class="till-row">
+    <span>Delivery QR</span>
+    <b>${money(p.deliveryQR)}</b>
+    </div>
+
+    <div class="till-row">
+    <span>Cash Taken</span>
+    <b>${money(till.cashTaken)}</b>
+    </div>
+
+    <div class="till-row">
+    <span>Actual Closing Cash</span>
+    <b>${money(till.actualClosingCash)}</b>
+    </div>
+
+    <div class="till-total">
+
+    <div class="till-row">
+    <span>Total Sales</span>
+    <b>${money(totalSales)}</b>
+    </div>
+
+    <div class="till-row">
+    <span>Expected Closing Cash</span>
+    <b>${money(expectedCash)}</b>
+    </div>
+
+    <div class="till-row">
+    <span>Difference</span>
+    <b>${money(difference)}</b>
+    </div>
+
+    </div>
+
+    <br>
+
+    <button class="btn"
+    onclick="openTillEdit()">
+    ✏️ Edit Till
+    </button>
+
+    </div>
+
+    <div class="alert">
+
+    <b>Automatic from POS:</b><br>
+    Cash, Card, QR, Uber, Deliveroo,
+    Delivery Cash, Delivery Card and Delivery QR.
+
+    <br><br>
+
+    <b>Manual:</b><br>
+    Main Till, Petty Cash,
+    Cash Taken and Actual Closing Cash.
+
+    </div>
+
+    `;
 
 }
 
 
-function closeDaily(){
+window.openTillEdit=async function(){
 
-document.getElementById("dailyModal")
-.style.display="none";
+    const till=await getTill();
 
-}
+    document.getElementById("editMainTill")
+    .value=till.mainTill||0;
 
+    document.getElementById("editPettyCash")
+    .value=till.pettyCash||0;
 
-function deleteTodayData(){
+    document.getElementById("editCashTaken")
+    .value=till.cashTaken||0;
 
-if(!confirm(
-"Delete today's manual till data?"
-))
-return;
+    document.getElementById("editActualClosing")
+    .value=till.actualClosingCash||0;
 
-let d=getToday();
+    document.getElementById("tillModal")
+    .style.display="flex";
 
-d.cashTaken=0;
-d.actualClosing=0;
-
-save();
-
-renderDaily();
-
-renderHome();
-
-}
+};
 
 
-/* ================================
+window.closeTillModal=function(){
+
+    document.getElementById("tillModal")
+    .style.display="none";
+
+};
+
+
+window.saveTillEdit=async function(){
+
+    const t=today();
+
+    const ref=
+    doc(db,"dailyTill",t.date);
+
+    await updateDoc(
+        ref,
+        {
+
+            mainTill:Number(
+                document.getElementById("editMainTill").value||0
+            ),
+
+            pettyCash:Number(
+                document.getElementById("editPettyCash").value||0
+            ),
+
+            cashTaken:Number(
+                document.getElementById("editCashTaken").value||0
+            ),
+
+            actualClosingCash:Number(
+                document.getElementById("editActualClosing").value||0
+            )
+
+        }
+    );
+
+    closeTillModal();
+
+    renderDailyTill();
+
+    alert("Daily Till updated.");
+
+};
+
+
+/* ==========================================
 MENU
-================================ */
+========================================== */
 
-function addMenu(){
+window.addMenuItem=async function(){
 
-let name=prompt("Food name:");
-if(!name)return;
+    const name=
+    prompt("Food item name:");
 
-let category=prompt("Category:");
-if(!category)return;
+    if(!name)return;
 
-let price=Number(prompt("Price £:"));
-if(!price)return;
+    const category=
+    prompt("Category:");
 
-let stock=Number(prompt("Opening stock:"))||0;
+    if(!category)return;
 
-menu.push({
-name,category,price,stock
-});
+    const price=
+    Number(prompt("Price £:"));
 
-save();
+    if(isNaN(price))return;
 
-renderMenu();
-renderInventory();
+    await addDoc(
+        collection(db,"menu"),
+        {
 
-}
+            name:name,
+            category:category,
+            price:price,
+            active:true,
+            createdAt:new Date().toISOString()
+
+        }
+    );
+
+    await loadMenu();
+
+    renderMenu();
+
+};
 
 
 function renderMenu(){
 
-document.getElementById("menuList")
-.innerHTML=menu.map((x,i)=>`
+    document.getElementById("menuList")
+    .innerHTML=
 
-<div class="item">
+    menu.map(item=>`
 
-<div>
-<b>${x.name}</b><br>
-<small>
-${x.category} • ${money(x.price)}
-</small>
-</div>
+    <div class="item">
 
-<div>
+        <div>
+        <b>${item.name}</b><br>
+        <small>
+        ${item.category||""}
+        • ${money(item.price)}
+        </small>
+        </div>
 
-<button class="small"
-onclick="editMenu(${i})">
-✏️
-</button>
+        <div>
 
-<button class="small"
-onclick="deleteMenu(${i})">
-🗑️
-</button>
+        <button class="small"
+        onclick="editMenu('${item.id}')">
+        ✏️
+        </button>
 
-</div>
+        <button class="small"
+        onclick="deleteMenu('${item.id}')">
+        🗑️
+        </button>
 
-</div>
+        </div>
 
-`).join("");
+    </div>
+
+    `).join("");
 
 }
 
 
-function editMenu(i){
+window.editMenu=async function(id){
 
-let x=menu[i];
+    const item=
+    menu.find(x=>x.id===id);
 
-let name=prompt("Food name:",x.name);
-if(!name)return;
+    if(!item)return;
 
-let category=prompt("Category:",x.category);
+    const name=
+    prompt("Food item:",item.name);
 
-let price=Number(
-prompt("Price:",x.price)
-);
+    if(!name)return;
 
-let stock=Number(
-prompt("Stock:",x.stock)
-);
+    const category=
+    prompt("Category:",item.category||"");
 
-menu[i]={
-name,
-category,
-price,
-stock
+    const price=
+    Number(
+        prompt("Price £:",item.price)
+    );
+
+    if(isNaN(price))return;
+
+    await updateDoc(
+        doc(db,"menu",id),
+        {
+            name,
+            category,
+            price
+        }
+    );
+
+    await loadMenu();
+
+    renderMenu();
+
 };
 
-save();
 
-renderMenu();
-renderInventory();
+window.deleteMenu=async function(id){
 
-}
+    if(!confirm("Delete this menu item?"))
+    return;
 
+    await deleteDoc(
+        doc(db,"menu",id)
+    );
 
-function deleteMenu(i){
+    await loadMenu();
 
-if(confirm("Delete this item?")){
+    renderMenu();
 
-menu.splice(i,1);
-
-save();
-
-renderMenu();
-renderInventory();
-
-}
-
-}
+};
 
 
-/* ================================
+/* ==========================================
 INVENTORY
-================================ */
+========================================== */
+
+window.addInventoryItem=async function(){
+
+    const name=
+    prompt("Stock item name:");
+
+    if(!name)return;
+
+    const unit=
+    prompt("Unit (kg, pcs, litre etc.):");
+
+    const quantity=
+    Number(prompt("Opening quantity:"));
+
+    if(isNaN(quantity))return;
+
+    const low=
+    Number(prompt("Low stock level:"))||5;
+
+    await addDoc(
+        collection(db,"inventory"),
+        {
+
+            name,
+            unit,
+            quantity,
+            lowStock:low,
+
+            createdAt:new Date().toISOString()
+
+        }
+    );
+
+    await loadInventory();
+
+    renderInventory();
+
+};
+
 
 function renderInventory(){
 
-let low=menu.filter(x=>x.stock<=5);
+    document.getElementById("inventoryList")
+    .innerHTML=
 
-document.getElementById("itemCount")
-.innerText=menu.length;
+    inventory.length?
 
-document.getElementById("lowCount")
-.innerText=low.length;
+    inventory.map(item=>`
 
-document.getElementById("inventoryList")
-.innerHTML=menu.map((x,i)=>`
+    <div class="item">
 
-<div class="item">
+        <div>
+        <b>${item.name}</b><br>
+        <small>${item.unit||""}</small>
+        </div>
 
-<span>
-<b>${x.name}</b><br>
-<small>${x.category}</small>
-</span>
+        <b class="${
+            Number(item.quantity)<=Number(item.lowStock)
+            ?"red-text":"green-text"
+        }">
 
-<b class="${x.stock<=5?"redtext":"green"}">
-${x.stock}
-</b>
+        ${item.quantity}
 
-</div>
+        </b>
 
-`).join("");
+    </div>
 
-}
+    `).join("")
 
+    :
 
-function stockChange(direction){
-
-let name=prompt("Food item name:");
-if(!name)return;
-
-let item=menu.find(
-x=>x.name.toLowerCase()===name.toLowerCase()
-);
-
-if(!item){
-
-alert("Item not found");
-return;
-
-}
-
-let qty=Number(prompt("Quantity:"));
-
-if(!qty)return;
-
-item.stock=Math.max(
-0,
-item.stock+(qty*direction)
-);
-
-save();
-
-renderInventory();
-renderMenu();
+    '<div class="empty">No inventory items.</div>';
 
 }
 
 
-/* ================================
+/* ==========================================
 EXPENSES
-================================ */
+========================================== */
 
-function addExpense(){
+window.addExpense=async function(){
 
-let name=prompt("Expense name:");
-if(!name)return;
+    const category=
+    prompt(
+        "Expense category:\nRent / Electricity / Gas / Salary / Purchase / Miscellaneous"
+    );
 
-let amount=Number(
-prompt("Amount £:")
-);
+    if(!category)return;
 
-if(!amount)return;
+    const description=
+    prompt("Description:");
 
-expenses.push({
+    const amount=
+    Number(prompt("Amount £:"));
 
-name,
-amount,
-date:today().date
+    if(isNaN(amount)||amount<=0){
 
-});
+        alert("Enter a valid amount.");
 
-save();
+        return;
 
-renderExpenses();
-renderHome();
-renderReports();
+    }
 
-}
+    const t=today();
+
+    await addDoc(
+        collection(db,"expenses"),
+        {
+
+            category,
+            description:description||"",
+            amount,
+            date:t.date,
+            day:t.day,
+
+            createdAt:new Date().toISOString(),
+
+            createdBy:currentUser.email
+
+        }
+    );
+
+    await loadExpenses();
+
+    renderExpenses();
+
+    renderHome();
+
+    renderReports();
+
+};
 
 
 function renderExpenses(){
 
-document.getElementById("expenseList")
-.innerHTML=
+    const total=
+    expenses.reduce(
+        (s,e)=>s+Number(e.amount||0),
+        0
+    );
 
-expenses.length?
+    document.getElementById("expenseTotal")
+    .innerText=money(total);
 
-expenses.slice().reverse().map((x,i)=>`
+    document.getElementById("expenseList")
+    .innerHTML=
 
-<div class="record">
+    expenses.length?
 
-<div>
-<b>${x.name}</b><br>
-<small>${formatDate(x.date)}</small>
-</div>
+    expenses
+    .slice()
+    .sort(
+        (a,b)=>
+        String(b.date)
+        .localeCompare(String(a.date))
+    )
+    .map(e=>`
 
-<div>
-<b>${money(x.amount)}</b>
-<br>
-<button class="small"
-onclick="deleteExpense(${expenses.length-1-i})">
-🗑️
-</button>
-</div>
+    <div class="record">
 
-</div>
+        <div>
+        <b>${e.category}</b><br>
+        <small>
+        ${e.description||""}
+        • ${formatDate(e.date)}
+        </small>
+        </div>
 
-`).join("")
+        <div>
+        <b>${money(e.amount)}</b><br>
 
-:
+        <button
+        class="small"
+        onclick="deleteExpense('${e.id}')">
+        🗑️
+        </button>
 
-'<div class="empty">No expenses</div>';
+        </div>
+
+    </div>
+
+    `).join("")
+
+    :
+
+    '<div class="empty">No expenses added.</div>';
 
 }
 
 
-function deleteExpense(i){
+window.deleteExpense=async function(id){
 
-expenses.splice(i,1);
+    if(!confirm("Delete this expense?"))
+    return;
 
-save();
+    await deleteDoc(
+        doc(db,"expenses",id)
+    );
 
-renderExpenses();
-renderHome();
-renderReports();
+    await loadExpenses();
 
-}
+    renderExpenses();
+    renderHome();
+    renderReports();
+
+};
 
 
-/* ================================
+/* ==========================================
 PETTY CASH
-================================ */
+========================================== */
 
-function getPettyIn(){
+window.setPettyOpening=async function(){
 
-return petty
-.filter(x=>x.type==="in")
-.reduce((s,x)=>s+x.amount,0);
+    const amount=
+    Number(
+        prompt("Opening petty cash £:")
+    );
 
-}
+    if(isNaN(amount))return;
 
-function getPettyOut(){
+    await addDoc(
+        collection(db,"pettyCash"),
+        {
 
-return petty
-.filter(x=>x.type==="out")
-.reduce((s,x)=>s+x.amount,0);
+            type:"opening",
+            amount,
+            date:today().date,
+            description:"Opening petty cash",
+            createdAt:new Date().toISOString()
 
-}
+        }
+    );
 
-function getPettyBalance(){
+    await loadPetty();
 
-return pettyOpening+
-getPettyIn()-
-getPettyOut();
+    renderPetty();
+    renderDailyTill();
 
-}
-
-
-function setPettyOpening(){
-
-let amount=Number(
-prompt(
-"Opening petty cash £:",
-pettyOpening
-)
-);
-
-if(isNaN(amount))return;
-
-pettyOpening=amount;
-
-save();
-
-renderPetty();
-renderHome();
-
-}
+};
 
 
-function pettyTransaction(type){
+window.pettyTransaction=async function(type){
 
-let amount=Number(
-prompt("Amount £:")
-);
+    const amount=
+    Number(
+        prompt("Amount £:")
+    );
 
-if(!amount)return;
+    if(isNaN(amount)||amount<=0)
+    return;
 
-let description=
-prompt("Description:");
+    const description=
+    prompt("Description:");
 
-petty.push({
+    await addDoc(
+        collection(db,"pettyCash"),
+        {
 
-type,
-amount,
-description:description||"Cash transaction",
-date:today().date
+            type,
+            amount,
+            description:description||"",
+            date:today().date,
+            createdAt:new Date().toISOString()
 
-});
+        }
+    );
 
-save();
+    await loadPetty();
 
-let d=getToday();
-d.pettyCash=getPettyBalance();
-save();
+    renderPetty();
+    renderDailyTill();
+    renderHome();
 
-renderPetty();
-renderDaily();
-renderHome();
-
-}
+};
 
 
 function renderPetty(){
 
-document.getElementById("pettyOpening")
-.innerText=money(pettyOpening);
+    const opening=
+    pettyTransactions
+    .filter(x=>x.type==="opening")
+    .reduce(
+        (s,x)=>s+Number(x.amount||0),
+        0
+    );
 
-document.getElementById("pettyIn")
-.innerText=money(getPettyIn());
+    const cashIn=
+    pettyTransactions
+    .filter(x=>x.type==="in")
+    .reduce(
+        (s,x)=>s+Number(x.amount||0),
+        0
+    );
 
-document.getElementById("pettyOut")
-.innerText=money(getPettyOut());
+    const cashOut=
+    pettyTransactions
+    .filter(x=>x.type==="out")
+    .reduce(
+        (s,x)=>s+Number(x.amount||0),
+        0
+    );
 
-document.getElementById("pettyBalance")
-.innerText=money(getPettyBalance());
+    const balance=
+    opening+cashIn-cashOut;
 
-document.getElementById("pettyHistory")
-.innerHTML=petty.slice().reverse().map(x=>`
+    document.getElementById("pettyOpening")
+    .innerText=money(opening);
 
-<div class="record">
+    document.getElementById("pettyIn")
+    .innerText=money(cashIn);
 
-<div>
-<b>${x.description}</b><br>
-<small>${formatDate(x.date)}</small>
-</div>
+    document.getElementById("pettyOut")
+    .innerText=money(cashOut);
 
-<b class="${x.type==="in"?"green":"redtext"}">
-${x.type==="in"?"+":"-"}${money(x.amount)}
-</b>
+    document.getElementById("pettyBalance")
+    .innerText=money(balance);
 
-</div>
+    document.getElementById("pettyHistory")
+    .innerHTML=
 
-`).join("");
+    pettyTransactions
+    .slice()
+    .reverse()
+    .map(x=>`
+
+    <div class="record">
+
+        <div>
+        <b>${x.description||x.type}</b><br>
+        <small>${formatDate(x.date)}</small>
+        </div>
+
+        <b class="${
+            x.type==="out"
+            ?"red-text":"green-text"
+        }">
+
+        ${x.type==="out"?"-":"+"}
+        ${money(x.amount)}
+
+        </b>
+
+    </div>
+
+    `).join("");
 
 }
 
 
-/* ================================
+/* ==========================================
+REPORT DATE RANGE
+========================================== */
+
+function reportRange(type){
+
+    const now=new Date();
+
+    let start=new Date();
+    let end=new Date();
+
+    end.setHours(23,59,59,999);
+
+    if(type==="daily"){
+
+        start=new Date(now);
+        start.setHours(0,0,0,0);
+
+    }
+
+    if(type==="weekly"){
+
+        start=startOfWeek();
+
+    }
+
+    if(type==="monthly"){
+
+        start=
+        new Date(
+            now.getFullYear(),
+            now.getMonth(),
+            1
+        );
+
+    }
+
+    if(type==="quarterly"){
+
+        const quarter=
+        Math.floor(now.getMonth()/3);
+
+        start=
+        new Date(
+            now.getFullYear(),
+            quarter*3,
+            1
+        );
+
+    }
+
+    if(type==="sixmonths"){
+
+        start=
+        new Date(
+            now.getFullYear(),
+            now.getMonth()-5,
+            1
+        );
+
+    }
+
+    if(type==="yearly"){
+
+        start=
+        new Date(
+            now.getFullYear(),
+            0,
+            1
+        );
+
+    }
+
+    start.setHours(0,0,0,0);
+
+    return {start,end};
+
+}
+
+
+/* ==========================================
 REPORTS
-================================ */
+========================================== */
 
 function renderReports(){
 
-let totalSales=0;
-let cash=0;
-let uber=0;
-let deliveroo=0;
-let deliveryCash=0;
-let deliveryCard=0;
+    const type=
+    document.getElementById("reportPeriod")
+    .value;
 
-Object.values(daily).forEach(d=>{
+    const range=
+    reportRange(type);
 
-totalSales+=
-d.cash+
-d.uber+
-d.deliveroo+
-d.deliveryCash+
-d.deliveryCard;
+    const selectedOrders=
+    orders.filter(o=>{
 
-cash+=d.cash;
-uber+=d.uber;
-deliveroo+=d.deliveroo;
-deliveryCash+=d.deliveryCash;
-deliveryCard+=d.deliveryCard;
+        const d=dateObject(o.date);
 
-});
+        return d>=range.start &&
+               d<=range.end;
 
-let exp=expenses.reduce(
-(s,x)=>s+x.amount,0
-);
+    });
 
-let profit=totalSales-exp;
+    const selectedExpenses=
+    expenses.filter(e=>{
 
-document.getElementById("reportsData")
-.innerHTML=`
+        const d=dateObject(e.date);
 
-<div class="record">
-<span>Total Sales</span>
-<b>${money(totalSales)}</b>
-</div>
+        return d>=range.start &&
+               d<=range.end;
 
-<div class="record">
-<span>Total Orders</span>
-<b>${orders.length}</b>
-</div>
+    });
 
-<div class="record">
-<span>Cash Sales</span>
-<b>${money(cash)}</b>
-</div>
+    const p=
+    paymentTotals(selectedOrders);
 
-<div class="record">
-<span>Uber</span>
-<b>${money(uber)}</b>
-</div>
+    const sales=
+    selectedOrders.reduce(
+        (s,o)=>s+Number(o.total||0),
+        0
+    );
 
-<div class="record">
-<span>Deliveroo</span>
-<b>${money(deliveroo)}</b>
-</div>
+    const expenseTotal=
+    selectedExpenses.reduce(
+        (s,e)=>s+Number(e.amount||0),
+        0
+    );
 
-<div class="record">
-<span>Delivery Cash</span>
-<b>${money(deliveryCash)}</b>
-</div>
+    const profit=sales-expenseTotal;
 
-<div class="record">
-<span>Delivery Card</span>
-<b>${money(deliveryCard)}</b>
-</div>
+    /*
+    Best-selling items
+    */
 
-<div class="record">
-<span>Total Expenses</span>
-<b>${money(exp)}</b>
-</div>
+    const itemSales={};
 
-<div class="record">
-<span>Profit</span>
-<b class="${profit>=0?"green":"redtext"}">
-${money(profit)}
-</b>
-</div>
+    selectedOrders.forEach(o=>{
 
-`;
+        (o.items||[]).forEach(item=>{
+
+            if(!itemSales[item.name])
+            itemSales[item.name]=0;
+
+            itemSales[item.name]+=
+            Number(item.qty||0);
+
+        });
+
+    });
+
+    const bestItems=
+    Object.entries(itemSales)
+    .sort((a,b)=>b[1]-a[1])
+    .slice(0,10);
+
+    document.getElementById("reportResults")
+    .innerHTML=`
+
+    <div class="cards">
+
+    <div class="card">
+    <h4>Total Sales</h4>
+    <div class="value">${money(sales)}</div>
+    </div>
+
+    <div class="card">
+    <h4>Total Orders</h4>
+    <div class="value">${selectedOrders.length}</div>
+    </div>
+
+    <div class="card">
+    <h4>Total Expenses</h4>
+    <div class="value">${money(expenseTotal)}</div>
+    </div>
+
+    <div class="card">
+    <h4>Profit</h4>
+    <div class="value ${
+        profit>=0
+        ?"green-text":"red-text"
+    }">
+    ${money(profit)}
+    </div>
+    </div>
+
+    </div>
+
+
+    <div class="title">
+    Payment Summary
+    </div>
+
+    <div class="record">
+    <span>💷 Cash</span>
+    <b>${money(p.cash)}</b>
+    </div>
+
+    <div class="record">
+    <span>💳 Card</span>
+    <b>${money(p.card)}</b>
+    </div>
+
+    <div class="record">
+    <span>📱 QR</span>
+    <b>${money(p.qr)}</b>
+    </div>
+
+    <div class="record">
+    <span>🚗 Uber</span>
+    <b>${money(p.uber)}</b>
+    </div>
+
+    <div class="record">
+    <span>🛵 Deliveroo</span>
+    <b>${money(p.deliveroo)}</b>
+    </div>
+
+    <div class="record">
+    <span>🛵 Delivery Cash</span>
+    <b>${money(p.deliveryCash)}</b>
+    </div>
+
+    <div class="record">
+    <span>💳 Delivery Card</span>
+    <b>${money(p.deliveryCard)}</b>
+    </div>
+
+    <div class="record">
+    <span>📱 Delivery QR</span>
+    <b>${money(p.deliveryQR)}</b>
+    </div>
+
+
+    <div class="title">
+    Best Selling Items
+    </div>
+
+    ${
+        bestItems.length
+        ?
+        bestItems.map(
+            x=>`
+            <div class="record">
+            <span>${x[0]}</span>
+            <b>${x[1]} sold</b>
+            </div>
+            `
+        ).join("")
+        :
+        '<div class="empty">No sales for this period.</div>'
+    }
+
+
+    <div class="title">
+    Expense Breakdown
+    </div>
+
+    ${
+        selectedExpenses.length
+        ?
+        selectedExpenses.map(
+            x=>`
+            <div class="record">
+            <span>
+            ${x.category}
+            <small>
+            ${x.description||""}
+            </small>
+            </span>
+            <b>${money(x.amount)}</b>
+            </div>
+            `
+        ).join("")
+        :
+        '<div class="empty">No expenses for this period.</div>'
+    }
+
+    `;
 
 }
 
 
-/* ================================
+/* ==========================================
 SETTINGS
-================================ */
+========================================== */
 
-function saveSettings(){
+window.saveSettings=async function(){
 
-vatRate=Number(
-document.getElementById("vatRate").value
-);
+    const restaurantName=
+    document.getElementById("restaurantName").value;
 
-save();
+    const vatRate=
+    Number(
+        document.getElementById("vatRate").value
+    );
 
-alert("Settings saved.");
+    await setDoc(
+        doc(db,"restaurants","settings"),
+        {
 
-}
+            restaurantName,
+            currency:"GBP",
+            vatRate
 
+        },
+        {merge:true}
+    );
 
-function backup(){
+    settings.restaurantName=
+    restaurantName;
 
-let data={
+    settings.vatRate=
+    vatRate;
 
-menu,
-orders,
-expenses,
-petty,
-pettyOpening,
-daily,
-vatRate
+    alert("Settings saved.");
 
 };
 
-let blob=new Blob(
-[JSON.stringify(data,null,2)],
-{type:"application/json"}
-);
 
-let url=URL.createObjectURL(blob);
+/* ==========================================
+INITIAL DATE
+========================================== */
 
-let a=document.createElement("a");
+setInterval(()=>{
 
-a.href=url;
-a.download="khans-restaurant-backup.json";
+    if(currentUser){
 
-a.click();
+        renderHome();
 
-URL.revokeObjectURL(url);
+    }
 
-}
-
-
-/* ================================
-HELPERS
-================================ */
-
-function money(n){
-
-return "£"+
-Number(n||0).toFixed(2);
-
-}
-
-function formatDate(date){
-
-let p=date.split("-");
-
-return p[2]+"/"+p[1]+"/"+p[0];
-
-}
-
-
-/* ================================
-INITIALIZE
-================================ */
-
-function initialize(){
-
-getToday();
-
-renderHome();
-renderTables();
-renderMenu();
-renderInventory();
-renderExpenses();
-renderPetty();
-renderDaily();
-renderReports();
-
-}
+},60000);
 
 </script>
 
