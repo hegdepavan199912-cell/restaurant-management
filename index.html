@@ -2,173 +2,285 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#111827">
-<title>Restaurant Management</title>
+
+<title>Khan’s Restaurant</title>
 
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
 
-body {
-    background: #f3f4f6;
-    color: #111827;
-    padding-bottom: 85px;
+body{
+background:#f3f4f6;
+color:#111827;
+padding-bottom:85px;
 }
 
-.header {
-    background: #111827;
-    color: white;
-    padding: 25px 18px 20px;
-    border-radius: 0 0 22px 22px;
+.header{
+background:#111827;
+color:white;
+padding:28px 18px 22px;
+border-radius:0 0 24px 24px;
 }
 
-.header h1 {
-    font-size: 24px;
-    margin-bottom: 5px;
+.header h1{
+font-size:25px;
 }
 
-.header p {
-    font-size: 14px;
-    opacity: 0.75;
+.header p{
+margin-top:5px;
+font-size:14px;
+opacity:.75;
 }
 
-.container {
-    padding: 18px;
+.container{
+padding:18px;
 }
 
-.section-title {
-    font-size: 18px;
-    font-weight: 700;
-    margin: 8px 0 14px;
+.section-title{
+font-size:18px;
+font-weight:700;
+margin:8px 0 14px;
 }
 
-.cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+.cards{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
 }
 
-.card {
-    background: white;
-    padding: 18px;
-    border-radius: 18px;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+.card{
+background:white;
+padding:17px;
+border-radius:18px;
+box-shadow:0 3px 12px rgba(0,0,0,.06);
 }
 
-.card .icon {
-    font-size: 25px;
-    margin-bottom: 10px;
+.card .icon{
+font-size:25px;
+margin-bottom:8px;
 }
 
-.card h3 {
-    font-size: 13px;
-    color: #6b7280;
-    margin-bottom: 6px;
+.card h3{
+font-size:13px;
+color:#6b7280;
+margin-bottom:6px;
 }
 
-.card .value {
-    font-size: 21px;
-    font-weight: 700;
+.value{
+font-size:20px;
+font-weight:700;
 }
 
-.quick-actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-top: 12px;
+.quick{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
 }
 
-.action {
-    background: white;
-    border: none;
-    padding: 18px 10px;
-    border-radius: 18px;
-    font-size: 15px;
-    font-weight: 600;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+.action{
+border:0;
+background:white;
+padding:18px 8px;
+border-radius:18px;
+font-size:15px;
+font-weight:600;
+box-shadow:0 3px 12px rgba(0,0,0,.06);
 }
 
-.action span {
-    display: block;
-    font-size: 28px;
-    margin-bottom: 8px;
+.action span{
+display:block;
+font-size:28px;
+margin-bottom:8px;
 }
 
-.alert {
-    margin-top: 20px;
-    background: #fff7ed;
-    border: 1px solid #fed7aa;
-    padding: 16px;
-    border-radius: 16px;
+.bottom-nav{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+height:75px;
+background:white;
+border-top:1px solid #ddd;
+display:flex;
+justify-content:space-around;
+align-items:center;
+z-index:100;
 }
 
-.alert h3 {
-    color: #c2410c;
-    margin-bottom: 6px;
+.nav{
+border:0;
+background:none;
+color:#777;
+font-size:11px;
 }
 
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 75px;
-    background: white;
-    border-top: 1px solid #e5e7eb;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    z-index: 100;
+.nav span{
+display:block;
+font-size:22px;
+margin-bottom:3px;
 }
 
-.nav-item {
-    border: none;
-    background: none;
-    color: #6b7280;
-    font-size: 11px;
-    text-align: center;
+.nav.active{
+color:#111827;
+font-weight:700;
 }
 
-.nav-item span {
-    display: block;
-    font-size: 23px;
-    margin-bottom: 3px;
+.page{
+display:none;
 }
 
-.nav-item.active {
-    color: #111827;
-    font-weight: 700;
+.page.active{
+display:block;
 }
 
-.page {
-    display: none;
+.list-item{
+background:white;
+padding:15px;
+border-radius:15px;
+margin-bottom:10px;
+display:flex;
+justify-content:space-between;
+align-items:center;
 }
 
-.page.active {
-    display: block;
+.item-info strong{
+display:block;
+font-size:16px;
 }
 
-.list {
-    margin-top: 10px;
+.item-info small{
+color:#777;
 }
 
-.list-item {
-    background: white;
-    padding: 16px;
-    border-radius: 15px;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.buttons button{
+border:0;
+background:#f3f4f6;
+padding:7px 9px;
+border-radius:8px;
+margin-left:4px;
 }
 
-button {
-    cursor: pointer;
+.add-btn{
+width:100%;
+padding:15px;
+border:0;
+border-radius:14px;
+background:#111827;
+color:white;
+font-size:16px;
+font-weight:600;
+margin-bottom:15px;
+}
+
+input,select{
+width:100%;
+padding:13px;
+border:1px solid #ddd;
+border-radius:12px;
+margin:7px 0;
+font-size:15px;
+}
+
+.modal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.5);
+z-index:200;
+align-items:flex-end;
+}
+
+.modal-box{
+background:white;
+width:100%;
+padding:22px;
+border-radius:24px 24px 0 0;
+}
+
+.modal-box h2{
+margin-bottom:10px;
+}
+
+.modal-buttons{
+display:flex;
+gap:10px;
+margin-top:10px;
+}
+
+.modal-buttons button{
+flex:1;
+padding:13px;
+border:0;
+border-radius:12px;
+font-weight:600;
+}
+
+.save{
+background:#111827;
+color:white;
+}
+
+.cancel{
+background:#eee;
+}
+
+.pos-item{
+background:white;
+padding:15px;
+border-radius:14px;
+margin-bottom:9px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.pos-item button{
+border:0;
+background:#111827;
+color:white;
+padding:8px 12px;
+border-radius:9px;
+}
+
+.bill{
+background:white;
+padding:18px;
+border-radius:18px;
+margin-top:15px;
+}
+
+.total{
+font-size:22px;
+font-weight:700;
+margin-top:15px;
+}
+
+.expense-total{
+background:#fff7ed;
+padding:18px;
+border-radius:17px;
+margin-bottom:15px;
+}
+
+.report{
+background:white;
+padding:17px;
+border-radius:17px;
+margin-bottom:10px;
+display:flex;
+justify-content:space-between;
+}
+
+.empty{
+text-align:center;
+color:#888;
+padding:25px;
 }
 </style>
 </head>
@@ -178,372 +290,808 @@ button {
 <!-- DASHBOARD -->
 <div id="dashboard" class="page active">
 
-    <div class="header">
-        <h1>🍽️ Restaurant</h1>
-        <p>Management Dashboard</p>
-    </div>
+<div class="header">
+<h1>🍽️ Khan’s Restaurant</h1>
+<p>Restaurant Management</p>
+</div>
 
-    <div class="container">
+<div class="container">
 
-        <div class="section-title">Today's Overview</div>
+<div class="section-title">Today’s Overview</div>
 
-        <div class="cards">
+<div class="cards">
 
-            <div class="card">
-                <div class="icon">💰</div>
-                <h3>Today's Sales</h3>
-                <div class="value">AED 0</div>
-            </div>
+<div class="card">
+<div class="icon">💷</div>
+<h3>Today's Sales</h3>
+<div class="value" id="salesValue">£0.00</div>
+</div>
 
-            <div class="card">
-                <div class="icon">🧾</div>
-                <h3>Orders</h3>
-                <div class="value">0</div>
-            </div>
+<div class="card">
+<div class="icon">🧾</div>
+<h3>Orders</h3>
+<div class="value" id="ordersValue">0</div>
+</div>
 
-            <div class="card">
-                <div class="icon">💸</div>
-                <h3>Expenses</h3>
-                <div class="value">AED 0</div>
-            </div>
+<div class="card">
+<div class="icon">💸</div>
+<h3>Expenses</h3>
+<div class="value" id="expenseValue">£0.00</div>
+</div>
 
-            <div class="card">
-                <div class="icon">📈</div>
-                <h3>Profit</h3>
-                <div class="value">AED 0</div>
-            </div>
+<div class="card">
+<div class="icon">📈</div>
+<h3>Profit</h3>
+<div class="value" id="profitValue">£0.00</div>
+</div>
 
-        </div>
+</div>
 
-        <div class="section-title" style="margin-top:25px;">
-            Quick Actions
-        </div>
+<div class="section-title" style="margin-top:25px">
+Quick Actions
+</div>
 
-        <div class="quick-actions">
+<div class="quick">
 
-            <button class="action" onclick="showPage('pos')">
-                <span>🧾</span>
-                New Bill
-            </button>
+<button class="action" onclick="showPage('pos')">
+<span>🧾</span>
+New Bill
+</button>
 
-            <button class="action" onclick="showPage('menu')">
-                <span>🍔</span>
-                Menu
-            </button>
+<button class="action" onclick="showPage('menu')">
+<span>🍔</span>
+Menu
+</button>
 
-            <button class="action" onclick="showPage('inventory')">
-                <span>📦</span>
-                Inventory
-            </button>
+<button class="action" onclick="showPage('inventory')">
+<span>📦</span>
+Inventory
+</button>
 
-            <button class="action" onclick="showPage('expenses')">
-                <span>💸</span>
-                Expense
-            </button>
+<button class="action" onclick="showPage('expenses')">
+<span>💸</span>
+Expenses
+</button>
 
-        </div>
+</div>
 
-        <div class="alert">
-            <h3>⚠️ Low Stock</h3>
-            <p>No low-stock items currently.</p>
-        </div>
-
-    </div>
+</div>
 </div>
 
 
 <!-- POS -->
 <div id="pos" class="page">
 
-    <div class="header">
-        <h1>🧾 POS Billing</h1>
-        <p>Create a new order</p>
-    </div>
+<div class="header">
+<h1>🧾 POS Billing</h1>
+<p>Khan’s Restaurant</p>
+</div>
 
-    <div class="container">
+<div class="container">
 
-        <div class="section-title">Order Type</div>
+<div class="section-title">Order Type</div>
 
-        <div class="quick-actions">
-            <button class="action">
-                🍽️<br>Dine-in
-            </button>
+<select id="orderType">
+<option>Dine-in</option>
+<option>Takeaway</option>
+<option>Delivery</option>
+</select>
 
-            <button class="action">
-                🥡<br>Takeaway
-            </button>
+<div class="section-title" style="margin-top:20px">
+Menu
+</div>
 
-            <button class="action">
-                🛵<br>Delivery
-            </button>
+<div id="posMenu"></div>
 
-            <button class="action">
-                📱<br>QR Payment
-            </button>
-        </div>
+<div class="bill">
 
-        <div class="section-title" style="margin-top:25px;">
-            Current Bill
-        </div>
+<h3>Current Bill</h3>
 
-        <div class="card">
-            <h3>No items added</h3>
-            <br>
-            <strong>Total: AED 0</strong>
-        </div>
+<div id="cart"></div>
 
-    </div>
+<div class="total">
+Total: <span id="cartTotal">£0.00</span>
+</div>
+
+<button class="add-btn" style="margin-top:15px" onclick="completeOrder()">
+💳 Complete Payment
+</button>
+
+</div>
+
+</div>
 </div>
 
 
 <!-- MENU -->
 <div id="menu" class="page">
 
-    <div class="header">
-        <h1>🍔 Menu Management</h1>
-        <p>Food items and prices</p>
-    </div>
+<div class="header">
+<h1>🍔 Menu Management</h1>
+<p>Add and manage food items</p>
+</div>
 
-    <div class="container">
+<div class="container">
 
-        <div class="section-title">Categories</div>
+<button class="add-btn" onclick="openAddItem()">
+＋ Add Food Item
+</button>
 
-        <div class="quick-actions">
+<div id="menuList"></div>
 
-            <button class="action">
-                🍛<br>Main Course
-            </button>
-
-            <button class="action">
-                🍚<br>Rice
-            </button>
-
-            <button class="action">
-                🥤<br>Drinks
-            </button>
-
-            <button class="action">
-                🍰<br>Desserts
-            </button>
-
-        </div>
-
-        <div class="section-title" style="margin-top:25px;">
-            Food Items
-        </div>
-
-        <div class="list">
-
-            <div class="list-item">
-                <span>Chicken Biryani</span>
-                <strong>AED 25</strong>
-            </div>
-
-            <div class="list-item">
-                <span>Butter Chicken</span>
-                <strong>AED 30</strong>
-            </div>
-
-            <div class="list-item">
-                <span>Fresh Juice</span>
-                <strong>AED 12</strong>
-            </div>
-
-        </div>
-
-    </div>
+</div>
 </div>
 
 
 <!-- INVENTORY -->
 <div id="inventory" class="page">
 
-    <div class="header">
-        <h1>📦 Inventory</h1>
-        <p>Stock management</p>
-    </div>
+<div class="header">
+<h1>📦 Inventory</h1>
+<p>Stock management</p>
+</div>
 
-    <div class="container">
+<div class="container">
 
-        <div class="cards">
+<div class="cards">
 
-            <div class="card">
-                <div class="icon">📦</div>
-                <h3>Total Items</h3>
-                <div class="value">0</div>
-            </div>
+<div class="card">
+<div class="icon">📦</div>
+<h3>Total Items</h3>
+<div class="value" id="inventoryCount">0</div>
+</div>
 
-            <div class="card">
-                <div class="icon">⚠️</div>
-                <h3>Low Stock</h3>
-                <div class="value">0</div>
-            </div>
+<div class="card">
+<div class="icon">⚠️</div>
+<h3>Low Stock</h3>
+<div class="value">0</div>
+</div>
 
-        </div>
+</div>
 
-        <div class="section-title" style="margin-top:25px;">
-            Stock
-        </div>
+<div class="section-title" style="margin-top:25px">
+Stock Items
+</div>
 
-        <div class="list">
+<div id="inventoryList"></div>
 
-            <div class="list-item">
-                <span>Rice</span>
-                <strong>0 Kg</strong>
-            </div>
-
-            <div class="list-item">
-                <span>Chicken</span>
-                <strong>0 Kg</strong>
-            </div>
-
-            <div class="list-item">
-                <span>Cooking Oil</span>
-                <strong>0 L</strong>
-            </div>
-
-        </div>
-
-    </div>
+</div>
 </div>
 
 
 <!-- EXPENSES -->
 <div id="expenses" class="page">
 
-    <div class="header">
-        <h1>💸 Expenses</h1>
-        <p>Restaurant expenses</p>
-    </div>
+<div class="header">
+<h1>💸 Expenses</h1>
+<p>Restaurant expenses</p>
+</div>
 
-    <div class="container">
+<div class="container">
 
-        <div class="cards">
+<div class="expense-total">
+<h3>Total Expenses</h3>
+<h2 id="expenseTotal">£0.00</h2>
+</div>
 
-            <div class="card">
-                <div class="icon">🏠</div>
-                <h3>Rent</h3>
-                <div class="value">AED 0</div>
-            </div>
+<button class="add-btn" onclick="addExpense()">
+＋ Add Expense
+</button>
 
-            <div class="card">
-                <div class="icon">⚡</div>
-                <h3>Electricity</h3>
-                <div class="value">AED 0</div>
-            </div>
+<div id="expenseList"></div>
 
-            <div class="card">
-                <div class="icon">🔥</div>
-                <h3>Gas</h3>
-                <div class="value">AED 0</div>
-            </div>
-
-            <div class="card">
-                <div class="icon">👨‍🍳</div>
-                <h3>Salary</h3>
-                <div class="value">AED 0</div>
-            </div>
-
-        </div>
-
-    </div>
+</div>
 </div>
 
 
 <!-- REPORTS -->
 <div id="reports" class="page">
 
-    <div class="header">
-        <h1>📊 Reports</h1>
-        <p>Restaurant performance</p>
-    </div>
+<div class="header">
+<h1>📊 Reports</h1>
+<p>Khan’s Restaurant</p>
+</div>
 
-    <div class="container">
+<div class="container">
 
-        <div class="list">
+<div class="report">
+<span>💷 Total Sales</span>
+<strong id="reportSales">£0.00</strong>
+</div>
 
-            <div class="list-item">
-                <span>📅 Daily Sales</span>
-                <strong>View</strong>
-            </div>
+<div class="report">
+<span>🧾 Total Orders</span>
+<strong id="reportOrders">0</strong>
+</div>
 
-            <div class="list-item">
-                <span>📆 Monthly Sales</span>
-                <strong>View</strong>
-            </div>
+<div class="report">
+<span>💸 Total Expenses</span>
+<strong id="reportExpenses">£0.00</strong>
+</div>
 
-            <div class="list-item">
-                <span>💰 Profit & Loss</span>
-                <strong>View</strong>
-            </div>
+<div class="report">
+<span>📈 Net Profit</span>
+<strong id="reportProfit">£0.00</strong>
+</div>
 
-            <div class="list-item">
-                <span>🍔 Best Selling Items</span>
-                <strong>View</strong>
-            </div>
-
-            <div class="list-item">
-                <span>📦 Inventory Report</span>
-                <strong>View</strong>
-            </div>
-
-        </div>
-
-    </div>
+</div>
 </div>
 
 
-<!-- BOTTOM NAVIGATION -->
+<!-- BOTTOM NAV -->
+
 <div class="bottom-nav">
 
-    <button class="nav-item active" onclick="showPage('dashboard', this)">
-        <span>🏠</span>
-        Home
-    </button>
+<button class="nav active" onclick="showPage('dashboard',this)">
+<span>🏠</span>
+Home
+</button>
 
-    <button class="nav-item" onclick="showPage('pos', this)">
-        <span>🧾</span>
-        POS
-    </button>
+<button class="nav" onclick="showPage('pos',this)">
+<span>🧾</span>
+POS
+</button>
 
-    <button class="nav-item" onclick="showPage('inventory', this)">
-        <span>📦</span>
-        Stock
-    </button>
+<button class="nav" onclick="showPage('menu',this)">
+<span>🍔</span>
+Menu
+</button>
 
-    <button class="nav-item" onclick="showPage('reports', this)">
-        <span>📊</span>
-        Reports
-    </button>
+<button class="nav" onclick="showPage('inventory',this)">
+<span>📦</span>
+Stock
+</button>
 
-    <button class="nav-item" onclick="showPage('expenses', this)">
-        <span>💸</span>
-        Expenses
-    </button>
+<button class="nav" onclick="showPage('reports',this)">
+<span>📊</span>
+Reports
+</button>
 
+</div>
+
+
+<!-- ADD / EDIT ITEM MODAL -->
+
+<div id="itemModal" class="modal">
+
+<div class="modal-box">
+
+<h2 id="modalTitle">Add Food Item</h2>
+
+<input id="itemName" placeholder="Food item name">
+
+<input id="itemCategory" placeholder="Category">
+
+<input id="itemPrice" type="number" placeholder="Price (£)" step="0.01">
+
+<div class="modal-buttons">
+
+<button class="cancel" onclick="closeModal()">
+Cancel
+</button>
+
+<button class="save" onclick="saveItem()">
+Save
+</button>
+
+</div>
+
+</div>
 </div>
 
 
 <script>
 
-function showPage(pageId, button) {
+let menuItems =
+JSON.parse(localStorage.getItem("khanMenu")) || [
 
-    document.querySelectorAll(".page").forEach(function(page) {
-        page.classList.remove("active");
-    });
+{
+name:"Chicken Biryani",
+category:"Main Course",
+price:12
+},
 
-    document.getElementById(pageId).classList.add("active");
+{
+name:"Butter Chicken",
+category:"Main Course",
+price:14
+},
 
-    document.querySelectorAll(".nav-item").forEach(function(nav) {
-        nav.classList.remove("active");
-    });
-
-    if (button) {
-        button.classList.add("active");
-    }
-
-    window.scrollTo(0, 0);
+{
+name:"Fresh Juice",
+category:"Drinks",
+price:5
 }
+
+];
+
+let cart=[];
+
+let expenses =
+JSON.parse(localStorage.getItem("khanExpenses")) || [];
+
+let sales =
+Number(localStorage.getItem("khanSales")) || 0;
+
+let orders =
+Number(localStorage.getItem("khanOrders")) || 0;
+
+let editIndex=-1;
+
+
+/* NAVIGATION */
+
+function showPage(id,button){
+
+document.querySelectorAll(".page")
+.forEach(p=>p.classList.remove("active"));
+
+document.getElementById(id)
+.classList.add("active");
+
+document.querySelectorAll(".nav")
+.forEach(n=>n.classList.remove("active"));
+
+if(button) button.classList.add("active");
+
+if(id==="menu") renderMenu();
+if(id==="pos") renderPOS();
+if(id==="inventory") renderInventory();
+
+window.scrollTo(0,0);
+
+}
+
+
+/* MENU */
+
+function renderMenu(){
+
+let list=document.getElementById("menuList");
+
+if(menuItems.length===0){
+
+list.innerHTML='<div class="empty">No food items added.</div>';
+
+return;
+
+}
+
+list.innerHTML=menuItems.map((item,index)=>`
+
+<div class="list-item">
+
+<div class="item-info">
+
+<strong>${item.name}</strong>
+
+<small>${item.category} • £${Number(item.price).toFixed(2)}</small>
+
+</div>
+
+<div class="buttons">
+
+<button onclick="editItem(${index})">✏️</button>
+
+<button onclick="deleteItem(${index})">🗑️</button>
+
+</div>
+
+</div>
+
+`).join("");
+
+}
+
+
+function openAddItem(){
+
+editIndex=-1;
+
+document.getElementById("modalTitle").innerText=
+"Add Food Item";
+
+document.getElementById("itemName").value="";
+document.getElementById("itemCategory").value="";
+document.getElementById("itemPrice").value="";
+
+document.getElementById("itemModal").style.display="flex";
+
+}
+
+
+function editItem(index){
+
+editIndex=index;
+
+let item=menuItems[index];
+
+document.getElementById("modalTitle").innerText=
+"Edit Food Item";
+
+document.getElementById("itemName").value=item.name;
+
+document.getElementById("itemCategory").value=item.category;
+
+document.getElementById("itemPrice").value=item.price;
+
+document.getElementById("itemModal").style.display="flex";
+
+}
+
+
+function closeModal(){
+
+document.getElementById("itemModal").style.display="none";
+
+}
+
+
+function saveItem(){
+
+let name=document.getElementById("itemName").value.trim();
+
+let category=document.getElementById("itemCategory").value.trim();
+
+let price=Number(document.getElementById("itemPrice").value);
+
+if(!name || !category || !price){
+
+alert("Please enter item name, category and price.");
+
+return;
+
+}
+
+let item={
+name:name,
+category:category,
+price:price
+};
+
+if(editIndex===-1){
+
+menuItems.push(item);
+
+}else{
+
+menuItems[editIndex]=item;
+
+}
+
+localStorage.setItem("khanMenu",
+JSON.stringify(menuItems));
+
+closeModal();
+
+renderMenu();
+
+renderPOS();
+
+}
+
+
+function deleteItem(index){
+
+if(confirm("Delete this food item?")){
+
+menuItems.splice(index,1);
+
+localStorage.setItem("khanMenu",
+JSON.stringify(menuItems));
+
+renderMenu();
+
+renderPOS();
+
+}
+
+}
+
+
+/* POS */
+
+function renderPOS(){
+
+let box=document.getElementById("posMenu");
+
+box.innerHTML=menuItems.map((item,index)=>`
+
+<div class="pos-item">
+
+<div>
+<strong>${item.name}</strong>
+<br>
+<small>${item.category} • £${Number(item.price).toFixed(2)}</small>
+</div>
+
+<button onclick="addToCart(${index})">
+Add
+</button>
+
+</div>
+
+`).join("");
+
+renderCart();
+
+}
+
+
+function addToCart(index){
+
+cart.push(menuItems[index]);
+
+renderCart();
+
+}
+
+
+function removeCart(index){
+
+cart.splice(index,1);
+
+renderCart();
+
+}
+
+
+function renderCart(){
+
+let box=document.getElementById("cart");
+
+if(cart.length===0){
+
+box.innerHTML=
+'<div class="empty">No items added</div>';
+
+document.getElementById("cartTotal").innerText="£0.00";
+
+return;
+
+}
+
+let total=0;
+
+box.innerHTML=cart.map((item,index)=>{
+
+total+=Number(item.price);
+
+return `
+
+<div class="list-item">
+
+<span>${item.name}</span>
+
+<div>
+<strong>£${Number(item.price).toFixed(2)}</strong>
+
+<button
+onclick="removeCart(${index})"
+style="border:0;background:none;margin-left:8px">
+❌
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}).join("");
+
+document.getElementById("cartTotal").innerText=
+"£"+total.toFixed(2);
+
+}
+
+
+function completeOrder(){
+
+if(cart.length===0){
+
+alert("Please add items to the bill.");
+
+return;
+
+}
+
+let total=cart.reduce(
+(sum,item)=>sum+Number(item.price),0
+);
+
+sales+=total;
+
+orders++;
+
+localStorage.setItem("khanSales",sales);
+
+localStorage.setItem("khanOrders",orders);
+
+cart=[];
+
+renderCart();
+
+updateDashboard();
+
+alert("Payment completed successfully! £"+total.toFixed(2));
+
+}
+
+
+/* EXPENSES */
+
+function addExpense(){
+
+let name=prompt(
+"Expense name (e.g. Gas, Electricity, Rent):"
+);
+
+if(!name) return;
+
+let amount=Number(
+prompt("Enter amount (£):")
+);
+
+if(!amount) return;
+
+expenses.push({
+name:name,
+amount:amount,
+date:new Date().toLocaleDateString()
+});
+
+localStorage.setItem(
+"khanExpenses",
+JSON.stringify(expenses)
+);
+
+renderExpenses();
+
+updateDashboard();
+
+}
+
+
+function renderExpenses(){
+
+let list=document.getElementById("expenseList");
+
+if(expenses.length===0){
+
+list.innerHTML=
+'<div class="empty">No expenses recorded.</div>';
+
+}else{
+
+list.innerHTML=expenses.map((e,index)=>`
+
+<div class="list-item">
+
+<div>
+<strong>${e.name}</strong>
+<br>
+<small>${e.date}</small>
+</div>
+
+<div>
+<strong>£${Number(e.amount).toFixed(2)}</strong>
+
+<button
+onclick="deleteExpense(${index})"
+style="border:0;background:none;margin-left:8px">
+🗑️
+</button>
+
+</div>
+
+</div>
+
+`).join("");
+
+}
+
+let total=expenses.reduce(
+(sum,e)=>sum+Number(e.amount),0
+);
+
+document.getElementById("expenseTotal").innerText=
+"£"+total.toFixed(2);
+
+}
+
+
+function deleteExpense(index){
+
+if(confirm("Delete this expense?")){
+
+expenses.splice(index,1);
+
+localStorage.setItem(
+"khanExpenses",
+JSON.stringify(expenses)
+);
+
+renderExpenses();
+
+updateDashboard();
+
+}
+
+}
+
+
+/* INVENTORY */
+
+function renderInventory(){
+
+document.getElementById("inventoryCount").innerText=
+menuItems.length;
+
+document.getElementById("inventoryList").innerHTML=
+menuItems.map(item=>`
+
+<div class="list-item">
+
+<span>${item.name}</span>
+
+<strong>Available</strong>
+
+</div>
+
+`).join("");
+
+}
+
+
+/* DASHBOARD */
+
+function updateDashboard(){
+
+let expenseTotal=expenses.reduce(
+(sum,e)=>sum+Number(e.amount),0
+);
+
+let profit=sales-expenseTotal;
+
+document.getElementById("salesValue").innerText=
+"£"+sales.toFixed(2);
+
+document.getElementById("ordersValue").innerText=
+orders;
+
+document.getElementById("expenseValue").innerText=
+"£"+expenseTotal.toFixed(2);
+
+document.getElementById("profitValue").innerText=
+"£"+profit.toFixed(2);
+
+document.getElementById("reportSales").innerText=
+"£"+sales.toFixed(2);
+
+document.getElementById("reportOrders").innerText=
+orders;
+
+document.getElementById("reportExpenses").innerText=
+"£"+expenseTotal.toFixed(2);
+
+document.getElementById("reportProfit").innerText=
+"£"+profit.toFixed(2);
+
+}
+
+
+/* START */
+
+renderMenu();
+
+renderPOS();
+
+renderInventory();
+
+renderExpenses();
+
+updateDashboard();
 
 </script>
 
