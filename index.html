@@ -2,927 +2,794 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Khan's Restaurant POS</title>
 
 <style>
 *{box-sizing:border-box}
 body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:#f4f5f7;
-  color:#171717;
+ margin:0;
+ font-family:Arial,Helvetica,sans-serif;
+ background:#f4f5f7;
+ color:#222;
 }
-button,input,select{
-  font:inherit;
+.header{
+ background:#111827;
+ color:white;
+ padding:16px;
+ position:sticky;
+ top:0;
+ z-index:100;
 }
-button{
-  cursor:pointer;
-}
-.hidden{display:none!important}
-
-.login{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#171717;
-  padding:20px;
-}
-.login-box{
-  width:100%;
-  max-width:400px;
-  background:#fff;
-  border-radius:20px;
-  padding:30px;
-  text-align:center;
-}
-.login-box h1{margin-bottom:5px}
-.login-box input{
-  width:100%;
-  padding:13px;
-  margin:7px 0;
-  border:1px solid #ddd;
-  border-radius:10px;
-}
-.primary{
-  background:#171717;
-  color:#fff;
-  border:0;
-  padding:13px 18px;
-  border-radius:10px;
-}
-.danger{
-  background:#dc2626!important;
-  color:#fff!important;
-}
-.green{
-  background:#15803d!important;
-  color:#fff!important;
-}
-
-.app-header{
-  background:#171717;
-  color:white;
-  padding:18px;
-  position:sticky;
-  top:0;
-  z-index:20;
-}
-.header-inner{
-  max-width:1200px;
-  margin:auto;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
-}
-.header-inner h1{margin:0;font-size:23px}
-.header-inner small{color:#ddd}
-
+.header h2{margin:0 0 4px}
 .container{
-  max-width:1200px;
-  margin:auto;
-  padding:18px;
+ max-width:1350px;
+ margin:auto;
+ padding:15px;
+ padding-bottom:80px;
 }
-
+.nav{
+ display:flex;
+ gap:6px;
+ overflow-x:auto;
+ background:white;
+ padding:8px;
+ border-radius:12px;
+ margin-bottom:15px;
+ box-shadow:0 2px 8px #0001;
+}
+.nav button{
+ border:0;
+ padding:12px 17px;
+ border-radius:8px;
+ background:#e5e7eb;
+ white-space:nowrap;
+ font-weight:bold;
+}
+.nav button.active{
+ background:#111827;
+ color:white;
+}
 .page{display:none}
 .page.active{display:block}
 
-.nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  height:70px;
-  background:#fff;
-  border-top:1px solid #ddd;
-  display:flex;
-  justify-content:center;
-  z-index:50;
-}
-.nav button{
-  border:0;
-  background:white;
-  color:#555;
-  min-width:90px;
-  font-size:12px;
-}
-.nav button span{
-  display:block;
-  font-size:21px;
-  margin-bottom:3px;
-}
-
-.cards{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-}
 .card{
-  background:#fff;
-  padding:18px;
-  border-radius:15px;
-  box-shadow:0 2px 8px #0000000c;
+ background:white;
+ border-radius:12px;
+ padding:16px;
+ margin-bottom:15px;
+ box-shadow:0 2px 8px #0001;
 }
-.card small{color:#777}
-.card strong{
-  display:block;
-  font-size:22px;
-  margin-top:8px;
+.cards{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:12px;
 }
-
-.section-title{
-  margin:25px 0 12px;
-  font-size:19px;
-  font-weight:bold;
+.stat{
+ background:white;
+ border-radius:12px;
+ padding:18px;
+ box-shadow:0 2px 8px #0001;
 }
-
-.quick{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
+.stat small{color:#777}
+.stat b{
+ display:block;
+ font-size:23px;
+ margin-top:8px;
 }
-.quick button{
-  background:white;
-  border:0;
-  border-radius:15px;
-  padding:25px 10px;
-  box-shadow:0 2px 8px #0000000c;
+.grid{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:10px;
 }
-.quick button span{
-  display:block;
-  font-size:28px;
-  margin-bottom:8px;
+.primary{
+ background:#111827;
+ color:white;
+ border:0;
+ padding:12px 16px;
+ border-radius:8px;
+ font-weight:bold;
 }
-
-.panel{
-  background:#fff;
-  border-radius:15px;
-  padding:18px;
-  margin-bottom:15px;
-  box-shadow:0 2px 8px #0000000c;
+.green{
+ background:#15803d;
+ color:white;
+ border:0;
+ padding:13px;
+ border-radius:8px;
+ width:100%;
+ font-weight:bold;
 }
-
+.red{
+ background:#dc2626;
+ color:white;
+ border:0;
+ padding:9px 12px;
+ border-radius:7px;
+}
+.small{
+ border:0;
+ background:#e5e7eb;
+ padding:8px 10px;
+ border-radius:7px;
+}
+.form{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:10px;
+}
 input,select{
-  border:1px solid #ddd;
-  border-radius:9px;
-  padding:11px;
-  background:#fff;
+ width:100%;
+ padding:11px;
+ border:1px solid #d1d5db;
+ border-radius:8px;
+ background:white;
 }
-
-.form-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
+.category-bar{
+ display:flex;
+ gap:8px;
+ overflow-x:auto;
+ padding-bottom:8px;
 }
-.form-grid input,
-.form-grid select{
-  width:100%;
+.category-bar button{
+ border:0;
+ background:#e5e7eb;
+ padding:10px 16px;
+ border-radius:20px;
+ white-space:nowrap;
+ font-weight:bold;
 }
-
-.category-tabs{
-  display:flex;
-  gap:8px;
-  overflow-x:auto;
-  padding-bottom:8px;
+.category-bar button.active{
+ background:#111827;
+ color:white;
 }
-.category-tabs button{
-  white-space:nowrap;
-  border:0;
-  padding:10px 15px;
-  border-radius:20px;
-  background:#e5e7eb;
+.food-grid{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:10px;
 }
-.category-tabs button.active{
-  background:#171717;
-  color:white;
+.food{
+ border:1px solid #ddd;
+ border-radius:10px;
+ padding:13px;
+ background:white;
 }
-
-.menu-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
+.food b{display:block;margin-bottom:7px}
+.food span{display:block;margin-bottom:10px;color:#555}
+.food button{
+ width:100%;
+ border:0;
+ background:#111827;
+ color:white;
+ padding:9px;
+ border-radius:7px;
 }
-.menu-item{
-  background:white;
-  border:1px solid #eee;
-  border-radius:12px;
-  padding:15px;
+.pos-layout{
+ display:grid;
+ grid-template-columns:1.5fr 1fr;
+ gap:15px;
 }
-.menu-item h3{
-  margin:0 0 7px;
-  font-size:16px;
-}
-.menu-item .price{
-  font-weight:bold;
-  margin-bottom:10px;
-}
-.menu-item button{
-  width:100%;
-  border:0;
-  background:#171717;
-  color:white;
-  padding:9px;
-  border-radius:8px;
-}
-
 .tables{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:10px;
+ display:grid;
+ grid-template-columns:repeat(5,1fr);
+ gap:9px;
 }
-.table-btn{
-  background:#dcfce7;
-  color:#166534;
-  border:0;
-  padding:18px 5px;
-  border-radius:12px;
-  font-weight:bold;
-}
-.order-layout{
-  display:grid;
-  grid-template-columns:1.5fr 1fr;
-  gap:15px;
-}
-.order-box{
-  background:#fff;
-  border-radius:15px;
-  padding:18px;
+.table{
+ border:0;
+ background:#dcfce7;
+ color:#166534;
+ padding:17px 5px;
+ border-radius:9px;
+ font-weight:bold;
 }
 .cart-row{
-  display:flex;
-  justify-content:space-between;
-  gap:8px;
-  padding:10px 0;
-  border-bottom:1px solid #eee;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ border-bottom:1px solid #eee;
+ padding:11px 0;
 }
 .qty button{
-  width:30px;
-  height:30px;
-  border:0;
-  border-radius:6px;
-  margin-left:3px;
+ border:0;
+ width:30px;
+ height:30px;
+ border-radius:6px;
+ margin-left:3px;
 }
 .total{
-  font-size:24px;
-  font-weight:bold;
-  padding:15px 0;
+ font-size:26px;
+ font-weight:bold;
+ margin:18px 0;
 }
-.payment-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:7px;
+.payment{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:7px;
 }
-.payment-btn{
-  background:#e5e7eb;
-  color:#111;
-  border:0;
-  border-radius:9px;
-  padding:12px;
+.payment button{
+ border:0;
+ padding:12px;
+ border-radius:8px;
+ background:#e5e7eb;
+ font-weight:bold;
 }
-.payment-btn.selected{
-  background:#171717;
-  color:white;
+.payment button.active{
+ background:#111827;
+ color:white;
 }
-
 .till-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:13px;
-  margin:7px 0;
-  background:#fff;
-  border-radius:10px;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ padding:12px;
+ background:white;
+ border-bottom:1px solid #eee;
 }
 .till-row input{
-  width:180px;
-  text-align:right;
+ max-width:200px;
+ text-align:right;
 }
 .till-total{
-  background:#171717;
-  color:white;
-  border-radius:15px;
-  padding:18px;
-  margin-top:15px;
+ background:#111827;
+ color:white;
+ border-radius:12px;
+ padding:16px;
+ margin-top:15px;
 }
 .till-total div{
-  display:flex;
-  justify-content:space-between;
-  padding:7px 0;
+ display:flex;
+ justify-content:space-between;
+ padding:7px 0;
 }
-
-.report-select{
-  width:100%;
-  max-width:350px;
-  margin-bottom:15px;
+.list-row{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ padding:12px;
+ background:white;
+ border-radius:8px;
+ margin-bottom:7px;
 }
-
-.expense-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:14px;
-  background:white;
-  border-radius:10px;
-  margin-bottom:8px;
+@media(max-width:850px){
+ .cards{grid-template-columns:repeat(2,1fr)}
+ .grid{grid-template-columns:repeat(2,1fr)}
+ .pos-layout{grid-template-columns:1fr}
+ .food-grid{grid-template-columns:repeat(2,1fr)}
+ .form{grid-template-columns:1fr}
+ .tables{grid-template-columns:repeat(3,1fr)}
 }
-
-.small{
-  font-size:12px;
-  color:#777;
-}
-
-.actions{
-  display:flex;
-  gap:6px;
-  flex-wrap:wrap;
-}
-.actions button{
-  border:0;
-  border-radius:7px;
-  padding:7px 10px;
-}
-
-@media(max-width:800px){
-  .cards{grid-template-columns:repeat(2,1fr)}
-  .quick{grid-template-columns:repeat(2,1fr)}
-  .menu-grid{grid-template-columns:repeat(2,1fr)}
-  .order-layout{grid-template-columns:1fr}
-  .tables{grid-template-columns:repeat(3,1fr)}
-  .form-grid{grid-template-columns:1fr}
-}
-
 @media(max-width:500px){
-  .container{padding:12px}
-  .cards{gap:8px}
-  .card{padding:13px}
-  .card strong{font-size:18px}
-  .menu-grid{grid-template-columns:1fr}
-  .tables{grid-template-columns:repeat(3,1fr)}
-  .header-inner h1{font-size:19px}
+ .cards{grid-template-columns:1fr 1fr}
+ .food-grid{grid-template-columns:1fr 1fr}
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
-<div id="loginPage" class="login">
-  <div class="login-box">
-    <h1>🍽️ Khan's Restaurant</h1>
-    <p>Restaurant POS & Management</p>
-
-    <input id="loginEmail" type="email" placeholder="Admin Email">
-    <input id="loginPassword" type="password" placeholder="Password">
-
-    <button class="primary" style="width:100%" onclick="login()">
-      Login
-    </button>
-
-    <p id="loginError"></p>
-  </div>
+<div class="header">
+ <div class="container" style="padding:0">
+  <h2>🍽️ Khan's Restaurant</h2>
+  <small id="dateDisplay"></small>
+ </div>
 </div>
 
+<div class="container">
 
-<!-- APP -->
-<div id="app" class="hidden">
-
-<header class="app-header">
-  <div class="header-inner">
-    <div>
-      <h1>🍽️ Khan's Restaurant</h1>
-      <small id="headerDate"></small>
-    </div>
-    <button class="primary" onclick="logout()">Logout</button>
-  </div>
-</header>
+<div class="nav">
+ <button class="active" onclick="showPage('home',this)">🏠 Home</button>
+ <button onclick="showPage('pos',this)">🧾 POS</button>
+ <button onclick="showPage('menu',this)">🍛 Menu</button>
+ <button onclick="showPage('till',this)">💷 Till</button>
+ <button onclick="showPage('expenses',this)">💸 Expenses</button>
+ <button onclick="showPage('reports',this)">📊 Reports</button>
+</div>
 
 
 <!-- HOME -->
-<section id="homePage" class="page active">
-<div class="container">
 
-  <div class="section-title">Today's Dashboard</div>
+<section id="home" class="page active">
 
-  <div class="cards">
-    <div class="card">
-      <small>Today's Sales</small>
-      <strong id="dashSales">£0.00</strong>
-    </div>
+<h2>Dashboard</h2>
 
-    <div class="card">
-      <small>Orders</small>
-      <strong id="dashOrders">0</strong>
-    </div>
+<div class="cards">
 
-    <div class="card">
-      <small>Cash</small>
-      <strong id="dashCash">£0.00</strong>
-    </div>
+<div class="stat">
+<small>Today's Sales</small>
+<b id="homeSales">£0.00</b>
+</div>
 
-    <div class="card">
-      <small>Card</small>
-      <strong id="dashCard">£0.00</strong>
-    </div>
+<div class="stat">
+<small>Orders</small>
+<b id="homeOrders">0</b>
+</div>
 
-    <div class="card">
-      <small>QR</small>
-      <strong id="dashQR">£0.00</strong>
-    </div>
+<div class="stat">
+<small>Cash</small>
+<b id="homeCash">£0.00</b>
+</div>
 
-    <div class="card">
-      <small>Delivery</small>
-      <strong id="dashDelivery">£0.00</strong>
-    </div>
+<div class="stat">
+<small>Card</small>
+<b id="homeCard">£0.00</b>
+</div>
 
-    <div class="card">
-      <small>Expenses</small>
-      <strong id="dashExpenses">£0.00</strong>
-    </div>
+<div class="stat">
+<small>QR</small>
+<b id="homeQR">£0.00</b>
+</div>
 
-    <div class="card">
-      <small>Estimated Profit</small>
-      <strong id="dashProfit">£0.00</strong>
-    </div>
-  </div>
+<div class="stat">
+<small>Delivery</small>
+<b id="homeDelivery">£0.00</b>
+</div>
 
+<div class="stat">
+<small>Expenses</small>
+<b id="homeExpenses">£0.00</b>
+</div>
 
-  <div class="section-title">Quick Access</div>
-
-  <div class="quick">
-    <button onclick="showPage('posPage')">
-      <span>🧾</span>POS
-    </button>
-
-    <button onclick="showPage('menuPage')">
-      <span>🍛</span>Menu
-    </button>
-
-    <button onclick="showPage('tillPage')">
-      <span>💷</span>Daily Till
-    </button>
-
-    <button onclick="showPage('expensePage')">
-      <span>💸</span>Expenses
-    </button>
-  </div>
+<div class="stat">
+<small>Estimated Profit</small>
+<b id="homeProfit">£0.00</b>
+</div>
 
 </div>
-</section>
 
+<br>
 
-<!-- MENU MANAGEMENT -->
-<section id="menuPage" class="page">
-<div class="container">
+<div class="card">
+<h3>Quick Actions</h3>
 
-  <div class="section-title">🍛 Menu Management</div>
-
-  <div class="panel">
-    <h3>Add / Edit Category</h3>
-
-    <div class="form-grid">
-      <input id="categoryName" placeholder="Category name">
-
-      <button class="primary" onclick="saveCategory()">
-        Save Category
-      </button>
-
-      <button class="danger" onclick="deleteCurrentCategory()">
-        Delete Category
-      </button>
-    </div>
-  </div>
-
-
-  <div class="panel">
-
-    <h3>Add New Dish</h3>
-
-    <div class="form-grid">
-
-      <input id="dishName" placeholder="Dish name">
-
-      <input id="dishPrice"
-             type="number"
-             step="0.01"
-             placeholder="Price £">
-
-      <select id="dishCategory"></select>
-
-    </div>
-
-    <button class="primary" onclick="saveDish()">
-      ➕ Add Dish
-    </button>
-
-  </div>
-
-
-  <div class="panel">
-
-    <h3>Categories</h3>
-
-    <div id="managementCategories"
-         class="category-tabs">
-    </div>
-
-  </div>
-
-
-  <div id="managementMenu"
-       class="menu-grid">
-  </div>
+<div class="grid">
+<button class="primary" onclick="showPage('pos')">🧾 New Sale</button>
+<button class="primary" onclick="showPage('menu')">🍛 Manage Menu</button>
+<button class="primary" onclick="showPage('till')">💷 Daily Till</button>
+<button class="primary" onclick="showPage('expenses')">💸 Add Expense</button>
+</div>
 
 </div>
+
 </section>
 
 
 <!-- POS -->
-<section id="posPage" class="page">
-<div class="container">
 
-  <div class="section-title">🧾 POS</div>
+<section id="pos" class="page">
 
-  <div id="posTableSelection">
+<h2>🧾 Point of Sale</h2>
 
-    <div class="panel">
-      <h3>Select Table</h3>
+<div id="orderSelection">
 
-      <div id="tableButtons"
-           class="tables">
-      </div>
-    </div>
+<div class="card">
+<h3>Tables</h3>
 
-    <div class="panel">
+<div class="tables" id="tableButtons"></div>
+</div>
 
-      <h3>Other Orders</h3>
+<div class="card">
+<h3>Other Orders</h3>
 
-      <div class="quick">
+<div class="grid">
 
-        <button onclick="startOrder('Takeaway')">
-          🥡 Takeaway
-        </button>
+<button class="primary" onclick="startOrder('Takeaway')">
+🥡 Takeaway
+</button>
 
-        <button onclick="startOrder('Delivery')">
-          🛵 Delivery
-        </button>
+<button class="primary" onclick="startOrder('Delivery')">
+🛵 Delivery
+</button>
 
-        <button onclick="startOrder('Uber')">
-          🚗 Uber
-        </button>
+<button class="primary" onclick="startOrder('Uber')">
+🚗 Uber
+</button>
 
-        <button onclick="startOrder('Deliveroo')">
-          🛵 Deliveroo
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <div id="posOrder" class="hidden">
-
-    <button class="primary"
-            onclick="backToTables()">
-      ← Back
-    </button>
-
-    <h3 id="currentOrderTitle"></h3>
-
-    <div class="order-layout">
-
-      <!-- FOOD -->
-      <div class="order-box">
-
-        <div id="posCategories"
-             class="category-tabs">
-        </div>
-
-        <div id="posMenu"
-             class="menu-grid">
-        </div>
-
-      </div>
-
-
-      <!-- CART -->
-      <div class="order-box">
-
-        <h3>Current Order</h3>
-
-        <div id="cart"></div>
-
-        <div class="total">
-          Total:
-          <span id="cartTotal">£0.00</span>
-        </div>
-
-        <h4>Payment Method</h4>
-
-        <div class="payment-grid">
-
-          <button class="payment-btn selected"
-                  onclick="setPayment('Cash',this)">
-            💷 Cash
-          </button>
-
-          <button class="payment-btn"
-                  onclick="setPayment('Card',this)">
-            💳 Card
-          </button>
-
-          <button class="payment-btn"
-                  onclick="setPayment('QR',this)">
-            📱 QR
-          </button>
-
-        </div>
-
-        <button class="green"
-                style="width:100%;padding:15px;border:0;border-radius:10px;margin-top:12px"
-                onclick="completeSale()">
-          ✅ COMPLETE SALE
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
+<button class="primary" onclick="startOrder('Deliveroo')">
+🛵 Deliveroo
+</button>
 
 </div>
+</div>
+
+</div>
+
+
+<div id="posScreen" style="display:none">
+
+<div class="card">
+
+<button class="small" onclick="backToOrders()">← Back</button>
+
+<h3 id="currentOrderTitle"></h3>
+
+</div>
+
+<div class="pos-layout">
+
+<div class="card">
+
+<div class="category-bar" id="posCategories"></div>
+
+<div class="food-grid" id="posFoods"></div>
+
+</div>
+
+
+<div class="card">
+
+<h3>Current Order</h3>
+
+<div id="cartItems">
+No items selected.
+</div>
+
+<div class="total">
+Total: <span id="cartTotal">£0.00</span>
+</div>
+
+<h4>Payment Method</h4>
+
+<div class="payment">
+
+<button class="active"
+onclick="setPayment('Cash',this)">
+💷 Cash
+</button>
+
+<button onclick="setPayment('Card',this)">
+💳 Card
+</button>
+
+<button onclick="setPayment('QR',this)">
+📱 QR
+</button>
+
+</div>
+
+<br>
+
+<button class="green" onclick="completeSale()">
+✅ COMPLETE SALE
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- MENU -->
+
+<section id="menu" class="page">
+
+<h2>🍛 Menu Management</h2>
+
+<div class="card">
+
+<h3>Add Category</h3>
+
+<div class="form">
+
+<input id="categoryName" placeholder="Example: Main Course">
+
+<button class="primary" onclick="addCategory()">
+➕ Add Category
+</button>
+
+<button class="red" onclick="deleteSelectedCategory()">
+🗑 Delete Category
+</button>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>Food Categories</h3>
+
+<div class="category-bar" id="menuCategories"></div>
+
+</div>
+
+
+<div class="card">
+
+<h3>Add / Edit Dish</h3>
+
+<div class="form">
+
+<input id="dishName" placeholder="Dish name">
+
+<input id="dishPrice"
+type="number"
+step="0.01"
+placeholder="Price £">
+
+<select id="dishCategory"></select>
+
+</div>
+
+<br>
+
+<button class="primary" onclick="saveDish()">
+💾 Save Dish
+</button>
+
+<button class="small" onclick="clearDishForm()">
+Clear
+</button>
+
+</div>
+
+
+<div class="food-grid" id="menuFoods"></div>
+
 </section>
 
 
 <!-- TILL -->
-<section id="tillPage" class="page">
-<div class="container">
 
-  <div class="section-title">💷 Daily Till</div>
+<section id="till" class="page">
 
-  <div class="panel">
+<h2>💷 Daily Till</h2>
 
-    <div class="till-row">
-      <div>
-        <b>Day / Date</b>
-        <div class="small">Automatic</div>
-      </div>
+<div class="card">
 
-      <b id="tillDate"></b>
-    </div>
+<div class="till-row">
+<b>Date</b>
+<b id="tillDate"></b>
+</div>
 
+<h3>💰 Till Entries — Editable</h3>
 
-    <h3>Manual Entries</h3>
+<div class="till-row">
+<span>Main Till</span>
+<input id="mainTill" type="number" step="0.01" value="0" oninput="calculateTill()">
+</div>
 
-    <div class="till-row">
-      <span>Main Till</span>
-      <input id="mainTill"
-             type="number"
-             step="0.01"
-             oninput="calculateTill()">
-    </div>
+<div class="till-row">
+<span>Petty Cash</span>
+<input id="pettyCash" type="number" step="0.01" value="0" oninput="calculateTill()">
+</div>
 
-    <div class="till-row">
-      <span>Petty Cash</span>
-      <input id="pettyCash"
-             type="number"
-             step="0.01"
-             oninput="calculateTill()">
-    </div>
+<h3>Sales / Payment</h3>
 
+<div class="till-row">
+<span>Cash</span>
+<input id="tillCash" type="number" step="0.01" value="0" oninput="calculateTill()">
+</div>
 
-    <h3>Automatic POS</h3>
+<div class="till-row">
+<span>Card</span>
+<input id="tillCard" type="number" step="0.01" value="0" oninput="calculateTill()">
+</div>
 
-    <div class="till-row">
-      <span>Cash</span>
-      <b id="tillCash">£0.00</b>
-    </div>
+<div class="till-row">
+<span>QR</span>
+<input id="tillQR" type="number" step="0.01" value="0" oninput="calculateTill()">
+</div>
 
-    <div class="till-row">
-      <span>Card</span>
-      <b id="tillCard">£0.00</b>
-    </div>
+<div class="till-row">
+<span>Uber</span>
+<input id="tillUber" type="number" step="0.01" value="0" oninput="calculateTill()">
+</div>
 
-    <div class="till-row">
-      <span>QR</span>
-      <b id="tillQR">£0.00</b>
-    </div>
+<div class="till-row">
+<span>Deliveroo</span>
+<input id="tillDeliveroo" type="number" step="0.01" value="0" oninput="calculateTill()">
+</div>
 
-    <div class="till-row">
-      <span>Uber</span>
-      <b id="tillUber">£0.00</b>
-    </div>
+<div class="till-row">
+<span>Delivery Cash</span>
+<input id="deliveryCash" type="number" step="0.01" value="0" oninput="calculateTill()">
+</div>
 
-    <div class="till-row">
-      <span>Deliveroo</span>
-      <b id="tillDeliveroo">£0.00</b>
-    </div>
+<div class="till-row">
+<span>Delivery Card</span>
+<input id="deliveryCard" type="number" step="0.01" value="0" oninput="calculateTill()">
+</div>
 
-    <div class="till-row">
-      <span>Delivery Cash</span>
-      <b id="tillDeliveryCash">£0.00</b>
-    </div>
+<div class="till-row">
+<span>Delivery QR</span>
+<input id="deliveryQR" type="number" step="0.01" value="0" oninput="calculateTill()">
+</div>
 
-    <div class="till-row">
-      <span>Delivery Card</span>
-      <b id="tillDeliveryCard">£0.00</b>
-    </div>
+<h3>Closing</h3>
 
-    <div class="till-row">
-      <span>Delivery QR</span>
-      <b id="tillDeliveryQR">£0.00</b>
-    </div>
+<div class="till-row">
+<span>Cash Taken</span>
+<input id="cashTaken" type="number" step="0.01" value="0" oninput="calculateTill()">
+</div>
 
-
-    <h3>Cash Closing</h3>
-
-    <div class="till-row">
-      <span>Cash Taken</span>
-      <input id="cashTaken"
-             type="number"
-             step="0.01"
-             oninput="calculateTill()">
-    </div>
-
-    <div class="till-row">
-      <span>Physical Closing Cash</span>
-      <input id="physicalCash"
-             type="number"
-             step="0.01"
-             oninput="calculateTill()">
-    </div>
+<div class="till-row">
+<span>Physical Closing Cash</span>
+<input id="physicalCash" type="number" step="0.01" value="0" oninput="calculateTill()">
+</div>
 
 
-    <div class="till-total">
+<div class="till-total">
 
-      <div>
-        <span>POS Total</span>
-        <b id="tillPOSTotal">£0.00</b>
-      </div>
+<div>
+<span>Total Sales</span>
+<b id="tillTotal">£0.00</b>
+</div>
 
-      <div>
-        <span>Expected Closing Cash</span>
-        <b id="expectedClosing">£0.00</b>
-      </div>
+<div>
+<span>Total Expenses</span>
+<b id="tillExpenses">£0.00</b>
+</div>
 
-      <div>
-        <span>Actual Closing Cash</span>
-        <b id="actualClosing">£0.00</b>
-      </div>
+<div>
+<span>Expected Closing Cash</span>
+<b id="expectedCash">£0.00</b>
+</div>
 
-      <div>
-        <span>Cash Difference</span>
-        <b id="cashDifference">£0.00</b>
-      </div>
+<div>
+<span>Actual Closing Cash</span>
+<b id="actualCash">£0.00</b>
+</div>
 
-    </div>
-
-    <button class="primary"
-            style="width:100%;margin-top:12px"
-            onclick="saveTill()">
-      💾 Save Daily Till
-    </button>
-
-    <p id="tillMessage"></p>
-
-  </div>
+<div>
+<span>Difference</span>
+<b id="cashDifference">£0.00</b>
+</div>
 
 </div>
+
+<br>
+
+<button class="green" onclick="saveTill()">
+💾 SAVE DAILY TILL
+</button>
+
+<p id="tillMessage"></p>
+
+</div>
+
 </section>
 
 
 <!-- EXPENSES -->
-<section id="expensePage" class="page">
-<div class="container">
 
-  <div class="section-title">💸 Expenses</div>
+<section id="expenses" class="page">
 
-  <div class="panel">
+<h2>💸 Expenses</h2>
 
-    <div class="form-grid">
+<div class="card">
 
-      <select id="expenseCategory">
-        <option>Food / Ingredients</option>
-        <option>Salary</option>
-        <option>Rent</option>
-        <option>Electricity</option>
-        <option>Gas</option>
-        <option>Repairs</option>
-        <option>Cleaning</option>
-        <option>Transport</option>
-        <option>Other</option>
-      </select>
+<div class="form">
 
-      <input id="expenseAmount"
-             type="number"
-             step="0.01"
-             placeholder="Amount £">
+<select id="expenseCategory">
+<option>Food / Ingredients</option>
+<option>Salary</option>
+<option>Rent</option>
+<option>Electricity</option>
+<option>Gas</option>
+<option>Repairs</option>
+<option>Cleaning</option>
+<option>Transport</option>
+<option>Other</option>
+</select>
 
-      <input id="expenseNote"
-             placeholder="Description">
+<input id="expenseAmount"
+type="number"
+step="0.01"
+placeholder="Amount £">
 
-    </div>
-
-    <button class="primary"
-            onclick="addExpense()">
-      ➕ Add Expense
-    </button>
-
-  </div>
-
-  <div id="expenseList"></div>
+<input id="expenseNote"
+placeholder="Description">
 
 </div>
+
+<br>
+
+<button class="primary" onclick="addExpense()">
+➕ Add Expense
+</button>
+
+</div>
+
+<div class="card">
+
+<h3>Today's Expenses</h3>
+
+<div id="expenseList"></div>
+
+</div>
+
 </section>
 
 
 <!-- REPORTS -->
-<section id="reportPage" class="page">
-<div class="container">
 
-  <div class="section-title">📊 Reports</div>
+<section id="reports" class="page">
 
-  <div class="panel">
+<h2>📊 Reports</h2>
 
-    <select id="reportPeriod"
-            class="report-select"
-            onchange="renderReport()">
+<div class="card">
 
-      <option value="daily">Daily</option>
-      <option value="weekly">Weekly</option>
-      <option value="monthly">Monthly</option>
-      <option value="quarterly">Quarterly</option>
-      <option value="sixmonths">6 Months</option>
-      <option value="yearly">Yearly</option>
+<select id="reportPeriod"
+onchange="generateReport()"
+style="max-width:250px">
 
-    </select>
+<option value="daily">Today</option>
+<option value="weekly">Last 7 Days</option>
+<option value="monthly">This Month</option>
+<option value="quarterly">This Quarter</option>
+<option value="six">Last 6 Months</option>
+<option value="yearly">This Year</option>
 
-    <div id="reportResult"></div>
-
-  </div>
+</select>
 
 </div>
+
+<div class="cards">
+
+<div class="stat">
+<small>Sales</small>
+<b id="reportSales">£0.00</b>
+</div>
+
+<div class="stat">
+<small>Orders</small>
+<b id="reportOrders">0</b>
+</div>
+
+<div class="stat">
+<small>Expenses</small>
+<b id="reportExpenses">£0.00</b>
+</div>
+
+<div class="stat">
+<small>Profit</small>
+<b id="reportProfit">£0.00</b>
+</div>
+
+<div class="stat">
+<small>Cash</small>
+<b id="reportCash">£0.00</b>
+</div>
+
+<div class="stat">
+<small>Card</small>
+<b id="reportCard">£0.00</b>
+</div>
+
+<div class="stat">
+<small>QR</small>
+<b id="reportQR">£0.00</b>
+</div>
+
+<div class="stat">
+<small>Delivery</small>
+<b id="reportDelivery">£0.00</b>
+</div>
+
+</div>
+
 </section>
-
-
-<!-- NAVIGATION -->
-<nav class="nav">
-
-<button onclick="showPage('homePage')">
-<span>🏠</span>Home
-</button>
-
-<button onclick="showPage('posPage')">
-<span>🧾</span>POS
-</button>
-
-<button onclick="showPage('menuPage')">
-<span>🍛</span>Menu
-</button>
-
-<button onclick="showPage('tillPage')">
-<span>💷</span>Till
-</button>
-
-<button onclick="showPage('expensePage')">
-<span>💸</span>Expenses
-</button>
-
-<button onclick="showPage('reportPage')">
-<span>📊</span>Reports
-</button>
-
-</nav>
 
 </div>
 
 
 <script type="module">
 
-import { initializeApp }
+import {initializeApp}
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
-  getAuth,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs,
-  doc,
-  getDoc,
-  setDoc,
-  updateDoc,
-  deleteDoc
+getFirestore,
+collection,
+addDoc,
+getDocs,
+doc,
+setDoc,
+deleteDoc,
+updateDoc
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -930,17 +797,15 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 /* FIREBASE */
 
 const firebaseConfig={
-  apiKey:"AIzaSyBsmbLMNMFNoI2OpR0maR97XAlDZ39yxkg",
-  authDomain:"khans-restaurant-46083.firebaseapp.com",
-  projectId:"khans-restaurant-46083",
-  storageBucket:"khans-restaurant-46083.firebasestorage.app",
-  messagingSenderId:"788410298373",
-  appId:"1:788410298373:web:9f9806e6566d7911bc6c6c",
-  measurementId:"G-8WJLEE7684"
+ apiKey:"AIzaSyBsmbLMNMFNoI2OpR0maR97XAlDZ39yxkg",
+ authDomain:"khans-restaurant-46083.firebaseapp.com",
+ projectId:"khans-restaurant-46083",
+ storageBucket:"khans-restaurant-46083.firebasestorage.app",
+ messagingSenderId:"788410298373",
+ appId:"1:788410298373:web:9f9806e6566d7911bc6c6c"
 };
 
 const app=initializeApp(firebaseConfig);
-const auth=getAuth(app);
 const db=getFirestore(app);
 
 
@@ -954,1544 +819,1618 @@ let expenses=[];
 let selectedCategory="";
 let editingDishId=null;
 
-let currentOrder=[];
-let currentOrderType="";
+let cart=[];
+let orderType="";
 let paymentMethod="Cash";
 
 
-/* DEFAULT MENU */
-
-const defaultCategories=[
-  "Starters",
-  "Main Course",
-  "Biryani & Rice",
-  "Breads",
-  "Drinks",
-  "Desserts"
+const defaultMenu=[
+ {
+  name:"Starters",
+  dishes:[
+   ["Samosa",3.50],
+   ["Chicken Tikka",8.50],
+   ["Seekh Kebab",8.00]
+  ]
+ },
+ {
+  name:"Main Course",
+  dishes:[
+   ["Chicken Curry",11.00],
+   ["Butter Chicken",12.00],
+   ["Mutton Curry",14.00]
+  ]
+ },
+ {
+  name:"Biryani & Rice",
+  dishes:[
+   ["Chicken Biryani",12.00],
+   ["Mutton Biryani",15.00],
+   ["Plain Rice",4.00]
+  ]
+ },
+ {
+  name:"Breads",
+  dishes:[
+   ["Naan",3.00],
+   ["Garlic Naan",4.00],
+   ["Chapati",2.50]
+  ]
+ },
+ {
+  name:"Drinks",
+  dishes:[
+   ["Tea",2.50],
+   ["Coffee",3.00],
+   ["Soft Drink",2.50]
+  ]
+ },
+ {
+  name:"Desserts",
+  dishes:[
+   ["Gulab Jamun",4.00],
+   ["Ice Cream",4.50]
+  ]
+ }
 ];
 
-const defaultDishes=[
-  {name:"Samosa",price:3.50,category:"Starters"},
-  {name:"Chicken Tikka",price:8.50,category:"Starters"},
-  {name:"Chicken Biryani",price:12,category:"Biryani & Rice"},
-  {name:"Mutton Biryani",price:15,category:"Biryani & Rice"},
-  {name:"Chicken Curry",price:11,category:"Main Course"},
-  {name:"Mutton Curry",price:14,category:"Main Course"},
-  {name:"Butter Chicken",price:12,category:"Main Course"},
-  {name:"Naan",price:3,category:"Breads"},
-  {name:"Garlic Naan",price:4,category:"Breads"},
-  {name:"Rice",price:4,category:"Biryani & Rice"},
-  {name:"Tea",price:2.50,category:"Drinks"},
-  {name:"Coffee",price:3,category:"Drinks"},
-  {name:"Soft Drink",price:2.50,category:"Drinks"},
-  {name:"Gulab Jamun",price:4,category:"Desserts"}
-];
-
-
-/* HELPERS */
-
-function money(value){
-  return "£"+Number(value||0).toFixed(2);
-}
 
 function today(){
-  const d=new Date();
-
-  return d.getFullYear()+"-"+
-    String(d.getMonth()+1).padStart(2,"0")+"-"+
-    String(d.getDate()).padStart(2,"0");
+ return new Date().toISOString().slice(0,10);
 }
 
-function showPage(id){
-
-  document.querySelectorAll(".page")
-    .forEach(p=>p.classList.remove("active"));
-
-  document.getElementById(id)
-    .classList.add("active");
-
-  window.scrollTo(0,0);
-
-  if(id==="menuPage")renderMenuManagement();
-  if(id==="posPage")renderTables();
-  if(id==="tillPage")loadTill();
-  if(id==="expensePage")renderExpenses();
-  if(id==="reportPage")renderReport();
-
+function money(value){
+ return "£"+Number(value||0).toFixed(2);
 }
 
-window.showPage=showPage;
+function clean(text){
+ return String(text)
+ .replaceAll("&","&amp;")
+ .replaceAll("<","&lt;")
+ .replaceAll(">","&gt;")
+ .replaceAll('"',"&quot;")
+ .replaceAll("'","&#039;");
+}
 
 
-/* AUTH */
+/* DATE */
 
-window.login=async function(){
-
-  const email=
-    document.getElementById("loginEmail").value.trim();
-
-  const password=
-    document.getElementById("loginPassword").value;
-
-  try{
-
-    await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-
-  }catch(error){
-
-    document.getElementById("loginError").innerText=
-      "Login failed. Please check your email and password.";
-
-  }
-
-};
-
-window.logout=function(){
-  signOut(auth);
-};
-
-
-onAuthStateChanged(auth,async user=>{
-
-  if(user){
-
-    document.getElementById("loginPage")
-      .classList.add("hidden");
-
-    document.getElementById("app")
-      .classList.remove("hidden");
-
-    document.getElementById("headerDate").innerText=
-      new Date().toLocaleDateString("en-GB",{
-        weekday:"long",
-        day:"2-digit",
-        month:"long",
-        year:"numeric"
-      });
-
-    await loadAll();
-
-  }else{
-
-    document.getElementById("loginPage")
-      .classList.remove("hidden");
-
-    document.getElementById("app")
-      .classList.add("hidden");
-
-  }
-
+document.getElementById("dateDisplay").innerText=
+new Date().toLocaleDateString("en-GB",{
+ weekday:"long",
+ year:"numeric",
+ month:"long",
+ day:"numeric"
 });
 
 
-/* LOAD DATA */
+/* NAVIGATION */
 
-async function loadAll(){
+window.showPage=function(id,button){
 
-  await loadCategories();
-  await loadDishes();
-  await loadOrders();
-  await loadExpenses();
+ document.querySelectorAll(".page")
+ .forEach(p=>p.classList.remove("active"));
 
-  renderMenuManagement();
-  renderTables();
-  renderDashboard();
-  renderExpenses();
-  loadTill();
-  renderReport();
+ document.getElementById(id)
+ .classList.add("active");
 
-}
+ document.querySelectorAll(".nav button")
+ .forEach(b=>b.classList.remove("active"));
+
+ if(button)button.classList.add("active");
+
+ if(id==="home")updateHome();
+ if(id==="menu")renderMenu();
+ if(id==="pos")renderPOSSelection();
+ if(id==="till")loadTill();
+ if(id==="expenses")renderExpenses();
+ if(id==="reports")generateReport();
+};
 
 
-/* CATEGORIES */
+/* LOAD DATABASE */
 
-async function loadCategories(){
+async function loadDatabase(){
 
-  const snap=
-    await getDocs(collection(db,"menuCategories"));
+ try{
+
+  const catSnap=
+  await getDocs(collection(db,"categories"));
 
   categories=[];
 
-  snap.forEach(d=>{
-    categories.push({
-      id:d.id,
-      ...d.data()
-    });
+  catSnap.forEach(d=>{
+   categories.push({
+    id:d.id,
+    ...d.data()
+   });
   });
+
+
+  /* FIRST TIME DEFAULT MENU */
 
   if(categories.length===0){
 
-    for(const name of defaultCategories){
+   for(const category of defaultMenu){
 
-      const ref=
-        await addDoc(
-          collection(db,"menuCategories"),
-          {name}
-        );
+    const ref=await addDoc(
+     collection(db,"categories"),
+     {
+      name:category.name
+     }
+    );
 
-      categories.push({
-        id:ref.id,
-        name
-      });
+    categories.push({
+     id:ref.id,
+     name:category.name
+    });
+
+   }
+
+  }
+
+
+  const dishSnap=
+  await getDocs(collection(db,"dishes"));
+
+  dishes=[];
+
+  dishSnap.forEach(d=>{
+   dishes.push({
+    id:d.id,
+    ...d.data()
+   });
+  });
+
+
+  if(dishes.length===0){
+
+   for(const category of defaultMenu){
+
+    for(const item of category.dishes){
+
+     const ref=await addDoc(
+      collection(db,"dishes"),
+      {
+       name:item[0],
+       price:item[1],
+       category:category.name
+      }
+     );
+
+     dishes.push({
+      id:ref.id,
+      name:item[0],
+      price:item[1],
+      category:category.name
+     });
 
     }
 
+   }
+
   }
 
+
+  const orderSnap=
+  await getDocs(collection(db,"orders"));
+
+  orders=[];
+
+  orderSnap.forEach(d=>{
+   orders.push({
+    id:d.id,
+    ...d.data()
+   });
+  });
+
+
+  const expenseSnap=
+  await getDocs(collection(db,"expenses"));
+
+  expenses=[];
+
+  expenseSnap.forEach(d=>{
+   expenses.push({
+    id:d.id,
+    ...d.data()
+   });
+  });
+
+
   if(!selectedCategory && categories.length){
-    selectedCategory=categories[0].name;
+   selectedCategory=categories[0].name;
   }
+
+
+  renderMenu();
+  renderPOSSelection();
+  updateHome();
+  renderExpenses();
+  loadTill();
+  generateReport();
+
+ }catch(error){
+
+  console.error(error);
+
+  alert(
+   "Firebase connection problem.\n\n"+
+   error.message
+  );
+
+ }
+
+}
+
+loadDatabase();
+
+
+/* HOME */
+
+function updateHome(){
+
+ const todaysOrders=
+ orders.filter(o=>o.date===today());
+
+ let sales=0;
+ let cash=0;
+ let card=0;
+ let qr=0;
+ let delivery=0;
+
+ todaysOrders.forEach(o=>{
+
+  const amount=Number(o.total||0);
+
+  sales+=amount;
+
+  if(o.payment==="Cash")cash+=amount;
+  if(o.payment==="Card")card+=amount;
+  if(o.payment==="QR")qr+=amount;
+
+  if(
+   o.type==="Delivery" ||
+   o.type==="Uber" ||
+   o.type==="Deliveroo"
+  ){
+   delivery+=amount;
+  }
+
+ });
+
+
+ const exp=
+ expenses
+ .filter(e=>e.date===today())
+ .reduce(
+  (total,e)=>total+Number(e.amount||0),
+  0
+ );
+
+
+ document.getElementById("homeSales").innerText=money(sales);
+ document.getElementById("homeOrders").innerText=todaysOrders.length;
+ document.getElementById("homeCash").innerText=money(cash);
+ document.getElementById("homeCard").innerText=money(card);
+ document.getElementById("homeQR").innerText=money(qr);
+ document.getElementById("homeDelivery").innerText=money(delivery);
+ document.getElementById("homeExpenses").innerText=money(exp);
+ document.getElementById("homeProfit").innerText=money(sales-exp);
 
 }
 
 
-async function saveCategory(){
+/* MENU */
 
-  const input=
-    document.getElementById("categoryName");
+function renderMenu(){
 
-  const name=input.value.trim();
+ document.getElementById("menuCategories").innerHTML=
+ categories.map(c=>`
 
-  if(!name){
-    alert("Enter category name.");
-    return;
-  }
+  <button
+   class="${selectedCategory===c.name?"active":""}"
+   onclick="chooseMenuCategory('${c.id}')">
 
-  if(categories.some(c=>c.name.toLowerCase()===name.toLowerCase())){
+   ${clean(c.name)}
 
-    alert("Category already exists.");
-    return;
+  </button>
 
-  }
+ `).join("");
+
+
+ document.getElementById("dishCategory").innerHTML=
+ categories.map(c=>`
+
+  <option value="${clean(c.name)}">
+   ${clean(c.name)}
+  </option>
+
+ `).join("");
+
+
+ if(selectedCategory){
+  document.getElementById("dishCategory").value=
+  selectedCategory;
+ }
+
+
+ const list=
+ dishes.filter(
+  d=>d.category===selectedCategory
+ );
+
+
+ document.getElementById("menuFoods").innerHTML=
+ list.length?
+
+ list.map(d=>`
+
+ <div class="food">
+
+  <b>${clean(d.name)}</b>
+
+  <span>${money(d.price)}</span>
+
+  <button
+   class="small"
+   onclick="editDish('${d.id}')">
+   ✏️ Edit
+  </button>
+
+  <br><br>
+
+  <button
+   class="red"
+   onclick="deleteDish('${d.id}')">
+   🗑 Delete
+  </button>
+
+ </div>
+
+ `).join("")
+
+ :
+
+ "<div class='card'>No dishes in this category.</div>";
+
+}
+
+
+window.chooseMenuCategory=function(id){
+
+ const category=
+ categories.find(c=>c.id===id);
+
+ if(!category)return;
+
+ selectedCategory=category.name;
+
+ renderMenu();
+
+ renderPOSCategories();
+
+};
+
+
+window.addCategory=async function(){
+
+ const name=
+ document.getElementById("categoryName")
+ .value.trim();
+
+ if(!name){
+  alert("Please enter category name.");
+  return;
+ }
+
+ if(
+  categories.some(
+   c=>c.name.toLowerCase()===name.toLowerCase()
+  )
+ ){
+  alert("Category already exists.");
+  return;
+ }
+
+ try{
 
   const ref=
-    await addDoc(
-      collection(db,"menuCategories"),
-      {name}
-    );
+  await addDoc(
+   collection(db,"categories"),
+   {name}
+  );
 
   categories.push({
-    id:ref.id,
-    name
+   id:ref.id,
+   name
   });
 
   selectedCategory=name;
 
-  input.value="";
+  document.getElementById("categoryName").value="";
 
-  renderMenuManagement();
+  renderMenu();
+  renderPOSCategories();
 
-}
+ }catch(error){
+
+  alert(error.message);
+
+ }
+
+};
 
 
-async function deleteCurrentCategory(){
+window.deleteSelectedCategory=async function(){
 
-  if(!selectedCategory)return;
+ const category=
+ categories.find(c=>c.name===selectedCategory);
 
-  const category=
-    categories.find(c=>c.name===selectedCategory);
+ if(!category)return;
 
-  if(!category)return;
+ const hasDishes=
+ dishes.some(
+  d=>d.category===selectedCategory
+ );
 
-  const hasDishes=
-    dishes.some(d=>d.category===selectedCategory);
+ if(hasDishes){
 
-  if(hasDishes){
-
-    alert(
-      "Remove the dishes from this category first."
-    );
-
-    return;
-
-  }
-
-  if(!confirm(
-    "Delete "+selectedCategory+"?"
-  ))return;
-
-  await deleteDoc(
-    doc(db,"menuCategories",category.id)
+  alert(
+   "Please delete all dishes from this category first."
   );
 
-  categories=
-    categories.filter(c=>c.id!==category.id);
+  return;
+ }
 
-  selectedCategory=
-    categories.length?
-    categories[0].name:"";
+ if(!confirm("Delete this category?"))return;
 
-  renderMenuManagement();
+ await deleteDoc(
+  doc(db,"categories",category.id)
+ );
 
-}
+ categories=
+ categories.filter(c=>c.id!==category.id);
 
+ selectedCategory=
+ categories.length?
+ categories[0].name:
+ "";
 
-/* DISHES */
+ renderMenu();
+ renderPOSCategories();
 
-async function loadDishes(){
-
-  const snap=
-    await getDocs(collection(db,"menuDishes"));
-
-  dishes=[];
-
-  snap.forEach(d=>{
-    dishes.push({
-      id:d.id,
-      ...d.data()
-    });
-  });
-
-  if(dishes.length===0){
-
-    for(const item of defaultDishes){
-
-      const ref=
-        await addDoc(
-          collection(db,"menuDishes"),
-          item
-        );
-
-      dishes.push({
-        id:ref.id,
-        ...item
-      });
-
-    }
-
-  }
-
-}
+};
 
 
 window.saveDish=async function(){
 
-  const name=
-    document.getElementById("dishName")
-      .value.trim();
+ const name=
+ document.getElementById("dishName")
+ .value.trim();
 
-  const price=
-    Number(
-      document.getElementById("dishPrice").value
-    );
+ const price=
+ Number(
+  document.getElementById("dishPrice")
+  .value
+ );
 
-  const category=
-    document.getElementById("dishCategory").value;
+ const category=
+ document.getElementById("dishCategory")
+ .value;
 
-  if(!name || !category || price<0){
 
-    alert("Enter dish name, price and category.");
+ if(!name){
+  alert("Enter dish name.");
+  return;
+ }
 
-    return;
-  }
+ if(price<0 || isNaN(price)){
+  alert("Enter valid price.");
+  return;
+ }
 
+
+ try{
 
   if(editingDishId){
 
-    await updateDoc(
-      doc(db,"menuDishes",editingDishId),
-      {
-        name,
-        price,
-        category
-      }
-    );
-
-    const item=
-      dishes.find(d=>d.id===editingDishId);
-
-    if(item){
-
-      item.name=name;
-      item.price=price;
-      item.category=category;
-
+   await updateDoc(
+    doc(db,"dishes",editingDishId),
+    {
+     name,
+     price,
+     category
     }
+   );
 
-    editingDishId=null;
+   const dish=
+   dishes.find(d=>d.id===editingDishId);
+
+   if(dish){
+    dish.name=name;
+    dish.price=price;
+    dish.category=category;
+   }
+
+   editingDishId=null;
 
   }else{
 
-    const ref=
-      await addDoc(
-        collection(db,"menuDishes"),
-        {
-          name,
-          price,
-          category
-        }
-      );
+   const ref=
+   await addDoc(
+    collection(db,"dishes"),
+    {
+     name,
+     price,
+     category
+    }
+   );
 
-    dishes.push({
-      id:ref.id,
-      name,
-      price,
-      category
-    });
+   dishes.push({
+    id:ref.id,
+    name,
+    price,
+    category
+   });
 
   }
 
 
-  document.getElementById("dishName").value="";
-  document.getElementById("dishPrice").value="";
+  clearDishForm();
 
-  renderMenuManagement();
+  renderMenu();
+  renderPOSCategories();
+
+ }catch(error){
+
+  alert(error.message);
+
+ }
 
 };
 
 
 window.editDish=function(id){
 
-  const item=
-    dishes.find(d=>d.id===id);
+ const dish=
+ dishes.find(d=>d.id===id);
 
-  if(!item)return;
+ if(!dish)return;
 
-  document.getElementById("dishName").value=
-    item.name;
+ editingDishId=id;
 
-  document.getElementById("dishPrice").value=
-    item.price;
+ document.getElementById("dishName").value=
+ dish.name;
 
+ document.getElementById("dishPrice").value=
+ dish.price;
+
+ document.getElementById("dishCategory").value=
+ dish.category;
+
+ window.scrollTo({
+  top:document.getElementById("menu").offsetTop,
+  behavior:"smooth"
+ });
+
+};
+
+
+window.clearDishForm=function(){
+
+ editingDishId=null;
+
+ document.getElementById("dishName").value="";
+ document.getElementById("dishPrice").value="";
+
+ if(selectedCategory){
   document.getElementById("dishCategory").value=
-    item.category;
-
-  editingDishId=id;
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
+  selectedCategory;
+ }
 
 };
 
 
 window.deleteDish=async function(id){
 
-  if(!confirm("Delete this dish?"))return;
+ if(!confirm("Delete this dish?"))return;
+
+ try{
 
   await deleteDoc(
-    doc(db,"menuDishes",id)
+   doc(db,"dishes",id)
   );
 
   dishes=
-    dishes.filter(d=>d.id!==id);
+  dishes.filter(d=>d.id!==id);
 
-  renderMenuManagement();
+  renderMenu();
+  renderPOSCategories();
 
-};
+ }catch(error){
 
+  alert(error.message);
 
-function renderMenuManagement(){
-
-  const cats=
-    document.getElementById("managementCategories");
-
-  cats.innerHTML=
-    categories.map(c=>`
-
-      <button
-        class="${selectedCategory===c.name?'active':''}"
-        onclick="selectManagementCategory('${escapeQuote(c.name)}')">
-
-        ${escapeHtml(c.name)}
-
-      </button>
-
-    `).join("");
-
-
-  const select=
-    document.getElementById("dishCategory");
-
-  select.innerHTML=
-    categories.map(c=>`
-
-      <option value="${escapeHtml(c.name)}">
-        ${escapeHtml(c.name)}
-      </option>
-
-    `).join("");
-
-
-  if(selectedCategory){
-
-    document.getElementById("categoryName").value=
-      selectedCategory;
-
-    select.value=selectedCategory;
-
-  }
-
-
-  const list=
-    dishes.filter(
-      d=>d.category===selectedCategory
-    );
-
-
-  document.getElementById("managementMenu")
-    .innerHTML=
-      list.map(d=>`
-
-        <div class="menu-item">
-
-          <h3>${escapeHtml(d.name)}</h3>
-
-          <div class="price">
-            ${money(d.price)}
-          </div>
-
-          <div class="actions">
-
-            <button
-              onclick="editDish('${d.id}')">
-              ✏️ Edit
-            </button>
-
-            <button
-              class="danger"
-              onclick="deleteDish('${d.id}')">
-              🗑️ Delete
-            </button>
-
-          </div>
-
-        </div>
-
-      `).join("");
-
-}
-
-
-window.selectManagementCategory=function(name){
-
-  selectedCategory=name;
-
-  renderMenuManagement();
+ }
 
 };
 
 
-function escapeHtml(text){
+/* POS */
 
-  return String(text)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+function renderPOSSelection(){
 
-}
+ let html="";
 
-function escapeQuote(text){
-  return String(text)
-    .replaceAll("\\","\\\\")
-    .replaceAll("'","\\'");
-}
+ for(let i=1;i<=30;i++){
 
+  const number=
+  String(i).padStart(2,"0");
 
-/* POS TABLES */
+  html+=`
 
-function renderTables(){
+  <button
+   class="table"
+   onclick="startOrder('Table ${number}')">
 
-  let html="";
+   🪑 Table ${number}
 
-  for(let i=1;i<=30;i++){
+  </button>
 
-    const table=
-      "Table "+String(i).padStart(2,"0");
+  `;
 
-    html+=`
+ }
 
-      <button
-        class="table-btn"
-        onclick="startOrder('${table}')">
-
-        🪑 ${table}
-
-      </button>
-
-    `;
-
-  }
-
-  document.getElementById("tableButtons")
-    .innerHTML=html;
+ document.getElementById("tableButtons").innerHTML=html;
 
 }
 
 
 window.startOrder=function(type){
 
-  currentOrderType=type;
-  currentOrder=[];
+ orderType=type;
 
-  paymentMethod="Cash";
+ cart=[];
 
-  document.getElementById("posTableSelection")
-    .classList.add("hidden");
+ paymentMethod="Cash";
 
-  document.getElementById("posOrder")
-    .classList.remove("hidden");
+ document.getElementById("orderSelection")
+ .style.display="none";
 
-  document.getElementById("currentOrderTitle")
-    .innerText=
-      "Order: "+type;
+ document.getElementById("posScreen")
+ .style.display="block";
 
-  renderPOSCategories();
+ document.getElementById("currentOrderTitle")
+ .innerText=
+ "Current Order - "+type;
 
-  renderPOSMenu();
-
-  renderCart();
-
-};
-
-
-window.backToTables=function(){
-
-  document.getElementById("posTableSelection")
-    .classList.remove("hidden");
-
-  document.getElementById("posOrder")
-    .classList.add("hidden");
-
-  currentOrder=[];
+ renderPOSCategories();
+ renderCart();
 
 };
 
 
 function renderPOSCategories(){
 
-  document.getElementById("posCategories")
-    .innerHTML=
-      categories.map(c=>`
+ document.getElementById("posCategories").innerHTML=
+ categories.map(c=>`
 
-        <button
-          class="${selectedCategory===c.name?'active':''}"
-          onclick="selectPOSCategory('${escapeQuote(c.name)}')">
+ <button
+  class="${selectedCategory===c.name?"active":""}"
+  onclick="choosePOSCategory('${c.id}')">
 
-          ${escapeHtml(c.name)}
+  ${clean(c.name)}
 
-        </button>
+ </button>
 
-      `).join("");
+ `).join("");
 
-}
-
-
-window.selectPOSCategory=function(name){
-
-  selectedCategory=name;
-
-  renderPOSCategories();
-
-  renderPOSMenu();
-
-};
-
-
-function renderPOSMenu(){
-
-  const list=
-    dishes.filter(
-      d=>d.category===selectedCategory
-    );
-
-  document.getElementById("posMenu")
-    .innerHTML=
-      list.map(d=>`
-
-        <div class="menu-item">
-
-          <h3>${escapeHtml(d.name)}</h3>
-
-          <div class="price">
-            ${money(d.price)}
-          </div>
-
-          <button
-            onclick="addToOrder('${d.id}')">
-            ADD
-          </button>
-
-        </div>
-
-      `).join("");
+ renderPOSFoods();
 
 }
 
 
-window.addToOrder=function(id){
+window.choosePOSCategory=function(id){
 
-  const dish=
-    dishes.find(d=>d.id===id);
+ const category=
+ categories.find(c=>c.id===id);
 
-  if(!dish)return;
+ if(!category)return;
 
-  const existing=
-    currentOrder.find(
-      x=>x.dishId===id
-    );
+ selectedCategory=category.name;
 
-  if(existing){
-
-    existing.qty++;
-
-  }else{
-
-    currentOrder.push({
-      dishId:dish.id,
-      name:dish.name,
-      price:Number(dish.price),
-      qty:1
-    });
-
-  }
-
-  renderCart();
+ renderPOSCategories();
 
 };
 
 
-window.changeQty=function(index,change){
+function renderPOSFoods(){
 
-  if(!currentOrder[index])return;
+ const list=
+ dishes.filter(
+  d=>d.category===selectedCategory
+ );
 
-  currentOrder[index].qty+=change;
+ document.getElementById("posFoods").innerHTML=
+ list.length?
 
-  if(currentOrder[index].qty<=0){
-    currentOrder.splice(index,1);
-  }
+ list.map(d=>`
 
-  renderCart();
+ <div class="food">
+
+  <b>${clean(d.name)}</b>
+
+  <span>${money(d.price)}</span>
+
+  <button
+   onclick="addToCart('${d.id}')">
+   ADD
+  </button>
+
+ </div>
+
+ `).join("")
+
+ :
+
+ "<p>No dishes in this category.</p>";
+
+}
+
+
+window.addToCart=function(id){
+
+ const dish=
+ dishes.find(d=>d.id===id);
+
+ if(!dish)return;
+
+ const existing=
+ cart.find(c=>c.id===id);
+
+ if(existing){
+
+  existing.qty++;
+
+ }else{
+
+  cart.push({
+   id:dish.id,
+   name:dish.name,
+   price:Number(dish.price),
+   qty:1
+  });
+
+ }
+
+ renderCart();
 
 };
 
 
 function renderCart(){
 
-  const cart=
-    document.getElementById("cart");
+ const element=
+ document.getElementById("cartItems");
 
-  if(currentOrder.length===0){
+ if(cart.length===0){
 
-    cart.innerHTML=
-      "<p>No items added.</p>";
+  element.innerHTML=
+  "<p>No items selected.</p>";
 
-    document.getElementById("cartTotal")
-      .innerText="£0.00";
+ }else{
 
-    return;
+  element.innerHTML=
+  cart.map((item,index)=>`
 
-  }
+   <div class="cart-row">
 
+    <div>
+     <b>${clean(item.name)}</b>
+     <br>
+     ${money(item.price)} × ${item.qty}
+    </div>
 
-  cart.innerHTML=
-    currentOrder.map((item,index)=>`
+    <div class="qty">
 
-      <div class="cart-row">
+     <button
+      onclick="changeQty(${index},-1)">
+      −
+     </button>
 
-        <div>
-          <b>${escapeHtml(item.name)}</b><br>
-          ${money(item.price)}
-        </div>
+     <button
+      onclick="changeQty(${index},1)">
+      +
+     </button>
 
-        <div class="qty">
+    </div>
 
-          <b>${money(item.price*item.qty)}</b>
+   </div>
 
-          <button
-            onclick="changeQty(${index},-1)">
-            −
-          </button>
+  `).join("");
 
-          <span>${item.qty}</span>
-
-          <button
-            onclick="changeQty(${index},1)">
-            +
-          </button>
-
-        </div>
-
-      </div>
-
-    `).join("");
+ }
 
 
-  const total=
-    currentOrder.reduce(
-      (sum,item)=>
-        sum+(item.price*item.qty),
-      0
-    );
+ const total=
+ cart.reduce(
+  (sum,item)=>
+  sum+(item.price*item.qty),
+  0
+ );
 
-  document.getElementById("cartTotal")
-    .innerText=money(total);
+ document.getElementById("cartTotal")
+ .innerText=money(total);
 
 }
+
+
+window.changeQty=function(index,change){
+
+ cart[index].qty+=change;
+
+ if(cart[index].qty<=0){
+  cart.splice(index,1);
+ }
+
+ renderCart();
+
+};
 
 
 window.setPayment=function(method,button){
 
-  paymentMethod=method;
+ paymentMethod=method;
 
-  document.querySelectorAll(".payment-btn")
-    .forEach(b=>b.classList.remove("selected"));
+ document.querySelectorAll(".payment button")
+ .forEach(b=>b.classList.remove("active"));
 
-  button.classList.add("selected");
+ button.classList.add("active");
 
 };
 
-
-/* COMPLETE SALE */
 
 window.completeSale=async function(){
 
-  if(currentOrder.length===0){
+ if(cart.length===0){
 
-    alert("Please add dishes to the order.");
+  alert("Please select at least one dish.");
+  return;
 
-    return;
+ }
 
-  }
-
-
-  const total=
-    currentOrder.reduce(
-      (sum,item)=>
-        sum+(item.price*item.qty),
-      0
-    );
+ const total=
+ cart.reduce(
+  (sum,item)=>
+  sum+(item.price*item.qty),
+  0
+ );
 
 
-  const sale={
+ const sale={
 
-    date:today(),
+  date:today(),
 
-    orderType:currentOrderType,
+  type:orderType,
 
-    payment:paymentMethod,
+  payment:paymentMethod,
 
-    items:currentOrder,
+  items:cart.map(item=>({
+   id:item.id,
+   name:item.name,
+   price:item.price,
+   qty:item.qty
+  })),
 
-    subtotal:total,
+  total:total,
 
-    total:total,
+  orderNumber:
+  "KH-"+Date.now(),
 
-    createdAt:new Date().toISOString(),
+  createdAt:
+  new Date().toISOString()
 
-    orderNumber:
-      "KH-"+Date.now()
-
-  };
+ };
 
 
-  try{
+ try{
 
-    await addDoc(
-      collection(db,"orders"),
-      sale
-    );
+  const ref=
+  await addDoc(
+   collection(db,"orders"),
+   sale
+  );
 
-    alert(
-      "SALE COMPLETED\n\n"+
-      "Order: "+sale.orderNumber+
-      "\nTotal: "+money(total)
-    );
+  orders.push({
+   id:ref.id,
+   ...sale
+  });
 
-    currentOrder=[];
 
-    await loadOrders();
+  alert(
+   "✅ Sale Completed\n\n"+
+   "Order: "+sale.orderNumber+
+   "\nType: "+sale.type+
+   "\nPayment: "+sale.payment+
+   "\nTotal: "+money(sale.total)
+  );
 
-    renderDashboard();
 
-    loadTill();
+  cart=[];
 
-    backToTables();
+  backToOrders();
 
-  }catch(error){
+  updateHome();
+  loadTill();
+  generateReport();
 
-    alert(
-      "Sale could not be saved.\n"+
-      error.message
-    );
+ }catch(error){
 
-  }
+  alert(
+   "Sale could not be saved.\n\n"+
+   error.message
+  );
+
+ }
 
 };
 
 
-/* ORDERS */
+window.backToOrders=function(){
 
-async function loadOrders(){
+ cart=[];
 
-  const snap=
-    await getDocs(
-      collection(db,"orders")
-    );
+ document.getElementById("orderSelection")
+ .style.display="block";
 
-  orders=[];
+ document.getElementById("posScreen")
+ .style.display="none";
 
-  snap.forEach(d=>{
-
-    orders.push({
-      id:d.id,
-      ...d.data()
-    });
-
-  });
-
-}
-
-
-/* DASHBOARD */
-
-function renderDashboard(){
-
-  const date=today();
-
-  const todayOrders=
-    orders.filter(
-      o=>o.date===date
-    );
-
-
-  const sales=
-    todayOrders.reduce(
-      (s,o)=>s+Number(o.total||0),
-      0
-    );
-
-
-  let cash=0;
-  let card=0;
-  let qr=0;
-  let delivery=0;
-
-
-  todayOrders.forEach(o=>{
-
-    const amount=
-      Number(o.total||0);
-
-    if(o.payment==="Cash")cash+=amount;
-    if(o.payment==="Card")card+=amount;
-    if(o.payment==="QR")qr+=amount;
-
-    if(
-      ["Delivery","Uber","Deliveroo"]
-      .includes(o.orderType)
-    ){
-      delivery+=amount;
-    }
-
-  });
-
-
-  const expensesToday=
-    expenses.filter(
-      e=>e.date===date
-    ).reduce(
-      (s,e)=>s+Number(e.amount||0),
-      0
-    );
-
-
-  document.getElementById("dashSales")
-    .innerText=money(sales);
-
-  document.getElementById("dashOrders")
-    .innerText=todayOrders.length;
-
-  document.getElementById("dashCash")
-    .innerText=money(cash);
-
-  document.getElementById("dashCard")
-    .innerText=money(card);
-
-  document.getElementById("dashQR")
-    .innerText=money(qr);
-
-  document.getElementById("dashDelivery")
-    .innerText=money(delivery);
-
-  document.getElementById("dashExpenses")
-    .innerText=money(expensesToday);
-
-  document.getElementById("dashProfit")
-    .innerText=money(sales-expensesToday);
-
-}
+};
 
 
 /* TILL */
 
-async function getTill(){
+function loadTill(){
 
-  const ref=
-    doc(db,"dailyTills",today());
+ document.getElementById("tillDate")
+ .innerText=
+ new Date().toLocaleDateString("en-GB");
 
-  const snap=
-    await getDoc(ref);
 
-  if(snap.exists()){
-    return snap.data();
+ const saved=
+ localStorage.getItem(
+  "khansTill_"+today()
+ );
+
+
+ if(saved){
+
+  const data=JSON.parse(saved);
+
+  setValue("mainTill",data.mainTill);
+  setValue("pettyCash",data.pettyCash);
+  setValue("tillCash",data.cash);
+  setValue("tillCard",data.card);
+  setValue("tillQR",data.qr);
+  setValue("tillUber",data.uber);
+  setValue("tillDeliveroo",data.deliveroo);
+  setValue("deliveryCash",data.deliveryCash);
+  setValue("deliveryCard",data.deliveryCard);
+  setValue("deliveryQR",data.deliveryQR);
+  setValue("cashTaken",data.cashTaken);
+  setValue("physicalCash",data.physicalCash);
+
+ }else{
+
+  /*
+   Automatically load today's POS amounts.
+   User can still edit them.
+  */
+
+  const totals=
+  calculateSalesFromOrders();
+
+  setValue("tillCash",totals.cash);
+  setValue("tillCard",totals.card);
+  setValue("tillQR",totals.qr);
+  setValue("tillUber",totals.uber);
+  setValue("tillDeliveroo",totals.deliveroo);
+  setValue("deliveryCash",totals.deliveryCash);
+  setValue("deliveryCard",totals.deliveryCard);
+  setValue("deliveryQR",totals.deliveryQR);
+
+ }
+
+
+ calculateTill();
+
+}
+
+
+function setValue(id,value){
+
+ document.getElementById(id).value=
+ Number(value||0);
+
+}
+
+
+function calculateSalesFromOrders(){
+
+ let result={
+  cash:0,
+  card:0,
+  qr:0,
+  uber:0,
+  deliveroo:0,
+  deliveryCash:0,
+  deliveryCard:0,
+  deliveryQR:0
+ };
+
+
+ orders
+ .filter(o=>o.date===today())
+ .forEach(o=>{
+
+  const amount=
+  Number(o.total||0);
+
+
+  if(o.type==="Uber"){
+
+   result.uber+=amount;
+
+  }else if(o.type==="Deliveroo"){
+
+   result.deliveroo+=amount;
+
+  }else if(o.type==="Delivery"){
+
+   if(o.payment==="Cash")
+    result.deliveryCash+=amount;
+
+   if(o.payment==="Card")
+    result.deliveryCard+=amount;
+
+   if(o.payment==="QR")
+    result.deliveryQR+=amount;
+
+  }else{
+
+   if(o.payment==="Cash")
+    result.cash+=amount;
+
+   if(o.payment==="Card")
+    result.card+=amount;
+
+   if(o.payment==="QR")
+    result.qr+=amount;
+
   }
 
-  return {
-    mainTill:0,
-    pettyCash:0,
-    cashTaken:0,
-    physicalCash:0
-  };
-
-}
+ });
 
 
-function getTodayPOS(){
-
-  const list=
-    orders.filter(
-      o=>o.date===today()
-    );
-
-
-  let cash=0;
-  let card=0;
-  let qr=0;
-  let uber=0;
-  let deliveroo=0;
-  let deliveryCash=0;
-  let deliveryCard=0;
-  let deliveryQR=0;
-
-
-  list.forEach(o=>{
-
-    const amount=
-      Number(o.total||0);
-
-
-    if(o.orderType==="Uber"){
-
-      uber+=amount;
-
-    }else if(o.orderType==="Deliveroo"){
-
-      deliveroo+=amount;
-
-    }else if(o.orderType==="Delivery"){
-
-      if(o.payment==="Cash")
-        deliveryCash+=amount;
-
-      if(o.payment==="Card")
-        deliveryCard+=amount;
-
-      if(o.payment==="QR")
-        deliveryQR+=amount;
-
-    }else{
-
-      if(o.payment==="Cash")
-        cash+=amount;
-
-      if(o.payment==="Card")
-        card+=amount;
-
-      if(o.payment==="QR")
-        qr+=amount;
-
-    }
-
-  });
-
-
-  return {
-    cash,
-    card,
-    qr,
-    uber,
-    deliveroo,
-    deliveryCash,
-    deliveryCard,
-    deliveryQR
-  };
-
-}
-
-
-async function loadTill(){
-
-  const manual=
-    await getTill();
-
-  const pos=
-    getTodayPOS();
-
-
-  document.getElementById("tillDate")
-    .innerText=
-      new Date().toLocaleDateString("en-GB");
-
-
-  document.getElementById("mainTill")
-    .value=
-      Number(manual.mainTill||0).toFixed(2);
-
-  document.getElementById("pettyCash")
-    .value=
-      Number(manual.pettyCash||0).toFixed(2);
-
-  document.getElementById("cashTaken")
-    .value=
-      Number(manual.cashTaken||0).toFixed(2);
-
-  document.getElementById("physicalCash")
-    .value=
-      Number(manual.physicalCash||0).toFixed(2);
-
-
-  document.getElementById("tillCash")
-    .innerText=money(pos.cash);
-
-  document.getElementById("tillCard")
-    .innerText=money(pos.card);
-
-  document.getElementById("tillQR")
-    .innerText=money(pos.qr);
-
-  document.getElementById("tillUber")
-    .innerText=money(pos.uber);
-
-  document.getElementById("tillDeliveroo")
-    .innerText=money(pos.deliveroo);
-
-  document.getElementById("tillDeliveryCash")
-    .innerText=money(pos.deliveryCash);
-
-  document.getElementById("tillDeliveryCard")
-    .innerText=money(pos.deliveryCard);
-
-  document.getElementById("tillDeliveryQR")
-    .innerText=money(pos.deliveryQR);
-
-
-  calculateTill();
+ return result;
 
 }
 
 
 window.calculateTill=function(){
 
-  const mainTill=
-    Number(
-      document.getElementById("mainTill").value
-    )||0;
+ const main=
+ Number(document.getElementById("mainTill").value)||0;
 
-  const petty=
-    Number(
-      document.getElementById("pettyCash").value
-    )||0;
+ const petty=
+ Number(document.getElementById("pettyCash").value)||0;
 
-  const cashTaken=
-    Number(
-      document.getElementById("cashTaken").value
-    )||0;
+ const cash=
+ Number(document.getElementById("tillCash").value)||0;
 
-  const physical=
-    Number(
-      document.getElementById("physicalCash").value
-    )||0;
+ const card=
+ Number(document.getElementById("tillCard").value)||0;
 
+ const qr=
+ Number(document.getElementById("tillQR").value)||0;
 
-  const cash=
-    Number(
-      document.getElementById("tillCash")
-        .innerText.replace("£","")
-    )||0;
+ const uber=
+ Number(document.getElementById("tillUber").value)||0;
 
+ const deliveroo=
+ Number(document.getElementById("tillDeliveroo").value)||0;
 
-  const posTotal=
-    ["tillCash","tillCard","tillQR",
-     "tillUber","tillDeliveroo",
-     "tillDeliveryCash","tillDeliveryCard",
-     "tillDeliveryQR"]
-    .reduce((sum,id)=>{
+ const deliveryCash=
+ Number(document.getElementById("deliveryCash").value)||0;
 
-      return sum+
-        (Number(
-          document.getElementById(id)
-            .innerText.replace("£","")
-        )||0);
+ const deliveryCard=
+ Number(document.getElementById("deliveryCard").value)||0;
 
-    },0);
+ const deliveryQR=
+ Number(document.getElementById("deliveryQR").value)||0;
+
+ const cashTaken=
+ Number(document.getElementById("cashTaken").value)||0;
+
+ const physical=
+ Number(document.getElementById("physicalCash").value)||0;
 
 
-  const expected=
-    mainTill+
-    petty+
-    cash-
-    cashTaken;
+ const totalSales=
+ cash+
+ card+
+ qr+
+ uber+
+ deliveroo+
+ deliveryCash+
+ deliveryCard+
+ deliveryQR;
 
 
-  const difference=
-    physical-
-    expected;
+ const expensesToday=
+ expenses
+ .filter(e=>e.date===today())
+ .reduce(
+  (sum,e)=>sum+Number(e.amount||0),
+  0
+ );
 
 
-  document.getElementById("tillPOSTotal")
-    .innerText=money(posTotal);
+ /*
+  Expected physical cash:
 
-  document.getElementById("expectedClosing")
-    .innerText=money(expected);
+  Main Till
+  + Petty Cash
+  + Cash sales
+  + Delivery Cash
+  - Expenses
+  - Cash Taken
+ */
 
-  document.getElementById("actualClosing")
-    .innerText=money(physical);
+ const expected=
+ main+
+ petty+
+ cash+
+ deliveryCash-
+ expensesToday-
+ cashTaken;
 
-  document.getElementById("cashDifference")
-    .innerText=money(difference);
+
+ const difference=
+ physical-expected;
+
+
+ document.getElementById("tillTotal")
+ .innerText=money(totalSales);
+
+ document.getElementById("tillExpenses")
+ .innerText=money(expensesToday);
+
+ document.getElementById("expectedCash")
+ .innerText=money(expected);
+
+ document.getElementById("actualCash")
+ .innerText=money(physical);
+
+ document.getElementById("cashDifference")
+ .innerText=money(difference);
 
 };
 
 
 window.saveTill=async function(){
 
-  const data={
+ const data={
 
-    date:today(),
+  date:today(),
 
-    mainTill:
-      Number(
-        document.getElementById("mainTill").value
-      )||0,
+  mainTill:
+  Number(document.getElementById("mainTill").value)||0,
 
-    pettyCash:
-      Number(
-        document.getElementById("pettyCash").value
-      )||0,
+  pettyCash:
+  Number(document.getElementById("pettyCash").value)||0,
 
-    cashTaken:
-      Number(
-        document.getElementById("cashTaken").value
-      )||0,
+  cash:
+  Number(document.getElementById("tillCash").value)||0,
 
-    physicalCash:
-      Number(
-        document.getElementById("physicalCash").value
-      )||0,
+  card:
+  Number(document.getElementById("tillCard").value)||0,
 
-    updatedAt:new Date().toISOString()
+  qr:
+  Number(document.getElementById("tillQR").value)||0,
 
-  };
+  uber:
+  Number(document.getElementById("tillUber").value)||0,
 
+  deliveroo:
+  Number(document.getElementById("tillDeliveroo").value)||0,
+
+  deliveryCash:
+  Number(document.getElementById("deliveryCash").value)||0,
+
+  deliveryCard:
+  Number(document.getElementById("deliveryCard").value)||0,
+
+  deliveryQR:
+  Number(document.getElementById("deliveryQR").value)||0,
+
+  cashTaken:
+  Number(document.getElementById("cashTaken").value)||0,
+
+  physicalCash:
+  Number(document.getElementById("physicalCash").value)||0,
+
+  updatedAt:
+  new Date().toISOString()
+
+ };
+
+
+ try{
+
+  /*
+   Save locally immediately.
+   This also makes the editable Till stay on the device.
+  */
+
+  localStorage.setItem(
+   "khansTill_"+today(),
+   JSON.stringify(data)
+  );
+
+
+  /*
+   Save to Firebase as well.
+  */
 
   await setDoc(
-    doc(db,"dailyTills",today()),
-    data,
-    {merge:true}
+   doc(db,"tills",today()),
+   data
   );
 
 
   document.getElementById("tillMessage")
-    .innerText=
-      "✅ Daily Till saved successfully.";
+  .innerText=
+  "✅ Till saved successfully to Firebase.";
+
+
+ }catch(error){
+
+  /*
+   Local save remains available even if Firebase
+   temporarily rejects the save.
+  */
+
+  document.getElementById("tillMessage")
+  .innerText=
+  "⚠️ Saved on this device. Firebase error: "+
+  error.message;
+
+ }
 
 };
 
 
 /* EXPENSES */
 
-async function loadExpenses(){
-
-  const snap=
-    await getDocs(
-      collection(db,"expenses")
-    );
-
-  expenses=[];
-
-  snap.forEach(d=>{
-
-    expenses.push({
-      id:d.id,
-      ...d.data()
-    });
-
-  });
-
-}
-
-
 window.addExpense=async function(){
 
-  const category=
-    document.getElementById("expenseCategory")
-      .value;
+ const category=
+ document.getElementById("expenseCategory")
+ .value;
 
-  const amount=
-    Number(
-      document.getElementById("expenseAmount")
-        .value
-    );
+ const amount=
+ Number(
+  document.getElementById("expenseAmount")
+  .value
+ );
 
-  const note=
-    document.getElementById("expenseNote")
-      .value.trim();
-
-
-  if(!amount || amount<=0){
-
-    alert("Enter expense amount.");
-
-    return;
-
-  }
+ const note=
+ document.getElementById("expenseNote")
+ .value.trim();
 
 
+ if(!amount || amount<=0){
+
+  alert("Please enter expense amount.");
+  return;
+
+ }
+
+
+ const expense={
+
+  date:today(),
+
+  category,
+
+  amount,
+
+  note,
+
+  createdAt:
+  new Date().toISOString()
+
+ };
+
+
+ try{
+
+  const ref=
   await addDoc(
-    collection(db,"expenses"),
-    {
-      date:today(),
-      category,
-      amount,
-      note,
-      createdAt:new Date().toISOString()
-    }
+   collection(db,"expenses"),
+   expense
   );
+
+  expenses.push({
+   id:ref.id,
+   ...expense
+  });
 
 
   document.getElementById("expenseAmount")
-    .value="";
+  .value="";
 
   document.getElementById("expenseNote")
-    .value="";
+  .value="";
 
-
-  await loadExpenses();
 
   renderExpenses();
+  updateHome();
+  calculateTill();
+  generateReport();
 
-  renderDashboard();
+
+ }catch(error){
+
+  alert(error.message);
+
+ }
 
 };
 
 
 function renderExpenses(){
 
-  const list=
-    document.getElementById("expenseList");
+ const list=
+ expenses.filter(
+  e=>e.date===today()
+ );
 
 
-  list.innerHTML=
-    expenses
-      .sort(
-        (a,b)=>
-          String(b.createdAt)
-          .localeCompare(
-            String(a.createdAt)
-          )
-      )
-      .map(e=>`
+ document.getElementById("expenseList").innerHTML=
 
-        <div class="expense-row">
+ list.length?
 
-          <div>
+ list.map(e=>`
 
-            <b>${escapeHtml(e.category)}</b>
+ <div class="list-row">
 
-            <div class="small">
-              ${escapeHtml(e.note||"")}
-            </div>
+  <div>
+   <b>${clean(e.category)}</b>
+   <br>
+   <small>${clean(e.note||"")}</small>
+  </div>
 
-            <div class="small">
-              ${escapeHtml(e.date)}
-            </div>
+  <div>
+   <b>${money(e.amount)}</b>
+   <br>
+   <button
+    class="red"
+    onclick="deleteExpense('${e.id}')">
+    Delete
+   </button>
+  </div>
 
-          </div>
+ </div>
 
-          <b>${money(e.amount)}</b>
+ `).join("")
 
-        </div>
+ :
 
-      `).join("");
+ "<p>No expenses today.</p>";
 
 }
 
 
+window.deleteExpense=async function(id){
+
+ if(!confirm("Delete this expense?"))return;
+
+ try{
+
+  await deleteDoc(
+   doc(db,"expenses",id)
+  );
+
+  expenses=
+  expenses.filter(e=>e.id!==id);
+
+  renderExpenses();
+  updateHome();
+  calculateTill();
+  generateReport();
+
+ }catch(error){
+
+  alert(error.message);
+
+ }
+
+};
+
+
 /* REPORTS */
 
-window.renderReport=function(){
+window.generateReport=function(){
 
-  const period=
-    document.getElementById("reportPeriod")
-      .value;
-
-  const now=new Date();
-
-  let start=new Date(now);
+ const period=
+ document.getElementById("reportPeriod").value;
 
 
-  if(period==="daily"){
+ const now=
+ new Date();
 
-    start=new Date(now);
-    start.setHours(0,0,0,0);
+ let start=
+ new Date(now);
+
+
+ if(period==="daily"){
+
+  start=
+  new Date(
+   now.getFullYear(),
+   now.getMonth(),
+   now.getDate()
+  );
+
+ }
+
+
+ if(period==="weekly"){
+
+  start.setDate(
+   now.getDate()-6
+  );
+
+ }
+
+
+ if(period==="monthly"){
+
+  start=
+  new Date(
+   now.getFullYear(),
+   now.getMonth(),
+   1
+  );
+
+ }
+
+
+ if(period==="quarterly"){
+
+  start=
+  new Date(
+   now.getFullYear(),
+   Math.floor(now.getMonth()/3)*3,
+   1
+  );
+
+ }
+
+
+ if(period==="six"){
+
+  start=
+  new Date(
+   now.getFullYear(),
+   now.getMonth()-5,
+   1
+  );
+
+ }
+
+
+ if(period==="yearly"){
+
+  start=
+  new Date(
+   now.getFullYear(),
+   0,
+   1
+  );
+
+ }
+
+
+ const startDate=
+ start.toISOString().slice(0,10);
+
+
+ const selectedOrders=
+ orders.filter(
+  o=>o.date>=startDate
+ );
+
+
+ const selectedExpenses=
+ expenses.filter(
+  e=>e.date>=startDate
+ );
+
+
+ let sales=0;
+ let cash=0;
+ let card=0;
+ let qr=0;
+ let delivery=0;
+
+
+ selectedOrders.forEach(o=>{
+
+  const amount=
+  Number(o.total||0);
+
+  sales+=amount;
+
+  if(o.payment==="Cash")
+   cash+=amount;
+
+  if(o.payment==="Card")
+   card+=amount;
+
+  if(o.payment==="QR")
+   qr+=amount;
+
+  if(
+   o.type==="Delivery" ||
+   o.type==="Uber" ||
+   o.type==="Deliveroo"
+  ){
+
+   delivery+=amount;
 
   }
 
-  if(period==="weekly"){
-
-    start.setDate(
-      now.getDate()-6
-    );
-
-  }
-
-  if(period==="monthly"){
-
-    start=new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      1
-    );
-
-  }
-
-  if(period==="quarterly"){
-
-    start=new Date(
-      now.getFullYear(),
-      Math.floor(now.getMonth()/3)*3,
-      1
-    );
-
-  }
-
-  if(period==="sixmonths"){
-
-    start=new Date(
-      now.getFullYear(),
-      now.getMonth()-5,
-      1
-    );
-
-  }
-
-  if(period==="yearly"){
-
-    start=new Date(
-      now.getFullYear(),
-      0,
-      1
-    );
-
-  }
+ });
 
 
-  const sales=
-    orders.filter(
-      o=>new Date(o.date)>=start
-    );
+ const totalExpenses=
+ selectedExpenses.reduce(
+  (sum,e)=>
+  sum+Number(e.amount||0),
+  0
+ );
 
 
-  const totalSales=
-    sales.reduce(
-      (s,o)=>
-        s+Number(o.total||0),
-      0
-    );
+ document.getElementById("reportSales")
+ .innerText=money(sales);
 
+ document.getElementById("reportOrders")
+ .innerText=selectedOrders.length;
 
-  const totalExpenses=
-    expenses.filter(
-      e=>new Date(e.date)>=start
-    ).reduce(
-      (s,e)=>
-        s+Number(e.amount||0),
-      0
-    );
+ document.getElementById("reportExpenses")
+ .innerText=money(totalExpenses);
 
+ document.getElementById("reportProfit")
+ .innerText=money(
+  sales-totalExpenses
+ );
 
-  const cash=
-    sales
-      .filter(o=>o.payment==="Cash")
-      .reduce(
-        (s,o)=>s+Number(o.total||0),
-        0
-      );
+ document.getElementById("reportCash")
+ .innerText=money(cash);
 
+ document.getElementById("reportCard")
+ .innerText=money(card);
 
-  const card=
-    sales
-      .filter(o=>o.payment==="Card")
-      .reduce(
-        (s,o)=>s+Number(o.total||0),
-        0
-      );
+ document.getElementById("reportQR")
+ .innerText=money(qr);
 
-
-  const qr=
-    sales
-      .filter(o=>o.payment==="QR")
-      .reduce(
-        (s,o)=>s+Number(o.total||0),
-        0
-      );
-
-
-  const profit=
-    totalSales-totalExpenses;
-
-
-  document.getElementById("reportResult")
-    .innerHTML=`
-
-      <div class="cards">
-
-        <div class="card">
-          <small>Total Sales</small>
-          <strong>${money(totalSales)}</strong>
-        </div>
-
-        <div class="card">
-          <small>Total Orders</small>
-          <strong>${sales.length}</strong>
-        </div>
-
-        <div class="card">
-          <small>Total Expenses</small>
-          <strong>${money(totalExpenses)}</strong>
-        </div>
-
-        <div class="card">
-          <small>Estimated Profit</small>
-          <strong>${money(profit)}</strong>
-        </div>
-
-        <div class="card">
-          <small>Cash Sales</small>
-          <strong>${money(cash)}</strong>
-        </div>
-
-        <div class="card">
-          <small>Card Sales</small>
-          <strong>${money(card)}</strong>
-        </div>
-
-        <div class="card">
-          <small>QR Sales</small>
-          <strong>${money(qr)}</strong>
-        </div>
-
-      </div>
-
-    `;
+ document.getElementById("reportDelivery")
+ .innerText=money(delivery);
 
 };
 
