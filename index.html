@@ -2,492 +2,305 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#111827">
 <title>Khan's Restaurant</title>
 
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-}
-
+*{box-sizing:border-box}
 body{
-    background:#f3f4f6;
-    color:#111827;
-    padding-bottom:85px;
+ margin:0;
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial;
+ background:#f3f4f6;
+ color:#111827;
+ padding-bottom:80px
 }
-
-button{
-    cursor:pointer;
+button,input,select{font:inherit}
+button{cursor:pointer}
+input,select{
+ width:100%;
+ padding:12px;
+ margin:5px 0 10px;
+ border:1px solid #d1d5db;
+ border-radius:10px;
+ background:white
 }
-
-input,select,textarea{
-    width:100%;
-    padding:13px;
-    border:1px solid #d1d5db;
-    border-radius:12px;
-    margin:6px 0;
-    font-size:15px;
-    background:white;
-}
-
-textarea{
-    min-height:80px;
-}
-
-.hidden{
-    display:none!important;
-}
-
-/* LOGIN */
+.hidden{display:none!important}
 
 .login{
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-    background:#111827;
+ min-height:100vh;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ background:#111827;
+ padding:20px
 }
-
 .login-box{
-    background:white;
-    width:100%;
-    max-width:400px;
-    padding:30px;
-    border-radius:25px;
+ background:white;
+ padding:30px;
+ width:100%;
+ max-width:380px;
+ border-radius:22px;
+ text-align:center
 }
-
-.login-box h1{
-    text-align:center;
-    margin-bottom:8px;
-}
-
-.login-box p{
-    text-align:center;
-    color:#6b7280;
-    margin-bottom:20px;
-}
-
-/* HEADER */
-
-.header{
-    background:#111827;
-    color:white;
-    padding:25px 18px;
-    border-radius:0 0 25px 25px;
-}
-
-.header h1{
-    font-size:24px;
-}
-
-.header p{
-    opacity:.7;
-    font-size:13px;
-    margin-top:4px;
-}
-
-.container{
-    padding:18px;
-}
-
-/* BUTTONS */
+.login-box h1{margin-top:0}
 
 .btn{
-    width:100%;
-    border:0;
-    background:#111827;
-    color:white;
-    padding:14px;
-    border-radius:12px;
-    font-weight:700;
+ width:100%;
+ padding:13px;
+ border:0;
+ border-radius:11px;
+ background:#111827;
+ color:white;
+ font-weight:700
 }
+.btn.red{background:#991b1b}
+.btn.green{background:#166534}
 
-.add-btn{
-    width:100%;
-    border:0;
-    background:#111827;
-    color:white;
-    padding:14px;
-    border-radius:13px;
-    font-weight:700;
-    margin-bottom:12px;
+.header{
+ background:#111827;
+ color:white;
+ padding:23px 18px;
+ border-radius:0 0 22px 22px
 }
+.header h1{margin:0;font-size:23px}
+.header p{margin:5px 0 0;color:#cbd5e1}
 
-.red-btn{
-    background:#991b1b;
-}
+.container{padding:17px}
 
-/* CARDS */
+.page{display:none}
+.page.active{display:block}
 
 .cards{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:12px
 }
-
 .card{
-    background:white;
-    padding:17px;
-    border-radius:18px;
-    box-shadow:0 3px 12px #0000000b;
+ background:white;
+ padding:16px;
+ border-radius:17px;
+ box-shadow:0 2px 10px #0000000a
 }
-
-.card h3{
-    font-size:13px;
-    color:#6b7280;
-}
-
+.card h4{margin:0;color:#6b7280}
 .value{
-    font-size:21px;
-    font-weight:700;
-    margin-top:6px;
+ font-size:21px;
+ font-weight:700;
+ margin-top:7px
 }
-
-.icon{
-    font-size:25px;
-    margin-bottom:6px;
-}
-
-/* QUICK */
 
 .quick{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:10px
+}
+.quick button{
+ background:white;
+ border:0;
+ border-radius:15px;
+ padding:18px 5px;
+ font-weight:700;
+ box-shadow:0 2px 10px #0000000a
+}
+.quick span{
+ display:block;
+ font-size:25px;
+ margin-bottom:5px
 }
 
-.action{
-    border:0;
-    background:white;
-    padding:17px 7px;
-    border-radius:18px;
-    font-weight:700;
-    box-shadow:0 3px 12px #0000000b;
+.title{
+ font-size:18px;
+ font-weight:700;
+ margin:18px 0 12px
 }
 
-.action span{
-    display:block;
-    font-size:25px;
-    margin-bottom:6px;
+.add{
+ width:100%;
+ padding:13px;
+ background:#111827;
+ color:white;
+ border:0;
+ border-radius:11px;
+ margin-bottom:12px;
+ font-weight:700
 }
 
-/* PAGE */
-
-.page{
-    display:none;
+.bottom{
+ position:fixed;
+ bottom:0;
+ left:0;
+ right:0;
+ height:73px;
+ background:white;
+ border-top:1px solid #ddd;
+ display:flex;
+ justify-content:space-around;
+ align-items:center;
+ z-index:99
 }
-
-.page.active{
-    display:block;
-}
-
-.section-title{
-    font-size:18px;
-    font-weight:700;
-    margin:10px 0 14px;
-}
-
-/* NAV */
-
-.bottom-nav{
-    position:fixed;
-    bottom:0;
-    left:0;
-    right:0;
-    height:76px;
-    background:white;
-    border-top:1px solid #ddd;
-    display:flex;
-    justify-content:space-around;
-    align-items:center;
-    z-index:100;
-}
-
 .nav{
-    border:0;
-    background:none;
-    color:#777;
-    font-size:10px;
+ background:none;
+ border:0;
+ color:#777;
+ font-size:10px
 }
-
 .nav span{
-    display:block;
-    font-size:21px;
-    margin-bottom:3px;
+ display:block;
+ font-size:21px
 }
-
 .nav.active{
-    color:#111827;
-    font-weight:700;
+ color:#111827;
+ font-weight:700
 }
-
-/* TABLES */
 
 .table-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:10px;
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:9px
+}
+.table{
+ border:0;
+ padding:15px 3px;
+ border-radius:13px;
+ background:#dcfce7;
+ color:#166534;
+ font-weight:700
+}
+.table.busy{
+ background:#ffedd5;
+ color:#c2410c
 }
 
-.table-btn{
-    border:0;
-    background:#dcfce7;
-    color:#166534;
-    padding:16px 4px;
-    border-radius:15px;
-    font-weight:700;
+.item,.record{
+ background:white;
+ border-radius:14px;
+ padding:14px;
+ margin-bottom:9px;
+ display:flex;
+ justify-content:space-between;
+ align-items:center
 }
 
-.table-btn.occupied{
-    background:#ffedd5;
-    color:#c2410c;
+.small{
+ border:0;
+ padding:7px 9px;
+ border-radius:8px;
+ background:#e5e7eb;
+ margin-left:3px
 }
-
-.table-btn small{
-    display:block;
-    margin-top:5px;
-}
-
-/* LIST */
-
-.list-item{
-    background:white;
-    padding:14px;
-    border-radius:14px;
-    margin-bottom:9px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.small-btn{
-    border:0;
-    background:#111827;
-    color:white;
-    padding:8px 11px;
-    border-radius:8px;
-}
-
-.light-btn{
-    border:0;
-    background:#f3f4f6;
-    padding:8px;
-    border-radius:8px;
-}
-
-/* POS */
 
 .pos-item{
-    background:white;
-    padding:14px;
-    border-radius:14px;
-    margin-bottom:9px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+ background:white;
+ padding:13px;
+ border-radius:13px;
+ margin-bottom:8px;
+ display:flex;
+ justify-content:space-between;
+ align-items:center
 }
-
-.cart-row{
-    background:white;
-    padding:12px;
-    border-radius:12px;
-    margin-bottom:8px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.qty button{
-    width:30px;
-    height:30px;
-    border:0;
-    border-radius:8px;
-}
-
-.bill{
-    background:white;
-    padding:18px;
-    border-radius:18px;
-    margin-top:15px;
-}
-
-.total{
-    font-size:23px;
-    font-weight:700;
-    margin-top:12px;
-}
-
-.payment-buttons{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:8px;
-}
-
-.payment-btn{
-    border:0;
-    padding:12px 4px;
-    border-radius:10px;
-    background:#eee;
-    font-weight:700;
-}
-
-.payment-btn.selected{
-    background:#111827;
-    color:white;
-}
-
-/* DAILY TILL */
-
-.daily-box{
-    background:white;
-    border-radius:18px;
-    padding:18px;
-    margin-bottom:15px;
-}
-
-.daily-row{
-    display:flex;
-    justify-content:space-between;
-    padding:9px 0;
-    border-bottom:1px solid #eee;
-}
-
-.daily-row:last-child{
-    border-bottom:0;
-}
-
-.daily-total{
-    background:#111827;
-    color:white;
-    padding:18px;
-    border-radius:18px;
-    margin-top:12px;
-}
-
-.daily-total .daily-row{
-    border-color:#ffffff33;
-}
-
-/* MODAL */
 
 .modal{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:#0008;
-    z-index:300;
-    align-items:flex-end;
+ position:fixed;
+ inset:0;
+ background:#0008;
+ display:none;
+ align-items:flex-end;
+ z-index:200
 }
-
 .modal-box{
-    background:white;
-    width:100%;
-    padding:22px;
-    border-radius:25px 25px 0 0;
-    max-height:90vh;
-    overflow:auto;
+ width:100%;
+ max-height:92vh;
+ overflow:auto;
+ background:white;
+ padding:20px;
+ border-radius:23px 23px 0 0
+}
+.modal-actions{
+ display:flex;
+ gap:8px;
+ margin-top:10px
+}
+.modal-actions button{
+ flex:1;
+ padding:12px;
+ border:0;
+ border-radius:10px;
+ font-weight:700
 }
 
-.modal-buttons{
-    display:flex;
-    gap:10px;
-    margin-top:10px;
+.cart{
+ background:white;
+ border-radius:14px;
+ padding:12px;
+ margin-top:12px
+}
+.cart-row{
+ display:flex;
+ justify-content:space-between;
+ padding:10px 0;
+ border-bottom:1px solid #eee
 }
 
-.modal-buttons button{
-    flex:1;
-    padding:13px;
-    border:0;
-    border-radius:11px;
-    font-weight:700;
+.payments{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:6px;
+ margin:10px 0
+}
+.payment{
+ border:0;
+ background:#e5e7eb;
+ padding:10px 3px;
+ border-radius:9px;
+ font-size:12px
+}
+.payment.selected{
+ background:#111827;
+ color:white
+}
+
+.till{
+ background:white;
+ padding:16px;
+ border-radius:17px;
+ margin-bottom:13px
+}
+.till-row{
+ display:flex;
+ justify-content:space-between;
+ padding:8px 0;
+ border-bottom:1px solid #eee
+}
+.till-total{
+ background:#111827;
+ color:white;
+ padding:14px;
+ border-radius:13px;
+ margin-top:12px
+}
+.till-total .till-row{
+ border-color:#ffffff33
 }
 
 .alert{
-    background:#fff7ed;
-    border:1px solid #fed7aa;
-    padding:15px;
-    border-radius:15px;
-    margin-top:15px;
+ background:#fff7ed;
+ border:1px solid #fed7aa;
+ padding:13px;
+ border-radius:12px;
+ margin-top:14px
 }
 
 .empty{
-    text-align:center;
-    padding:25px;
-    color:#888;
+ text-align:center;
+ color:#777;
+ padding:25px
 }
 
-.green{
-    color:#15803d;
-}
+.green{color:#15803d}
+.redtext{color:#b91c1c}
 
-.red{
-    color:#b91c1c;
-}
-
-.orange{
-    color:#c2410c;
-}
-
-.stat-big{
-    background:white;
-    padding:20px;
-    border-radius:18px;
-    text-align:center;
-    margin-bottom:12px;
-}
-
-.stat-big h2{
-    font-size:27px;
-    margin-top:5px;
-}
-
-/* PRINT */
-
-.receipt{
-    background:white;
-    padding:20px;
-    max-width:500px;
-    margin:auto;
-}
-
-.receipt h2,
-.receipt p{
-    text-align:center;
-}
-
-.receipt-line{
-    display:flex;
-    justify-content:space-between;
-    padding:5px 0;
-}
-
-hr{
-    border:0;
-    border-top:1px solid #ddd;
-    margin:10px 0;
-}
-
-@media print{
-    body *{
-        visibility:hidden;
-    }
-
-    #printArea,
-    #printArea *{
-        visibility:visible;
-    }
-
-    #printArea{
-        position:absolute;
-        left:0;
-        top:0;
-        width:100%;
-    }
+@media(max-width:380px){
+ .payments{grid-template-columns:1fr 1fr}
 }
 </style>
 </head>
@@ -495,169 +308,160 @@ hr{
 <body>
 
 <!-- LOGIN -->
-
-<div id="loginScreen" class="login">
-
+<div id="login" class="login">
 <div class="login-box">
-
 <h1>🍽️ Khan's Restaurant</h1>
-
 <p>Restaurant Management System</p>
 
-<input id="loginUser" placeholder="Username">
-
-<input id="loginPass" type="password" placeholder="Password">
+<input id="username" placeholder="Username">
+<input id="password" type="password" placeholder="Password">
 
 <button class="btn" onclick="login()">Login</button>
 
-<p style="font-size:12px;margin-top:15px">
+<p style="font-size:12px;color:#777;margin-top:15px">
 Username: admin<br>
 Password: 1234
 </p>
-
 </div>
-
 </div>
 
 
 <div id="app" class="hidden">
 
-
-<!-- DASHBOARD -->
-
-<div id="dashboard" class="page active">
+<!-- HOME -->
+<section id="home" class="page active">
 
 <div class="header">
 <h1>🍽️ Khan's Restaurant</h1>
-<p>Management Dashboard</p>
+<p id="todayText"></p>
 </div>
 
 <div class="container">
 
-<div class="section-title">
-Today's Overview
-</div>
+<div class="title">Today's Dashboard</div>
 
 <div class="cards">
 
 <div class="card">
-<div class="icon">💷</div>
-<h3>Sales</h3>
-<div class="value" id="dashSales">£0.00</div>
+<h4>Today's Sales</h4>
+<div class="value" id="homeSales">£0.00</div>
 </div>
 
 <div class="card">
-<div class="icon">🧾</div>
-<h3>Orders</h3>
-<div class="value" id="dashOrders">0</div>
+<h4>Today's Orders</h4>
+<div class="value" id="homeOrders">0</div>
 </div>
 
 <div class="card">
-<div class="icon">💸</div>
-<h3>Expenses</h3>
-<div class="value" id="dashExpenses">£0.00</div>
+<h4>Today's Expenses</h4>
+<div class="value" id="homeExpenses">£0.00</div>
 </div>
 
 <div class="card">
-<div class="icon">📈</div>
-<h3>Profit</h3>
-<div class="value" id="dashProfit">£0.00</div>
+<h4>Today's Profit</h4>
+<div class="value" id="homeProfit">£0.00</div>
 </div>
 
 </div>
 
 
-<div class="section-title" style="margin-top:22px">
-Today's Till
-</div>
+<div class="title">Today's Till</div>
 
 <div class="cards">
 
 <div class="card">
-<div class="icon">💵</div>
-<h3>Main Till</h3>
-<div class="value" id="dashTill">£0.00</div>
+<h4>Main Till</h4>
+<div class="value" id="homeMainTill">£0.00</div>
 </div>
 
 <div class="card">
-<div class="icon">💰</div>
-<h3>Petty Cash</h3>
-<div class="value" id="dashPetty">£0.00</div>
+<h4>Petty Cash</h4>
+<div class="value" id="homePetty">£0.00</div>
+</div>
+
+<div class="card">
+<h4>Cash</h4>
+<div class="value" id="homeCash">£0.00</div>
+</div>
+
+<div class="card">
+<h4>Card</h4>
+<div class="value" id="homeCard">£0.00</div>
 </div>
 
 </div>
 
 
-<div class="section-title" style="margin-top:22px">
-Quick Actions
-</div>
+<div class="title">Quick Actions</div>
 
 <div class="quick">
 
-<button class="action" onclick="showPage('pos')">
+<button onclick="go('pos')">
 <span>🧾</span>POS
 </button>
 
-<button class="action" onclick="showPage('daily')">
+<button onclick="go('daily')">
 <span>💷</span>Daily Till
 </button>
 
-<button class="action" onclick="showPage('menu')">
+<button onclick="go('menu')">
 <span>🍔</span>Menu
 </button>
 
-<button class="action" onclick="showPage('inventory')">
+<button onclick="go('inventory')">
 <span>📦</span>Inventory
 </button>
 
-<button class="action" onclick="showPage('petty')">
-<span>💵</span>Petty Cash
+<button onclick="go('petty')">
+<span>💰</span>Petty Cash
 </button>
 
-<button class="action" onclick="showPage('reports')">
+<button onclick="go('reports')">
 <span>📊</span>Reports
 </button>
 
 </div>
 
-<div id="lowStockAlert"></div>
+<div id="stockAlert"></div>
 
 </div>
-
-</div>
+</section>
 
 
 <!-- POS -->
-
-<div id="pos" class="page">
+<section id="pos" class="page">
 
 <div class="header">
 <h1>🧾 POS Billing</h1>
-<p>30 Tables</p>
+<p>Table / Takeaway / Delivery</p>
 </div>
 
 <div class="container">
 
-<div id="tableSelection">
+<div id="tableScreen">
 
-<div class="section-title">
-Select Table
-</div>
+<div class="title">30 Tables</div>
 
-<div class="table-grid" id="tableGrid"></div>
+<div class="table-grid" id="tables"></div>
 
-<div class="section-title" style="margin-top:22px">
-Other Orders
-</div>
+<div class="title">Other Orders</div>
 
 <div class="quick">
 
-<button class="action" onclick="openOtherOrder('Takeaway')">
+<button onclick="openOrder('Takeaway')">
 <span>🥡</span>Takeaway
 </button>
 
-<button class="action" onclick="openOtherOrder('Delivery')">
+<button onclick="openOrder('Delivery')">
 <span>🛵</span>Delivery
+</button>
+
+<button onclick="openOrder('Uber')">
+<span>🚗</span>Uber
+</button>
+
+<button onclick="openOrder('Deliveroo')">
+<span>🛵</span>Deliveroo
 </button>
 
 </div>
@@ -667,145 +471,104 @@ Other Orders
 
 <div id="orderScreen" style="display:none">
 
-<button class="light-btn" onclick="backToTables()">
-← Back
-</button>
+<button class="small" onclick="backTables()">← Back</button>
 
-<h2 id="orderTitle" style="margin:15px 0"></h2>
+<h2 id="orderTitle"></h2>
 
-<div class="section-title">
-Add Food
-</div>
+<div class="title">Menu</div>
 
 <div id="posMenu"></div>
 
-<div class="section-title" style="margin-top:20px">
-Current Order
-</div>
+<div class="title">Current Order</div>
 
 <div id="cart"></div>
 
-<div class="bill">
+<div class="cart">
 
-<div>
-Subtotal:
-<strong id="subtotal">£0.00</strong>
-</div>
+<p>Subtotal: <b id="subtotal">£0.00</b></p>
+<p>VAT: <b id="vat">£0.00</b></p>
 
-<div style="margin-top:7px">
-VAT:
-<strong id="vatAmount">£0.00</strong>
-</div>
+<h2>Total: <span id="total">£0.00</span></h2>
 
-<div class="total">
-Total: <span id="cartTotal">£0.00</span>
-</div>
+<div class="title">Payment</div>
 
-<div class="section-title" style="margin-top:18px">
-Payment
-</div>
+<div class="payments">
 
-<div class="payment-buttons">
-
-<button class="payment-btn selected"
-onclick="selectPayment(this,'Cash')">
-💵 Cash
+<button class="payment selected"
+onclick="payment('Cash',this)">
+Cash
 </button>
 
-<button class="payment-btn"
-onclick="selectPayment(this,'Card')">
-💳 Card
+<button class="payment"
+onclick="payment('Card',this)">
+Card
 </button>
 
-<button class="payment-btn"
-onclick="selectPayment(this,'QR')">
-📱 QR
+<button class="payment"
+onclick="payment('QR',this)">
+QR
+</button>
+
+<button class="payment"
+onclick="payment('Other',this)">
+Other
 </button>
 
 </div>
 
-<button class="btn" style="margin-top:12px"
-onclick="completePayment()">
+<button class="btn green"
+onclick="completeOrder()">
 ✅ Complete Payment
 </button>
 
-<button class="btn"
-style="margin-top:8px;background:#e5e7eb;color:#111827"
-onclick="printBill()">
-🖨️ Print Bill
-</button>
-
 </div>
 
 </div>
 
 </div>
-
-</div>
+</section>
 
 
 <!-- DAILY TILL -->
-
-<div id="daily" class="page">
+<section id="daily" class="page">
 
 <div class="header">
-
 <h1>💷 Daily Till</h1>
-
-<p>Daily Cash & Delivery Reconciliation</p>
-
+<p>Automatic POS + Manual Till Control</p>
 </div>
 
 <div class="container">
 
-<button class="add-btn"
-onclick="openDailyEntry()">
-＋ Add Today's Till Entry
-</button>
-
-<div id="dailyRecords"></div>
+<div id="dailyRecord"></div>
 
 </div>
-
-</div>
+</section>
 
 
 <!-- MENU -->
-
-<div id="menu" class="page">
+<section id="menu" class="page">
 
 <div class="header">
-
 <h1>🍔 Menu Management</h1>
-
 <p>Food Items & Prices</p>
-
 </div>
 
 <div class="container">
 
-<button class="add-btn"
-onclick="openAddItem()">
-＋ Add Food Item
-</button>
+<button class="add" onclick="addMenu()">＋ Add Food Item</button>
 
 <div id="menuList"></div>
 
 </div>
-
-</div>
+</section>
 
 
 <!-- INVENTORY -->
-
-<div id="inventory" class="page">
+<section id="inventory" class="page">
 
 <div class="header">
-
 <h1>📦 Inventory</h1>
-
 <p>Stock Management</p>
-
 </div>
 
 <div class="container">
@@ -813,12 +576,12 @@ onclick="openAddItem()">
 <div class="cards">
 
 <div class="card">
-<h3>Total Items</h3>
-<div class="value" id="inventoryCount">0</div>
+<h4>Total Items</h4>
+<div class="value" id="itemCount">0</div>
 </div>
 
 <div class="card">
-<h3>Low Stock</h3>
+<h4>Low Stock</h4>
 <div class="value" id="lowCount">0</div>
 </div>
 
@@ -826,121 +589,46 @@ onclick="openAddItem()">
 
 <br>
 
-<button class="add-btn"
-onclick="stockEntry('in')">
+<button class="add" onclick="stockChange(1)">
 ＋ Stock In
 </button>
 
-<button class="add-btn red-btn"
-onclick="stockEntry('out')">
+<button class="add" onclick="stockChange(-1)">
 − Stock Out
 </button>
 
 <div id="inventoryList"></div>
 
 </div>
+</section>
 
-</div>
 
-
-<!-- PURCHASES -->
-
-<div id="purchases" class="page">
+<!-- EXPENSE -->
+<section id="expenses" class="page">
 
 <div class="header">
-
-<h1>🛒 Purchases</h1>
-
-<p>Supplier Bills</p>
-
-</div>
-
-<div class="container">
-
-<button class="add-btn"
-onclick="addPurchase()">
-＋ Add Purchase
-</button>
-
-<div id="purchaseList"></div>
-
-</div>
-
-</div>
-
-
-<!-- EMPLOYEES -->
-
-<div id="employees" class="page">
-
-<div class="header">
-
-<h1>👨‍🍳 Employees</h1>
-
-<p>Staff & Salary</p>
-
-</div>
-
-<div class="container">
-
-<button class="add-btn"
-onclick="addEmployee()">
-＋ Add Employee
-</button>
-
-<div id="employeeList"></div>
-
-</div>
-
-</div>
-
-
-<!-- EXPENSES -->
-
-<div id="expenses" class="page">
-
-<div class="header">
-
 <h1>💸 Expenses</h1>
-
 <p>Restaurant Expenses</p>
-
 </div>
 
 <div class="container">
 
-<div class="stat-big">
-
-<h3>Total Expenses</h3>
-
-<h2 id="expenseTotal">
-£0.00
-</h2>
-
-</div>
-
-<button class="add-btn"
-onclick="addExpense()">
+<button class="add" onclick="addExpense()">
 ＋ Add Expense
 </button>
 
 <div id="expenseList"></div>
 
 </div>
+</section>
 
-</div>
 
-
-<!-- PETTY CASH -->
-
-<div id="petty" class="page">
+<!-- PETTY -->
+<section id="petty" class="page">
 
 <div class="header">
-
-<h1>💵 Petty Cash</h1>
-
+<h1>💰 Petty Cash</h1>
 <p>Cash In / Cash Out</p>
-
 </div>
 
 <div class="container">
@@ -948,22 +636,22 @@ onclick="addExpense()">
 <div class="cards">
 
 <div class="card">
-<h3>Opening Cash</h3>
-<div class="value" id="openingCash">£0.00</div>
+<h4>Opening</h4>
+<div class="value" id="pettyOpening">£0.00</div>
 </div>
 
 <div class="card">
-<h3>Cash In</h3>
-<div class="value" id="cashIn">£0.00</div>
+<h4>Cash In</h4>
+<div class="value" id="pettyIn">£0.00</div>
 </div>
 
 <div class="card">
-<h3>Cash Out</h3>
-<div class="value" id="cashOut">£0.00</div>
+<h4>Cash Out</h4>
+<div class="value" id="pettyOut">£0.00</div>
 </div>
 
 <div class="card">
-<h3>Balance</h3>
+<h4>Balance</h4>
 <div class="value" id="pettyBalance">£0.00</div>
 </div>
 
@@ -971,155 +659,56 @@ onclick="addExpense()">
 
 <br>
 
-<button class="add-btn"
-onclick="setOpeningCash()">
-💵 Set Opening Cash
+<button class="add" onclick="setPettyOpening()">
+Set Opening Petty Cash
 </button>
 
-<button class="add-btn"
-onclick="cashTransaction('in')">
+<button class="add" onclick="pettyTransaction('in')">
 ＋ Cash In
 </button>
 
-<button class="add-btn red-btn"
-onclick="cashTransaction('out')">
+<button class="add" onclick="pettyTransaction('out')">
 − Cash Out
 </button>
 
-<div id="cashHistory"></div>
+<div id="pettyHistory"></div>
 
 </div>
-
-</div>
-
-
-<!-- CUSTOMERS -->
-
-<div id="customers" class="page">
-
-<div class="header">
-
-<h1>👤 Customers</h1>
-
-<p>Customer Records</p>
-
-</div>
-
-<div class="container">
-
-<button class="add-btn"
-onclick="addCustomer()">
-＋ Add Customer
-</button>
-
-<div id="customerList"></div>
-
-</div>
-
-</div>
+</section>
 
 
 <!-- REPORTS -->
-
-<div id="reports" class="page">
+<section id="reports" class="page">
 
 <div class="header">
-
 <h1>📊 Reports</h1>
-
-<p>Restaurant Reports</p>
-
+<p>Sales & Financial Summary</p>
 </div>
 
-<div class="container">
+<div class="container" id="reportsData"></div>
 
-<div class="report list-item">
-<span>Total Sales</span>
-<strong id="rSales">£0.00</strong>
-</div>
-
-<div class="report list-item">
-<span>Orders</span>
-<strong id="rOrders">0</strong>
-</div>
-
-<div class="report list-item">
-<span>Expenses</span>
-<strong id="rExpenses">£0.00</strong>
-</div>
-
-<div class="report list-item">
-<span>Purchases</span>
-<strong id="rPurchases">£0.00</strong>
-</div>
-
-<div class="report list-item">
-<span>Uber</span>
-<strong id="rUber">£0.00</strong>
-</div>
-
-<div class="report list-item">
-<span>Deliveroo</span>
-<strong id="rDeliveroo">£0.00</strong>
-</div>
-
-<div class="report list-item">
-<span>Delivery Cash</span>
-<strong id="rDeliveryCash">£0.00</strong>
-</div>
-
-<div class="report list-item">
-<span>Delivery Card</span>
-<strong id="rDeliveryCard">£0.00</strong>
-</div>
-
-<div class="report list-item">
-<span>Cash Taken</span>
-<strong id="rCashTaken">£0.00</strong>
-</div>
-
-<div class="report list-item">
-<span>Net Profit</span>
-<strong id="rProfit">£0.00</strong>
-</div>
-
-</div>
-
-</div>
+</section>
 
 
 <!-- SETTINGS -->
-
-<div id="settings" class="page">
+<section id="settings" class="page">
 
 <div class="header">
-
 <h1>⚙️ Settings</h1>
-
 <p>Restaurant Settings</p>
-
 </div>
 
 <div class="container">
 
 <div class="card">
 
-<h3>Restaurant Name</h3>
+<label>Restaurant Name</label>
+<input id="restaurantName" value="Khan's Restaurant">
 
-<input id="restaurantName"
-value="Khan's Restaurant">
+<label>VAT %</label>
+<input id="vatRate" type="number" value="20">
 
-<h3 style="margin-top:12px">
-VAT / Tax %
-</h3>
-
-<input id="taxRate"
-type="number"
-value="20">
-
-<button class="btn"
-style="margin-top:10px"
-onclick="saveSettings()">
+<button class="btn" onclick="saveSettings()">
 Save Settings
 </button>
 
@@ -1127,274 +716,336 @@ Save Settings
 
 <br>
 
-<button class="add-btn"
-onclick="backupData()">
+<button class="add" onclick="backup()">
 💾 Backup Data
 </button>
 
-<button class="add-btn red-btn"
-onclick="logout()">
+<button class="btn red" onclick="logout()">
 Logout
 </button>
 
 </div>
+</section>
 
-</div>
 
+<!-- BOTTOM NAV -->
+<div class="bottom">
 
-<!-- NAVIGATION -->
-
-<div class="bottom-nav">
-
-<button class="nav active"
-onclick="showPage('dashboard',this)">
+<button class="nav active" onclick="go('home',this)">
 <span>🏠</span>Home
 </button>
 
-<button class="nav"
-onclick="showPage('pos',this)">
+<button class="nav" onclick="go('pos',this)">
 <span>🧾</span>POS
 </button>
 
-<button class="nav"
-onclick="showPage('daily',this)">
+<button class="nav" onclick="go('daily',this)">
 <span>💷</span>Till
 </button>
 
-<button class="nav"
-onclick="showPage('menu',this)">
+<button class="nav" onclick="go('menu',this)">
 <span>🍔</span>Menu
 </button>
 
-<button class="nav"
-onclick="showPage('reports',this)">
+<button class="nav" onclick="go('reports',this)">
 <span>📊</span>Reports
 </button>
 
 </div>
 
-
-<!-- ITEM MODAL -->
-
-<div id="itemModal" class="modal">
-
-<div class="modal-box">
-
-<h2>Add / Edit Food</h2>
-
-<input id="itemName"
-placeholder="Food Item Name">
-
-<input id="itemCategory"
-placeholder="Category">
-
-<input id="itemPrice"
-type="number"
-step="0.01"
-placeholder="Price £">
-
-<input id="itemStock"
-type="number"
-placeholder="Opening Stock">
-
-<div class="modal-buttons">
-
-<button onclick="closeModal()"
-style="background:#eee">
-Cancel
-</button>
-
-<button onclick="saveItem()"
-style="background:#111827;color:white">
-Save
-</button>
-
-</div>
-
-</div>
-
 </div>
 
 
-<!-- DAILY MODAL -->
-
+<!-- DAILY EDIT MODAL -->
 <div id="dailyModal" class="modal">
 
 <div class="modal-box">
 
-<h2>Daily Till Entry</h2>
+<h2>Edit Daily Till</h2>
 
 <label>Day</label>
-<input id="dailyDay" readonly>
+<input id="editDay" readonly>
 
 <label>Date</label>
-<input id="dailyDate" type="date">
+<input id="editDate" readonly>
 
 <label>Main Till</label>
-<input id="mainTill" type="number" step="0.01">
+<input id="editMainTill" type="number" step="0.01">
 
 <label>Petty Cash</label>
-<input id="dailyPetty" type="number" step="0.01">
+<input id="editPetty" type="number" step="0.01">
 
 <label>Cash</label>
-<input id="dailyCash" type="number" step="0.01">
+<input id="editCash" type="number" step="0.01">
 
 <label>Uber</label>
-<input id="uber" type="number" step="0.01">
+<input id="editUber" type="number" step="0.01">
 
 <label>Deliveroo</label>
-<input id="deliveroo" type="number" step="0.01">
+<input id="editDeliveroo" type="number" step="0.01">
 
 <label>Delivery Cash</label>
-<input id="deliveryCash" type="number" step="0.01">
+<input id="editDeliveryCash" type="number" step="0.01">
 
 <label>Delivery Card</label>
-<input id="deliveryCard" type="number" step="0.01">
+<input id="editDeliveryCard" type="number" step="0.01">
 
 <label>Cash Taken</label>
-<input id="cashTaken" type="number" step="0.01">
+<input id="editCashTaken" type="number" step="0.01">
 
 <label>Actual Closing Cash</label>
-<input id="actualClosing" type="number" step="0.01">
+<input id="editActual" type="number" step="0.01">
 
-<div class="daily-total">
+<div class="till-total">
 
-<div class="daily-row">
+<div class="till-row">
 <span>Total Sales</span>
-<strong id="entryTotalSales">£0.00</strong>
+<b id="editSales">£0.00</b>
 </div>
 
-<div class="daily-row">
-<span>Expected Closing Cash</span>
-<strong id="entryExpected">£0.00</strong>
+<div class="till-row">
+<span>Expected Closing</span>
+<b id="editExpected">£0.00</b>
 </div>
 
-<div class="daily-row">
+<div class="till-row">
 <span>Difference</span>
-<strong id="entryDifference">£0.00</strong>
+<b id="editDifference">£0.00</b>
 </div>
 
 </div>
 
-<div class="modal-buttons">
+<div class="modal-actions">
 
-<button onclick="closeDailyModal()"
-style="background:#eee">
+<button onclick="closeDaily()">
 Cancel
 </button>
 
-<button onclick="saveDailyEntry()"
-style="background:#111827;color:white">
-Save Entry
+<button style="background:#111827;color:white"
+onclick="saveDailyEdit()">
+Save Changes
 </button>
 
 </div>
 
 </div>
-
 </div>
-
-
-<div id="printArea" class="hidden"></div>
 
 
 <script>
 
-/* =========================
+/* ================================
 DATA
-========================= */
+================================ */
 
-let menuItems =
-JSON.parse(localStorage.getItem("khanMenu")) || [
-
-{
-name:"Chicken Biryani",
-category:"Main Course",
-price:12,
-stock:20
-},
-
-{
-name:"Butter Chicken",
-category:"Main Course",
-price:14,
-stock:20
-},
-
-{
-name:"Fresh Juice",
-category:"Drinks",
-price:5,
-stock:30
-}
-
+let menu=JSON.parse(
+localStorage.getItem("KR_menu")||"null"
+)||[
+{name:"Chicken Biryani",category:"Main Course",price:12,stock:30},
+{name:"Butter Chicken",category:"Main Course",price:14,stock:30},
+{name:"Fresh Juice",category:"Drinks",price:5,stock:30}
 ];
 
-let tables =
-JSON.parse(localStorage.getItem("khanTables")) || {};
+let orders=JSON.parse(
+localStorage.getItem("KR_orders")||"[]"
+);
 
-let expenses =
-JSON.parse(localStorage.getItem("khanExpenses")) || [];
+let expenses=JSON.parse(
+localStorage.getItem("KR_expenses")||"[]"
+);
 
-let purchases =
-JSON.parse(localStorage.getItem("khanPurchases")) || [];
+let petty=JSON.parse(
+localStorage.getItem("KR_petty")||"[]"
+);
 
-let employees =
-JSON.parse(localStorage.getItem("khanEmployees")) || [];
+let pettyOpening=Number(
+localStorage.getItem("KR_pettyOpening")||0
+);
 
-let customers =
-JSON.parse(localStorage.getItem("khanCustomers")) || [];
+let daily=JSON.parse(
+localStorage.getItem("KR_daily")||"{}"
+);
 
-let cashLog =
-JSON.parse(localStorage.getItem("khanCashLog")) || [];
+let vatRate=Number(
+localStorage.getItem("KR_vat")||20
+);
 
-let dailyRecords =
-JSON.parse(localStorage.getItem("khanDailyRecords")) || [];
-
-let sales =
-Number(localStorage.getItem("khanSales")) || 0;
-
-let orders =
-Number(localStorage.getItem("khanOrders")) || 0;
-
-let openingCash =
-Number(localStorage.getItem("khanOpeningCash")) || 0;
-
-let taxRate =
-Number(localStorage.getItem("khanTax")) || 20;
-
-let currentTable=null;
-
-let cart=[];
-
-let paymentMethod="Cash";
-
-let editIndex=-1;
+let currentOrder=[];
+let currentType="";
+let currentPayment="Cash";
+let editingDaily=false;
 
 
-/* =========================
+/* ================================
+SAVE
+================================ */
+
+function save(){
+
+localStorage.setItem("KR_menu",JSON.stringify(menu));
+localStorage.setItem("KR_orders",JSON.stringify(orders));
+localStorage.setItem("KR_expenses",JSON.stringify(expenses));
+localStorage.setItem("KR_petty",JSON.stringify(petty));
+localStorage.setItem("KR_pettyOpening",pettyOpening);
+localStorage.setItem("KR_daily",JSON.stringify(daily));
+localStorage.setItem("KR_vat",vatRate);
+
+}
+
+
+/* ================================
+DATE
+================================ */
+
+function today(){
+
+let d=new Date();
+
+let date=d.toISOString().slice(0,10);
+
+let day=d.toLocaleDateString(
+"en-GB",{weekday:"long"}
+);
+
+return {date,day};
+
+}
+
+
+/* ================================
+AUTOMATIC DAILY RECORD
+================================ */
+
+function getToday(){
+
+let t=today();
+
+if(!daily[t.date]){
+
+/*
+Automatically create today's record.
+*/
+
+let previousDates=Object.keys(daily)
+.sort();
+
+let previous=
+previousDates.length
+?daily[previousDates[previousDates.length-1]]
+:null;
+
+daily[t.date]={
+
+day:t.day,
+date:t.date,
+
+mainTill:
+previous
+?Number(previous.actualClosing||previous.mainTill||0)
+:0,
+
+pettyCash:getPettyBalance(),
+
+cash:0,
+uber:0,
+deliveroo:0,
+deliveryCash:0,
+deliveryCard:0,
+cashTaken:0,
+actualClosing:0
+
+};
+
+save();
+
+}
+
+return daily[t.date];
+
+}
+
+
+/* ================================
+UPDATE AUTOMATIC DAILY SALES
+================================ */
+
+function rebuildTodaySales(){
+
+let t=today();
+
+let d=getToday();
+
+d.cash=0;
+d.uber=0;
+d.deliveroo=0;
+d.deliveryCash=0;
+d.deliveryCard=0;
+
+orders.forEach(o=>{
+
+if(o.date!==t.date)return;
+
+let amount=Number(o.total||0);
+
+if(o.type==="Uber"){
+
+d.uber+=amount;
+
+}
+
+else if(o.type==="Deliveroo"){
+
+d.deliveroo+=amount;
+
+}
+
+else if(o.type==="Delivery"){
+
+if(o.payment==="Cash")
+d.deliveryCash+=amount;
+else
+d.deliveryCard+=amount;
+
+}
+
+else{
+
+if(o.payment==="Cash")
+d.cash+=amount;
+
+}
+
+});
+
+d.pettyCash=getPettyBalance();
+
+save();
+
+}
+
+
+/* ================================
 LOGIN
-========================= */
+================================ */
 
 function login(){
 
-let user=document.getElementById("loginUser").value;
+let u=document.getElementById("username").value;
+let p=document.getElementById("password").value;
 
-let pass=document.getElementById("loginPass").value;
+if(u==="admin"&&p==="1234"){
 
-if(user==="admin" && pass==="1234"){
-
-document.getElementById("loginScreen")
+document.getElementById("login")
 .classList.add("hidden");
 
 document.getElementById("app")
 .classList.remove("hidden");
 
-updateDashboard();
+initialize();
 
 }else{
 
-alert("Invalid username or password.");
+alert("Wrong username or password");
 
 }
 
@@ -1405,93 +1056,133 @@ function logout(){
 document.getElementById("app")
 .classList.add("hidden");
 
-document.getElementById("loginScreen")
+document.getElementById("login")
 .classList.remove("hidden");
 
 }
 
 
-/* =========================
+/* ================================
 NAVIGATION
-========================= */
+================================ */
 
-function showPage(id,button){
+function go(id,button){
 
 document.querySelectorAll(".page")
-.forEach(p=>p.classList.remove("active"));
+.forEach(x=>x.classList.remove("active"));
 
 document.getElementById(id)
 .classList.add("active");
 
 document.querySelectorAll(".nav")
-.forEach(n=>n.classList.remove("active"));
+.forEach(x=>x.classList.remove("active"));
 
 if(button)
 button.classList.add("active");
 
+if(id==="home")renderHome();
 if(id==="pos")renderTables();
-
 if(id==="daily")renderDaily();
-
 if(id==="menu")renderMenu();
-
 if(id==="inventory")renderInventory();
-
 if(id==="expenses")renderExpenses();
-
-if(id==="purchases")renderPurchases();
-
-if(id==="employees")renderEmployees();
-
 if(id==="petty")renderPetty();
-
-if(id==="customers")renderCustomers();
-
-if(id==="reports")updateReports();
-
-updateDashboard();
+if(id==="reports")renderReports();
 
 window.scrollTo(0,0);
 
 }
 
 
-/* =========================
-TABLES
-========================= */
+/* ================================
+HOME
+================================ */
+
+function renderHome(){
+
+let d=getToday();
+
+rebuildTodaySales();
+
+let sales=
+d.cash+
+d.uber+
+d.deliveroo+
+d.deliveryCash+
+d.deliveryCard;
+
+let exp=
+expenses
+.filter(x=>x.date===today().date)
+.reduce((s,x)=>s+x.amount,0);
+
+document.getElementById("todayText")
+.innerText=
+d.day+" • "+formatDate(d.date);
+
+document.getElementById("homeSales")
+.innerText=money(sales);
+
+document.getElementById("homeOrders")
+.innerText=
+orders.filter(x=>x.date===today().date).length;
+
+document.getElementById("homeExpenses")
+.innerText=money(exp);
+
+document.getElementById("homeProfit")
+.innerText=money(sales-exp);
+
+document.getElementById("homeMainTill")
+.innerText=money(d.mainTill);
+
+document.getElementById("homePetty")
+.innerText=money(getPettyBalance());
+
+document.getElementById("homeCash")
+.innerText=money(d.cash+d.deliveryCash);
+
+document.getElementById("homeCard")
+.innerText=money(d.deliveryCard);
+
+let low=menu.filter(x=>x.stock<=5);
+
+document.getElementById("stockAlert")
+.innerHTML=low.length?
+`<div class="alert">
+⚠️ <b>Low Stock:</b>
+${low.map(x=>x.name+" ("+x.stock+")").join(", ")}
+</div>`:"";
+
+}
+
+
+/* ================================
+POS TABLES
+================================ */
 
 function renderTables(){
 
-let grid=document.getElementById("tableGrid");
+let box=document.getElementById("tables");
 
-grid.innerHTML="";
+box.innerHTML="";
 
 for(let i=1;i<=30;i++){
 
-let n=String(i).padStart(2,"0");
+let name="Table "+String(i).padStart(2,"0");
 
-let key="Table "+n;
+let open=
+orders.some(x=>x.openTable===name);
 
-let order=tables[key];
+box.innerHTML+=`
 
-let occupied=order && order.length;
+<button class="table ${open?"busy":""}"
+onclick="openOrder('${name}')">
 
-let total=0;
-
-if(occupied)
-total=order.reduce(
-(s,x)=>s+x.price*x.qty,0
-);
-
-grid.innerHTML+=`
-
-<button class="table-btn ${occupied?"occupied":""}"
-onclick="openTable('${n}')">
-
-🪑 Table ${n}
+🪑 ${name}
 
 <small>
-${occupied?"£"+total.toFixed(2):"Available"}
+${open?"Order Open":"Available"}
 </small>
 
 </button>
@@ -1503,60 +1194,30 @@ ${occupied?"£"+total.toFixed(2):"Available"}
 }
 
 
-function openTable(n){
+function openOrder(type){
 
-currentTable="Table "+n;
+currentType=type;
+currentOrder=[];
+currentPayment="Cash";
 
-cart=tables[currentTable]
-?JSON.parse(JSON.stringify(tables[currentTable]))
-:[];
-
-document.getElementById("tableSelection")
+document.getElementById("tableScreen")
 .style.display="none";
 
 document.getElementById("orderScreen")
 .style.display="block";
 
 document.getElementById("orderTitle")
-.innerText="🪑 "+currentTable;
+.innerText="🧾 "+type;
 
-renderPOS();
-
+renderPOSMenu();
 renderCart();
 
 }
 
 
-function openOtherOrder(type){
+function backTables(){
 
-currentTable=type;
-
-cart=[];
-
-document.getElementById("tableSelection")
-.style.display="none";
-
-document.getElementById("orderScreen")
-.style.display="block";
-
-document.getElementById("orderTitle")
-.innerText=
-type==="Takeaway"
-?"🥡 Takeaway"
-:"🛵 Delivery";
-
-renderPOS();
-
-renderCart();
-
-}
-
-
-function backToTables(){
-
-saveOrder();
-
-document.getElementById("tableSelection")
+document.getElementById("tableScreen")
 .style.display="block";
 
 document.getElementById("orderScreen")
@@ -1567,86 +1228,53 @@ renderTables();
 }
 
 
-/* =========================
-POS
-========================= */
+function renderPOSMenu(){
 
-function renderPOS(){
+document.getElementById("posMenu").innerHTML=
 
-let box=document.getElementById("posMenu");
-
-box.innerHTML=menuItems.map(
-(item,i)=>`
+menu.map((x,i)=>`
 
 <div class="pos-item">
 
 <div>
-
-<strong>${item.name}</strong>
-
-<br>
-
+<b>${x.name}</b><br>
 <small>
-${item.category}
-•
-£${item.price.toFixed(2)}
-•
-Stock ${item.stock}
+${x.category} • £${x.price.toFixed(2)}
+• Stock ${x.stock}
 </small>
-
 </div>
 
-<button class="small-btn"
-onclick="addToCart(${i})">
-Add
+<button class="small"
+onclick="addItem(${i})">
+ADD
 </button>
 
 </div>
 
-`
-).join("");
+`).join("");
 
 }
 
 
-function addToCart(i){
+function addItem(i){
 
-let item=menuItems[i];
+if(menu[i].stock<=0){
 
-if(item.stock<=0){
-
-alert("This item is out of stock.");
-
+alert("Item is out of stock");
 return;
 
 }
 
-let found=
-cart.find(x=>x.name===item.name);
+let found=currentOrder.find(
+x=>x.name===menu[i].name
+);
 
 if(found)
 found.qty++;
-
 else
-cart.push({...item,qty:1});
+currentOrder.push({...menu[i],qty:1});
 
 renderCart();
-
-saveOrder();
-
-}
-
-
-function changeQty(i,d){
-
-cart[i].qty+=d;
-
-if(cart[i].qty<=0)
-cart.splice(i,1);
-
-renderCart();
-
-saveOrder();
 
 }
 
@@ -1655,7 +1283,7 @@ function renderCart(){
 
 let box=document.getElementById("cart");
 
-if(!cart.length){
+if(!currentOrder.length){
 
 box.innerHTML=
 '<div class="empty">No items added</div>';
@@ -1663,263 +1291,317 @@ box.innerHTML=
 document.getElementById("subtotal")
 .innerText="£0.00";
 
-document.getElementById("vatAmount")
+document.getElementById("vat")
 .innerText="£0.00";
 
-document.getElementById("cartTotal")
+document.getElementById("total")
 .innerText="£0.00";
 
 return;
 
 }
 
-let subtotal=
-cart.reduce(
+let subtotal=currentOrder.reduce(
 (s,x)=>s+x.price*x.qty,0
 );
 
-let vat=
-subtotal*(taxRate/100);
+let vat=subtotal*vatRate/100;
 
 let total=subtotal+vat;
 
-box.innerHTML=
-cart.map(
-(x,i)=>`
+box.innerHTML=currentOrder.map((x,i)=>`
 
 <div class="cart-row">
 
-<div>
-
-<strong>${x.name}</strong>
-
-<br>
-
-<small>
+<span>
+<b>${x.name}</b><br>
 £${x.price.toFixed(2)} × ${x.qty}
-</small>
-
-</div>
-
-<div class="qty">
-
-<button onclick="changeQty(${i},-1)">
-−
-</button>
-
-<span style="margin:0 7px">
-${x.qty}
 </span>
 
-<button onclick="changeQty(${i},1)">
-+
-</button>
+<span>
+<button class="small"
+onclick="qty(${i},-1)">−</button>
+
+<button class="small"
+onclick="qty(${i},1)">+</button>
+</span>
 
 </div>
 
-</div>
-
-`
-).join("");
+`).join("");
 
 document.getElementById("subtotal")
-.innerText="£"+subtotal.toFixed(2);
+.innerText=money(subtotal);
 
-document.getElementById("vatAmount")
-.innerText="£"+vat.toFixed(2);
+document.getElementById("vat")
+.innerText=money(vat);
 
-document.getElementById("cartTotal")
-.innerText="£"+total.toFixed(2);
-
-}
-
-
-function saveOrder(){
-
-if(!currentTable)
-return;
-
-if(currentTable.startsWith("Table")){
-
-if(cart.length)
-tables[currentTable]=cart;
-
-else
-delete tables[currentTable];
-
-localStorage.setItem(
-"khanTables",
-JSON.stringify(tables)
-);
-
-}
+document.getElementById("total")
+.innerText=money(total);
 
 }
 
 
-function selectPayment(btn,type){
+function qty(i,n){
 
-paymentMethod=type;
+currentOrder[i].qty+=n;
 
-document.querySelectorAll(".payment-btn")
-.forEach(x=>
-x.classList.remove("selected")
-);
+if(currentOrder[i].qty<=0)
+currentOrder.splice(i,1);
 
-btn.classList.add("selected");
+renderCart();
 
 }
 
 
-function completePayment(){
+function payment(type,button){
 
-if(!cart.length){
+currentPayment=type;
 
-alert("Please add items.");
+document.querySelectorAll(".payment")
+.forEach(x=>x.classList.remove("selected"));
 
+button.classList.add("selected");
+
+}
+
+
+/* ================================
+COMPLETE POS ORDER
+================================ */
+
+function completeOrder(){
+
+if(!currentOrder.length){
+
+alert("Please add food items");
 return;
 
 }
 
-let subtotal=
-cart.reduce(
+let subtotal=currentOrder.reduce(
 (s,x)=>s+x.price*x.qty,0
 );
 
-let vat=
-subtotal*(taxRate/100);
+let vat=subtotal*vatRate/100;
 
-let total=
-subtotal+vat;
+let total=subtotal+vat;
 
-cart.forEach(orderItem=>{
 
-let item=
-menuItems.find(
-x=>x.name===orderItem.name
+/*
+Reduce stock
+*/
+
+currentOrder.forEach(x=>{
+
+let item=menu.find(
+m=>m.name===x.name
 );
 
 if(item)
-item.stock=
-Math.max(
-0,
-item.stock-orderItem.qty
+item.stock=Math.max(
+0,item.stock-x.qty
 );
 
 });
 
-sales+=total;
 
-orders++;
+let t=today();
 
-localStorage.setItem(
-"khanSales",
-sales
-);
+orders.push({
 
-localStorage.setItem(
-"khanOrders",
-orders
-);
+id:"ORD-"+Date.now(),
 
-localStorage.setItem(
-"khanMenu",
-JSON.stringify(menuItems)
-);
+date:t.date,
 
-if(currentTable &&
-currentTable.startsWith("Table")){
+day:t.day,
 
-delete tables[currentTable];
+type:currentType,
 
-localStorage.setItem(
-"khanTables",
-JSON.stringify(tables)
-);
+payment:currentPayment,
 
-}
+subtotal:subtotal,
 
-printReceipt(total,vat);
+vat:vat,
+
+total:total,
+
+items:currentOrder
+
+});
+
+save();
+
+/*
+Rebuild Daily Till automatically.
+*/
+
+rebuildTodaySales();
 
 alert(
 "Payment completed!\n\n"+
-"Total: £"+total.toFixed(2)
+"Order: "+currentType+
+"\nPayment: "+currentPayment+
+"\nTotal: "+money(total)
 );
 
-cart=[];
+currentOrder=[];
 
-currentTable=null;
+backTables();
 
-document.getElementById("tableSelection")
-.style.display="block";
-
-document.getElementById("orderScreen")
-.style.display="none";
-
-renderTables();
-
-updateDashboard();
+renderHome();
 
 }
 
 
-/* =========================
-PRINT BILL
-========================= */
+/* ================================
+DAILY TILL
+================================ */
 
-function printReceipt(total,vat){
+function renderDaily(){
 
-let subtotal=total-vat;
+let d=getToday();
 
-document.getElementById("printArea")
-.innerHTML=`
+rebuildTodaySales();
 
-<div class="receipt">
+d=getToday();
 
-<h2>Khan's Restaurant</h2>
+let totalSales=
+d.cash+
+d.uber+
+d.deliveroo+
+d.deliveryCash+
+d.deliveryCard;
 
-<p>Restaurant Bill</p>
+let expected=
+d.mainTill+
+d.cash+
+d.deliveryCash-
+d.cashTaken;
 
-<hr>
+let difference=
+d.actualClosing-expected;
 
-${cart.map(x=>`
+document.getElementById("dailyRecord").innerHTML=`
 
-<div class="receipt-line">
+<div class="till">
 
-<span>
-${x.name} × ${x.qty}
-</span>
+<div style="display:flex;justify-content:space-between">
 
-<span>
-£${(x.price*x.qty).toFixed(2)}
-</span>
+<b>${d.day}</b>
+<b>${formatDate(d.date)}</b>
 
-</div>
-
-`).join("")}
-
-<hr>
-
-<div class="receipt-line">
-<span>Subtotal</span>
-<strong>£${subtotal.toFixed(2)}</strong>
-</div>
-
-<div class="receipt-line">
-<span>VAT</span>
-<strong>£${vat.toFixed(2)}</strong>
-</div>
-
-<div class="receipt-line">
-<strong>Total</strong>
-<strong>£${total.toFixed(2)}</strong>
 </div>
 
 <hr>
 
-<p>Payment: ${paymentMethod}</p>
+<div class="till-row">
+<span>Day</span>
+<b>${d.day}</b>
+</div>
 
-<p>${new Date().toLocaleString()}</p>
+<div class="till-row">
+<span>Date</span>
+<b>${formatDate(d.date)}</b>
+</div>
+
+<div class="till-row">
+<span>Main Till</span>
+<b>${money(d.mainTill)}</b>
+</div>
+
+<div class="till-row">
+<span>Petty Cash</span>
+<b>${money(d.pettyCash)}</b>
+</div>
+
+<div class="till-row">
+<span>Cash</span>
+<b>${money(d.cash)}</b>
+</div>
+
+<div class="till-row">
+<span>Uber</span>
+<b>${money(d.uber)}</b>
+</div>
+
+<div class="till-row">
+<span>Deliveroo</span>
+<b>${money(d.deliveroo)}</b>
+</div>
+
+<div class="till-row">
+<span>Delivery Cash</span>
+<b>${money(d.deliveryCash)}</b>
+</div>
+
+<div class="till-row">
+<span>Delivery Card</span>
+<b>${money(d.deliveryCard)}</b>
+</div>
+
+<div class="till-row">
+<span>Cash Taken</span>
+<b>${money(d.cashTaken)}</b>
+</div>
+
+<div class="till-row">
+<span>Actual Closing Cash</span>
+<b>${money(d.actualClosing)}</b>
+</div>
+
+<div class="till-total">
+
+<div class="till-row">
+<span>Total Sales</span>
+<b>${money(totalSales)}</b>
+</div>
+
+<div class="till-row">
+<span>Expected Closing</span>
+<b>${money(expected)}</b>
+</div>
+
+<div class="till-row">
+<span>Difference</span>
+<b class="${Math.abs(difference)<0.01?"":"redtext"}">
+${money(difference)}
+</b>
+</div>
+
+</div>
+
+<br>
+
+<button class="btn"
+onclick="editDaily()">
+✏️ Edit Daily Till
+</button>
+
+<br><br>
+
+<button class="btn red"
+onclick="deleteTodayData()">
+🗑️ Delete Today's Till
+</button>
+
+</div>
+
+<div class="alert">
+
+<b>Automatic from POS:</b><br>
+
+Cash, Uber, Deliveroo,
+Delivery Cash and Delivery Card
+are automatically calculated from today's POS orders.
+
+<br><br>
+
+<b>Manual:</b><br>
+
+Main Till, Petty Cash,
+Cash Taken and Actual Closing Cash
+can be edited.
 
 </div>
 
@@ -1928,84 +1610,28 @@ ${x.name} × ${x.qty}
 }
 
 
-function printBill(){
+/* ================================
+EDIT DAILY
+================================ */
 
-if(!cart.length){
+function editDaily(){
 
-alert("No items in bill.");
+let d=getToday();
 
-return;
+document.getElementById("editDay").value=d.day;
+document.getElementById("editDate").value=d.date;
 
-}
+document.getElementById("editMainTill").value=d.mainTill;
+document.getElementById("editPetty").value=d.pettyCash;
+document.getElementById("editCash").value=d.cash;
+document.getElementById("editUber").value=d.uber;
+document.getElementById("editDeliveroo").value=d.deliveroo;
+document.getElementById("editDeliveryCash").value=d.deliveryCash;
+document.getElementById("editDeliveryCard").value=d.deliveryCard;
+document.getElementById("editCashTaken").value=d.cashTaken;
+document.getElementById("editActual").value=d.actualClosing;
 
-let subtotal=
-cart.reduce(
-(s,x)=>s+x.price*x.qty,0
-);
-
-let vat=
-subtotal*(taxRate/100);
-
-let total=
-subtotal+vat;
-
-printReceipt(total,vat);
-
-window.print();
-
-}
-
-
-/* =========================
-DAILY TILL
-========================= */
-
-function openDailyEntry(){
-
-let now=new Date();
-
-let day=
-now.toLocaleDateString(
-"en-GB",
-{weekday:"long"}
-);
-
-let date=
-now.toISOString()
-.split("T")[0];
-
-document.getElementById("dailyDay")
-.value=day;
-
-document.getElementById("dailyDate")
-.value=date;
-
-document.getElementById("mainTill").value="";
-
-document.getElementById("dailyPetty").value="";
-
-document.getElementById("dailyCash").value="";
-
-document.getElementById("uber").value="";
-
-document.getElementById("deliveroo").value="";
-
-document.getElementById("deliveryCash").value="";
-
-document.getElementById("deliveryCard").value="";
-
-document.getElementById("cashTaken").value="";
-
-document.getElementById("actualClosing").value="";
-
-document.getElementById("entryTotalSales")
-.innerText="£0.00";
-
-document.getElementById("entryExpected")
-.innerText="£0.00";
-
-document.getElementById("entryDifference")
-.innerText="£0.00";
+updateEditCalculation();
 
 document.getElementById("dailyModal")
 .style.display="flex";
@@ -2013,199 +1639,128 @@ document.getElementById("dailyModal")
 }
 
 
-function calculateDaily(){
+function updateEditCalculation(){
 
-let mainTill=
-Number(document.getElementById("mainTill").value)||0;
+let main=Number(
+document.getElementById("editMainTill").value||0
+);
 
-let petty=
-Number(document.getElementById("dailyPetty").value)||0;
+let cash=Number(
+document.getElementById("editCash").value||0
+);
 
-let cash=
-Number(document.getElementById("dailyCash").value)||0;
+let uber=Number(
+document.getElementById("editUber").value||0
+);
 
-let uber=
-Number(document.getElementById("uber").value)||0;
+let deliveroo=Number(
+document.getElementById("editDeliveroo").value||0
+);
 
-let deliveroo=
-Number(document.getElementById("deliveroo").value)||0;
+let dc=Number(
+document.getElementById("editDeliveryCash").value||0
+);
 
-let deliveryCash=
-Number(document.getElementById("deliveryCash").value)||0;
+let dcard=Number(
+document.getElementById("editDeliveryCard").value||0
+);
 
-let deliveryCard=
-Number(document.getElementById("deliveryCard").value)||0;
+let taken=Number(
+document.getElementById("editCashTaken").value||0
+);
 
-let cashTaken=
-Number(document.getElementById("cashTaken").value)||0;
+let actual=Number(
+document.getElementById("editActual").value||0
+);
 
-let actual=
-Number(document.getElementById("actualClosing").value)||0;
-
-
-/*
-TOTAL SALES
-
-Cash + Uber + Deliveroo
-+ Delivery Cash + Delivery Card
-*/
-
-let totalSales=
-cash+
-uber+
-deliveroo+
-deliveryCash+
-deliveryCard;
-
-
-/*
-EXPECTED CLOSING CASH
-
-Main Till
-+ Cash
-+ Delivery Cash
-- Cash Taken
-
-Petty Cash is displayed separately.
-*/
+let sales=
+cash+uber+deliveroo+dc+dcard;
 
 let expected=
-mainTill+
-cash+
-deliveryCash-
-cashTaken;
+main+cash+dc-taken;
 
 let difference=
 actual-expected;
 
-document.getElementById("entryTotalSales")
-.innerText=
-"£"+totalSales.toFixed(2);
+document.getElementById("editSales")
+.innerText=money(sales);
 
-document.getElementById("entryExpected")
-.innerText=
-"£"+expected.toFixed(2);
+document.getElementById("editExpected")
+.innerText=money(expected);
 
-document.getElementById("entryDifference")
-.innerText=
-"£"+difference.toFixed(2);
-
-return {
-mainTill,
-petty,
-cash,
-uber,
-deliveroo,
-deliveryCash,
-deliveryCard,
-cashTaken,
-actual,
-totalSales,
-expected,
-difference
-};
+document.getElementById("editDifference")
+.innerText=money(difference);
 
 }
 
 
 /*
-Automatically calculate while typing
+Live calculation while editing
 */
 
-document.addEventListener(
-"input",
-function(e){
+document.addEventListener("input",e=>{
 
-if(
-[
-"mainTill",
-"dailyPetty",
-"dailyCash",
-"uber",
-"deliveroo",
-"deliveryCash",
-"deliveryCard",
-"cashTaken",
-"actualClosing"
-].includes(e.target.id)
-){
-
-calculateDaily();
-
-}
-
-}
-);
-
-
-function saveDailyEntry(){
-
-let d=calculateDaily();
-
-let day=
-document.getElementById("dailyDay").value;
-
-let date=
-document.getElementById("dailyDate").value;
-
-if(!date){
-
-alert("Please select date.");
-
-return;
-
-}
-
-dailyRecords.push({
-
-day,
-date,
-
-mainTill:d.mainTill,
-
-pettyCash:d.petty,
-
-cash:d.cash,
-
-uber:d.uber,
-
-deliveroo:d.deliveroo,
-
-deliveryCash:d.deliveryCash,
-
-deliveryCard:d.deliveryCard,
-
-cashTaken:d.cashTaken,
-
-actualClosing:d.actual,
-
-totalSales:d.totalSales,
-
-expectedClosing:d.expected,
-
-difference:d.difference
+if(e.target.id.startsWith("edit"))
+updateEditCalculation();
 
 });
 
-localStorage.setItem(
-"khanDailyRecords",
-JSON.stringify(dailyRecords)
+
+function saveDailyEdit(){
+
+let t=today();
+let d=daily[t.date];
+
+d.mainTill=Number(
+document.getElementById("editMainTill").value||0
 );
 
-closeDailyModal();
+d.pettyCash=Number(
+document.getElementById("editPetty").value||0
+);
+
+d.cash=Number(
+document.getElementById("editCash").value||0
+);
+
+d.uber=Number(
+document.getElementById("editUber").value||0
+);
+
+d.deliveroo=Number(
+document.getElementById("editDeliveroo").value||0
+);
+
+d.deliveryCash=Number(
+document.getElementById("editDeliveryCash").value||0
+);
+
+d.deliveryCard=Number(
+document.getElementById("editDeliveryCard").value||0
+);
+
+d.cashTaken=Number(
+document.getElementById("editCashTaken").value||0
+);
+
+d.actualClosing=Number(
+document.getElementById("editActual").value||0
+);
+
+save();
+
+closeDaily();
 
 renderDaily();
+renderHome();
+renderReports();
 
-updateReports();
-
-updateDashboard();
-
-alert("Daily till entry saved.");
+alert("Daily Till updated successfully.");
 
 }
 
 
-function closeDailyModal(){
+function closeDaily(){
 
 document.getElementById("dailyModal")
 .style.display="none";
@@ -2213,114 +1768,81 @@ document.getElementById("dailyModal")
 }
 
 
-function renderDaily(){
+function deleteTodayData(){
 
-let box=
-document.getElementById("dailyRecords");
-
-if(!dailyRecords.length){
-
-box.innerHTML=
-'<div class="empty">No daily till records.</div>';
-
+if(!confirm(
+"Delete today's manual till data?"
+))
 return;
+
+let d=getToday();
+
+d.cashTaken=0;
+d.actualClosing=0;
+
+save();
+
+renderDaily();
+
+renderHome();
 
 }
 
-let records=
-[...dailyRecords].reverse();
 
-box.innerHTML=
-records.map((x,index)=>`
+/* ================================
+MENU
+================================ */
 
-<div class="daily-box">
+function addMenu(){
 
-<div style="display:flex;justify-content:space-between">
+let name=prompt("Food name:");
+if(!name)return;
 
-<strong>
-${x.day}
-</strong>
+let category=prompt("Category:");
+if(!category)return;
 
-<strong>
-${x.date}
-</strong>
+let price=Number(prompt("Price £:"));
+if(!price)return;
 
+let stock=Number(prompt("Opening stock:"))||0;
+
+menu.push({
+name,category,price,stock
+});
+
+save();
+
+renderMenu();
+renderInventory();
+
+}
+
+
+function renderMenu(){
+
+document.getElementById("menuList")
+.innerHTML=menu.map((x,i)=>`
+
+<div class="item">
+
+<div>
+<b>${x.name}</b><br>
+<small>
+${x.category} • ${money(x.price)}
+</small>
 </div>
 
-<hr>
+<div>
 
-<div class="daily-row">
-<span>Main Till</span>
-<strong>£${x.mainTill.toFixed(2)}</strong>
-</div>
+<button class="small"
+onclick="editMenu(${i})">
+✏️
+</button>
 
-<div class="daily-row">
-<span>Petty Cash</span>
-<strong>£${x.pettyCash.toFixed(2)}</strong>
-</div>
-
-<div class="daily-row">
-<span>Cash</span>
-<strong>£${x.cash.toFixed(2)}</strong>
-</div>
-
-<div class="daily-row">
-<span>Uber</span>
-<strong>£${x.uber.toFixed(2)}</strong>
-</div>
-
-<div class="daily-row">
-<span>Deliveroo</span>
-<strong>£${x.deliveroo.toFixed(2)}</strong>
-</div>
-
-<div class="daily-row">
-<span>Delivery Cash</span>
-<strong>£${x.deliveryCash.toFixed(2)}</strong>
-</div>
-
-<div class="daily-row">
-<span>Delivery Card</span>
-<strong>£${x.deliveryCard.toFixed(2)}</strong>
-</div>
-
-<div class="daily-row">
-<span>Cash Taken</span>
-<strong>£${x.cashTaken.toFixed(2)}</strong>
-</div>
-
-<div class="daily-total">
-
-<div class="daily-row">
-<span>Total Sales</span>
-<strong>£${x.totalSales.toFixed(2)}</strong>
-</div>
-
-<div class="daily-row">
-<span>Expected Closing</span>
-<strong>£${x.expectedClosing.toFixed(2)}</strong>
-</div>
-
-<div class="daily-row">
-<span>Actual Closing</span>
-<strong>£${x.actualClosing.toFixed(2)}</strong>
-</div>
-
-<div class="daily-row">
-
-<span>Difference</span>
-
-<strong class="${
-Math.abs(x.difference)<0.01
-?""
-:"red"
-}">
-
-£${x.difference.toFixed(2)}
-
-</strong>
-
-</div>
+<button class="small"
+onclick="deleteMenu(${i})">
+🗑️
+</button>
 
 </div>
 
@@ -2331,296 +1853,134 @@ Math.abs(x.difference)<0.01
 }
 
 
-/* =========================
-MENU
-========================= */
+function editMenu(i){
 
-function renderMenu(){
+let x=menu[i];
 
-let list=
-document.getElementById("menuList");
+let name=prompt("Food name:",x.name);
+if(!name)return;
 
-list.innerHTML=
-menuItems.length?
+let category=prompt("Category:",x.category);
 
-menuItems.map(
-(x,i)=>`
-
-<div class="list-item">
-
-<div>
-
-<strong>${x.name}</strong>
-
-<br>
-
-<small>
-${x.category}
-•
-£${x.price.toFixed(2)}
-•
-Stock ${x.stock}
-</small>
-
-</div>
-
-<div>
-
-<button class="light-btn"
-onclick="editItem(${i})">
-✏️
-</button>
-
-<button class="light-btn"
-onclick="deleteItem(${i})">
-🗑️
-</button>
-
-</div>
-
-</div>
-
-`
-).join("")
-
-:
-
-'<div class="empty">No menu items</div>';
-
-}
-
-
-function openAddItem(){
-
-editIndex=-1;
-
-document.getElementById("itemName").value="";
-
-document.getElementById("itemCategory").value="";
-
-document.getElementById("itemPrice").value="";
-
-document.getElementById("itemStock").value="";
-
-document.getElementById("itemModal")
-.style.display="flex";
-
-}
-
-
-function editItem(i){
-
-editIndex=i;
-
-let x=menuItems[i];
-
-document.getElementById("itemName").value=x.name;
-
-document.getElementById("itemCategory").value=x.category;
-
-document.getElementById("itemPrice").value=x.price;
-
-document.getElementById("itemStock").value=x.stock;
-
-document.getElementById("itemModal")
-.style.display="flex";
-
-}
-
-
-function closeModal(){
-
-document.getElementById("itemModal")
-.style.display="none";
-
-}
-
-
-function saveItem(){
-
-let name=
-document.getElementById("itemName")
-.value.trim();
-
-let category=
-document.getElementById("itemCategory")
-.value.trim();
-
-let price=
-Number(document.getElementById("itemPrice").value);
-
-let stock=
-Number(document.getElementById("itemStock").value)||0;
-
-if(!name||!category||!price){
-
-alert(
-"Please enter food name, category and price."
+let price=Number(
+prompt("Price:",x.price)
 );
 
-return;
+let stock=Number(
+prompt("Stock:",x.stock)
+);
 
-}
-
-let item={
+menu[i]={
 name,
 category,
 price,
 stock
 };
 
-if(editIndex<0)
-menuItems.push(item);
-
-else
-menuItems[editIndex]=item;
-
-localStorage.setItem(
-"khanMenu",
-JSON.stringify(menuItems)
-);
-
-closeModal();
+save();
 
 renderMenu();
-
-renderPOS();
-
-updateDashboard();
+renderInventory();
 
 }
 
 
-function deleteItem(i){
+function deleteMenu(i){
 
-if(confirm("Delete this food item?")){
+if(confirm("Delete this item?")){
 
-menuItems.splice(i,1);
+menu.splice(i,1);
 
-localStorage.setItem(
-"khanMenu",
-JSON.stringify(menuItems)
-);
+save();
 
 renderMenu();
-
-renderPOS();
-
-}
+renderInventory();
 
 }
 
+}
 
-/* =========================
+
+/* ================================
 INVENTORY
-========================= */
+================================ */
 
 function renderInventory(){
 
-let low=
-menuItems.filter(
-x=>x.stock<=5
-);
+let low=menu.filter(x=>x.stock<=5);
 
-document.getElementById("inventoryCount")
-.innerText=menuItems.length;
+document.getElementById("itemCount")
+.innerText=menu.length;
 
 document.getElementById("lowCount")
 .innerText=low.length;
 
 document.getElementById("inventoryList")
-.innerHTML=
-menuItems.map(
-x=>`
+.innerHTML=menu.map((x,i)=>`
 
-<div class="list-item">
+<div class="item">
 
 <span>
-
-<strong>${x.name}</strong>
-
-<br>
-
+<b>${x.name}</b><br>
 <small>${x.category}</small>
-
 </span>
 
-<strong class="${
-x.stock<=5?"red":"green"
-}">
-
+<b class="${x.stock<=5?"redtext":"green"}">
 ${x.stock}
-
-</strong>
+</b>
 
 </div>
 
-`
-).join("");
+`).join("");
 
 }
 
 
-function stockEntry(type){
+function stockChange(direction){
 
-let name=prompt(
-"Enter food item name:"
-);
-
+let name=prompt("Food item name:");
 if(!name)return;
 
-let item=
-menuItems.find(
-x=>x.name.toLowerCase()
-===name.toLowerCase()
+let item=menu.find(
+x=>x.name.toLowerCase()===name.toLowerCase()
 );
 
 if(!item){
 
-alert("Item not found.");
-
+alert("Item not found");
 return;
 
 }
 
-let qty=
-Number(prompt("Enter quantity:"));
+let qty=Number(prompt("Quantity:"));
 
 if(!qty)return;
 
-if(type==="in")
-item.stock+=qty;
-
-else
-item.stock=
-Math.max(0,item.stock-qty);
-
-localStorage.setItem(
-"khanMenu",
-JSON.stringify(menuItems)
+item.stock=Math.max(
+0,
+item.stock+(qty*direction)
 );
 
-renderInventory();
+save();
 
-renderPOS();
+renderInventory();
+renderMenu();
 
 }
 
 
-/* =========================
+/* ================================
 EXPENSES
-========================= */
+================================ */
 
 function addExpense(){
 
-let name=prompt(
-"Expense name:"
-);
-
+let name=prompt("Expense name:");
 if(!name)return;
 
-let amount=
-Number(prompt("Amount (£):"));
+let amount=Number(
+prompt("Amount £:")
+);
 
 if(!amount)return;
 
@@ -2628,73 +1988,51 @@ expenses.push({
 
 name,
 amount,
-
-date:
-new Date()
-.toLocaleDateString()
+date:today().date
 
 });
 
-localStorage.setItem(
-"khanExpenses",
-JSON.stringify(expenses)
-);
+save();
 
 renderExpenses();
-
-updateDashboard();
+renderHome();
+renderReports();
 
 }
 
 
 function renderExpenses(){
 
-let total=
-expenses.reduce(
-(s,x)=>s+x.amount,0
-);
-
-document.getElementById("expenseTotal")
-.innerText=
-"£"+total.toFixed(2);
-
 document.getElementById("expenseList")
 .innerHTML=
+
 expenses.length?
 
-expenses.map(
-(x,i)=>`
+expenses.slice().reverse().map((x,i)=>`
 
-<div class="list-item">
+<div class="record">
 
 <div>
-
-<strong>${x.name}</strong>
-
-<br>
-
-<small>${x.date}</small>
-
+<b>${x.name}</b><br>
+<small>${formatDate(x.date)}</small>
 </div>
 
-<strong>
-£${x.amount.toFixed(2)}
-
-<button class="light-btn"
-onclick="deleteExpense(${i})">
+<div>
+<b>${money(x.amount)}</b>
+<br>
+<button class="small"
+onclick="deleteExpense(${expenses.length-1-i})">
 🗑️
 </button>
-
-</strong>
+</div>
 
 </div>
 
-`
-).join("")
+`).join("")
 
 :
 
-'<div class="empty">No expenses recorded.</div>';
+'<div class="empty">No expenses</div>';
 
 }
 
@@ -2703,204 +2041,69 @@ function deleteExpense(i){
 
 expenses.splice(i,1);
 
-localStorage.setItem(
-"khanExpenses",
-JSON.stringify(expenses)
-);
+save();
 
 renderExpenses();
-
-updateDashboard();
-
-}
-
-
-/* =========================
-PURCHASES
-========================= */
-
-function addPurchase(){
-
-let supplier=
-prompt("Supplier name:");
-
-if(!supplier)return;
-
-let invoice=
-prompt("Invoice number:");
-
-let amount=
-Number(prompt("Purchase amount (£):"));
-
-if(!amount)return;
-
-purchases.push({
-
-supplier,
-invoice,
-amount,
-
-date:
-new Date()
-.toLocaleDateString()
-
-});
-
-localStorage.setItem(
-"khanPurchases",
-JSON.stringify(purchases)
-);
-
-renderPurchases();
+renderHome();
+renderReports();
 
 }
 
 
-function renderPurchases(){
-
-document.getElementById("purchaseList")
-.innerHTML=
-purchases.length?
-
-purchases.map(
-x=>`
-
-<div class="list-item">
-
-<div>
-
-<strong>${x.supplier}</strong>
-
-<br>
-
-<small>
-Invoice: ${x.invoice||"-"}
-•
-${x.date}
-</small>
-
-</div>
-
-<strong>
-£${x.amount.toFixed(2)}
-</strong>
-
-</div>
-
-`
-).join("")
-
-:
-
-'<div class="empty">No purchases.</div>';
-
-}
-
-
-/* =========================
-EMPLOYEES
-========================= */
-
-function addEmployee(){
-
-let name=
-prompt("Employee name:");
-
-if(!name)return;
-
-let role=
-prompt("Job role:");
-
-let salary=
-Number(
-prompt("Monthly salary (£):")
-)||0;
-
-employees.push({
-name,
-role,
-salary
-});
-
-localStorage.setItem(
-"khanEmployees",
-JSON.stringify(employees)
-);
-
-renderEmployees();
-
-}
-
-
-function renderEmployees(){
-
-document.getElementById("employeeList")
-.innerHTML=
-employees.length?
-
-employees.map(
-x=>`
-
-<div class="list-item">
-
-<div>
-
-<strong>${x.name}</strong>
-
-<br>
-
-<small>${x.role||"Staff"}</small>
-
-</div>
-
-<strong>
-£${x.salary.toFixed(2)}
-</strong>
-
-</div>
-
-`
-).join("")
-
-:
-
-'<div class="empty">No employees.</div>';
-
-}
-
-
-/* =========================
+/* ================================
 PETTY CASH
-========================= */
+================================ */
 
-function setOpeningCash(){
+function getPettyIn(){
 
-let amount=
-Number(
-prompt("Opening petty cash (£):")
+return petty
+.filter(x=>x.type==="in")
+.reduce((s,x)=>s+x.amount,0);
+
+}
+
+function getPettyOut(){
+
+return petty
+.filter(x=>x.type==="out")
+.reduce((s,x)=>s+x.amount,0);
+
+}
+
+function getPettyBalance(){
+
+return pettyOpening+
+getPettyIn()-
+getPettyOut();
+
+}
+
+
+function setPettyOpening(){
+
+let amount=Number(
+prompt(
+"Opening petty cash £:",
+pettyOpening
+)
 );
 
 if(isNaN(amount))return;
 
-openingCash=amount;
+pettyOpening=amount;
 
-localStorage.setItem(
-"khanOpeningCash",
-openingCash
-);
+save();
 
 renderPetty();
-
-updateDashboard();
+renderHome();
 
 }
 
 
-function cashTransaction(type){
+function pettyTransaction(type){
 
-let amount=
-Number(
-prompt("Amount (£):")
+let amount=Number(
+prompt("Amount £:")
 );
 
 if(!amount)return;
@@ -2908,412 +2111,196 @@ if(!amount)return;
 let description=
 prompt("Description:");
 
-cashLog.push({
+petty.push({
 
 type,
 amount,
-
-description:
-description||
-"Cash transaction",
-
-date:
-new Date()
-.toLocaleString()
+description:description||"Cash transaction",
+date:today().date
 
 });
 
-localStorage.setItem(
-"khanCashLog",
-JSON.stringify(cashLog)
-);
+save();
+
+let d=getToday();
+d.pettyCash=getPettyBalance();
+save();
 
 renderPetty();
-
-updateDashboard();
-
-}
-
-
-function getCashIn(){
-
-return cashLog
-.filter(x=>x.type==="in")
-.reduce(
-(s,x)=>s+x.amount,0
-);
-
-}
-
-
-function getCashOut(){
-
-return cashLog
-.filter(x=>x.type==="out")
-.reduce(
-(s,x)=>s+x.amount,0
-);
+renderDaily();
+renderHome();
 
 }
 
 
 function renderPetty(){
 
-let cin=getCashIn();
+document.getElementById("pettyOpening")
+.innerText=money(pettyOpening);
 
-let cout=getCashOut();
+document.getElementById("pettyIn")
+.innerText=money(getPettyIn());
 
-let balance=
-openingCash+cin-cout;
-
-document.getElementById("openingCash")
-.innerText=
-"£"+openingCash.toFixed(2);
-
-document.getElementById("cashIn")
-.innerText=
-"£"+cin.toFixed(2);
-
-document.getElementById("cashOut")
-.innerText=
-"£"+cout.toFixed(2);
+document.getElementById("pettyOut")
+.innerText=money(getPettyOut());
 
 document.getElementById("pettyBalance")
-.innerText=
-"£"+balance.toFixed(2);
+.innerText=money(getPettyBalance());
 
-document.getElementById("cashHistory")
-.innerHTML=
-cashLog
-.slice()
-.reverse()
-.map(
-x=>`
+document.getElementById("pettyHistory")
+.innerHTML=petty.slice().reverse().map(x=>`
 
-<div class="list-item">
+<div class="record">
 
 <div>
+<b>${x.description}</b><br>
+<small>${formatDate(x.date)}</small>
+</div>
 
-<strong>${x.description}</strong>
-
-<br>
-
-<small>${x.date}</small>
+<b class="${x.type==="in"?"green":"redtext"}">
+${x.type==="in"?"+":"-"}${money(x.amount)}
+</b>
 
 </div>
 
-<strong class="${
-x.type==="in"
-?"green"
-:"red"
-}">
-
-${x.type==="in"?"+":"-"}
-£${x.amount.toFixed(2)}
-
-</strong>
-
-</div>
-
-`
-).join("");
+`).join("");
 
 }
 
 
-/* =========================
-CUSTOMERS
-========================= */
+/* ================================
+REPORTS
+================================ */
 
-function addCustomer(){
+function renderReports(){
 
-let name=
-prompt("Customer name:");
+let totalSales=0;
+let cash=0;
+let uber=0;
+let deliveroo=0;
+let deliveryCash=0;
+let deliveryCard=0;
 
-if(!name)return;
+Object.values(daily).forEach(d=>{
 
-let phone=
-prompt("Phone number:");
+totalSales+=
+d.cash+
+d.uber+
+d.deliveroo+
+d.deliveryCash+
+d.deliveryCard;
 
-customers.push({
-name,
-phone,
-date:
-new Date()
-.toLocaleDateString()
+cash+=d.cash;
+uber+=d.uber;
+deliveroo+=d.deliveroo;
+deliveryCash+=d.deliveryCash;
+deliveryCard+=d.deliveryCard;
+
 });
 
-localStorage.setItem(
-"khanCustomers",
-JSON.stringify(customers)
+let exp=expenses.reduce(
+(s,x)=>s+x.amount,0
 );
 
-renderCustomers();
+let profit=totalSales-exp;
 
-}
+document.getElementById("reportsData")
+.innerHTML=`
 
-
-function renderCustomers(){
-
-document.getElementById("customerList")
-.innerHTML=
-customers.length?
-
-customers.map(
-x=>`
-
-<div class="list-item">
-
-<div>
-
-<strong>${x.name}</strong>
-
-<br>
-
-<small>
-${x.phone||"-"}
-</small>
-
+<div class="record">
+<span>Total Sales</span>
+<b>${money(totalSales)}</b>
 </div>
 
-<span>Customer</span>
-
+<div class="record">
+<span>Total Orders</span>
+<b>${orders.length}</b>
 </div>
 
-`
-).join("")
+<div class="record">
+<span>Cash Sales</span>
+<b>${money(cash)}</b>
+</div>
 
-:
+<div class="record">
+<span>Uber</span>
+<b>${money(uber)}</b>
+</div>
 
-'<div class="empty">No customers.</div>';
+<div class="record">
+<span>Deliveroo</span>
+<b>${money(deliveroo)}</b>
+</div>
 
-}
+<div class="record">
+<span>Delivery Cash</span>
+<b>${money(deliveryCash)}</b>
+</div>
 
+<div class="record">
+<span>Delivery Card</span>
+<b>${money(deliveryCard)}</b>
+</div>
 
-/* =========================
-REPORTS
-========================= */
+<div class="record">
+<span>Total Expenses</span>
+<b>${money(exp)}</b>
+</div>
 
-function updateReports(){
+<div class="record">
+<span>Profit</span>
+<b class="${profit>=0?"green":"redtext"}">
+${money(profit)}
+</b>
+</div>
 
-let expenseTotal=
-expenses.reduce(
-(s,x)=>s+x.amount,0
-);
-
-let purchaseTotal=
-purchases.reduce(
-(s,x)=>s+x.amount,0
-);
-
-let uber=
-dailyRecords.reduce(
-(s,x)=>s+x.uber,0
-);
-
-let deliveroo=
-dailyRecords.reduce(
-(s,x)=>s+x.deliveroo,0
-);
-
-let deliveryCash=
-dailyRecords.reduce(
-(s,x)=>s+x.deliveryCash,0
-);
-
-let deliveryCard=
-dailyRecords.reduce(
-(s,x)=>s+x.deliveryCard,0
-);
-
-let cashTaken=
-dailyRecords.reduce(
-(s,x)=>s+x.cashTaken,0
-);
-
-let profit=
-sales-expenseTotal-purchaseTotal;
-
-document.getElementById("rSales")
-.innerText="£"+sales.toFixed(2);
-
-document.getElementById("rOrders")
-.innerText=orders;
-
-document.getElementById("rExpenses")
-.innerText=
-"£"+expenseTotal.toFixed(2);
-
-document.getElementById("rPurchases")
-.innerText=
-"£"+purchaseTotal.toFixed(2);
-
-document.getElementById("rUber")
-.innerText=
-"£"+uber.toFixed(2);
-
-document.getElementById("rDeliveroo")
-.innerText=
-"£"+deliveroo.toFixed(2);
-
-document.getElementById("rDeliveryCash")
-.innerText=
-"£"+deliveryCash.toFixed(2);
-
-document.getElementById("rDeliveryCard")
-.innerText=
-"£"+deliveryCard.toFixed(2);
-
-document.getElementById("rCashTaken")
-.innerText=
-"£"+cashTaken.toFixed(2);
-
-document.getElementById("rProfit")
-.innerText=
-"£"+profit.toFixed(2);
+`;
 
 }
 
 
-/* =========================
-DASHBOARD
-========================= */
-
-function updateDashboard(){
-
-let expenseTotal=
-expenses.reduce(
-(s,x)=>s+x.amount,0
-);
-
-let purchaseTotal=
-purchases.reduce(
-(s,x)=>s+x.amount,0
-);
-
-let latest=
-dailyRecords.length
-?dailyRecords[dailyRecords.length-1]
-:null;
-
-document.getElementById("dashSales")
-.innerText=
-"£"+sales.toFixed(2);
-
-document.getElementById("dashOrders")
-.innerText=orders;
-
-document.getElementById("dashExpenses")
-.innerText=
-"£"+expenseTotal.toFixed(2);
-
-document.getElementById("dashProfit")
-.innerText=
-"£"+
-(sales-expenseTotal-purchaseTotal)
-.toFixed(2);
-
-document.getElementById("dashTill")
-.innerText=
-latest
-?"£"+latest.actualClosing.toFixed(2)
-:"£0.00";
-
-document.getElementById("dashPetty")
-.innerText=
-"£"+
-(openingCash+getCashIn()-getCashOut())
-.toFixed(2);
-
-let low=
-menuItems.filter(
-x=>x.stock<=5
-);
-
-document.getElementById("lowStockAlert")
-.innerHTML=
-low.length?
-
-`<div class="alert">
-
-<strong>⚠️ Low Stock</strong>
-
-<br>
-
-${low.map(
-x=>x.name+" ("+x.stock+")"
-).join(", ")}
-
-</div>`
-
-:"";
-
-}
-
-
-/* =========================
+/* ================================
 SETTINGS
-========================= */
+================================ */
 
 function saveSettings(){
 
-taxRate=
-Number(
-document.getElementById("taxRate")
-.value
+vatRate=Number(
+document.getElementById("vatRate").value
 );
 
-localStorage.setItem(
-"khanTax",
-taxRate
-);
+save();
 
 alert("Settings saved.");
-
-renderCart();
 
 }
 
 
-/* =========================
-BACKUP
-========================= */
-
-function backupData(){
+function backup(){
 
 let data={
 
-menuItems,
-tables,
-expenses,
-purchases,
-employees,
-customers,
-cashLog,
-dailyRecords,
-sales,
+menu,
 orders,
-openingCash,
-taxRate
+expenses,
+petty,
+pettyOpening,
+daily,
+vatRate
 
 };
 
-let blob=
-new Blob(
+let blob=new Blob(
 [JSON.stringify(data,null,2)],
 {type:"application/json"}
 );
 
-let url=
-URL.createObjectURL(blob);
+let url=URL.createObjectURL(blob);
 
-let a=
-document.createElement("a");
+let a=document.createElement("a");
 
 a.href=url;
-
-a.download=
-"khans-restaurant-backup.json";
+a.download="khans-restaurant-backup.json";
 
 a.click();
 
@@ -3322,33 +2309,46 @@ URL.revokeObjectURL(url);
 }
 
 
-/* =========================
-START
-========================= */
+/* ================================
+HELPERS
+================================ */
 
+function money(n){
+
+return "£"+
+Number(n||0).toFixed(2);
+
+}
+
+function formatDate(date){
+
+let p=date.split("-");
+
+return p[2]+"/"+p[1]+"/"+p[0];
+
+}
+
+
+/* ================================
+INITIALIZE
+================================ */
+
+function initialize(){
+
+getToday();
+
+renderHome();
 renderTables();
-
 renderMenu();
-
 renderInventory();
-
 renderExpenses();
-
-renderPurchases();
-
-renderEmployees();
-
 renderPetty();
-
-renderCustomers();
-
 renderDaily();
+renderReports();
 
-updateDashboard();
+}
 
 </script>
-
-</div>
 
 </body>
 </html>
