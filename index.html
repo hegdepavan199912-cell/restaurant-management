@@ -2,224 +2,639 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Khan's Restaurant</title>
 
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial;background:#f3f4f6;color:#222}
-header{background:#111827;color:white;padding:16px}
-.container{max-width:1100px;margin:auto;padding:15px}
-nav{display:flex;gap:8px;overflow:auto;background:white;padding:8px;border-radius:12px;margin-bottom:15px}
-nav button{border:0;padding:12px 16px;border-radius:8px;font-weight:bold;white-space:nowrap}
-nav button.active{background:#111827;color:white}
-.page{display:none}.page.active{display:block}
-.card,.stat,.history{background:white;padding:16px;border-radius:12px;margin-bottom:15px;box-shadow:0 2px 8px #0001}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.formgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.pdq{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-label{display:block;font-weight:bold;margin-bottom:6px}
-input,select{width:100%;padding:12px;border:1px solid #ccc;border-radius:8px;font-size:16px}
-.stat small{color:#666}.stat b{display:block;font-size:21px;margin-top:8px}
-.row,.totalLine{display:flex;justify-content:space-between;gap:15px;padding:10px 0;border-bottom:1px solid #eee}
-.total{background:#111827;color:white;padding:14px;border-radius:9px;margin-top:12px}
-.save{width:100%;padding:15px;background:#15803d;color:white;border:0;border-radius:8px;font-weight:bold;font-size:17px}
-.primary{background:#111827;color:white;border:0;padding:10px 15px;border-radius:8px}
-.edit{background:#2563eb;color:white;border:0;padding:8px 12px;border-radius:7px}
-.message{font-weight:bold;margin-top:10px}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f3f4f6;
+  color:#1f2937;
+}
+header{
+  background:#111827;
+  color:#fff;
+  padding:16px;
+}
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:15px;
+}
+nav{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  background:#fff;
+  padding:8px;
+  border-radius:12px;
+  margin-bottom:15px;
+}
+nav button{
+  border:0;
+  background:#e5e7eb;
+  padding:12px 16px;
+  border-radius:8px;
+  font-weight:bold;
+  white-space:nowrap;
+}
+nav button.active{
+  background:#111827;
+  color:#fff;
+}
+.page{display:none}
+.page.active{display:block}
+
+.card,.stat,.history{
+  background:#fff;
+  padding:16px;
+  border-radius:12px;
+  margin-bottom:15px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+.formgrid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+.pdq{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+label{
+  display:block;
+  font-weight:bold;
+  margin-bottom:6px;
+}
+input,select{
+  width:100%;
+  padding:12px;
+  border:1px solid #d1d5db;
+  border-radius:8px;
+  font-size:16px;
+}
+.stat small{color:#6b7280}
+.stat b{
+  display:block;
+  font-size:21px;
+  margin-top:8px;
+}
+.row,.totalLine{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  padding:10px 0;
+  border-bottom:1px solid #eee;
+}
+.total{
+  background:#111827;
+  color:#fff;
+  padding:14px;
+  border-radius:9px;
+  margin-top:12px;
+}
+.save{
+  width:100%;
+  padding:15px;
+  background:#15803d;
+  color:#fff;
+  border:0;
+  border-radius:8px;
+  font-weight:bold;
+  font-size:17px;
+}
+.primary{
+  background:#111827;
+  color:#fff;
+  border:0;
+  padding:10px 15px;
+  border-radius:8px;
+}
+.edit{
+  background:#2563eb;
+  color:#fff;
+  border:0;
+  padding:8px 12px;
+  border-radius:7px;
+}
+.message{
+  font-weight:bold;
+  margin-top:10px;
+}
 .hidden{display:none}
-.login{max-width:420px;margin:60px auto;padding:15px}
-table{width:100%;border-collapse:collapse;background:white}
-th,td{padding:10px;border-bottom:1px solid #ddd;text-align:left}
-th{background:#f3f4f6}
-.person{padding:10px;background:#f9fafb;border-radius:8px;margin:6px 0}
+.login{
+  max-width:420px;
+  margin:60px auto;
+  padding:15px;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  background:#fff;
+}
+th,td{
+  padding:10px;
+  border-bottom:1px solid #ddd;
+  text-align:left;
+}
+th{
+  background:#f3f4f6;
+}
+.person{
+  padding:10px;
+  background:#f9fafb;
+  border-radius:8px;
+  margin:6px 0;
+}
+.green{
+  color:#15803d;
+}
+.red{
+  color:#b91c1c;
+}
 @media(max-width:700px){
-.grid{grid-template-columns:repeat(2,1fr)}
-.pdq{grid-template-columns:repeat(2,1fr)}
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .pdq{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:520px){
-.formgrid{grid-template-columns:1fr}
-.grid{grid-template-columns:1fr 1fr}
+  .formgrid{grid-template-columns:1fr}
+  .grid{grid-template-columns:1fr 1fr}
+  th,td{
+    font-size:13px;
+    padding:7px;
+  }
 }
 </style>
 </head>
 
 <body>
 
+<!-- LOGIN -->
 <div id="loginScreen" class="login">
-<div class="card">
-<h2>🍽️ Khan's Restaurant</h2>
-<p>Staff Login</p>
-<input id="email" type="email" placeholder="Email"><br><br>
-<input id="password" type="password" placeholder="Password"><br><br>
-<button class="save" onclick="login()">LOGIN</button>
-<div id="loginMsg" class="message"></div>
-</div>
+  <div class="card">
+    <h2>🍽️ Khan's Restaurant</h2>
+    <p>Staff Login</p>
+
+    <input id="email" type="email" placeholder="Email">
+    <br><br>
+
+    <input id="password" type="password" placeholder="Password">
+    <br><br>
+
+    <button class="save" onclick="login()">LOGIN</button>
+
+    <div id="loginMsg" class="message"></div>
+  </div>
 </div>
 
+
+<!-- APP -->
 <div id="app" class="hidden">
 
 <header>
-<div class="container">
-<h2>🍽️ Khan's Restaurant</h2>
-<small id="headerDate"></small>
-</div>
+  <div class="container">
+    <h2>🍽️ Khan's Restaurant</h2>
+    <small id="headerDate"></small>
+  </div>
 </header>
 
 <div class="container">
 
 <nav>
-<button class="active" onclick="openPage('home',this)">🏠 Home</button>
-<button onclick="openPage('entry',this)">📝 Daily Entry</button>
-<button onclick="openPage('history',this)">📚 History</button>
-<button onclick="openPage('reports',this)">📊 Reports</button>
+  <button class="active" onclick="openPage('home',this)">🏠 Home</button>
+  <button onclick="openPage('entry',this)">📝 Daily Entry</button>
+  <button onclick="openPage('history',this)">📚 History</button>
+  <button onclick="openPage('reports',this)">📊 Reports</button>
 </nav>
+
 
 <!-- HOME -->
 <section id="home" class="page active">
+
 <h2>Today's Summary</h2>
 
 <div class="grid">
-<div class="stat"><small>Main Till</small><b id="homeMain">£0.00</b></div>
-<div class="stat"><small>PDQ Total</small><b id="homePDQ">£0.00</b></div>
-<div class="stat"><small>Petty Cash</small><b id="homePetty">£0.00</b></div>
-<div class="stat"><small>Cash</small><b id="homeCash">£0.00</b></div>
-<div class="stat"><small>Uber</small><b id="homeUber">£0.00</b></div>
-<div class="stat"><small>Deliveroo</small><b id="homeDeliveroo">£0.00</b></div>
-<div class="stat"><small>Delivery Cash</small><b id="homeDeliveryCash">£0.00</b></div>
-<div class="stat"><small>Delivery Card</small><b id="homeDeliveryCard">£0.00</b></div>
-<div class="stat"><small>Cash Taken</small><b id="homeTaken">£0.00</b></div>
+
+<div class="stat">
+<small>Main Till / Total Sales</small>
+<b id="homeMain">£0.00</b>
 </div>
+
+<div class="stat">
+<small>PDQ Total</small>
+<b id="homePDQ">£0.00</b>
+</div>
+
+<div class="stat">
+<small>Petty Cash</small>
+<b id="homePetty">£0.00</b>
+</div>
+
+<div class="stat">
+<small>Cash</small>
+<b id="homeCash">£0.00</b>
+</div>
+
+<div class="stat">
+<small>Uber</small>
+<b id="homeUber">£0.00</b>
+</div>
+
+<div class="stat">
+<small>Deliveroo</small>
+<b id="homeDeliveroo">£0.00</b>
+</div>
+
+<div class="stat">
+<small>Delivery Cash</small>
+<b id="homeDeliveryCash">£0.00</b>
+</div>
+
+<div class="stat">
+<small>Delivery Card</small>
+<b id="homeDeliveryCard">£0.00</b>
+</div>
+
+<div class="stat">
+<small>Cash Taken</small>
+<b id="homeTaken">£0.00</b>
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>🛵 Delivery Summary</h3>
+
+<div class="totalLine">
+<span>Uber 30% Commission</span>
+<b id="homeUber30">£0.00</b>
+</div>
+
+<div class="totalLine">
+<span>Uber 70% Remaining</span>
+<b id="homeUber70">£0.00</b>
+</div>
+
+<div class="totalLine">
+<span>Deliveroo 35% Commission</span>
+<b id="homeDeliveroo35">£0.00</b>
+</div>
+
+<div class="totalLine">
+<span>Deliveroo 65% Remaining</span>
+<b id="homeDeliveroo65">£0.00</b>
+</div>
+
+</div>
+
 </section>
 
-<!-- ENTRY -->
+
+<!-- DAILY ENTRY -->
 <section id="entry" class="page">
+
 <h2>📝 Daily Entry</h2>
 
 <div class="card">
+
 <div class="formgrid">
+
 <div>
 <label>Date</label>
 <input id="entryDate" type="date" onchange="loadExistingEntry()">
 </div>
+
 <div>
 <label>Day</label>
 <input id="entryDay" readonly>
 </div>
-</div>
+
 </div>
 
+</div>
+
+
 <div class="card">
+
 <h3>💷 Main Till / Total Sales</h3>
-<input id="mainTill" type="number" step="0.01" oninput="calculateAll()" placeholder="Enter Main Till">
+
+<input
+id="mainTill"
+type="number"
+step="0.01"
+placeholder="Enter Main Till"
+oninput="calculateAll()"
+>
+
 </div>
 
+
+<!-- PDQ -->
 <div class="card">
+
 <h3>💳 PDQ</h3>
+
+<p>Enter the 4 PDQ tabs.</p>
+
 <div class="pdq">
-<div><label>PDQ 1</label><input id="pdq1" type="number" step="0.01" oninput="calculateAll()"></div>
-<div><label>PDQ 2</label><input id="pdq2" type="number" step="0.01" oninput="calculateAll()"></div>
-<div><label>PDQ 3</label><input id="pdq3" type="number" step="0.01" oninput="calculateAll()"></div>
-<div><label>PDQ 4</label><input id="pdq4" type="number" step="0.01" oninput="calculateAll()"></div>
+
+<div>
+<label>PDQ 1</label>
+<input id="pdq1" type="number" step="0.01" oninput="calculateAll()">
 </div>
 
-<div class="total">
-<div class="totalLine"><span>PDQ FINAL TOTAL</span><b id="pdqTotal">£0.00</b></div>
-</div>
-</div>
-
-<div class="card">
-<h3>💰 Cash</h3>
-
-<div class="row">
-<label>Petty Cash</label>
-<input id="pettyCash" type="number" step="0.01" oninput="calculateAll()">
+<div>
+<label>PDQ 2</label>
+<input id="pdq2" type="number" step="0.01" oninput="calculateAll()">
 </div>
 
-<div class="row">
-<label>Cash Taken</label>
-<input id="cashTaken" type="number" step="0.01" oninput="calculateAll()">
+<div>
+<label>PDQ 3</label>
+<input id="pdq3" type="number" step="0.01" oninput="calculateAll()">
 </div>
 
-<div class="row">
-<label>Taken By</label>
-<input id="takenBy" type="text" placeholder="Person's name">
+<div>
+<label>PDQ 4</label>
+<input id="pdq4" type="number" step="0.01" oninput="calculateAll()">
+</div>
+
 </div>
 
 <div class="total">
 <div class="totalLine">
-<span>CASH IN DRAWER</span>
+<span>PDQ FINAL TOTAL</span>
+<b id="pdqTotal">£0.00</b>
+</div>
+</div>
+
+</div>
+
+
+<!-- CASH -->
+<div class="card">
+
+<h3>💰 Cash / Balance</h3>
+
+<div class="row">
+<label>Petty Cash</label>
+<input
+id="pettyCash"
+type="number"
+step="0.01"
+placeholder="0.00"
+oninput="calculateAll()"
+>
+</div>
+
+<div class="row">
+<label>Cash Taken</label>
+<input
+id="cashTaken"
+type="number"
+step="0.01"
+placeholder="0.00"
+oninput="calculateAll()"
+>
+</div>
+
+<div class="row">
+<label>Taken By</label>
+<input
+id="takenBy"
+type="text"
+placeholder="Enter person's name"
+>
+</div>
+
+<div class="total">
+
+<div class="totalLine">
+<span>CASH / BALANCE</span>
 <b id="cashResult">£0.00</b>
 </div>
+
 </div>
 
-<p><b>Cash = Main Till − PDQ Total − Petty Cash − Cash Taken</b></p>
+<p>
+<b>Cash = Main Till − PDQ Total − Petty Cash − Cash Taken</b>
+</p>
+
 </div>
 
+
+<!-- DELIVERY -->
 <div class="card">
+
 <h3>🛵 Delivery</h3>
 
-<div class="row"><label>Uber</label><input id="uber" type="number" step="0.01"></div>
-<div class="row"><label>Deliveroo</label><input id="deliveroo" type="number" step="0.01"></div>
-<div class="row"><label>Delivery Cash</label><input id="deliveryCash" type="number" step="0.01"></div>
-<div class="row"><label>Delivery Card</label><input id="deliveryCard" type="number" step="0.01"></div>
+<div class="row">
+<label>Uber</label>
+<input id="uber" type="number" step="0.01" placeholder="0.00">
 </div>
 
-<div class="card">
-<button class="save" onclick="saveDailyEntry()">💾 SAVE / UPDATE ENTRY</button>
-<div id="saveMessage" class="message"></div>
+<div class="row">
+<label>Deliveroo</label>
+<input id="deliveroo" type="number" step="0.01" placeholder="0.00">
 </div>
+
+<div class="row">
+<label>Delivery Cash</label>
+<input id="deliveryCash" type="number" step="0.01" placeholder="0.00">
+</div>
+
+<div class="row">
+<label>Delivery Card</label>
+<input id="deliveryCard" type="number" step="0.01" placeholder="0.00">
+</div>
+
+</div>
+
+
+<div class="card">
+
+<button class="save" onclick="saveDailyEntry()">
+💾 SAVE / UPDATE ENTRY
+</button>
+
+<div id="saveMessage" class="message"></div>
+
+</div>
+
 </section>
+
 
 <!-- HISTORY -->
 <section id="history" class="page">
+
 <h2>📚 History</h2>
 
 <div class="card">
+
 <label>Search Date</label>
-<input id="historyDate" type="date" onchange="displayHistory()"><br><br>
-<button class="primary" onclick="showAllHistory()">SHOW ALL</button>
+
+<input
+id="historyDate"
+type="date"
+onchange="displayHistory()"
+>
+
+<br><br>
+
+<button class="primary" onclick="showAllHistory()">
+SHOW ALL
+</button>
+
 </div>
 
 <div id="historyList"></div>
+
 </section>
+
 
 <!-- REPORTS -->
 <section id="reports" class="page">
+
 <h2>📊 Reports</h2>
 
 <div class="card">
+
 <select id="reportPeriod" onchange="generateReport()">
+
 <option value="week">This Week</option>
 <option value="month">This Month</option>
 <option value="year">This Year</option>
 <option value="all">All History</option>
+
 </select>
+
 </div>
 
+
+<!-- GENERAL TOTALS -->
 <div class="grid">
-<div class="stat"><small>Total Main Till</small><b id="reportMain">£0.00</b></div>
-<div class="stat"><small>Total PDQ</small><b id="reportPDQ">£0.00</b></div>
-<div class="stat"><small>Total Petty Cash</small><b id="reportPetty">£0.00</b></div>
-<div class="stat"><small>Total Cash</small><b id="reportCash">£0.00</b></div>
-<div class="stat"><small>Total Uber</small><b id="reportUber">£0.00</b></div>
-<div class="stat"><small>Uber 30%</small><b id="reportUber30">£0.00</b></div>
-<div class="stat"><small>Total Deliveroo</small><b id="reportDeliveroo">£0.00</b></div>
-<div class="stat"><small>Deliveroo 35%</small><b id="reportDeliveroo35">£0.00</b></div>
-<div class="stat"><small>Delivery Cash</small><b id="reportDeliveryCash">£0.00</b></div>
-<div class="stat"><small>Delivery Card</small><b id="reportDeliveryCard">£0.00</b></div>
-<div class="stat"><small>Total Cash Taken</small><b id="reportCashTaken">£0.00</b></div>
-<div class="stat"><small>Number of Days</small><b id="reportDays">0</b></div>
+
+<div class="stat">
+<small>Total Main Till</small>
+<b id="reportMain">£0.00</b>
 </div>
 
+<div class="stat">
+<small>Total PDQ</small>
+<b id="reportPDQ">£0.00</b>
+</div>
+
+<div class="stat">
+<small>Total Petty Cash</small>
+<b id="reportPetty">£0.00</b>
+</div>
+
+<div class="stat">
+<small>Total Cash / Balance</small>
+<b id="reportCash">£0.00</b>
+</div>
+
+<div class="stat">
+<small>Total Cash Taken</small>
+<b id="reportCashTaken">£0.00</b>
+</div>
+
+<div class="stat">
+<small>Number of Days</small>
+<b id="reportDays">0</b>
+</div>
+
+</div>
+
+
+<!-- UBER -->
 <div class="card">
+
+<h3>🟢 Uber Report</h3>
+
+<div class="totalLine">
+<span>Total Uber Sales</span>
+<b id="reportUber">£0.00</b>
+</div>
+
+<div class="totalLine">
+<span>Uber Commission 30%</span>
+<b id="reportUber30">£0.00</b>
+</div>
+
+<div class="totalLine">
+<span>Uber Remaining 70%</span>
+<b id="reportUber70">£0.00</b>
+</div>
+
+</div>
+
+
+<!-- DELIVEROO -->
+<div class="card">
+
+<h3>🔴 Deliveroo Report</h3>
+
+<div class="totalLine">
+<span>Total Deliveroo Sales</span>
+<b id="reportDeliveroo">£0.00</b>
+</div>
+
+<div class="totalLine">
+<span>Deliveroo Commission 35%</span>
+<b id="reportDeliveroo35">£0.00</b>
+</div>
+
+<div class="totalLine">
+<span>Deliveroo Remaining 65%</span>
+<b id="reportDeliveroo65">£0.00</b>
+</div>
+
+</div>
+
+
+<!-- OTHER DELIVERY -->
+<div class="grid">
+
+<div class="stat">
+<small>Total Delivery Cash</small>
+<b id="reportDeliveryCash">£0.00</b>
+</div>
+
+<div class="stat">
+<small>Total Delivery Card</small>
+<b id="reportDeliveryCard">£0.00</b>
+</div>
+
+</div>
+
+
+<!-- CASH TAKEN DAILY -->
+<div class="card">
+
 <h3>💸 Cash Taken — Daily Details</h3>
+
 <div id="cashTakenDetails"></div>
+
 </div>
 
+
+<!-- PERSON TOTAL -->
 <div class="card">
+
 <h3>👤 Cash Taken — Person Wise Total</h3>
+
 <div id="personTotals"></div>
+
 </div>
 
 </section>
@@ -227,10 +642,14 @@ th{background:#f3f4f6}
 </div>
 </div>
 
+
 <script type="module">
 
-import {initializeApp}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
 getAuth,
@@ -238,7 +657,8 @@ signInWithEmailAndPassword,
 signOut,
 onAuthStateChanged
 }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import {
 getFirestore,
@@ -247,277 +667,651 @@ doc,
 setDoc,
 getDocs
 }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+/* SAME FIREBASE PROJECT */
 
 const firebaseConfig={
-apiKey:"AIzaSyBsmbLMNMFNoI2OpR0maR97XAlDZ39yxkg",
-authDomain:"khans-restaurant-46083.firebaseapp.com",
-projectId:"khans-restaurant-46083",
-storageBucket:"khans-restaurant-46083.firebasestorage.app",
-messagingSenderId:"788410298373",
-appId:"1:788410298373:web:9f9806e6566d7911bc6c6c",
-measurementId:"G-8WJLEE7684"
+
+apiKey:
+"AIzaSyBsmbLMNMFNoI2OpR0maR97XAlDZ39yxkg",
+
+authDomain:
+"khans-restaurant-46083.firebaseapp.com",
+
+projectId:
+"khans-restaurant-46083",
+
+storageBucket:
+"khans-restaurant-46083.firebasestorage.app",
+
+messagingSenderId:
+"788410298373",
+
+appId:
+"1:788410298373:web:9f9806e6566d7911bc6c6c",
+
+measurementId:
+"G-8WJLEE7684"
+
 };
 
-const app=initializeApp(firebaseConfig);
-const auth=getAuth(app);
-const db=getFirestore(app);
+
+const firebaseApp=
+initializeApp(firebaseConfig);
+
+const auth=
+getAuth(firebaseApp);
+
+const db=
+getFirestore(firebaseApp);
 
 let currentUser=null;
 let allRecords=[];
 
-const $=id=>document.getElementById(id);
-const num=id=>Number($(id).value)||0;
-const money=n=>"£"+Number(n||0).toFixed(2);
+
+const $=id=>
+document.getElementById(id);
+
+const num=id=>
+Number($(id).value)||0;
+
+const money=n=>
+"£"+Number(n||0).toFixed(2);
+
 
 function today(){
-return new Date().toISOString().split("T")[0];
+
+return new Date()
+.toISOString()
+.split("T")[0];
+
 }
 
-window.login=async()=>{
+
+/* LOGIN */
+
+window.login=async function(){
+
+const email=$("email").value.trim();
+const password=$("password").value;
+
+if(!email||!password){
+
+$("loginMsg").innerText=
+"Please enter email and password.";
+
+return;
+}
+
 try{
+
 await signInWithEmailAndPassword(
 auth,
-$("email").value.trim(),
-$("password").value
+email,
+password
 );
-}catch(e){
-$("loginMsg").innerText="Login failed: "+e.message;
+
+}catch(error){
+
+$("loginMsg").innerText=
+"Login failed: "+error.message;
+
 }
+
+}
+
+
+window.logout=async function(){
+
+await signOut(auth);
+
 };
 
-window.logout=()=>signOut(auth);
 
-onAuthStateChanged(auth,async user=>{
+/* AUTH */
+
+onAuthStateChanged(
+auth,
+async user=>{
+
 if(user){
+
 currentUser=user;
-$("loginScreen").classList.add("hidden");
-$("app").classList.remove("hidden");
+
+$("loginScreen")
+.classList.add("hidden");
+
+$("app")
+.classList.remove("hidden");
 
 $("headerDate").innerText=
-new Date().toLocaleDateString("en-GB",{
+new Date().toLocaleDateString(
+"en-GB",
+{
 weekday:"long",
 day:"2-digit",
 month:"long",
 year:"numeric"
-});
+}
+);
 
 $("entryDate").value=today();
 
 setDay();
+
 await loadRecords();
+
 loadExistingEntry();
 
 }else{
+
 currentUser=null;
-$("loginScreen").classList.remove("hidden");
-$("app").classList.add("hidden");
+
+$("loginScreen")
+.classList.remove("hidden");
+
+$("app")
+.classList.add("hidden");
+
 }
+
 });
 
-function setDay(){
-const date=$("entryDate").value;
-if(date){
-$("entryDay").value=
-new Date(date+"T00:00:00")
-.toLocaleDateString("en-GB",{weekday:"long"});
-}
-}
 
-function pdqTotal(){
-const total=num("pdq1")+num("pdq2")+num("pdq3")+num("pdq4");
-$("pdqTotal").innerText=money(total);
-return total;
-}
+/* NAVIGATION */
 
-window.calculateAll=()=>{
-const pdq=pdqTotal();
+window.openPage=function(page,button){
 
-const cash=
-num("mainTill")-
-pdq-
-num("pettyCash")-
-num("cashTaken");
-
-$("cashResult").innerText=money(cash);
-};
-
-window.openPage=(page,button)=>{
-document.querySelectorAll(".page")
-.forEach(x=>x.classList.remove("active"));
+document
+.querySelectorAll(".page")
+.forEach(p=>
+p.classList.remove("active")
+);
 
 $(page).classList.add("active");
 
-document.querySelectorAll("nav button")
-.forEach(x=>x.classList.remove("active"));
+document
+.querySelectorAll("nav button")
+.forEach(b=>
+b.classList.remove("active")
+);
 
-if(button)button.classList.add("active");
+if(button)
+button.classList.add("active");
 
-if(page==="home")updateHome();
-if(page==="history")displayHistory();
-if(page==="reports")generateReport();
+if(page==="home")
+updateHome();
+
+if(page==="history")
+displayHistory();
+
+if(page==="reports")
+generateReport();
+
 };
+
+
+/* DAY */
+
+function setDay(){
+
+const date=$("entryDate").value;
+
+if(!date)return;
+
+$("entryDay").value=
+new Date(date+"T00:00:00")
+.toLocaleDateString(
+"en-GB",
+{weekday:"long"}
+);
+
+}
+
+
+/* PDQ */
+
+function calculatePDQ(){
+
+const total=
+num("pdq1")+
+num("pdq2")+
+num("pdq3")+
+num("pdq4");
+
+$("pdqTotal").innerText=
+money(total);
+
+return total;
+
+}
+
+
+/* CASH */
+
+window.calculateAll=function(){
+
+const pdq=calculatePDQ();
+
+const cash=
+num("mainTill")
+-
+pdq
+-
+num("pettyCash")
+-
+num("cashTaken");
+
+$("cashResult").innerText=
+money(cash);
+
+};
+
+
+/* FIRESTORE LOAD */
 
 async function loadRecords(){
 
-const snap=await getDocs(
+try{
+
+const snapshot=
+await getDocs(
 collection(db,"dailyRecords")
 );
 
 allRecords=[];
 
-snap.forEach(x=>{
-allRecords.push({id:x.id,...x.data()});
+snapshot.forEach(item=>{
+
+allRecords.push({
+id:item.id,
+...item.data()
+});
+
 });
 
 allRecords.sort(
-(a,b)=>(b.date||"").localeCompare(a.date||"")
+(a,b)=>
+(b.date||"")
+.localeCompare(a.date||"")
 );
 
 updateHome();
 displayHistory();
 generateReport();
+
+}catch(error){
+
+console.error(error);
+
 }
 
-window.loadExistingEntry=()=>{
+}
+
+
+/* LOAD EXISTING ENTRY */
+
+window.loadExistingEntry=function(){
+
 setDay();
 
+const date=
+$("entryDate").value;
+
 const record=
-allRecords.find(r=>r.date===$("entryDate").value);
+allRecords.find(
+r=>r.date===date
+);
 
 if(!record){
+
 clearForm();
+
 calculateAll();
+
 return;
+
 }
 
-$("mainTill").value=record.mainTill??"";
-$("pdq1").value=record.pdq1??"";
-$("pdq2").value=record.pdq2??"";
-$("pdq3").value=record.pdq3??"";
-$("pdq4").value=record.pdq4??"";
-$("pettyCash").value=record.pettyCash??"";
-$("cashTaken").value=record.cashTaken??"";
-$("takenBy").value=record.takenBy??"";
-$("uber").value=record.uber??"";
-$("deliveroo").value=record.deliveroo??"";
-$("deliveryCash").value=record.deliveryCash??"";
-$("deliveryCard").value=record.deliveryCard??"";
+
+$("mainTill").value=
+record.mainTill??"";
+
+$("pdq1").value=
+record.pdq1??"";
+
+$("pdq2").value=
+record.pdq2??"";
+
+$("pdq3").value=
+record.pdq3??"";
+
+$("pdq4").value=
+record.pdq4??"";
+
+$("pettyCash").value=
+record.pettyCash??"";
+
+$("cashTaken").value=
+record.cashTaken??"";
+
+$("takenBy").value=
+record.takenBy??"";
+
+$("uber").value=
+record.uber??"";
+
+$("deliveroo").value=
+record.deliveroo??"";
+
+$("deliveryCash").value=
+record.deliveryCash??"";
+
+$("deliveryCard").value=
+record.deliveryCard??"";
 
 calculateAll();
+
 };
 
+
+/* CLEAR FORM */
+
 function clearForm(){
+
 [
-"mainTill","pdq1","pdq2","pdq3","pdq4",
-"pettyCash","cashTaken","takenBy",
-"uber","deliveroo","deliveryCash","deliveryCard"
-].forEach(id=>$(id).value="");
+"mainTill",
+"pdq1",
+"pdq2",
+"pdq3",
+"pdq4",
+"pettyCash",
+"cashTaken",
+"takenBy",
+"uber",
+"deliveroo",
+"deliveryCash",
+"deliveryCard"
+]
+.forEach(id=>{
+$(id).value="";
+});
+
 }
 
-window.saveDailyEntry=async()=>{
 
-if(!currentUser)return;
+/* SAVE */
 
-const date=$("entryDate").value;
-const pdq=pdqTotal();
+window.saveDailyEntry=async function(){
+
+if(!currentUser){
+
+$("saveMessage").innerText=
+"Please login first.";
+
+return;
+
+}
+
+const date=
+$("entryDate").value;
+
+if(!date){
+
+$("saveMessage").innerText=
+"Please select a date.";
+
+return;
+
+}
+
+const pdqTotal=
+calculatePDQ();
+
+const mainTill=
+num("mainTill");
+
+const pettyCash=
+num("pettyCash");
+
+const cashTaken=
+num("cashTaken");
+
+
+/*
+ IMPORTANT:
+ CASH/BALANCE FORMULA
+ Main Till - PDQ - Petty Cash - Cash Taken
+*/
+
+const cash=
+mainTill
+-
+pdqTotal
+-
+pettyCash
+-
+cashTaken;
+
 
 const data={
-date,
+
+date:date,
+
 day:$("entryDay").value,
 
-mainTill:num("mainTill"),
+mainTill:mainTill,
 
 pdq1:num("pdq1"),
 pdq2:num("pdq2"),
 pdq3:num("pdq3"),
 pdq4:num("pdq4"),
-pdqTotal:pdq,
 
-pettyCash:num("pettyCash"),
+pdqTotal:pdqTotal,
 
-cashTaken:num("cashTaken"),
+pettyCash:pettyCash,
 
-takenBy:$("takenBy").value.trim(),
+cashTaken:cashTaken,
 
-cash:
-num("mainTill")-
-pdq-
-num("pettyCash")-
-num("cashTaken"),
+takenBy:
+$("takenBy").value.trim(),
+
+cash:cash,
 
 uber:num("uber"),
+
 deliveroo:num("deliveroo"),
+
 deliveryCash:num("deliveryCash"),
+
 deliveryCard:num("deliveryCard"),
 
-updatedBy:currentUser.email,
-updatedAt:new Date().toISOString()
+updatedBy:
+currentUser.email,
+
+updatedAt:
+new Date().toISOString()
+
 };
+
 
 try{
 
+/*
+ SAME COLLECTION:
+ dailyRecords
+
+ SAME DOCUMENT:
+ date
+
+ EXISTING RECORD WILL BE UPDATED,
+ NOT DELETED.
+*/
+
 await setDoc(
-doc(db,"dailyRecords",date),
+
+doc(
+db,
+"dailyRecords",
+date
+),
+
 data,
+
 {merge:true}
+
 );
+
 
 $("saveMessage").innerText=
 "✅ Successfully saved to Firebase.";
 
 await loadRecords();
 
-}catch(e){
+}catch(error){
+
+console.error(error);
 
 $("saveMessage").innerText=
-"❌ Save failed: "+e.message;
+"❌ Save failed: "+error.message;
 
 }
+
 };
+
+
+/* HOME */
 
 function updateHome(){
 
-const r=allRecords.find(x=>x.date===today());
+const record=
+allRecords.find(
+r=>r.date===today()
+);
 
-const fields={
-homeMain:r?.mainTill,
-homePDQ:r?.pdqTotal,
-homePetty:r?.pettyCash,
-homeCash:r?.cash,
-homeUber:r?.uber,
-homeDeliveroo:r?.deliveroo,
-homeDeliveryCash:r?.deliveryCash,
-homeDeliveryCard:r?.deliveryCard,
-homeTaken:r?.cashTaken
-};
+if(!record){
 
-Object.entries(fields)
-.forEach(([id,value])=>{
-$(id).innerText=money(value);
+[
+"homeMain",
+"homePDQ",
+"homePetty",
+"homeCash",
+"homeUber",
+"homeDeliveroo",
+"homeDeliveryCash",
+"homeDeliveryCard",
+"homeTaken",
+"homeUber30",
+"homeUber70",
+"homeDeliveroo35",
+"homeDeliveroo65"
+]
+.forEach(id=>{
+$(id).innerText="£0.00";
 });
+
+return;
+
 }
 
-window.displayHistory=()=>{
+
+$("homeMain").innerText=
+money(record.mainTill);
+
+$("homePDQ").innerText=
+money(record.pdqTotal);
+
+$("homePetty").innerText=
+money(record.pettyCash);
+
+$("homeCash").innerText=
+money(record.cash);
+
+$("homeUber").innerText=
+money(record.uber);
+
+$("homeDeliveroo").innerText=
+money(record.deliveroo);
+
+$("homeDeliveryCash").innerText=
+money(record.deliveryCash);
+
+$("homeDeliveryCard").innerText=
+money(record.deliveryCard);
+
+$("homeTaken").innerText=
+money(record.cashTaken);
+
+
+const uber30=
+Number(record.uber||0)*0.30;
+
+const deliveroo35=
+Number(record.deliveroo||0)*0.35;
+
+
+$("homeUber30").innerText=
+money(uber30);
+
+$("homeUber70").innerText=
+money(
+Number(record.uber||0)-uber30
+);
+
+$("homeDeliveroo35").innerText=
+money(deliveroo35);
+
+$("homeDeliveroo65").innerText=
+money(
+Number(record.deliveroo||0)-deliveroo35
+);
+
+}
+
+
+/* HISTORY */
+
+window.displayHistory=function(){
+
+const search=
+$("historyDate").value;
 
 let records=allRecords;
-const search=$("historyDate").value;
 
-if(search)
-records=records.filter(r=>r.date===search);
+if(search){
+
+records=
+allRecords.filter(
+r=>r.date===search
+);
+
+}
 
 if(!records.length){
+
 $("historyList").innerHTML=
-'<div class="card">No saved entries found.</div>';
+`
+<div class="card">
+No saved entries found.
+</div>
+`;
+
 return;
+
 }
+
 
 $("historyList").innerHTML=
 records.map(r=>`
 
 <div class="history">
 
-<h3>${r.date} — ${r.day||""}</h3>
+<h3>
+${r.date||"-"} — ${r.day||""}
+</h3>
 
 <div class="totalLine">
 <span>Main Till</span>
@@ -545,7 +1339,7 @@ records.map(r=>`
 </div>
 
 <div class="totalLine">
-<span>Cash</span>
+<span>Cash / Balance</span>
 <b>${money(r.cash)}</b>
 </div>
 
@@ -571,7 +1365,8 @@ records.map(r=>`
 
 <br>
 
-<button class="edit"
+<button
+class="edit"
 onclick="editEntry('${r.date}')">
 ✏️ EDIT
 </button>
@@ -579,15 +1374,23 @@ onclick="editEntry('${r.date}')">
 </div>
 
 `).join("");
+
 };
 
-window.showAllHistory=()=>{
+
+window.showAllHistory=function(){
+
 $("historyDate").value="";
+
 displayHistory();
+
 };
 
-window.editEntry=date=>{
+
+window.editEntry=function(date){
+
 $("entryDate").value=date;
+
 loadExistingEntry();
 
 openPage(
@@ -595,47 +1398,83 @@ openPage(
 document.querySelectorAll("nav button")[1]
 );
 
-window.scrollTo({top:0,behavior:"smooth"});
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
 };
 
-window.generateReport=()=>{
 
-const period=$("reportPeriod").value;
+/* REPORT */
+
+window.generateReport=function(){
+
+const period=
+$("reportPeriod").value;
+
 const now=new Date();
 
 let start=null;
 
-if(period==="week")
-start=new Date(
+
+if(period==="week"){
+
+start=
+new Date(
 now.getFullYear(),
 now.getMonth(),
 now.getDate()-6
 );
 
-if(period==="month")
-start=new Date(
+}
+
+
+if(period==="month"){
+
+start=
+new Date(
 now.getFullYear(),
 now.getMonth(),
 1
 );
 
-if(period==="year")
-start=new Date(
+}
+
+
+if(period==="year"){
+
+start=
+new Date(
 now.getFullYear(),
 0,
 1
 );
 
+}
+
+
 let records=allRecords;
+
 
 if(start){
 
-const s=start.toISOString().split("T")[0];
+const startDate=
+start.toISOString()
+.split("T")[0];
 
-records=records.filter(r=>r.date>=s);
+records=
+allRecords.filter(
+r=>r.date>=startDate
+);
+
 }
 
-let t={
+
+/* TOTALS */
+
+let total={
+
 mainTill:0,
 pdqTotal:0,
 pettyCash:0,
@@ -645,31 +1484,107 @@ deliveroo:0,
 deliveryCash:0,
 deliveryCard:0,
 cashTaken:0
+
 };
+
 
 records.forEach(r=>{
 
-Object.keys(t).forEach(k=>{
-t[k]+=Number(r[k]||0);
-});
+total.mainTill+=
+Number(r.mainTill||0);
+
+total.pdqTotal+=
+Number(r.pdqTotal||0);
+
+total.pettyCash+=
+Number(r.pettyCash||0);
+
+total.cash+=
+Number(r.cash||0);
+
+total.uber+=
+Number(r.uber||0);
+
+total.deliveroo+=
+Number(r.deliveroo||0);
+
+total.deliveryCash+=
+Number(r.deliveryCash||0);
+
+total.deliveryCard+=
+Number(r.deliveryCard||0);
+
+total.cashTaken+=
+Number(r.cashTaken||0);
 
 });
 
-$("reportMain").innerText=money(t.mainTill);
-$("reportPDQ").innerText=money(t.pdqTotal);
-$("reportPetty").innerText=money(t.pettyCash);
-$("reportCash").innerText=money(t.cash);
-$("reportUber").innerText=money(t.uber);
-$("reportUber30").innerText=money(t.uber*.30);
-$("reportDeliveroo").innerText=money(t.deliveroo);
-$("reportDeliveroo35").innerText=money(t.deliveroo*.35);
-$("reportDeliveryCash").innerText=money(t.deliveryCash);
-$("reportDeliveryCard").innerText=money(t.deliveryCard);
-$("reportCashTaken").innerText=money(t.cashTaken);
-$("reportDays").innerText=records.length;
+
+$("reportMain").innerText=
+money(total.mainTill);
+
+$("reportPDQ").innerText=
+money(total.pdqTotal);
+
+$("reportPetty").innerText=
+money(total.pettyCash);
+
+$("reportCash").innerText=
+money(total.cash);
+
+$("reportCashTaken").innerText=
+money(total.cashTaken);
+
+$("reportDays").innerText=
+records.length;
 
 
-/* DAILY CASH TAKEN DETAILS */
+/* UBER */
+
+$("reportUber").innerText=
+money(total.uber);
+
+const uberCommission=
+total.uber*0.30;
+
+const uberRemaining=
+total.uber*0.70;
+
+$("reportUber30").innerText=
+money(uberCommission);
+
+$("reportUber70").innerText=
+money(uberRemaining);
+
+
+/* DELIVEROO */
+
+$("reportDeliveroo").innerText=
+money(total.deliveroo);
+
+const deliverooCommission=
+total.deliveroo*0.35;
+
+const deliverooRemaining=
+total.deliveroo*0.65;
+
+$("reportDeliveroo35").innerText=
+money(deliverooCommission);
+
+$("reportDeliveroo65").innerText=
+money(deliverooRemaining);
+
+
+/* DELIVERY */
+
+$("reportDeliveryCash").innerText=
+money(total.deliveryCash);
+
+$("reportDeliveryCard").innerText=
+money(total.deliveryCard);
+
+
+/* CASH TAKEN DAILY DETAILS */
 
 if(!records.length){
 
@@ -683,12 +1598,14 @@ $("cashTakenDetails").innerHTML=`
 <table>
 
 <thead>
+
 <tr>
 <th>Date</th>
 <th>Cash Taken</th>
 <th>Taken By</th>
-<th>Cash Balance</th>
+<th>Cash / Balance</th>
 </tr>
+
 </thead>
 
 <tbody>
@@ -696,10 +1613,15 @@ $("cashTakenDetails").innerHTML=`
 ${records.map(r=>`
 
 <tr>
+
 <td>${r.date||"-"}</td>
+
 <td>${money(r.cashTaken)}</td>
+
 <td>${r.takenBy||"-"}</td>
+
 <td>${money(r.cash)}</td>
+
 </tr>
 
 `).join("")}
@@ -707,18 +1629,21 @@ ${records.map(r=>`
 </tbody>
 
 </table>
+
 `;
 
 }
 
 
-/* PERSON-WISE TOTAL */
+/* PERSON-WISE CASH TAKEN */
 
 const people={};
 
 records.forEach(r=>{
 
-const name=(r.takenBy||"Unknown").trim()||"Unknown";
+const name=
+(r.takenBy||"Unknown").trim()||
+"Unknown";
 
 people[name]=
 (people[name]||0)+
@@ -726,7 +1651,10 @@ Number(r.cashTaken||0);
 
 });
 
-const names=Object.keys(people);
+
+const names=
+Object.keys(people);
+
 
 if(!names.length){
 
@@ -745,15 +1673,20 @@ names
 
 <div class="totalLine">
 
-<span><b>${name}</b></span>
+<span>
+<b>${name}</b>
+</span>
 
-<b>${money(people[name])}</b>
+<b>
+${money(people[name])}
+</b>
 
 </div>
 
 </div>
 
-`).join("");
+`)
+.join("");
 
 }
 
