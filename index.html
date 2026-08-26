@@ -2,600 +2,248 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Khan's Restaurant | Management System</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Khan's Restaurant</title>
 
 <style>
-:root{
-  --bg:#f4f1ea;
-  --card:#ffffff;
-  --dark:#171717;
-  --dark2:#252525;
-  --gold:#c89b3c;
-  --gold2:#e3bd67;
-  --text:#242424;
-  --muted:#777;
-  --border:#e8e2d6;
-  --green:#18864b;
-  --red:#c0392b;
-  --blue:#3568b8;
-  --shadow:0 8px 28px rgba(40,30,15,.08);
-}
-
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
-  margin:0;
-  font-family:Inter,Arial,Helvetica,sans-serif;
-  background:
-    radial-gradient(circle at top right,rgba(200,155,60,.13),transparent 30%),
-    linear-gradient(135deg,#f7f4ed,#eee9df);
-  color:var(--text);
+margin:0;
+font-family:Arial,Helvetica,sans-serif;
+background:#f3f4f6;
+color:#1f2937
 }
 
-.hidden{
-  display:none!important;
+header{
+background:#111827;
+color:white;
+padding:16px
 }
 
-/* LOGIN */
-
-.login-screen{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  background:
-    linear-gradient(rgba(10,10,10,.72),rgba(10,10,10,.78)),
-    radial-gradient(circle at center,#5d4925,#111);
+.container{
+max-width:1100px;
+margin:auto;
+padding:15px
 }
 
-.login-box{
-  width:100%;
-  max-width:430px;
-  background:rgba(255,255,255,.98);
-  border-radius:24px;
-  padding:35px;
-  box-shadow:0 25px 80px rgba(0,0,0,.35);
-  text-align:center;
+nav{
+display:flex;
+gap:8px;
+overflow-x:auto;
+background:white;
+padding:8px;
+border-radius:12px;
+margin-bottom:15px
 }
 
-.logo-circle{
-  width:78px;
-  height:78px;
-  border-radius:50%;
-  margin:0 auto 18px;
-  background:linear-gradient(145deg,var(--gold),#9b7020);
-  color:white;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:34px;
-  box-shadow:0 8px 20px rgba(160,115,30,.3);
+nav button{
+border:0;
+background:#e5e7eb;
+padding:12px 16px;
+border-radius:8px;
+font-weight:bold;
+white-space:nowrap
 }
 
-.login-box h1{
-  margin:5px 0;
-  font-family:Georgia,serif;
-  font-size:28px;
+nav button.active{
+background:#111827;
+color:white
 }
 
-.login-box p{
-  color:var(--muted);
-  margin-bottom:25px;
+.page{display:none}
+.page.active{display:block}
+
+.card,.stat,.history{
+background:white;
+padding:16px;
+border-radius:12px;
+margin-bottom:15px;
+box-shadow:0 2px 8px rgba(0,0,0,.08)
 }
 
-input,select{
-  width:100%;
-  padding:13px 14px;
-  border:1px solid #ddd6c9;
-  border-radius:11px;
-  background:#fff;
-  font-size:15px;
-  outline:none;
-  transition:.2s;
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:12px
 }
 
-input:focus,select:focus{
-  border-color:var(--gold);
-  box-shadow:0 0 0 3px rgba(200,155,60,.12);
+.formgrid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px
+}
+
+.pdq{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px
+}
+
+.cashgrid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px
 }
 
 label{
-  display:block;
-  font-size:13px;
-  font-weight:700;
-  margin-bottom:7px;
+display:block;
+font-weight:bold;
+margin-bottom:6px
 }
 
-.form-group{
-  margin-bottom:15px;
+input,select{
+width:100%;
+padding:12px;
+border:1px solid #d1d5db;
+border-radius:8px;
+font-size:16px
 }
 
-/* HEADER */
-
-.header{
-  background:linear-gradient(110deg,#111,#29251e);
-  color:white;
-  position:sticky;
-  top:0;
-  z-index:50;
-  box-shadow:0 5px 25px rgba(0,0,0,.18);
+.stat small{
+color:#6b7280
 }
 
-.header-inner{
-  max-width:1200px;
-  margin:auto;
-  padding:17px 20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
+.stat b{
+display:block;
+font-size:21px;
+margin-top:8px
 }
 
-.brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
+.row,.totalLine{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:15px;
+padding:10px 0;
+border-bottom:1px solid #eee
 }
 
-.brand-logo{
-  width:46px;
-  height:46px;
-  border-radius:13px;
-  background:linear-gradient(145deg,var(--gold),#8d641d);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:22px;
+.total{
+background:#111827;
+color:white;
+padding:14px;
+border-radius:9px;
+margin-top:12px
 }
 
-.brand h1{
-  margin:0;
-  font-size:20px;
-  font-family:Georgia,serif;
+.save{
+width:100%;
+padding:15px;
+background:#15803d;
+color:white;
+border:0;
+border-radius:8px;
+font-weight:bold;
+font-size:17px
 }
 
-.brand small{
-  color:#d4c7ad;
+.primary{
+background:#111827;
+color:white;
+border:0;
+padding:10px 15px;
+border-radius:8px
 }
 
-.user-info{
-  text-align:right;
-  font-size:12px;
-  color:#d8d8d8;
+.edit{
+background:#2563eb;
+color:white;
+border:0;
+padding:8px 12px;
+border-radius:7px
 }
 
-/* NAV */
-
-.nav-wrap{
-  max-width:1200px;
-  margin:18px auto 0;
-  padding:0 20px;
+.message{
+font-weight:bold;
+margin-top:10px
 }
 
-.nav{
-  display:flex;
-  gap:8px;
-  overflow-x:auto;
-  background:rgba(255,255,255,.8);
-  padding:8px;
-  border:1px solid var(--border);
-  border-radius:16px;
-  box-shadow:var(--shadow);
+.hidden{
+display:none
 }
 
-.nav button{
-  border:0;
-  background:transparent;
-  padding:12px 17px;
-  border-radius:10px;
-  font-weight:700;
-  white-space:nowrap;
-  cursor:pointer;
-  color:#555;
-}
-
-.nav button:hover{
-  background:#f0eadf;
-}
-
-.nav button.active{
-  background:var(--dark);
-  color:white;
-}
-
-/* MAIN */
-
-.container{
-  max-width:1200px;
-  margin:auto;
-  padding:20px;
-}
-
-.page{
-  display:none;
-}
-
-.page.active{
-  display:block;
-}
-
-.page-title{
-  font-family:Georgia,serif;
-  font-size:27px;
-  margin:5px 0 18px;
-}
-
-.subtitle{
-  color:var(--muted);
-  margin-top:-12px;
-  margin-bottom:22px;
-}
-
-/* CARDS */
-
-.card{
-  background:rgba(255,255,255,.95);
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:20px;
-  margin-bottom:18px;
-  box-shadow:var(--shadow);
-}
-
-.card h3{
-  margin-top:0;
-  font-family:Georgia,serif;
-}
-
-.card-header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  margin-bottom:14px;
-}
-
-.card-header h3{
-  margin:0;
-}
-
-/* DASHBOARD */
-
-.dashboard-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:15px;
-}
-
-.stat-card{
-  background:white;
-  border:1px solid var(--border);
-  border-radius:17px;
-  padding:18px;
-  box-shadow:var(--shadow);
-  position:relative;
-  overflow:hidden;
-}
-
-.stat-card:after{
-  content:"";
-  position:absolute;
-  width:70px;
-  height:70px;
-  border-radius:50%;
-  background:rgba(200,155,60,.08);
-  right:-25px;
-  top:-25px;
-}
-
-.stat-icon{
-  font-size:22px;
-  margin-bottom:12px;
-}
-
-.stat-label{
-  font-size:12px;
-  color:#777;
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:.4px;
-}
-
-.stat-value{
-  font-size:23px;
-  font-weight:800;
-  margin-top:7px;
-}
-
-/* SECTION GRID */
-
-.two-col{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:18px;
-}
-
-.three-col{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
-}
-
-.form-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:15px;
-}
-
-.pdq-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-}
-
-.cash-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:15px;
-}
-
-/* BUTTONS */
-
-.btn{
-  border:0;
-  padding:12px 17px;
-  border-radius:10px;
-  font-weight:800;
-  cursor:pointer;
-  transition:.2s;
-}
-
-.btn:hover{
-  transform:translateY(-1px);
-}
-
-.btn-primary{
-  background:var(--dark);
-  color:white;
-}
-
-.btn-gold{
-  background:linear-gradient(135deg,var(--gold),#a87823);
-  color:white;
-}
-
-.btn-green{
-  background:var(--green);
-  color:white;
-}
-
-.btn-blue{
-  background:var(--blue);
-  color:white;
-}
-
-.btn-light{
-  background:#eee9df;
-  color:#333;
-}
-
-/* BIG SAVE */
-
-.save-btn{
-  width:100%;
-  border:0;
-  border-radius:13px;
-  padding:16px;
-  background:linear-gradient(135deg,#b6852d,var(--gold));
-  color:white;
-  font-size:16px;
-  font-weight:800;
-  cursor:pointer;
-  box-shadow:0 8px 18px rgba(160,115,30,.2);
-}
-
-/* TOTAL */
-
-.total-box{
-  background:linear-gradient(120deg,#191919,#302b22);
-  color:white;
-  border-radius:14px;
-  padding:16px;
-  margin-top:14px;
-}
-
-.total-line{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
-  padding:10px 0;
-  border-bottom:1px solid rgba(255,255,255,.1);
-}
-
-.total-line:last-child{
-  border-bottom:0;
-}
-
-.white-card .total-line{
-  border-bottom:1px solid #eee;
-}
-
-/* TABLE */
-
-.table-wrap{
-  overflow-x:auto;
+.login{
+max-width:420px;
+margin:60px auto;
+padding:15px
 }
 
 table{
-  width:100%;
-  border-collapse:collapse;
-  min-width:650px;
-}
-
-th{
-  background:#f1ece3;
-  font-size:12px;
-  text-transform:uppercase;
-  letter-spacing:.4px;
+width:100%;
+border-collapse:collapse;
+background:white
 }
 
 th,td{
-  padding:12px;
-  border-bottom:1px solid #e9e4da;
-  text-align:left;
+padding:10px;
+border-bottom:1px solid #ddd;
+text-align:left
 }
 
-tr:hover td{
-  background:#faf8f3;
-}
-
-/* REPORT */
-
-.report-buttons{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-}
-
-.report-buttons button{
-  border:1px solid #ddd4c4;
-  background:#f5f1e8;
-  padding:10px 14px;
-  border-radius:9px;
-  font-weight:700;
-  cursor:pointer;
-}
-
-.report-buttons button.active{
-  background:var(--dark);
-  color:white;
-}
-
-.week-card{
-  background:#fbf9f5;
-  border:1px solid #e6dfd2;
-  border-radius:14px;
-  padding:17px;
-  margin-bottom:12px;
-}
-
-.week-title{
-  font-weight:800;
-  font-size:17px;
-  color:#9a7025;
-  margin-bottom:10px;
-}
-
-/* STATUS */
-
-.message{
-  margin-top:12px;
-  font-weight:700;
-}
-
-.small{
-  color:var(--muted);
-  font-size:12px;
+th{
+background:#f3f4f6
 }
 
 .person{
-  background:#faf8f3;
-  border:1px solid #e9e2d5;
-  padding:12px 15px;
-  border-radius:11px;
-  margin-bottom:8px;
+padding:10px;
+background:#f9fafb;
+border-radius:8px;
+margin:6px 0
 }
 
-/* MOBILE */
-
-@media(max-width:900px){
-
-.dashboard-grid{
-  grid-template-columns:repeat(2,1fr);
+.weekCard{
+border:1px solid #ddd;
+border-radius:10px;
+padding:14px;
+margin:12px 0;
+background:#fafafa
 }
 
-.three-col{
-  grid-template-columns:1fr 1fr;
+.weekTitle{
+font-size:18px;
+font-weight:bold;
+margin-bottom:10px
 }
 
+.reportButtons{
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+margin-top:10px
 }
 
-@media(max-width:650px){
-
-.header-inner{
-  padding:13px 15px;
+.reportButtons button{
+border:0;
+padding:10px 14px;
+border-radius:8px;
+background:#e5e7eb;
+font-weight:bold
 }
 
-.brand h1{
-  font-size:17px;
+.reportButtons button.active{
+background:#111827;
+color:white
 }
 
-.user-info{
-  display:none;
+.small{
+font-size:13px;
+color:#6b7280
 }
 
-.nav-wrap{
-  padding:0 12px;
+@media(max-width:700px){
+.grid{grid-template-columns:repeat(2,1fr)}
+.pdq{grid-template-columns:repeat(2,1fr)}
+.cashgrid{grid-template-columns:1fr}
 }
 
-.container{
-  padding:15px 12px;
+@media(max-width:520px){
+.formgrid{grid-template-columns:1fr}
+.grid{grid-template-columns:1fr 1fr}
+th,td{
+font-size:12px;
+padding:7px
 }
-
-.page-title{
-  font-size:24px;
-}
-
-.dashboard-grid{
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-
-.stat-card{
-  padding:14px;
-}
-
-.stat-value{
-  font-size:19px;
-}
-
-.two-col,
-.form-grid,
-.cash-grid{
-  grid-template-columns:1fr;
-}
-
-.pdq-grid{
-  grid-template-columns:1fr 1fr;
-}
-
-.three-col{
-  grid-template-columns:1fr;
-}
-
-.card{
-  padding:15px;
-  border-radius:15px;
-}
-
-}
-
-@media(max-width:400px){
-
-.dashboard-grid{
-  grid-template-columns:1fr;
-}
-
-.pdq-grid{
-  grid-template-columns:1fr;
-}
-
 }
 </style>
 </head>
@@ -604,33 +252,37 @@ tr:hover td{
 
 <!-- LOGIN -->
 
-<div id="loginScreen" class="login-screen">
+<div id="loginScreen" class="login">
 
-  <div class="login-box">
+<div class="card">
 
-    <div class="logo-circle">🍽️</div>
+<h2>🍽️ Khan's Restaurant</h2>
 
-    <h1>Khan's Restaurant</h1>
+<p>Staff Login</p>
 
-    <p>Restaurant Management System</p>
+<input
+id="email"
+type="email"
+placeholder="Personal Email"
+>
 
-    <div class="form-group">
-      <label>Email</label>
-      <input id="email" type="email" placeholder="Enter your email">
-    </div>
+<br><br>
 
-    <div class="form-group">
-      <label>Password</label>
-      <input id="password" type="password" placeholder="Enter your password">
-    </div>
+<input
+id="password"
+type="password"
+placeholder="Password"
+>
 
-    <button class="save-btn" onclick="login()">
-      LOGIN
-    </button>
+<br><br>
 
-    <div id="loginMsg" class="message"></div>
+<button class="save" onclick="login()">
+LOGIN
+</button>
 
-  </div>
+<div id="loginMsg" class="message"></div>
+
+</div>
 
 </div>
 
@@ -639,176 +291,141 @@ tr:hover td{
 
 <div id="app" class="hidden">
 
-<header class="header">
+<header>
 
-  <div class="header-inner">
+<div class="container">
 
-    <div class="brand">
+<h2>🍽️ Khan's Restaurant</h2>
 
-      <div class="brand-logo">🍽️</div>
+<small id="headerDate"></small>
 
-      <div>
-        <h1>Khan's Restaurant</h1>
-        <small>Restaurant Management System</small>
-      </div>
-
-    </div>
-
-    <div class="user-info">
-      <div id="userEmail"></div>
-      <div id="headerDate"></div>
-    </div>
-
-  </div>
+</div>
 
 </header>
 
 
-<div class="nav-wrap">
+<div class="container">
 
-<nav class="nav">
+<nav>
 
-<button class="active" onclick="openPage('home',this)">
+<button
+class="active"
+onclick="openPage('home',this)"
+>
 🏠 Home
 </button>
 
-<button onclick="openPage('entry',this)">
+<button
+onclick="openPage('entry',this)"
+>
 📝 Daily Entry
 </button>
 
-<button onclick="openPage('history',this)">
+<button
+onclick="openPage('history',this)"
+>
 📚 History
 </button>
 
-<button onclick="openPage('reports',this)">
+<button
+onclick="openPage('reports',this)"
+>
 📊 Reports
 </button>
 
 </nav>
-
-</div>
-
-
-<div class="container">
 
 
 <!-- HOME -->
 
 <section id="home" class="page active">
 
-<h2 class="page-title">Dashboard</h2>
+<h2>Today's Summary</h2>
 
-<p class="subtitle">
-Today's restaurant financial overview
-</p>
+<div class="grid">
 
-
-<div class="dashboard-grid">
-
-<div class="stat-card">
-<div class="stat-icon">💷</div>
-<div class="stat-label">Main Till</div>
-<div class="stat-value" id="homeMain">£0.00</div>
+<div class="stat">
+<small>Main Till / Total Sales</small>
+<b id="homeMain">£0.00</b>
 </div>
 
-<div class="stat-card">
-<div class="stat-icon">💳</div>
-<div class="stat-label">PDQ Total</div>
-<div class="stat-value" id="homePDQ">£0.00</div>
+<div class="stat">
+<small>PDQ Total</small>
+<b id="homePDQ">£0.00</b>
 </div>
 
-<div class="stat-card">
-<div class="stat-icon">💰</div>
-<div class="stat-label">Petty Cash</div>
-<div class="stat-value" id="homePetty">£0.00</div>
+<div class="stat">
+<small>Petty Cash</small>
+<b id="homePetty">£0.00</b>
 </div>
 
-<div class="stat-card">
-<div class="stat-icon">💵</div>
-<div class="stat-label">Cash / Balance</div>
-<div class="stat-value" id="homeCash">£0.00</div>
+<div class="stat">
+<small>Cash / Balance</small>
+<b id="homeCash">£0.00</b>
 </div>
 
-<div class="stat-card">
-<div class="stat-icon">🟢</div>
-<div class="stat-label">Uber</div>
-<div class="stat-value" id="homeUber">£0.00</div>
+<div class="stat">
+<small>Uber</small>
+<b id="homeUber">£0.00</b>
 </div>
 
-<div class="stat-card">
-<div class="stat-icon">🔴</div>
-<div class="stat-label">Deliveroo</div>
-<div class="stat-value" id="homeDeliveroo">£0.00</div>
+<div class="stat">
+<small>Deliveroo</small>
+<b id="homeDeliveroo">£0.00</b>
 </div>
 
-<div class="stat-card">
-<div class="stat-icon">🚚</div>
-<div class="stat-label">Delivery Cash</div>
-<div class="stat-value" id="homeDeliveryCash">£0.00</div>
+<div class="stat">
+<small>Delivery Cash</small>
+<b id="homeDeliveryCash">£0.00</b>
 </div>
 
-<div class="stat-card">
-<div class="stat-icon">💳</div>
-<div class="stat-label">Delivery Card</div>
-<div class="stat-value" id="homeDeliveryCard">£0.00</div>
+<div class="stat">
+<small>Delivery Card</small>
+<b id="homeDeliveryCard">£0.00</b>
 </div>
 
-<div class="stat-card">
-<div class="stat-icon">💸</div>
-<div class="stat-label">Cash Taken</div>
-<div class="stat-value" id="homeTaken">£0.00</div>
+<div class="stat">
+<small>Total Cash Taken</small>
+<b id="homeTaken">£0.00</b>
 </div>
 
 </div>
 
-
-<div class="two-col" style="margin-top:18px">
 
 <div class="card">
 
-<div class="card-header">
-<h3>🟢 Uber</h3>
-</div>
+<h3>🛵 Today's Delivery Calculation</h3>
 
-<div class="total-line">
-<span>Total Sales</span>
+<div class="totalLine">
+<span>Uber Sales</span>
 <b id="homeUberSales">£0.00</b>
 </div>
 
-<div class="total-line">
-<span>30% Commission</span>
+<div class="totalLine">
+<span>Uber 30% Commission</span>
 <b id="homeUber30">£0.00</b>
 </div>
 
-<div class="total-line">
-<span>70% Remaining</span>
+<div class="totalLine">
+<span>Uber 70% Remaining</span>
 <b id="homeUber70">£0.00</b>
 </div>
 
-</div>
+<br>
 
-
-<div class="card">
-
-<div class="card-header">
-<h3>🔴 Deliveroo</h3>
-</div>
-
-<div class="total-line">
-<span>Total Sales</span>
+<div class="totalLine">
+<span>Deliveroo Sales</span>
 <b id="homeDeliverooSales">£0.00</b>
 </div>
 
-<div class="total-line">
-<span>35% Commission</span>
+<div class="totalLine">
+<span>Deliveroo 35% Commission</span>
 <b id="homeDeliveroo35">£0.00</b>
 </div>
 
-<div class="total-line">
-<span>65% Remaining</span>
+<div class="totalLine">
+<span>Deliveroo 65% Remaining</span>
 <b id="homeDeliveroo65">£0.00</b>
-</div>
-
 </div>
 
 </div>
@@ -816,92 +433,133 @@ Today's restaurant financial overview
 </section>
 
 
-<!-- ENTRY -->
+<!-- DAILY ENTRY -->
 
 <section id="entry" class="page">
 
-<h2 class="page-title">Daily Entry</h2>
-
-<p class="subtitle">
-Enter the restaurant's daily financial information
-</p>
-
+<h2>📝 Daily Entry</h2>
 
 <div class="card">
 
-<div class="form-grid">
+<div class="formgrid">
 
 <div>
+
 <label>Date</label>
-<input id="entryDate" type="date" onchange="loadExistingEntry()">
+
+<input
+id="entryDate"
+type="date"
+onchange="loadExistingEntry()"
+>
+
 </div>
 
 <div>
+
 <label>Day</label>
-<input id="entryDay" readonly>
-</div>
+
+<input
+id="entryDay"
+readonly
+>
 
 </div>
 
 </div>
 
+</div>
+
+
+<!-- MAIN TILL -->
 
 <div class="card">
 
-<h3>💷 Main Till</h3>
-
-<label>Main Till / Total Sales</label>
+<h3>💷 Main Till / Total Sales</h3>
 
 <input
 id="mainTill"
 type="number"
 step="0.01"
-placeholder="£0.00"
+placeholder="Enter Main Till"
 oninput="calculateAll()"
 >
 
 </div>
 
 
+<!-- PDQ -->
+
 <div class="card">
 
 <h3>💳 PDQ</h3>
 
-<div class="pdq-grid">
+<p class="small">
+Enter the amount from each of the 4 PDQ tabs.
+</p>
+
+<div class="pdq">
 
 <div>
 <label>PDQ 1</label>
-<input id="pdq1" type="number" step="0.01" oninput="calculateAll()">
+<input
+id="pdq1"
+type="number"
+step="0.01"
+oninput="calculateAll()"
+>
 </div>
 
 <div>
 <label>PDQ 2</label>
-<input id="pdq2" type="number" step="0.01" oninput="calculateAll()">
+<input
+id="pdq2"
+type="number"
+step="0.01"
+oninput="calculateAll()"
+>
 </div>
 
 <div>
 <label>PDQ 3</label>
-<input id="pdq3" type="number" step="0.01" oninput="calculateAll()">
+<input
+id="pdq3"
+type="number"
+step="0.01"
+oninput="calculateAll()"
+>
 </div>
 
 <div>
 <label>PDQ 4</label>
-<input id="pdq4" type="number" step="0.01" oninput="calculateAll()">
+<input
+id="pdq4"
+type="number"
+step="0.01"
+oninput="calculateAll()"
+>
 </div>
 
 </div>
 
-<div class="total-box">
+<div class="total">
 
-<div class="total-line">
+<div class="totalLine">
+
 <span>PDQ FINAL TOTAL</span>
-<b id="pdqTotal">£0.00</b>
-</div>
+
+<b id="pdqTotal">
+£0.00
+</b>
 
 </div>
 
 </div>
 
+</div>
+
+
+<!-- PETTY CASH -->
 
 <div class="card">
 
@@ -911,22 +569,25 @@ oninput="calculateAll()"
 id="pettyCash"
 type="number"
 step="0.01"
-placeholder="£0.00"
+placeholder="Petty Cash"
 oninput="calculateAll()"
 >
 
 </div>
 
 
+<!-- CASH TAKEN ONLY 2 -->
+
 <div class="card">
 
 <h3>💸 Cash Taken</h3>
 
 <p class="small">
-Maximum 2 cash-taken entries per day. If nobody takes cash, leave both as zero.
+If nobody takes cash, leave both entries as 0.
+That date will not appear in the Cash Taken Daily Details.
 </p>
 
-<div class="cash-grid">
+<div class="cashgrid">
 
 <div>
 
@@ -936,7 +597,7 @@ Maximum 2 cash-taken entries per day. If nobody takes cash, leave both as zero.
 id="cashTaken1"
 type="number"
 step="0.01"
-placeholder="£0.00"
+placeholder="0.00"
 oninput="calculateAll()"
 >
 
@@ -954,6 +615,7 @@ placeholder="Name"
 
 </div>
 
+
 <div>
 
 <label>Cash Taken 2</label>
@@ -962,7 +624,7 @@ placeholder="Name"
 id="cashTaken2"
 type="number"
 step="0.01"
-placeholder="£0.00"
+placeholder="0.00"
 oninput="calculateAll()"
 >
 
@@ -982,63 +644,108 @@ placeholder="Name"
 
 </div>
 
-<div class="total-box">
 
-<div class="total-line">
+<div class="total">
+
+<div class="totalLine">
+
 <span>TOTAL CASH TAKEN</span>
-<b id="totalCashTaken">£0.00</b>
-</div>
+
+<b id="totalCashTaken">
+£0.00
+</b>
 
 </div>
 
 </div>
 
+</div>
+
+
+<!-- CASH -->
 
 <div class="card">
 
-<h3>💵 Cash / Balance</h3>
+<h3>💰 Cash / Balance</h3>
 
-<div class="total-box">
+<div class="total">
 
-<div class="total-line">
+<div class="totalLine">
+
 <span>CASH / BALANCE</span>
-<b id="cashResult">£0.00</b>
-</div>
+
+<b id="cashResult">
+£0.00
+</b>
 
 </div>
 
-<p class="small">
+</div>
+
+<p>
+<b>
 Cash = Main Till − PDQ Total − Petty Cash − Total Cash Taken
+</b>
 </p>
 
 </div>
 
 
+<!-- DELIVERY -->
+
 <div class="card">
 
 <h3>🛵 Delivery</h3>
 
-<div class="form-grid">
+<div class="row">
 
-<div>
 <label>Uber</label>
-<input id="uber" type="number" step="0.01" placeholder="£0.00">
+
+<input
+id="uber"
+type="number"
+step="0.01"
+placeholder="0.00"
+>
+
 </div>
 
-<div>
+<div class="row">
+
 <label>Deliveroo</label>
-<input id="deliveroo" type="number" step="0.01" placeholder="£0.00">
+
+<input
+id="deliveroo"
+type="number"
+step="0.01"
+placeholder="0.00"
+>
+
 </div>
 
-<div>
+<div class="row">
+
 <label>Delivery Cash</label>
-<input id="deliveryCash" type="number" step="0.01" placeholder="£0.00">
+
+<input
+id="deliveryCash"
+type="number"
+step="0.01"
+placeholder="0.00"
+>
+
 </div>
 
-<div>
+<div class="row">
+
 <label>Delivery Card</label>
-<input id="deliveryCard" type="number" step="0.01" placeholder="£0.00">
-</div>
+
+<input
+id="deliveryCard"
+type="number"
+step="0.01"
+placeholder="0.00"
+>
 
 </div>
 
@@ -1047,8 +754,11 @@ Cash = Main Till − PDQ Total − Petty Cash − Total Cash Taken
 
 <div class="card">
 
-<button class="save-btn" onclick="saveDailyEntry()">
-💾 SAVE / UPDATE DAILY ENTRY
+<button
+class="save"
+onclick="saveDailyEntry()"
+>
+💾 SAVE / UPDATE ENTRY
 </button>
 
 <div id="saveMessage" class="message"></div>
@@ -1062,17 +772,11 @@ Cash = Main Till − PDQ Total − Petty Cash − Total Cash Taken
 
 <section id="history" class="page">
 
-<h2 class="page-title">History</h2>
-
-<p class="subtitle">
-View and edit previously saved daily entries
-</p>
+<h2>📚 History</h2>
 
 <div class="card">
 
-<div class="form-group">
-
-<label>Search by Date</label>
+<label>Search Date</label>
 
 <input
 id="historyDate"
@@ -1080,9 +784,12 @@ type="date"
 onchange="displayHistory()"
 >
 
-</div>
+<br><br>
 
-<button class="btn btn-light" onclick="showAllHistory()">
+<button
+class="primary"
+onclick="showAllHistory()"
+>
 SHOW ALL
 </button>
 
@@ -1097,28 +804,26 @@ SHOW ALL
 
 <section id="reports" class="page">
 
-<h2 class="page-title">Reports</h2>
-
-<p class="subtitle">
-Professional weekly and period-based financial reports
-</p>
-
+<h2>📊 Reports</h2>
 
 <div class="card">
 
-<h3>📅 Reporting Period</h3>
+<h3>Reporting Period</h3>
 
 <p class="small">
-Weekly reports run from Monday to Sunday.
+Weekly reports are Monday to Sunday.
 </p>
 
-<div class="form-grid">
+<div class="formgrid">
 
 <div>
 
 <label>Year</label>
 
-<select id="reportYear" onchange="generateReport()"></select>
+<select
+id="reportYear"
+onchange="generateReport()"
+></select>
 
 </div>
 
@@ -1126,7 +831,10 @@ Weekly reports run from Monday to Sunday.
 
 <label>Reporting Month</label>
 
-<select id="reportMonth" onchange="generateReport()">
+<select
+id="reportMonth"
+onchange="generateReport()"
+>
 
 <option value="0">January</option>
 <option value="1">February</option>
@@ -1147,35 +855,55 @@ Weekly reports run from Monday to Sunday.
 
 </div>
 
-<br>
 
-<div class="report-buttons">
+<div class="reportButtons">
 
-<button id="weekMode" onclick="setReportMode('weeks')">
+<button
+id="weekMode"
+onclick="setReportMode('weeks')"
+>
 WEEKLY
 </button>
 
-<button id="monthMode" onclick="setReportMode('month')">
-MONTH
+<button
+id="monthMode"
+onclick="setReportMode('month')"
+>
+MONTH TOTAL
 </button>
 
-<button id="twoMonthMode" onclick="setReportMode('2months')">
+<button
+id="twoMonthMode"
+onclick="setReportMode('2months')"
+>
 2 MONTHS
 </button>
 
-<button id="threeMonthMode" onclick="setReportMode('3months')">
+<button
+id="threeMonthMode"
+onclick="setReportMode('3months')"
+>
 3 MONTHS
 </button>
 
-<button id="sixMonthMode" onclick="setReportMode('6months')">
+<button
+id="sixMonthMode"
+onclick="setReportMode('6months')"
+>
 6 MONTHS
 </button>
 
-<button id="yearMode" onclick="setReportMode('year')">
+<button
+id="yearMode"
+onclick="setReportMode('year')"
+>
 1 YEAR
 </button>
 
-<button id="allMode" onclick="setReportMode('all')">
+<button
+id="allMode"
+onclick="setReportMode('all')"
+>
 ALL HISTORY
 </button>
 
@@ -1184,131 +912,131 @@ ALL HISTORY
 </div>
 
 
-<div class="dashboard-grid">
+<!-- REPORT TOTALS -->
 
-<div class="stat-card">
-<div class="stat-icon">💷</div>
-<div class="stat-label">Main Till</div>
-<div class="stat-value" id="reportMain">£0.00</div>
+<div class="grid">
+
+<div class="stat">
+<small>Total Main Till</small>
+<b id="reportMain">£0.00</b>
 </div>
 
-<div class="stat-card">
-<div class="stat-icon">💳</div>
-<div class="stat-label">PDQ</div>
-<div class="stat-value" id="reportPDQ">£0.00</div>
+<div class="stat">
+<small>Total PDQ</small>
+<b id="reportPDQ">£0.00</b>
 </div>
 
-<div class="stat-card">
-<div class="stat-icon">💰</div>
-<div class="stat-label">Petty Cash</div>
-<div class="stat-value" id="reportPetty">£0.00</div>
+<div class="stat">
+<small>Total Petty Cash</small>
+<b id="reportPetty">£0.00</b>
 </div>
 
-<div class="stat-card">
-<div class="stat-icon">💵</div>
-<div class="stat-label">Cash / Balance</div>
-<div class="stat-value" id="reportCash">£0.00</div>
+<div class="stat">
+<small>Total Cash / Balance</small>
+<b id="reportCash">£0.00</b>
 </div>
 
-<div class="stat-card">
-<div class="stat-icon">💸</div>
-<div class="stat-label">Cash Taken</div>
-<div class="stat-value" id="reportCashTaken">£0.00</div>
+<div class="stat">
+<small>Total Cash Taken</small>
+<b id="reportCashTaken">£0.00</b>
 </div>
 
-<div class="stat-card">
-<div class="stat-icon">📅</div>
-<div class="stat-label">Days Entered</div>
-<div class="stat-value" id="reportDays">0</div>
+<div class="stat">
+<small>Days Entered</small>
+<b id="reportDays">0</b>
 </div>
 
 </div>
 
 
-<div class="two-col" style="margin-top:18px">
+<!-- UBER -->
 
 <div class="card">
 
 <h3>🟢 Uber</h3>
 
-<div class="total-line">
+<div class="totalLine">
 <span>Total Uber Sales</span>
 <b id="reportUber">£0.00</b>
 </div>
 
-<div class="total-line">
-<span>30% Commission</span>
+<div class="totalLine">
+<span>Uber 30% Commission</span>
 <b id="reportUber30">£0.00</b>
 </div>
 
-<div class="total-line">
-<span>70% Remaining</span>
+<div class="totalLine">
+<span>Uber 70% Remaining</span>
 <b id="reportUber70">£0.00</b>
 </div>
 
 </div>
 
 
+<!-- DELIVEROO -->
+
 <div class="card">
 
 <h3>🔴 Deliveroo</h3>
 
-<div class="total-line">
+<div class="totalLine">
 <span>Total Deliveroo Sales</span>
 <b id="reportDeliveroo">£0.00</b>
 </div>
 
-<div class="total-line">
-<span>35% Commission</span>
+<div class="totalLine">
+<span>Deliveroo 35% Commission</span>
 <b id="reportDeliveroo35">£0.00</b>
 </div>
 
-<div class="total-line">
-<span>65% Remaining</span>
+<div class="totalLine">
+<span>Deliveroo 65% Remaining</span>
 <b id="reportDeliveroo65">£0.00</b>
 </div>
 
 </div>
 
+
+<div class="grid">
+
+<div class="stat">
+<small>Delivery Cash</small>
+<b id="reportDeliveryCash">£0.00</b>
+</div>
+
+<div class="stat">
+<small>Delivery Card</small>
+<b id="reportDeliveryCard">£0.00</b>
+</div>
+
 </div>
 
 
-<div class="two-col">
-
-<div class="stat-card">
-<div class="stat-label">Delivery Cash</div>
-<div class="stat-value" id="reportDeliveryCash">£0.00</div>
-</div>
-
-<div class="stat-card">
-<div class="stat-label">Delivery Card</div>
-<div class="stat-value" id="reportDeliveryCard">£0.00</div>
-</div>
-
-</div>
-
+<!-- WEEKLY REPORT -->
 
 <div class="card">
 
-<h3 id="weeklyTitle">📅 Weekly Report</h3>
+<h3 id="weeklyTitle">
+📅 Weekly Report
+</h3>
 
 <div id="weeklyReport"></div>
 
 </div>
 
 
+<!-- CASH TAKEN DAILY -->
+
 <div class="card">
 
 <h3>💸 Cash Taken — Daily Details</h3>
-
-<div class="table-wrap">
 
 <div id="cashTakenDetails"></div>
 
 </div>
 
-</div>
 
+<!-- PERSON TOTAL -->
 
 <div class="card">
 
@@ -1318,6 +1046,8 @@ ALL HISTORY
 
 </div>
 
+
+<!-- MONTH SUMMARY -->
 
 <div class="card">
 
@@ -1345,6 +1075,7 @@ from
 import {
 getAuth,
 signInWithEmailAndPassword,
+signOut,
 onAuthStateChanged
 }
 from
@@ -1361,7 +1092,9 @@ from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-const firebaseConfig = {
+/* FIREBASE */
+
+const firebaseConfig={
 
 apiKey:
 "AIzaSyBsmbLMNMFNoI2OpR0maR97XAlDZ39yxkg",
@@ -1387,32 +1120,30 @@ measurementId:
 };
 
 
-const app =
+const firebaseApp=
 initializeApp(firebaseConfig);
 
-const auth =
-getAuth(app);
+const auth=
+getAuth(firebaseApp);
 
-const db =
-getFirestore(app);
+const db=
+getFirestore(firebaseApp);
 
-let currentUser = null;
+let currentUser=null;
 
-let allRecords = [];
+let allRecords=[];
 
-let reportMode = "weeks";
+let reportMode="weeks";
 
 
-const $ = id =>
+const $=id=>
 document.getElementById(id);
 
+const num=id=>
+Number($(id).value)||0;
 
-const num = id =>
-Number($(id).value) || 0;
-
-
-const money = n =>
-"£" + Number(n || 0).toFixed(2);
+const money=n=>
+"£"+Number(n||0).toFixed(2);
 
 
 function pad(n){
@@ -1430,23 +1161,25 @@ pad(date.getDate());
 
 
 function parseDate(s){
+
 return new Date(s+"T00:00:00");
+
 }
 
 
 /* LOGIN */
 
-window.login = async function(){
+window.login=async function(){
 
-const email =
+const email=
 $("email").value.trim();
 
-const password =
+const password=
 $("password").value;
 
-if(!email || !password){
+if(!email||!password){
 
-$("loginMsg").innerText =
+$("loginMsg").innerText=
 "Please enter email and password.";
 
 return;
@@ -1463,8 +1196,8 @@ password
 
 }catch(error){
 
-$("loginMsg").innerText =
-"Login failed. Please check email and password.";
+$("loginMsg").innerText=
+"Login failed: "+error.message;
 
 }
 
@@ -1475,11 +1208,11 @@ $("loginMsg").innerText =
 
 onAuthStateChanged(
 auth,
-async user => {
+async user=>{
 
 if(user){
 
-currentUser = user;
+currentUser=user;
 
 $("loginScreen")
 .classList.add("hidden");
@@ -1487,10 +1220,7 @@ $("loginScreen")
 $("app")
 .classList.remove("hidden");
 
-$("userEmail").innerText =
-user.email || "";
-
-$("headerDate").innerText =
+$("headerDate").innerText=
 new Date().toLocaleDateString(
 "en-GB",
 {
@@ -1501,7 +1231,7 @@ year:"numeric"
 }
 );
 
-$("entryDate").value =
+$("entryDate").value=
 dateString(new Date());
 
 setDay();
@@ -1514,7 +1244,7 @@ loadExistingEntry();
 
 }else{
 
-currentUser = null;
+currentUser=null;
 
 $("loginScreen")
 .classList.remove("hidden");
@@ -1529,32 +1259,35 @@ $("app")
 
 /* NAVIGATION */
 
-window.openPage = function(page,button){
+window.openPage=function(
+page,
+button
+){
 
 document
 .querySelectorAll(".page")
-.forEach(p =>
-p.classList.remove("active")
+.forEach(
+p=>p.classList.remove("active")
 );
 
 $(page).classList.add("active");
 
 document
-.querySelectorAll(".nav button")
-.forEach(b =>
-b.classList.remove("active")
+.querySelectorAll("nav button")
+.forEach(
+b=>b.classList.remove("active")
 );
 
 if(button)
 button.classList.add("active");
 
-if(page === "home")
+if(page==="home")
 updateHome();
 
-if(page === "history")
+if(page==="history")
 displayHistory();
 
-if(page === "reports")
+if(page==="reports")
 generateReport();
 
 };
@@ -1564,13 +1297,14 @@ generateReport();
 
 function setDay(){
 
-const value =
+const value=
 $("entryDate").value;
 
-if(!value) return;
+if(!value)return;
 
-$("entryDay").value =
-parseDate(value).toLocaleDateString(
+$("entryDay").value=
+parseDate(value)
+.toLocaleDateString(
 "en-GB",
 {
 weekday:"long"
@@ -1584,13 +1318,13 @@ weekday:"long"
 
 function calculatePDQ(){
 
-const total =
-num("pdq1") +
-num("pdq2") +
-num("pdq3") +
+const total=
+num("pdq1")+
+num("pdq2")+
+num("pdq3")+
 num("pdq4");
 
-$("pdqTotal").innerText =
+$("pdqTotal").innerText=
 money(total);
 
 return total;
@@ -1602,11 +1336,11 @@ return total;
 
 function calculateCashTaken(){
 
-const total =
-num("cashTaken1") +
+const total=
+num("cashTaken1")+
 num("cashTaken2");
 
-$("totalCashTaken").innerText =
+$("totalCashTaken").innerText=
 money(total);
 
 return total;
@@ -1616,44 +1350,48 @@ return total;
 
 /* CASH */
 
-window.calculateAll = function(){
+window.calculateAll=function(){
 
-const pdq =
+const pdq=
 calculatePDQ();
 
-const taken =
+const taken=
 calculateCashTaken();
 
-const cash =
-num("mainTill") -
-pdq -
-num("pettyCash") -
+const cash=
+num("mainTill")-
+pdq-
+num("pettyCash")-
 taken;
 
-$("cashResult").innerText =
+$("cashResult").innerText=
 money(cash);
 
 };
 
 
-/* LOAD */
+/* LOAD RECORDS */
 
 async function loadRecords(){
 
 try{
 
-const snapshot =
+const snapshot=
 await getDocs(
-collection(db,"dailyRecords")
+collection(
+db,
+"dailyRecords"
+)
 );
 
-allRecords = [];
+allRecords=[];
 
-snapshot.forEach(item => {
+snapshot.forEach(item=>{
 
 allRecords.push({
 
 id:item.id,
+
 ...item.data()
 
 });
@@ -1661,9 +1399,9 @@ id:item.id,
 });
 
 allRecords.sort(
-(a,b) =>
-(b.date || "")
-.localeCompare(a.date || "")
+(a,b)=>
+(b.date||"")
+.localeCompare(a.date||"")
 );
 
 updateHome();
@@ -1681,18 +1419,18 @@ console.error(error);
 }
 
 
-/* LOAD EXISTING */
+/* LOAD EXISTING ENTRY */
 
-window.loadExistingEntry = function(){
+window.loadExistingEntry=function(){
 
 setDay();
 
-const date =
+const date=
 $("entryDate").value;
 
-const record =
+const record=
 allRecords.find(
-r => r.date === date
+r=>r.date===date
 );
 
 if(!record){
@@ -1705,51 +1443,56 @@ return;
 
 }
 
-$("mainTill").value =
-record.mainTill ?? "";
 
-$("pdq1").value =
-record.pdq1 ?? "";
+$("mainTill").value=
+record.mainTill??"";
 
-$("pdq2").value =
-record.pdq2 ?? "";
+$("pdq1").value=
+record.pdq1??"";
 
-$("pdq3").value =
-record.pdq3 ?? "";
+$("pdq2").value=
+record.pdq2??"";
 
-$("pdq4").value =
-record.pdq4 ?? "";
+$("pdq3").value=
+record.pdq3??"";
 
-$("pettyCash").value =
-record.pettyCash ?? "";
+$("pdq4").value=
+record.pdq4??"";
 
-$("cashTaken1").value =
+$("pettyCash").value=
+record.pettyCash??"";
+
+
+/* TWO CASH TAKEN */
+
+$("cashTaken1").value=
 record.cashTaken1 ??
 record.cashTaken ??
 "";
 
-$("takenBy1").value =
+$("takenBy1").value=
 record.takenBy1 ??
 record.takenBy ??
 "";
 
-$("cashTaken2").value =
-record.cashTaken2 ?? "";
+$("cashTaken2").value=
+record.cashTaken2??"";
 
-$("takenBy2").value =
-record.takenBy2 ?? "";
+$("takenBy2").value=
+record.takenBy2??"";
 
-$("uber").value =
-record.uber ?? "";
 
-$("deliveroo").value =
-record.deliveroo ?? "";
+$("uber").value=
+record.uber??"";
 
-$("deliveryCash").value =
-record.deliveryCash ?? "";
+$("deliveroo").value=
+record.deliveroo??"";
 
-$("deliveryCard").value =
-record.deliveryCard ?? "";
+$("deliveryCash").value=
+record.deliveryCash??"";
+
+$("deliveryCard").value=
+record.deliveryCard??"";
 
 calculateAll();
 
@@ -1776,7 +1519,7 @@ function clearForm(){
 "deliveryCash",
 "deliveryCard"
 ].forEach(
-id => $(id).value = ""
+id=>$(id).value=""
 );
 
 }
@@ -1784,44 +1527,45 @@ id => $(id).value = ""
 
 /* SAVE */
 
-window.saveDailyEntry =
+window.saveDailyEntry=
 async function(){
 
 if(!currentUser){
 
-$("saveMessage").innerText =
+$("saveMessage").innerText=
 "Please login first.";
 
 return;
 
 }
 
-const date =
+const date=
 $("entryDate").value;
 
 if(!date){
 
-$("saveMessage").innerText =
+$("saveMessage").innerText=
 "Please select a date.";
 
 return;
 
 }
 
-const pdqTotal =
+
+const pdqTotal=
 calculatePDQ();
 
-const totalCashTaken =
+const totalCashTaken=
 calculateCashTaken();
 
-const cash =
-num("mainTill") -
-pdqTotal -
-num("pettyCash") -
+const cash=
+num("mainTill")-
+pdqTotal-
+num("pettyCash")-
 totalCashTaken;
 
 
-const data = {
+const data={
 
 date:date,
 
@@ -1838,13 +1582,22 @@ pdqTotal:pdqTotal,
 
 pettyCash:num("pettyCash"),
 
+
 cashTaken1:num("cashTaken1"),
-takenBy1:$("takenBy1").value.trim(),
+
+takenBy1:
+$("takenBy1").value.trim(),
+
 
 cashTaken2:num("cashTaken2"),
-takenBy2:$("takenBy2").value.trim(),
 
-cashTaken:totalCashTaken,
+takenBy2:
+$("takenBy2").value.trim(),
+
+
+cashTaken:
+totalCashTaken,
+
 
 cash:cash,
 
@@ -1856,9 +1609,11 @@ deliveryCash:num("deliveryCash"),
 
 deliveryCard:num("deliveryCard"),
 
-updatedBy:currentUser.email,
+updatedBy:
+currentUser.email,
 
-updatedAt:new Date().toISOString()
+updatedAt:
+new Date().toISOString()
 
 };
 
@@ -1866,12 +1621,20 @@ updatedAt:new Date().toISOString()
 try{
 
 await setDoc(
-doc(db,"dailyRecords",date),
+
+doc(
+db,
+"dailyRecords",
+date
+),
+
 data,
+
 {merge:true}
+
 );
 
-$("saveMessage").innerText =
+$("saveMessage").innerText=
 "✅ Successfully saved to Firebase.";
 
 await loadRecords();
@@ -1880,8 +1643,8 @@ await loadRecords();
 
 console.error(error);
 
-$("saveMessage").innerText =
-"❌ Save failed.";
+$("saveMessage").innerText=
+"❌ Save failed: "+error.message;
 
 }
 
@@ -1892,13 +1655,16 @@ $("saveMessage").innerText =
 
 function updateHome(){
 
-const record =
+const record=
 allRecords.find(
-r => r.date === dateString(new Date())
+r=>r.date===
+dateString(new Date())
 );
 
-const ids = [
 
+if(!record){
+
+[
 "homeMain",
 "homePDQ",
 "homePetty",
@@ -1914,92 +1680,93 @@ const ids = [
 "homeDeliverooSales",
 "homeDeliveroo35",
 "homeDeliveroo65"
-
-];
-
-if(!record){
-
-ids.forEach(
-id => $(id).innerText = "£0.00"
+].forEach(
+id=>$(id).innerText="£0.00"
 );
 
 return;
 
 }
 
-$("homeMain").innerText =
+
+$("homeMain").innerText=
 money(record.mainTill);
 
-$("homePDQ").innerText =
+$("homePDQ").innerText=
 money(record.pdqTotal);
 
-$("homePetty").innerText =
+$("homePetty").innerText=
 money(record.pettyCash);
 
-$("homeCash").innerText =
+$("homeCash").innerText=
 money(record.cash);
 
-$("homeTaken").innerText =
+$("homeTaken").innerText=
 money(getTotalCashTaken(record));
 
-$("homeUber").innerText =
+$("homeUber").innerText=
 money(record.uber);
 
-$("homeDeliveroo").innerText =
+$("homeDeliveroo").innerText=
 money(record.deliveroo);
 
-$("homeDeliveryCash").innerText =
+$("homeDeliveryCash").innerText=
 money(record.deliveryCash);
 
-$("homeDeliveryCard").innerText =
+$("homeDeliveryCard").innerText=
 money(record.deliveryCard);
 
 
-const uber =
-Number(record.uber || 0);
+const uber=
+Number(record.uber||0);
 
-$("homeUberSales").innerText =
+$("homeUberSales").innerText=
 money(uber);
 
-$("homeUber30").innerText =
-money(uber * .30);
+$("homeUber30").innerText=
+money(uber*.30);
 
-$("homeUber70").innerText =
-money(uber * .70);
+$("homeUber70").innerText=
+money(uber*.70);
 
 
-const deliveroo =
-Number(record.deliveroo || 0);
+const deliveroo=
+Number(record.deliveroo||0);
 
-$("homeDeliverooSales").innerText =
+$("homeDeliverooSales").innerText=
 money(deliveroo);
 
-$("homeDeliveroo35").innerText =
-money(deliveroo * .35);
+$("homeDeliveroo35").innerText=
+money(deliveroo*.35);
 
-$("homeDeliveroo65").innerText =
-money(deliveroo * .65);
+$("homeDeliveroo65").innerText=
+money(deliveroo*.65);
 
 }
 
 
-/* TOTAL CASH */
+/* TOTAL CASH TAKEN */
 
 function getTotalCashTaken(record){
 
 if(
-record.cashTaken1 !== undefined ||
-record.cashTaken2 !== undefined
+record.cashTaken1!==undefined ||
+record.cashTaken2!==undefined
 ){
 
-return (
-Number(record.cashTaken1 || 0) +
-Number(record.cashTaken2 || 0)
+return(
+Number(record.cashTaken1||0)+
+Number(record.cashTaken2||0)
 );
 
 }
 
-return Number(record.cashTaken || 0);
+
+/* OLD DATA */
+
+return Number(
+record.cashTaken||0
+);
 
 }
 
@@ -2008,47 +1775,69 @@ return Number(record.cashTaken || 0);
 
 function getCashTakenEntries(record){
 
-const entries = [];
+const entries=[];
 
-const amount1 =
-Number(record.cashTaken1 || 0);
 
-if(amount1 > 0){
+/* ENTRY 1 */
+
+const amount1=
+Number(record.cashTaken1||0);
+
+const name1=
+(record.takenBy1||"").trim();
+
+
+if(amount1>0){
 
 entries.push({
+
 amount:amount1,
-name:(record.takenBy1 || "Unknown").trim()
+
+name:name1||"Unknown"
+
 });
 
 }
 
 
-const amount2 =
-Number(record.cashTaken2 || 0);
+/* ENTRY 2 */
 
-if(amount2 > 0){
+const amount2=
+Number(record.cashTaken2||0);
+
+const name2=
+(record.takenBy2||"").trim();
+
+
+if(amount2>0){
 
 entries.push({
+
 amount:amount2,
-name:(record.takenBy2 || "Unknown").trim()
+
+name:name2||"Unknown"
+
 });
 
 }
 
 
-/* OLD DATA SUPPORT */
+/* OLD DATA COMPATIBILITY */
 
 if(
-entries.length === 0 &&
-Number(record.cashTaken || 0) > 0
+entries.length===0 &&
+Number(record.cashTaken||0)>0
 ){
 
 entries.push({
 
-amount:Number(record.cashTaken || 0),
+amount:
+Number(record.cashTaken||0),
 
 name:
-(record.takenBy || "Unknown").trim()
+(record.takenBy||"").trim()
+||
+"Unknown"
 
 });
 
@@ -2061,34 +1850,32 @@ return entries;
 
 /* HISTORY */
 
-window.displayHistory = function(){
+window.displayHistory=
+function(){
 
-const search =
+const search=
 $("historyDate").value;
 
-let records = allRecords;
+let records=
+allRecords;
 
 if(search){
 
-records =
+records=
 allRecords.filter(
-r => r.date === search
+r=>r.date===search
 );
 
 }
 
+
 if(!records.length){
 
-$("historyList").innerHTML = `
-
+$("historyList").innerHTML=
+`
 <div class="card">
-
-<p>
 No saved entries found.
-</p>
-
 </div>
-
 `;
 
 return;
@@ -2096,64 +1883,45 @@ return;
 }
 
 
-$("historyList").innerHTML =
+$("historyList").innerHTML=
+records.map(r=>{
 
-records.map(r => {
-
-const entries =
+const cashEntries=
 getCashTakenEntries(r);
+
 
 return `
 
-<div class="card">
-
-<div class="card-header">
-
-<div>
+<div class="history">
 
 <h3>
-${r.date || "-"}
+${r.date||"-"} — ${r.day||""}
 </h3>
 
-<span class="small">
-${r.day || ""}
-</span>
-
-</div>
-
-<button
-class="btn btn-blue"
-onclick="editEntry('${r.date}')"
->
-✏️ Edit
-</button>
-
-</div>
-
-
-<div class="total-line">
+<div class="totalLine">
 <span>Main Till</span>
 <b>${money(r.mainTill)}</b>
 </div>
 
-<div class="total-line">
+<div class="totalLine">
 <span>PDQ Total</span>
 <b>${money(r.pdqTotal)}</b>
 </div>
 
-<div class="total-line">
+<div class="totalLine">
 <span>Petty Cash</span>
 <b>${money(r.pettyCash)}</b>
 </div>
 
 
 ${
-entries.length
+cashEntries.length
 ?
-entries.map(
-(e,i) => `
 
-<div class="total-line">
+cashEntries.map(
+(e,i)=>`
+
+<div class="totalLine">
 
 <span>
 Cash Taken ${i+1}
@@ -2161,64 +1929,106 @@ Cash Taken ${i+1}
 <small>${e.name}</small>
 </span>
 
-<b>${money(e.amount)}</b>
+<b>
+${money(e.amount)}
+</b>
 
 </div>
 
 `
 ).join("")
-:
-""
+
+:""
 }
 
 
 ${
-entries.length
+cashEntries.length
 ?
-`
 
-<div class="total-line">
+`
+<div class="totalLine">
 
 <span>
 <b>Total Cash Taken</b>
 </span>
 
 <b>
-${money(getTotalCashTaken(r))}
+${money(
+getTotalCashTaken(r)
+)}
+</b>
+
+</div>
+`
+
+:""
+}
+
+
+<div class="totalLine">
+
+<span>Cash / Balance</span>
+
+<b>
+${money(r.cash)}
 </b>
 
 </div>
 
-`
-:
-""
-}
 
+<div class="totalLine">
 
-<div class="total-line">
-<span>Cash / Balance</span>
-<b>${money(r.cash)}</b>
-</div>
-
-<div class="total-line">
 <span>Uber</span>
-<b>${money(r.uber)}</b>
+
+<b>
+${money(r.uber)}
+</b>
+
 </div>
 
-<div class="total-line">
+
+<div class="totalLine">
+
 <span>Deliveroo</span>
-<b>${money(r.deliveroo)}</b>
+
+<b>
+${money(r.deliveroo)}
+</b>
+
 </div>
 
-<div class="total-line">
+
+<div class="totalLine">
+
 <span>Delivery Cash</span>
-<b>${money(r.deliveryCash)}</b>
+
+<b>
+${money(r.deliveryCash)}
+</b>
+
 </div>
 
-<div class="total-line">
+
+<div class="totalLine">
+
 <span>Delivery Card</span>
-<b>${money(r.deliveryCard)}</b>
+
+<b>
+${money(r.deliveryCard)}
+</b>
+
 </div>
+
+
+<br>
+
+<button
+class="edit"
+onclick="editEntry('${r.date}')"
+>
+✏️ EDIT
+</button>
 
 </div>
 
@@ -2229,26 +2039,28 @@ ${money(getTotalCashTaken(r))}
 };
 
 
-window.showAllHistory =
+window.showAllHistory=
 function(){
 
-$("historyDate").value = "";
+$("historyDate").value="";
 
 displayHistory();
 
 };
 
 
-window.editEntry =
+window.editEntry=
 function(date){
 
-$("entryDate").value = date;
+$("entryDate").value=
+date;
 
 loadExistingEntry();
 
 openPage(
 "entry",
-document.querySelectorAll(".nav button")[1]
+document
+.querySelectorAll("nav button")[1]
 );
 
 window.scrollTo({
@@ -2263,13 +2075,14 @@ behavior:"smooth"
 
 function setupReportYears(){
 
-const select =
+const select=
 $("reportYear");
 
-select.innerHTML = "";
+select.innerHTML="";
 
-const current =
+const current=
 new Date().getFullYear();
+
 
 for(
 let y=current-5;
@@ -2277,20 +2090,21 @@ y<=current+2;
 y++
 ){
 
-const option =
+const option=
 document.createElement("option");
 
-option.value = y;
+option.value=y;
 
-option.textContent = y;
+option.textContent=y;
 
 select.appendChild(option);
 
 }
 
-select.value = current;
 
-$("reportMonth").value =
+select.value=current;
+
+$("reportMonth").value=
 new Date().getMonth();
 
 }
@@ -2298,66 +2112,91 @@ new Date().getMonth();
 
 /* REPORT MODE */
 
-window.setReportMode =
+window.setReportMode=
 function(mode){
 
-reportMode = mode;
+reportMode=mode;
 
 document
-.querySelectorAll(".report-buttons button")
+.querySelectorAll(
+".reportButtons button"
+)
 .forEach(
-b => b.classList.remove("active")
+b=>b.classList.remove("active")
 );
 
-const map = {
+
+const map={
 
 weeks:"weekMode",
+
 month:"monthMode",
+
 "2months":"twoMonthMode",
+
 "3months":"threeMonthMode",
+
 "6months":"sixMonthMode",
+
 year:"yearMode",
+
 all:"allMode"
 
 };
 
-$(map[mode]).classList.add("active");
+
+$(map[mode])
+.classList.add("active");
 
 generateReport();
 
 };
 
 
-/* REPORTING MONTH */
+/* REPORTING MONTH START */
 
-function reportingMonthStart(year,month){
+function reportingMonthStart(
+year,
+month
+){
 
-const first =
-new Date(year,month,1);
-
-const day =
-first.getDay();
-
-const diff =
-day === 0 ? 6 : day - 1;
-
-first.setDate(
-first.getDate() - diff
+const first=
+new Date(
+year,
+month,
+1
 );
 
-first.setHours(0,0,0,0);
+const day=
+first.getDay();
+
+const diff=
+day===0?6:day-1;
+
+first.setDate(
+first.getDate()-diff
+);
+
+first.setHours(
+0,0,0,0
+);
 
 return first;
 
 }
 
 
-function nextReportingMonthStart(year,month){
+/* NEXT MONTH */
 
-if(month === 11){
+function nextReportingMonthStart(
+year,
+month
+){
+
+if(month===11){
 
 return reportingMonthStart(
-year + 1,
+year+1,
 0
 );
 
@@ -2365,22 +2204,27 @@ year + 1,
 
 return reportingMonthStart(
 year,
-month + 1
+month+1
 );
 
 }
 
 
-function reportingMonthEnd(year,month){
+/* MONTH END */
 
-const next =
+function reportingMonthEnd(
+year,
+month
+){
+
+const next=
 nextReportingMonthStart(
 year,
 month
 );
 
 next.setDate(
-next.getDate() - 1
+next.getDate()-1
 );
 
 return next;
@@ -2390,46 +2234,54 @@ return next;
 
 /* WEEKS */
 
-function getReportingWeeks(year,month){
+function getReportingWeeks(
+year,
+month
+){
 
-const start =
+const start=
 reportingMonthStart(
 year,
 month
 );
 
-const end =
+const end=
 reportingMonthEnd(
 year,
 month
 );
 
-const weeks = [];
+const weeks=[];
 
-let current =
+let current=
 new Date(start);
 
-let weekNumber = 1;
+let weekNumber=1;
 
-while(current <= end){
 
-const weekStart =
+while(current<=end){
+
+const weekStart=
 new Date(current);
 
-const weekEnd =
+const weekEnd=
 new Date(current);
 
 weekEnd.setDate(
 weekEnd.getDate()+6
 );
 
+
 weeks.push({
 
 number:weekNumber,
+
 start:weekStart,
+
 end:weekEnd
 
 });
+
 
 current.setDate(
 current.getDate()+7
@@ -2444,18 +2296,21 @@ return weeks;
 }
 
 
-/* RECORD RANGE */
+/* RECORDS BETWEEN */
 
-function recordsBetween(start,end){
+function recordsBetween(
+start,
+end
+){
 
-const s =
+const s=
 dateString(start);
 
-const e =
+const e=
 dateString(end);
 
 return allRecords.filter(
-r => r.date >= s && r.date <= e
+r=>r.date>=s&&r.date<=e
 );
 
 }
@@ -2465,50 +2320,60 @@ r => r.date >= s && r.date <= e
 
 function sumRecords(records){
 
-const total = {
+const total={
 
 mainTill:0,
+
 pdqTotal:0,
+
 pettyCash:0,
+
 cash:0,
+
 uber:0,
+
 deliveroo:0,
+
 deliveryCash:0,
+
 deliveryCard:0,
+
 cashTaken:0
 
 };
 
-records.forEach(r => {
 
-total.mainTill +=
-Number(r.mainTill || 0);
+records.forEach(r=>{
 
-total.pdqTotal +=
-Number(r.pdqTotal || 0);
+total.mainTill+=
+Number(r.mainTill||0);
 
-total.pettyCash +=
-Number(r.pettyCash || 0);
+total.pdqTotal+=
+Number(r.pdqTotal||0);
 
-total.cash +=
-Number(r.cash || 0);
+total.pettyCash+=
+Number(r.pettyCash||0);
 
-total.uber +=
-Number(r.uber || 0);
+total.cash+=
+Number(r.cash||0);
 
-total.deliveroo +=
-Number(r.deliveroo || 0);
+total.uber+=
+Number(r.uber||0);
 
-total.deliveryCash +=
-Number(r.deliveryCash || 0);
+total.deliveroo+=
+Number(r.deliveroo||0);
 
-total.deliveryCard +=
-Number(r.deliveryCard || 0);
+total.deliveryCash+=
+Number(r.deliveryCash||0);
 
-total.cashTaken +=
+total.deliveryCard+=
+Number(r.deliveryCard||0);
+
+total.cashTaken+=
 getTotalCashTaken(r);
 
 });
+
 
 return total;
 
@@ -2517,31 +2382,32 @@ return total;
 
 /* REPORT */
 
-window.generateReport =
+window.generateReport=
 function(){
 
-const year =
+const year=
 Number($("reportYear").value);
 
-const month =
+const month=
 Number($("reportMonth").value);
 
 let start;
+
 let end;
 
 
 if(
-reportMode === "month" ||
-reportMode === "weeks"
+reportMode==="month"||
+reportMode==="weeks"
 ){
 
-start =
+start=
 reportingMonthStart(
 year,
 month
 );
 
-end =
+end=
 reportingMonthEnd(
 year,
 month
@@ -2551,33 +2417,38 @@ month
 
 
 if(
-reportMode === "2months" ||
-reportMode === "3months" ||
-reportMode === "6months"
+reportMode==="2months"||
+reportMode==="3months"||
+reportMode==="6months"
 ){
 
-const months =
+const months=
 Number(
-reportMode.replace("months","")
+reportMode.replace(
+"months",
+""
+)
 );
 
-start =
+start=
 reportingMonthStart(
 year,
 month
 );
 
-let endMonth =
-month + months - 1;
+let endMonth=
+month+months-1;
 
-let endYear =
-year +
-Math.floor(endMonth / 12);
+let endYear=
+year+
+Math.floor(
+endMonth/12
+);
 
-endMonth =
-endMonth % 12;
+endMonth=
+endMonth%12;
 
-end =
+end=
 reportingMonthEnd(
 endYear,
 endMonth
@@ -2586,15 +2457,15 @@ endMonth
 }
 
 
-if(reportMode === "year"){
+if(reportMode==="year"){
 
-start =
+start=
 reportingMonthStart(
 year,
 0
 );
 
-end =
+end=
 reportingMonthEnd(
 year,
 11
@@ -2603,90 +2474,104 @@ year,
 }
 
 
-if(reportMode === "all"){
+if(reportMode==="all"){
 
 if(allRecords.length){
 
-const dates =
+const dates=
 allRecords
-.map(r => r.date)
+.map(r=>r.date)
 .filter(Boolean)
 .sort();
 
-start =
+start=
 parseDate(dates[0]);
 
-end =
+end=
 parseDate(
-dates[dates.length - 1]
+dates[dates.length-1]
 );
 
 }else{
 
-start = new Date();
-end = new Date();
+start=new Date();
+
+end=new Date();
 
 }
 
 }
 
 
-const records =
-recordsBetween(start,end);
+const records=
+recordsBetween(
+start,
+end
+);
 
-const total =
+const total=
 sumRecords(records);
 
 
-$("reportMain").innerText =
+/* TOTALS */
+
+$("reportMain").innerText=
 money(total.mainTill);
 
-$("reportPDQ").innerText =
+$("reportPDQ").innerText=
 money(total.pdqTotal);
 
-$("reportPetty").innerText =
+$("reportPetty").innerText=
 money(total.pettyCash);
 
-$("reportCash").innerText =
+$("reportCash").innerText=
 money(total.cash);
 
-$("reportCashTaken").innerText =
+$("reportCashTaken").innerText=
 money(total.cashTaken);
 
-$("reportDays").innerText =
+$("reportDays").innerText=
 records.length;
 
 
-$("reportUber").innerText =
+/* UBER */
+
+$("reportUber").innerText=
 money(total.uber);
 
-$("reportUber30").innerText =
-money(total.uber * .30);
+$("reportUber30").innerText=
+money(total.uber*.30);
 
-$("reportUber70").innerText =
-money(total.uber * .70);
+$("reportUber70").innerText=
+money(total.uber*.70);
 
 
-$("reportDeliveroo").innerText =
+/* DELIVEROO */
+
+$("reportDeliveroo").innerText=
 money(total.deliveroo);
 
-$("reportDeliveroo35").innerText =
-money(total.deliveroo * .35);
+$("reportDeliveroo35").innerText=
+money(total.deliveroo*.35);
 
-$("reportDeliveroo65").innerText =
-money(total.deliveroo * .65);
+$("reportDeliveroo65").innerText=
+money(total.deliveroo*.65);
 
 
-$("reportDeliveryCash").innerText =
+/* DELIVERY */
+
+$("reportDeliveryCash").innerText=
 money(total.deliveryCash);
 
-$("reportDeliveryCard").innerText =
+$("reportDeliveryCard").innerText=
 money(total.deliveryCard);
 
 
+/* WEEKLY */
+
 if(
-reportMode === "weeks" ||
-reportMode === "month"
+reportMode==="weeks"||
+reportMode==="month"
 ){
 
 showWeeklyReport(
@@ -2696,41 +2581,59 @@ month
 
 }else{
 
-$("weeklyTitle").innerText =
+$("weeklyTitle").innerText=
 "📅 Weekly Breakdown";
 
-$("weeklyReport").innerHTML = `
-
-<p class="small">
-Select WEEKLY to see Monday-Sunday breakdown.
+$("weeklyReport").innerHTML=
+`
+<p>
+Select <b>WEEKLY</b> to see the Monday-Sunday breakdown.
 </p>
-
 `;
 
 }
 
 
-showCashTakenDetails(records);
+/* CASH DETAILS */
 
-showPersonTotals(records);
+showCashTakenDetails(
+records
+);
 
-showMonthSummary(year,month);
+
+/* PERSON TOTAL */
+
+showPersonTotals(
+records
+);
+
+
+/* MONTH */
+
+showMonthSummary(
+year,
+month
+);
 
 };
 
 
-/* WEEKLY */
+/* WEEKLY REPORT */
 
-function showWeeklyReport(year,month){
+function showWeeklyReport(
+year,
+month
+){
 
-const weeks =
+const weeks=
 getReportingWeeks(
 year,
 month
 );
 
-$("weeklyTitle").innerText =
-"📅 Weekly Report — " +
+
+$("weeklyTitle").innerText=
+"📅 Weekly Report — "+
 new Date(
 year,
 month,
@@ -2744,103 +2647,116 @@ year:"numeric"
 );
 
 
-$("weeklyReport").innerHTML =
+$("weeklyReport").innerHTML=
 
-weeks.map(w => {
+weeks.map(w=>{
 
-const records =
+const records=
 recordsBetween(
 w.start,
 w.end
 );
 
-const t =
+const t=
 sumRecords(records);
+
 
 return `
 
-<div class="week-card">
+<div class="weekCard">
 
-<div class="week-title">
+<div class="weekTitle">
 
-Week ${w.number}
+Week ${w.number}:
 
-<br>
-
-<span class="small">
-
-${dateString(w.start).split("-").reverse().join("/")}
+${dateString(w.start)
+.split("-")
+.reverse()
+.join("/")}
 
 →
 
-${dateString(w.end).split("-").reverse().join("/")}
-
-</span>
+${dateString(w.end)
+.split("-")
+.reverse()
+.join("/")}
 
 </div>
 
 
-<div class="total-line">
+<div class="totalLine">
 <span>Main Till</span>
 <b>${money(t.mainTill)}</b>
 </div>
 
-<div class="total-line">
+
+<div class="totalLine">
 <span>PDQ Total</span>
 <b>${money(t.pdqTotal)}</b>
 </div>
 
-<div class="total-line">
+
+<div class="totalLine">
 <span>Petty Cash</span>
 <b>${money(t.pettyCash)}</b>
 </div>
 
-<div class="total-line">
+
+<div class="totalLine">
 <span>Total Cash Taken</span>
 <b>${money(t.cashTaken)}</b>
 </div>
 
-<div class="total-line">
+
+<div class="totalLine">
 <span>Cash / Balance</span>
 <b>${money(t.cash)}</b>
 </div>
 
-<div class="total-line">
+
+<div class="totalLine">
 <span>Uber</span>
 <b>${money(t.uber)}</b>
 </div>
 
-<div class="total-line">
+
+<div class="totalLine">
 <span>Uber 30%</span>
 <b>${money(t.uber*.30)}</b>
 </div>
 
-<div class="total-line">
-<span>Uber 70%</span>
+
+<div class="totalLine">
+<span>Uber 70% Remaining</span>
 <b>${money(t.uber*.70)}</b>
 </div>
 
-<div class="total-line">
+
+<div class="totalLine">
 <span>Deliveroo</span>
 <b>${money(t.deliveroo)}</b>
 </div>
 
-<div class="total-line">
+
+<div class="totalLine">
 <span>Deliveroo 35%</span>
 <b>${money(t.deliveroo*.35)}</b>
 </div>
 
-<div class="total-line">
-<span>Deliveroo 65%</span>
+
+<div class="totalLine">
+<span>Deliveroo 65% Remaining</span>
 <b>${money(t.deliveroo*.65)}</b>
 </div>
 
-<div class="total-line">
+
+<div class="totalLine">
 <span>Delivery Cash</span>
 <b>${money(t.deliveryCash)}</b>
 </div>
 
-<div class="total-line">
+
+<div class="totalLine">
 <span>Delivery Card</span>
 <b>${money(t.deliveryCard)}</b>
 </div>
@@ -2854,23 +2770,30 @@ ${dateString(w.end).split("-").reverse().join("/")}
 }
 
 
-/* CASH TAKEN DAILY */
+/* ===================================================
+   CASH TAKEN DAILY DETAILS
 
-function showCashTakenDetails(records){
+   ONLY DATES WHERE CASH TAKEN > £0 ARE SHOWN
+=================================================== */
 
-const cashRecords =
+function showCashTakenDetails(
+records
+){
+
+const cashRecords=
 records.filter(
-r => getCashTakenEntries(r).length > 0
+r=>
+getCashTakenEntries(r).length>0
 );
+
 
 if(!cashRecords.length){
 
-$("cashTakenDetails").innerHTML = `
-
+$("cashTakenDetails").innerHTML=
+`
 <p class="small">
 No cash was taken during this reporting period.
 </p>
-
 `;
 
 return;
@@ -2878,7 +2801,7 @@ return;
 }
 
 
-let html = `
+let html=`
 
 <table>
 
@@ -2907,44 +2830,71 @@ let html = `
 `;
 
 
-cashRecords.forEach(r => {
+cashRecords.forEach(r=>{
 
-const entries =
+const entries=
 getCashTakenEntries(r);
 
-const e1 =
-entries[0] || {amount:0,name:""};
 
-const e2 =
-entries[1] || {amount:0,name:""};
+const e1=
+entries[0]||{
+amount:0,
+name:""
+};
 
 
-html += `
+const e2=
+entries[1]||{
+amount:0,
+name:""
+};
+
+
+html+=`
 
 <tr>
 
 <td>
-<b>${r.date || "-"}</b>
+<b>${r.date||"-"}</b>
 </td>
 
-<td>
-${e1.amount > 0 ? money(e1.amount) : ""}
-</td>
 
 <td>
-${e1.amount > 0 ? e1.name : ""}
+${e1.amount>0
+?money(e1.amount)
+:""}
 </td>
 
-<td>
-${e2.amount > 0 ? money(e2.amount) : ""}
-</td>
 
 <td>
-${e2.amount > 0 ? e2.name : ""}
+${e1.amount>0
+?(e1.name||"Unknown")
+:""}
 </td>
 
+
 <td>
-<b>${money(getTotalCashTaken(r))}</b>
+${e2.amount>0
+?money(e2.amount)
+:""}
+</td>
+
+
+<td>
+${e2.amount>0
+?(e2.name||"Unknown")
+:""}
+</td>
+
+
+<td>
+
+<b>
+${money(
+getTotalCashTaken(r)
+)}
+</b>
+
 </td>
 
 </tr>
@@ -2954,54 +2904,60 @@ ${e2.amount > 0 ? e2.name : ""}
 });
 
 
-html += `
+html+=`
 
 </tbody>
 
 </table>
-
 `;
 
-$("cashTakenDetails").innerHTML =
+
+$("cashTakenDetails").innerHTML=
 html;
 
 }
 
 
-/* PERSON TOTAL */
+/* PERSON TOTALS */
 
-function showPersonTotals(records){
+function showPersonTotals(
+records
+){
 
-const people = {};
+const people={};
 
-records.forEach(r => {
 
-getCashTakenEntries(r)
-.forEach(e => {
+records.forEach(r=>{
 
-const name =
-e.name || "Unknown";
+const entries=
+getCashTakenEntries(r);
 
-people[name] =
-(people[name] || 0) +
-Number(e.amount || 0);
+
+entries.forEach(e=>{
+
+const name=
+e.name||"Unknown";
+
+people[name]=
+(people[name]||0)+
+Number(e.amount||0);
 
 });
 
 });
 
 
-const names =
+const names=
 Object.keys(people);
+
 
 if(!names.length){
 
-$("personTotals").innerHTML = `
-
+$("personTotals").innerHTML=
+`
 <p class="small">
 No cash was taken during this reporting period.
 </p>
-
 `;
 
 return;
@@ -3009,15 +2965,15 @@ return;
 }
 
 
-$("personTotals").innerHTML =
+$("personTotals").innerHTML=
 
 names
 .sort()
-.map(name => `
+.map(name=>`
 
 <div class="person">
 
-<div class="total-line">
+<div class="totalLine">
 
 <span>
 <b>${name}</b>
@@ -3039,27 +2995,34 @@ ${money(people[name])}
 
 /* MONTH SUMMARY */
 
-function showMonthSummary(year,month){
+function showMonthSummary(
+year,
+month
+){
 
-const start =
+const start=
 reportingMonthStart(
 year,
 month
 );
 
-const end =
+const end=
 reportingMonthEnd(
 year,
 month
 );
 
-const records =
-recordsBetween(start,end);
+const records=
+recordsBetween(
+start,
+end
+);
 
-const t =
+const t=
 sumRecords(records);
 
-const monthName =
+
+const monthName=
 new Date(
 year,
 month,
@@ -3073,7 +3036,7 @@ year:"numeric"
 );
 
 
-$("monthSummary").innerHTML = `
+$("monthSummary").innerHTML=`
 
 <h3>${monthName}</h3>
 
@@ -3081,76 +3044,94 @@ $("monthSummary").innerHTML = `
 
 Reporting period:
 
-${dateString(start).split("-").reverse().join("/")}
+${dateString(start)
+.split("-")
+.reverse()
+.join("/")}
 
 →
 
-${dateString(end).split("-").reverse().join("/")}
+${dateString(end)
+.split("-")
+.reverse()
+.join("/")}
 
 </p>
 
 
-<div class="total-line">
+<div class="totalLine">
 <span>Main Till</span>
 <b>${money(t.mainTill)}</b>
 </div>
 
-<div class="total-line">
+
+<div class="totalLine">
 <span>PDQ Total</span>
 <b>${money(t.pdqTotal)}</b>
 </div>
 
-<div class="total-line">
+
+<div class="totalLine">
 <span>Petty Cash</span>
 <b>${money(t.pettyCash)}</b>
 </div>
 
-<div class="total-line">
+
+<div class="totalLine">
 <span>Total Cash Taken</span>
 <b>${money(t.cashTaken)}</b>
 </div>
 
-<div class="total-line">
+
+<div class="totalLine">
 <span>Cash / Balance</span>
 <b>${money(t.cash)}</b>
 </div>
 
-<div class="total-line">
+
+<div class="totalLine">
 <span>Uber</span>
 <b>${money(t.uber)}</b>
 </div>
 
-<div class="total-line">
+
+<div class="totalLine">
 <span>Uber 30%</span>
 <b>${money(t.uber*.30)}</b>
 </div>
 
-<div class="total-line">
+
+<div class="totalLine">
 <span>Uber 70% Remaining</span>
 <b>${money(t.uber*.70)}</b>
 </div>
 
-<div class="total-line">
+
+<div class="totalLine">
 <span>Deliveroo</span>
 <b>${money(t.deliveroo)}</b>
 </div>
 
-<div class="total-line">
+
+<div class="totalLine">
 <span>Deliveroo 35%</span>
 <b>${money(t.deliveroo*.35)}</b>
 </div>
 
-<div class="total-line">
+
+<div class="totalLine">
 <span>Deliveroo 65% Remaining</span>
 <b>${money(t.deliveroo*.65)}</b>
 </div>
 
-<div class="total-line">
+
+<div class="totalLine">
 <span>Delivery Cash</span>
 <b>${money(t.deliveryCash)}</b>
 </div>
 
-<div class="total-line">
+
+<div class="totalLine">
 <span>Delivery Card</span>
 <b>${money(t.deliveryCard)}</b>
 </div>
@@ -3158,19 +3139,6 @@ ${dateString(end).split("-").reverse().join("/")}
 `;
 
 }
-
-
-/* DEFAULT REPORT */
-
-setTimeout(() => {
-
-if($("weekMode")){
-
-setReportMode("weeks");
-
-}
-
-},500);
 
 </script>
 
