@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#111827">
 <title>Khan's Restaurant</title>
 
 <style>
@@ -86,12 +87,6 @@ grid-template-columns:repeat(2,1fr);
 gap:12px
 }
 
-.monthCashGrid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:12px
-}
-
 label{
 display:block;
 font-weight:bold;
@@ -106,14 +101,10 @@ border-radius:8px;
 font-size:16px
 }
 
-textarea{
-width:100%;
-padding:12px;
-border:1px solid #d1d5db;
-border-radius:8px;
-font-size:16px;
-font-family:Arial,Helvetica,sans-serif;
-resize:vertical
+input:disabled,
+select:disabled{
+background:#f3f4f6;
+color:#6b7280
 }
 
 .stat small{
@@ -170,12 +161,12 @@ padding:8px 12px;
 border-radius:7px
 }
 
-.deleteBtn{
-background:#dc2626;
+.danger{
+background:#b91c1c;
 color:white;
 border:0;
-padding:8px 12px;
-border-radius:7px
+padding:10px 14px;
+border-radius:8px
 }
 
 .message{
@@ -255,40 +246,55 @@ font-size:13px;
 color:#6b7280
 }
 
-.permissionBox{
-padding:12px;
-border-radius:8px;
-margin-bottom:15px;
-font-weight:bold
+.permissionBadge{
+display:inline-block;
+padding:6px 10px;
+border-radius:20px;
+font-size:13px;
+font-weight:bold;
+margin-top:8px
 }
 
-.editorBox{
+.editorBadge{
 background:#dcfce7;
 color:#166534
 }
 
-.viewerBox{
-background:#dbeafe;
-color:#1e40af
+.viewerBadge{
+background:#e5e7eb;
+color:#374151
 }
 
-.monthEndHeader{
+.lastEdited{
+background:#f9fafb;
+border-radius:8px;
+padding:10px;
+margin-top:12px;
+font-size:13px;
+color:#4b5563
+}
+
+.monthEnd{
+border-left:5px solid #111827
+}
+
+.carryBox{
+background:#ecfdf5;
+border:1px solid #86efac;
+padding:15px;
+border-radius:10px;
+margin-top:12px
+}
+
+.monthEndTotal{
 background:#111827;
-color:white;
-padding:14px;
-border-radius:9px;
-margin-bottom:15px
-}
-
-.remainingBox{
-background:#15803d;
 color:white;
 padding:16px;
 border-radius:10px;
 margin-top:15px
 }
 
-.openingBox{
+.infoBox{
 background:#eff6ff;
 border:1px solid #bfdbfe;
 padding:14px;
@@ -296,22 +302,10 @@ border-radius:10px;
 margin-bottom:15px
 }
 
-.lastEdited{
-font-size:13px;
-color:#6b7280;
-margin-top:12px
-}
-
-.readonly{
-background:#f3f4f6;
-color:#4b5563
-}
-
 @media(max-width:700px){
 .grid{grid-template-columns:repeat(2,1fr)}
 .pdq{grid-template-columns:repeat(2,1fr)}
 .cashgrid{grid-template-columns:1fr}
-.monthCashGrid{grid-template-columns:1fr}
 }
 
 @media(max-width:520px){
@@ -327,7 +321,9 @@ padding:7px
 
 <body>
 
-<!-- LOGIN -->
+<!-- =====================================================
+LOGIN
+===================================================== -->
 
 <div id="loginScreen" class="login">
 
@@ -337,19 +333,11 @@ padding:7px
 
 <p>Staff Login</p>
 
-<input
-id="email"
-type="email"
-placeholder="Personal Email"
->
+<input id="email" type="email" placeholder="Personal Email">
 
 <br><br>
 
-<input
-id="password"
-type="password"
-placeholder="Password"
->
+<input id="password" type="password" placeholder="Password">
 
 <br><br>
 
@@ -364,7 +352,9 @@ LOGIN
 </div>
 
 
-<!-- APP -->
+<!-- =====================================================
+APP
+===================================================== -->
 
 <div id="app" class="hidden">
 
@@ -376,6 +366,10 @@ LOGIN
 
 <small id="headerDate"></small>
 
+<div>
+<span id="permissionBadge" class="permissionBadge"></span>
+</div>
+
 </div>
 
 </header>
@@ -383,45 +377,34 @@ LOGIN
 
 <div class="container">
 
-<div id="permissionBox" class="permissionBox"></div>
-
 <nav>
 
-<button
-class="active"
-onclick="openPage('home',this)"
->
+<button class="active" onclick="openPage('home',this)">
 🏠 Home
 </button>
 
-<button
-onclick="openPage('entry',this)"
->
+<button onclick="openPage('entry',this)">
 📝 Daily Entry
 </button>
 
-<button
-onclick="openPage('history',this)"
->
+<button onclick="openPage('history',this)">
 📚 History
 </button>
 
-<button
-onclick="openPage('reports',this)"
->
-📊 Reports
+<button onclick="openPage('monthEnd',this)">
+💷 Month End
 </button>
 
-<button
-onclick="openPage('monthEnd',this)"
->
-💰 Month End
+<button onclick="openPage('reports',this)">
+📊 Reports
 </button>
 
 </nav>
 
 
-<!-- HOME -->
+<!-- =====================================================
+HOME
+===================================================== -->
 
 <section id="home" class="page active">
 
@@ -445,7 +428,7 @@ onclick="openPage('monthEnd',this)"
 </div>
 
 <div class="stat">
-<small>Drawer Cash / Balance</small>
+<small>Cash / Balance</small>
 <b id="homeCash">£0.00</b>
 </div>
 
@@ -518,36 +501,25 @@ onclick="openPage('monthEnd',this)"
 
 <div class="card">
 
-<h3>💰 Current Month-End Cash Position</h3>
+<h3>💷 Current Carry Forward</h3>
 
 <div class="totalLine">
-<span>Drawer Cash Accumulated</span>
-<b id="homeMonthDrawer">£0.00</b>
+<span>Previous Month Remaining Cash</span>
+<b id="homeCarryForward">£0.00</b>
 </div>
 
-<div class="totalLine">
-<span>Opening Cash Carried Forward</span>
-<b id="homeOpeningCash">£0.00</b>
-</div>
-
-<div class="totalLine">
-<span>Cash Accounted For</span>
-<b id="homeMonthAccounted">£0.00</b>
-</div>
-
-<div class="remainingBox">
-<div class="totalLine">
-<span>Remaining Cash</span>
-<b id="homeMonthRemaining">£0.00</b>
-</div>
-</div>
+<p class="small">
+This is the remaining cash carried forward from the previous month.
+</p>
 
 </div>
 
 </section>
 
 
-<!-- DAILY ENTRY -->
+<!-- =====================================================
+DAILY ENTRY
+===================================================== -->
 
 <section id="entry" class="page">
 
@@ -561,11 +533,7 @@ onclick="openPage('monthEnd',this)"
 
 <label>Date</label>
 
-<input
-id="entryDate"
-type="date"
-onchange="loadExistingEntry()"
->
+<input id="entryDate" type="date" onchange="loadExistingEntry()">
 
 </div>
 
@@ -573,12 +541,17 @@ onchange="loadExistingEntry()"
 
 <label>Day</label>
 
-<input
-id="entryDay"
-readonly
->
+<input id="entryDay" readonly>
 
 </div>
+
+</div>
+
+<div id="viewerNotice"
+class="small hidden"
+style="margin-top:10px">
+
+👀 View-only access. You can view the entry but cannot edit or save it.
 
 </div>
 
@@ -673,7 +646,6 @@ oninput="calculateAll()"
 
 <p class="small">
 If nobody takes cash, leave both entries as 0.
-That date will not appear in the Cash Taken Daily Details.
 </p>
 
 <div class="cashgrid">
@@ -738,9 +710,7 @@ placeholder="Name"
 
 <span>TOTAL CASH TAKEN</span>
 
-<b id="totalCashTaken">
-£0.00
-</b>
+<b id="totalCashTaken">£0.00</b>
 
 </div>
 
@@ -753,7 +723,7 @@ placeholder="Name"
 
 <div class="card">
 
-<h3>💰 Drawer Cash / Balance</h3>
+<h3>💰 Cash / Balance — Drawer Cash</h3>
 
 <div class="total">
 
@@ -769,7 +739,7 @@ placeholder="Name"
 
 <p>
 <b>
-Drawer Cash = Main Till − PDQ Total − Petty Cash − Total Cash Taken
+Cash = Main Till − PDQ Total − Petty Cash − Total Cash Taken
 </b>
 </p>
 
@@ -783,34 +753,43 @@ Drawer Cash = Main Till − PDQ Total − Petty Cash − Total Cash Taken
 <h3>🛵 Delivery</h3>
 
 <div class="row">
+
 <label>Uber</label>
+
 <input id="uber" type="number" step="0.01" placeholder="0.00">
+
 </div>
 
 <div class="row">
+
 <label>Deliveroo</label>
+
 <input id="deliveroo" type="number" step="0.01" placeholder="0.00">
+
 </div>
 
 <div class="row">
+
 <label>Delivery Cash</label>
+
 <input id="deliveryCash" type="number" step="0.01" placeholder="0.00">
+
 </div>
 
 <div class="row">
+
 <label>Delivery Card</label>
+
 <input id="deliveryCard" type="number" step="0.01" placeholder="0.00">
-</div>
 
 </div>
 
+</div>
 
-<div id="dailySaveCard" class="card">
 
-<button
-class="save"
-onclick="saveDailyEntry()"
->
+<div id="saveCard" class="card">
+
+<button class="save" onclick="saveDailyEntry()">
 💾 SAVE / UPDATE ENTRY
 </button>
 
@@ -821,7 +800,9 @@ onclick="saveDailyEntry()"
 </section>
 
 
-<!-- HISTORY -->
+<!-- =====================================================
+HISTORY
+===================================================== -->
 
 <section id="history" class="page">
 
@@ -831,18 +812,11 @@ onclick="saveDailyEntry()"
 
 <label>Search Date</label>
 
-<input
-id="historyDate"
-type="date"
-onchange="displayHistory()"
->
+<input id="historyDate" type="date" onchange="displayHistory()">
 
 <br><br>
 
-<button
-class="primary"
-onclick="showAllHistory()"
->
+<button class="primary" onclick="showAllHistory()">
 SHOW ALL
 </button>
 
@@ -853,7 +827,261 @@ SHOW ALL
 </section>
 
 
-<!-- REPORTS -->
+<!-- =====================================================
+MONTH END
+===================================================== -->
+
+<section id="monthEnd" class="page">
+
+<h2>💷 Month End Cash Management</h2>
+
+<div class="infoBox">
+
+<b>How this works</b>
+
+<p>
+At the end of the month, the drawer cash is settled here.
+After staff wages, director wages, bank deposit and extra payments
+are deducted, the remaining cash automatically becomes the
+<strong>next month's opening/carry-forward cash</strong>.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<div class="formgrid">
+
+<div>
+
+<label>Month</label>
+
+<select id="monthEndMonth" onchange="loadMonthEnd()">
+
+<option value="0">January</option>
+<option value="1">February</option>
+<option value="2">March</option>
+<option value="3">April</option>
+<option value="4">May</option>
+<option value="5">June</option>
+<option value="6">July</option>
+<option value="7">August</option>
+<option value="8">September</option>
+<option value="9">October</option>
+<option value="10">November</option>
+<option value="11">December</option>
+
+</select>
+
+</div>
+
+<div>
+
+<label>Year</label>
+
+<select id="monthEndYear" onchange="loadMonthEnd()"></select>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card monthEnd">
+
+<h3>📦 Month End Drawer Cash</h3>
+
+<div class="totalLine">
+
+<span>Last Recorded Drawer Cash</span>
+
+<b id="monthEndDrawerCash">£0.00</b>
+
+</div>
+
+<p class="small" id="monthEndLastDate">
+No daily entry found.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>💷 Month End Payments</h3>
+
+<p class="small">
+Enter the cash taken out of the drawer at month end.
+</p>
+
+<div>
+
+<label>Cash Paid for Staff Wages</label>
+
+<input
+id="staffWages"
+type="number"
+step="0.01"
+placeholder="0.00"
+oninput="calculateMonthEnd()"
+>
+
+</div>
+
+<br>
+
+<div>
+
+<label>Cash Paid for Director Wages</label>
+
+<input
+id="directorWages"
+type="number"
+step="0.01"
+placeholder="0.00"
+oninput="calculateMonthEnd()"
+>
+
+</div>
+
+<br>
+
+<div>
+
+<label>Bank Cash Deposit</label>
+
+<input
+id="bankDeposit"
+type="number"
+step="0.01"
+placeholder="0.00"
+oninput="calculateMonthEnd()"
+>
+
+</div>
+
+<br>
+
+<div>
+
+<label>Extra / Other Cash Payment</label>
+
+<input
+id="extraPayment"
+type="number"
+step="0.01"
+placeholder="0.00"
+oninput="calculateMonthEnd()"
+>
+
+</div>
+
+</div>
+
+
+<div class="monthEndTotal">
+
+<div class="totalLine">
+
+<span>MONTH END DRAWER CASH</span>
+
+<b id="monthEndCashDisplay">£0.00</b>
+
+</div>
+
+<div class="totalLine">
+
+<span>Staff Wages</span>
+
+<b id="monthEndStaff">£0.00</b>
+
+</div>
+
+<div class="totalLine">
+
+<span>Director Wages</span>
+
+<b id="monthEndDirector">£0.00</b>
+
+</div>
+
+<div class="totalLine">
+
+<span>Bank Deposit</span>
+
+<b id="monthEndBank">£0.00</b>
+
+</div>
+
+<div class="totalLine">
+
+<span>Extra / Other</span>
+
+<b id="monthEndExtra">£0.00</b>
+
+</div>
+
+<br>
+
+<div class="totalLine">
+
+<span><strong>REMAINING CASH</strong></span>
+
+<b id="monthEndRemaining">£0.00</b>
+
+</div>
+
+</div>
+
+
+<div class="carryBox">
+
+<h3>➡️ Next Month Opening Cash</h3>
+
+<div class="totalLine">
+
+<span>Automatically Carried Forward</span>
+
+<b id="nextMonthCarry">£0.00</b>
+
+</div>
+
+<p class="small">
+This amount becomes the opening/carry-forward cash for the following month.
+</p>
+
+</div>
+
+
+<div id="monthEndSaveCard" class="card">
+
+<button class="save" onclick="saveMonthEnd()">
+💾 SAVE MONTH END
+</button>
+
+<div id="monthEndMessage" class="message"></div>
+
+</div>
+
+
+<div class="card">
+
+<h3>📝 Last Month End Edit</h3>
+
+<div id="monthEndLastEdited">
+No month-end record saved.
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+REPORTS
+===================================================== -->
 
 <section id="reports" class="page">
 
@@ -956,7 +1184,7 @@ ALL HISTORY
 </div>
 
 <div class="stat">
-<small>Total Drawer Cash</small>
+<small>Total Cash / Balance</small>
 <b id="reportCash">£0.00</b>
 </div>
 
@@ -1034,7 +1262,9 @@ ALL HISTORY
 
 <div class="card">
 
-<h3 id="weeklyTitle">📅 Weekly Report</h3>
+<h3 id="weeklyTitle">
+📅 Weekly Report
+</h3>
 
 <div id="weeklyReport"></div>
 
@@ -1067,314 +1297,20 @@ ALL HISTORY
 
 </div>
 
-</section>
 
-
-<!-- MONTH END -->
-
-<section id="monthEnd" class="page">
-
-<h2>💰 Month-End Drawer Cash</h2>
+<!-- MONTH END REPORT -->
 
 <div class="card">
 
-<div class="monthEndHeader">
+<h3>💷 Month End Cash Summary</h3>
 
-<h3 id="monthEndTitle">
-Month-End Cash
-</h3>
-
-<p class="small" style="color:#d1d5db">
-This section tracks where the accumulated drawer cash goes at month end.
-</p>
-
-</div>
-
-
-<div class="formgrid">
-
-<div>
-
-<label>Month</label>
-
-<select
-id="monthEndMonth"
-onchange="loadMonthEnd()"
->
-
-<option value="0">January</option>
-<option value="1">February</option>
-<option value="2">March</option>
-<option value="3">April</option>
-<option value="4">May</option>
-<option value="5">June</option>
-<option value="6">July</option>
-<option value="7">August</option>
-<option value="8">September</option>
-<option value="9">October</option>
-<option value="10">November</option>
-<option value="11">December</option>
-
-</select>
-
-</div>
-
-
-<div>
-
-<label>Year</label>
-
-<select
-id="monthEndYear"
-onchange="loadMonthEnd()"
-></select>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="openingBox">
-
-<h3>🔄 Opening Cash Carried Forward</h3>
-
-<div class="totalLine">
-
-<span>
-Previous Month Remaining Cash
-</span>
-
-<b id="monthOpeningCash">
-£0.00
-</b>
-
-</div>
-
-<p class="small">
-This amount is automatically taken from the previous month's Remaining Cash.
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h3>💷 Drawer Cash Available</h3>
-
-<div class="totalLine">
-
-<span>
-Daily Drawer Cash Accumulated
-</span>
-
-<b id="monthDrawerCash">
-£0.00
-</b>
-
-</div>
-
-<div class="totalLine">
-
-<span>
-Opening Cash Carried Forward
-</span>
-
-<b id="monthOpeningDisplay">
-£0.00
-</b>
-
-</div>
-
-<div class="total">
-
-<div class="totalLine">
-
-<span>
-TOTAL CASH AVAILABLE
-</span>
-
-<b id="monthTotalAvailable">
-£0.00
-</b>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="card">
-
-<h3>💸 Where Did The Cash Go?</h3>
-
-<p class="small">
-Enter the cash removed or paid from the drawer at month end.
-</p>
-
-
-<div class="monthCashGrid">
-
-<div>
-
-<label>👨‍🍳 Cash Paid — Staff Wages</label>
-
-<input
-id="staffWages"
-type="number"
-step="0.01"
-placeholder="0.00"
-oninput="calculateMonthEnd()"
->
-
-</div>
-
-
-<div>
-
-<label>👔 Cash Paid — Director Wages</label>
-
-<input
-id="directorWages"
-type="number"
-step="0.01"
-placeholder="0.00"
-oninput="calculateMonthEnd()"
->
-
-</div>
-
-
-<div>
-
-<label>🏦 Bank Cash Deposit</label>
-
-<input
-id="bankDeposit"
-type="number"
-step="0.01"
-placeholder="0.00"
-oninput="calculateMonthEnd()"
->
-
-</div>
-
-
-<div>
-
-<label>➕ Extra / Other</label>
-
-<input
-id="extraCash"
-type="number"
-step="0.01"
-placeholder="0.00"
-oninput="calculateMonthEnd()"
->
-
-</div>
-
-</div>
-
-
-<br>
-
-<label>📝 Extra / Other Description</label>
-
-<textarea
-id="extraDescription"
-rows="3"
-placeholder="Example: Supplier payment, emergency expense, etc."
-></textarea>
-
-
-<div class="total">
-
-<div class="totalLine">
-
-<span>
-TOTAL CASH ACCOUNTED FOR
-</span>
-
-<b id="monthTotalPaid">
-£0.00
-</b>
-
-</div>
-
-</div>
-
-
-<div class="remainingBox">
-
-<div class="totalLine">
-
-<span>
-💰 REMAINING CASH
-</span>
-
-<b id="monthRemaining">
-£0.00
-</b>
-
-</div>
-
-</div>
-
-
-<div class="card" style="margin-top:15px;background:#eff6ff">
-
-<h3>🔄 Next Month Opening Cash</h3>
-
-<p class="small">
-The Remaining Cash above will automatically become the opening cash for the following month.
-</p>
-
-<div class="totalLine">
-
-<span>
-Next Month Opening Cash
-</span>
-
-<b id="nextMonthOpening">
-£0.00
-</b>
-
-</div>
-
-</div>
-
-
-<div id="monthEndSaveCard">
-
-<button
-class="save"
-onclick="saveMonthEnd()"
->
-💾 SAVE MONTH-END CASH
-</button>
-
-<div id="monthEndMessage" class="message"></div>
-
-</div>
-
-</div>
-
-
-<div class="card">
-
-<h3>📋 Month-End Summary</h3>
-
-<div id="monthEndSummary"></div>
+<div id="reportMonthEnd"></div>
 
 </div>
 
 </section>
 
 </div>
-
 </div>
 
 
@@ -1399,15 +1335,14 @@ getFirestore,
 collection,
 doc,
 setDoc,
-getDocs,
-getDoc
+onSnapshot
 }
 from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 /* =====================================================
-   FIREBASE
+FIREBASE
 ===================================================== */
 
 const firebaseConfig={
@@ -1446,31 +1381,37 @@ const db=
 getFirestore(firebaseApp);
 
 
+let currentUser=null;
+let allRecords=[];
+let allMonthEnds=[];
+let reportMode="weeks";
+let unsubscribeRecords=null;
+let unsubscribeMonthEnds=null;
+
+
 /* =====================================================
-   PERMISSIONS
+EDITORS
 ===================================================== */
 
 const EDITORS=[
 "kj.hegde@hotmail.co.uk",
-"Vasimalisiddiee@yahoo.co.uk"
+"vasimalisiddiee@yahoo.uk"
 ];
+
+
+/* =====================================================
+VIEWERS
+===================================================== */
 
 const VIEWERS=[
-"Farukyakub123@hotmail.com"
+"farukyakub123@hotmail.com"
 ];
 
-let currentUser=null;
 
-let allRecords=[];
+function isEditor(){
 
-let monthEndRecords=[];
-
-let reportMode="weeks";
-
-
-function canEdit(){
-
-if(!currentUser)return false;
+if(!currentUser||!currentUser.email)
+return false;
 
 return EDITORS.includes(
 currentUser.email.toLowerCase()
@@ -1479,23 +1420,20 @@ currentUser.email.toLowerCase()
 }
 
 
-function isKnownUser(){
+function isViewer(){
 
-if(!currentUser)return false;
+if(!currentUser||!currentUser.email)
+return false;
 
-const email=
-currentUser.email.toLowerCase();
-
-return(
-EDITORS.includes(email)||
-VIEWERS.includes(email)
+return VIEWERS.includes(
+currentUser.email.toLowerCase()
 );
 
 }
 
 
 /* =====================================================
-   HELPERS
+HELPERS
 ===================================================== */
 
 const $=id=>
@@ -1536,25 +1474,140 @@ return year+"-"+pad(month+1);
 }
 
 
-function monthName(year,month){
+/* =====================================================
+PERMISSIONS
+===================================================== */
 
-return new Date(
-year,
-month,
-1
-).toLocaleDateString(
-"en-GB",
-{
-month:"long",
-year:"numeric"
+function setupPermissions(){
+
+const badge=$("permissionBadge");
+const notice=$("viewerNotice");
+const saveCard=$("saveCard");
+const monthEndSave=$("monthEndSaveCard");
+
+if(isEditor()){
+
+badge.innerText="✏️ EDIT ACCESS";
+badge.className="permissionBadge editorBadge";
+
+notice.classList.add("hidden");
+
+saveCard.classList.remove("hidden");
+monthEndSave.classList.remove("hidden");
+
+enableEntryFields();
+enableMonthEndFields();
+
+}else{
+
+badge.innerText="👀 VIEW ONLY";
+badge.className="permissionBadge viewerBadge";
+
+notice.classList.remove("hidden");
+
+saveCard.classList.add("hidden");
+monthEndSave.classList.add("hidden");
+
+disableEntryFields();
+disableMonthEndFields();
+
 }
-);
 
 }
 
 
 /* =====================================================
-   LOGIN
+ENTRY FIELDS
+===================================================== */
+
+function entryFieldIds(){
+
+return [
+"mainTill",
+"pdq1",
+"pdq2",
+"pdq3",
+"pdq4",
+"pettyCash",
+"cashTaken1",
+"takenBy1",
+"cashTaken2",
+"takenBy2",
+"uber",
+"deliveroo",
+"deliveryCash",
+"deliveryCard"
+];
+
+}
+
+
+function disableEntryFields(){
+
+entryFieldIds().forEach(id=>{
+
+if($(id))
+$(id).disabled=true;
+
+});
+
+}
+
+
+function enableEntryFields(){
+
+entryFieldIds().forEach(id=>{
+
+if($(id))
+$(id).disabled=false;
+
+});
+
+}
+
+
+/* =====================================================
+MONTH END FIELDS
+===================================================== */
+
+function monthEndFieldIds(){
+
+return [
+"staffWages",
+"directorWages",
+"bankDeposit",
+"extraPayment"
+];
+
+}
+
+
+function disableMonthEndFields(){
+
+monthEndFieldIds().forEach(id=>{
+
+if($(id))
+$(id).disabled=true;
+
+});
+
+}
+
+
+function enableMonthEndFields(){
+
+monthEndFieldIds().forEach(id=>{
+
+if($(id))
+$(id).disabled=false;
+
+});
+
+}
+
+
+/* =====================================================
+LOGIN
 ===================================================== */
 
 window.login=async function(){
@@ -1593,7 +1646,7 @@ $("loginMsg").innerText=
 
 
 /* =====================================================
-   AUTH
+AUTH
 ===================================================== */
 
 onAuthStateChanged(
@@ -1604,28 +1657,8 @@ if(user){
 
 currentUser=user;
 
-const email=
-user.email.toLowerCase();
-
-
-if(!isKnownUser()){
-
-$("loginMsg").innerText=
-"This email is not authorised for this restaurant.";
-
-await auth.signOut();
-
-return;
-
-}
-
-
-$("loginScreen")
-.classList.add("hidden");
-
-$("app")
-.classList.remove("hidden");
-
+$("loginScreen").classList.add("hidden");
+$("app").classList.remove("hidden");
 
 $("headerDate").innerText=
 new Date().toLocaleDateString(
@@ -1638,56 +1671,43 @@ year:"numeric"
 }
 );
 
-
-/* PERMISSION DISPLAY */
-
-if(canEdit()){
-
-$("permissionBox").className=
-"permissionBox editorBox";
-
-$("permissionBox").innerText=
-"✏️ Editor Access — You can add and update restaurant records.";
-
-}else{
-
-$("permissionBox").className=
-"permissionBox viewerBox";
-
-$("permissionBox").innerText=
-"👁️ View Only — You can view records and reports, but cannot edit.";
-
-}
-
-
-/* DATE */
-
 $("entryDate").value=
 dateString(new Date());
 
-setDay();
-
 setupReportYears();
-
 setupMonthEndYears();
 
-await loadRecords();
+$("reportMonth").value=
+new Date().getMonth();
 
-await loadMonthEndRecords();
+$("monthEndMonth").value=
+new Date().getMonth();
+
+setDay();
+
+setupPermissions();
+
+loadRecords();
+loadMonthEnds();
 
 loadExistingEntry();
-
-loadMonthEnd();
 
 }else{
 
 currentUser=null;
 
-$("loginScreen")
-.classList.remove("hidden");
+$("loginScreen").classList.remove("hidden");
+$("app").classList.add("hidden");
 
-$("app")
-.classList.add("hidden");
+if(unsubscribeRecords){
+unsubscribeRecords();
+unsubscribeRecords=null;
+}
+
+if(unsubscribeMonthEnds){
+unsubscribeMonthEnds();
+unsubscribeMonthEnds=null;
+}
 
 }
 
@@ -1695,13 +1715,10 @@ $("app")
 
 
 /* =====================================================
-   NAVIGATION
+NAVIGATION
 ===================================================== */
 
-window.openPage=function(
-page,
-button
-){
+window.openPage=function(page,button){
 
 document
 .querySelectorAll(".page")
@@ -1726,29 +1743,27 @@ updateHome();
 if(page==="history")
 displayHistory();
 
-if(page==="reports")
-generateReport();
-
 if(page==="monthEnd")
 loadMonthEnd();
+
+if(page==="reports")
+generateReport();
 
 };
 
 
 /* =====================================================
-   DAY
+DAY
 ===================================================== */
 
 function setDay(){
 
-const value=
-$("entryDate").value;
+const value=$("entryDate").value;
 
 if(!value)return;
 
 $("entryDay").value=
-parseDate(value)
-.toLocaleDateString(
+parseDate(value).toLocaleDateString(
 "en-GB",
 {
 weekday:"long"
@@ -1759,7 +1774,7 @@ weekday:"long"
 
 
 /* =====================================================
-   PDQ
+PDQ
 ===================================================== */
 
 function calculatePDQ(){
@@ -1779,7 +1794,7 @@ return total;
 
 
 /* =====================================================
-   CASH TAKEN
+CASH TAKEN
 ===================================================== */
 
 function calculateCashTaken(){
@@ -1797,16 +1812,13 @@ return total;
 
 
 /* =====================================================
-   CASH
+CASH
 ===================================================== */
 
 window.calculateAll=function(){
 
-const pdq=
-calculatePDQ();
-
-const taken=
-calculateCashTaken();
+const pdq=calculatePDQ();
+const taken=calculateCashTaken();
 
 const cash=
 num("mainTill")-
@@ -1821,82 +1833,115 @@ money(cash);
 
 
 /* =====================================================
-   LOAD DAILY RECORDS
+LOAD DAILY RECORDS
 ===================================================== */
 
-async function loadRecords(){
+function loadRecords(){
 
-try{
+if(unsubscribeRecords)
+unsubscribeRecords();
 
-const snapshot=
-await getDocs(
-collection(
-db,
-"dailyRecords"
-)
-);
+unsubscribeRecords=
+onSnapshot(
+collection(db,"dailyRecords"),
+snapshot=>{
 
 allRecords=[];
 
 snapshot.forEach(item=>{
 
 allRecords.push({
-
 id:item.id,
-
 ...item.data()
-
 });
 
 });
 
 allRecords.sort(
 (a,b)=>
-(b.date||"")
-.localeCompare(a.date||"")
+(b.date||"").localeCompare(a.date||"")
 );
 
 updateHome();
-
 displayHistory();
-
 generateReport();
+loadExistingEntry();
+loadMonthEnd();
 
-}catch(error){
+},
+error=>{
 
 console.error(error);
 
-}
+});
 
 }
 
 
 /* =====================================================
-   LOAD EXISTING ENTRY
+LOAD MONTH ENDS
+===================================================== */
+
+function loadMonthEnds(){
+
+if(unsubscribeMonthEnds)
+unsubscribeMonthEnds();
+
+unsubscribeMonthEnds=
+onSnapshot(
+collection(db,"monthEnds"),
+snapshot=>{
+
+allMonthEnds=[];
+
+snapshot.forEach(item=>{
+
+allMonthEnds.push({
+id:item.id,
+...item.data()
+});
+
+});
+
+allMonthEnds.sort(
+(a,b)=>
+(b.monthKey||"").localeCompare(a.monthKey||"")
+);
+
+updateHome();
+loadMonthEnd();
+generateReport();
+
+},
+error=>{
+
+console.error(error);
+
+});
+
+}
+
+
+/* =====================================================
+DAILY EXISTING
 ===================================================== */
 
 window.loadExistingEntry=function(){
 
 setDay();
 
-const date=
-$("entryDate").value;
+const date=$("entryDate").value;
 
 const record=
-allRecords.find(
-r=>r.date===date
-);
+allRecords.find(r=>r.date===date);
 
 if(!record){
 
 clearForm();
-
 calculateAll();
-
 return;
 
 }
-
 
 $("mainTill").value=
 record.mainTill??"";
@@ -1916,23 +1961,23 @@ record.pdq4??"";
 $("pettyCash").value=
 record.pettyCash??"";
 
-
 $("cashTaken1").value=
-record.cashTaken1 ??
-record.cashTaken ??
+record.cashTaken1??
+record.cashTaken??
 "";
 
 $("takenBy1").value=
-record.takenBy1 ??
-record.takenBy ??
+record.takenBy1??
+record.takenBy??
 "";
 
 $("cashTaken2").value=
-record.cashTaken2??"";
+record.cashTaken2??
+"";
 
 $("takenBy2").value=
-record.takenBy2??"";
-
+record.takenBy2??
+"";
 
 $("uber").value=
 record.uber??"";
@@ -1952,7 +1997,7 @@ calculateAll();
 
 
 /* =====================================================
-   CLEAR
+CLEAR
 ===================================================== */
 
 function clearForm(){
@@ -1970,6 +2015,7 @@ function clearForm(){
 "takenBy2",
 "uber",
 "deliveroo",
+"deliveryCash",
 "deliveryCard"
 ].forEach(
 id=>$(id).value=""
@@ -1979,56 +2025,39 @@ id=>$(id).value=""
 
 
 /* =====================================================
-   SAVE DAILY
+SAVE DAILY
 ===================================================== */
 
-window.saveDailyEntry=
-async function(){
+window.saveDailyEntry=async function(){
 
 if(!currentUser){
-
 $("saveMessage").innerText=
 "Please login first.";
-
 return;
-
 }
 
-if(!canEdit()){
-
+if(!isEditor()){
 $("saveMessage").innerText=
-"👁️ View-only staff cannot edit records.";
-
+"❌ You have view-only access.";
 return;
-
 }
 
-
-const date=
-$("entryDate").value;
+const date=$("entryDate").value;
 
 if(!date){
-
 $("saveMessage").innerText=
 "Please select a date.";
-
 return;
-
 }
 
-
-const pdqTotal=
-calculatePDQ();
-
-const totalCashTaken=
-calculateCashTaken();
+const pdqTotal=calculatePDQ();
+const totalCashTaken=calculateCashTaken();
 
 const cash=
 num("mainTill")-
 pdqTotal-
 num("pettyCash")-
 totalCashTaken;
-
 
 const data={
 
@@ -2048,57 +2077,36 @@ pdqTotal:pdqTotal,
 pettyCash:num("pettyCash"),
 
 cashTaken1:num("cashTaken1"),
-
-takenBy1:
-$("takenBy1").value.trim(),
+takenBy1:$("takenBy1").value.trim(),
 
 cashTaken2:num("cashTaken2"),
+takenBy2:$("takenBy2").value.trim(),
 
-takenBy2:
-$("takenBy2").value.trim(),
-
-cashTaken:
-totalCashTaken,
+cashTaken:totalCashTaken,
 
 cash:cash,
 
 uber:num("uber"),
-
 deliveroo:num("deliveroo"),
-
 deliveryCash:num("deliveryCash"),
-
 deliveryCard:num("deliveryCard"),
 
-updatedBy:
-currentUser.email,
+updatedBy:currentUser.email,
 
-updatedAt:
-new Date().toISOString()
+updatedAt:new Date().toISOString()
 
 };
-
 
 try{
 
 await setDoc(
-
-doc(
-db,
-"dailyRecords",
-date
-),
-
+doc(db,"dailyRecords",date),
 data,
-
 {merge:true}
-
 );
 
 $("saveMessage").innerText=
 "✅ Successfully saved to Firebase.";
-
-await loadRecords();
 
 }catch(error){
 
@@ -2113,19 +2121,15 @@ $("saveMessage").innerText=
 
 
 /* =====================================================
-   HOME
+HOME
 ===================================================== */
 
 function updateHome(){
 
-const today=
-dateString(new Date());
+const today=dateString(new Date());
 
 const record=
-allRecords.find(
-r=>r.date===today
-);
-
+allRecords.find(r=>r.date===today);
 
 if(!record){
 
@@ -2178,9 +2182,7 @@ money(record.deliveryCash);
 $("homeDeliveryCard").innerText=
 money(record.deliveryCard);
 
-
-const uber=
-Number(record.uber||0);
+const uber=Number(record.uber||0);
 
 $("homeUberSales").innerText=
 money(uber);
@@ -2190,7 +2192,6 @@ money(uber*.30);
 
 $("homeUber70").innerText=
 money(uber*.70);
-
 
 const deliveroo=
 Number(record.deliveroo||0);
@@ -2206,14 +2207,25 @@ money(deliveroo*.65);
 
 }
 
+const now=new Date();
 
-updateHomeMonthEnd();
+const currentMonth=now.getMonth();
+const currentYear=now.getFullYear();
+
+const previous=
+getPreviousMonthEnd(
+currentYear,
+currentMonth
+);
+
+$("homeCarryForward").innerText=
+money(previous?.remainingCash||0);
 
 }
 
 
 /* =====================================================
-   CASH TAKEN
+CASH TAKEN
 ===================================================== */
 
 function getTotalCashTaken(record){
@@ -2230,9 +2242,7 @@ Number(record.cashTaken2||0)
 
 }
 
-return Number(
-record.cashTaken||0
-);
+return Number(record.cashTaken||0);
 
 }
 
@@ -2256,7 +2266,6 @@ name:name1||"Unknown"
 
 }
 
-
 const amount2=
 Number(record.cashTaken2||0);
 
@@ -2272,22 +2281,14 @@ name:name2||"Unknown"
 
 }
 
-
 if(
 entries.length===0 &&
 Number(record.cashTaken||0)>0
 ){
 
 entries.push({
-
-amount:
-Number(record.cashTaken||0),
-
-name:
-(record.takenBy||"").trim()
-||
-"Unknown"
-
+amount:Number(record.cashTaken||0),
+name:(record.takenBy||"").trim()||"Unknown"
 });
 
 }
@@ -2298,17 +2299,50 @@ return entries;
 
 
 /* =====================================================
-   HISTORY
+UPDATED TIME
 ===================================================== */
 
-window.displayHistory=
-function(){
+function formatUpdatedAt(value){
 
-const search=
-$("historyDate").value;
+if(!value)
+return "Not available";
 
-let records=
-allRecords;
+try{
+
+const date=new Date(value);
+
+if(isNaN(date.getTime()))
+return value;
+
+return date.toLocaleString(
+"en-GB",
+{
+day:"2-digit",
+month:"2-digit",
+year:"numeric",
+hour:"2-digit",
+minute:"2-digit"
+}
+);
+
+}catch(error){
+
+return value;
+
+}
+
+}
+
+
+/* =====================================================
+HISTORY
+===================================================== */
+
+window.displayHistory=function(){
+
+const search=$("historyDate").value;
+
+let records=allRecords;
 
 if(search){
 
@@ -2319,11 +2353,9 @@ r=>r.date===search
 
 }
 
-
 if(!records.length){
 
-$("historyList").innerHTML=
-`
+$("historyList").innerHTML=`
 <div class="card">
 No saved entries found.
 </div>
@@ -2333,25 +2365,11 @@ return;
 
 }
 
-
 $("historyList").innerHTML=
 records.map(r=>{
 
 const cashEntries=
 getCashTakenEntries(r);
-
-const updatedBy=
-r.updatedBy||
-"Unknown";
-
-const updatedAt=
-r.updatedAt
-?
-new Date(r.updatedAt)
-.toLocaleString("en-GB")
-:
-"";
-
 
 return `
 
@@ -2404,22 +2422,15 @@ cashEntries.length
 ?
 `
 <div class="totalLine">
-
-<span>
-<b>Total Cash Taken</b>
-</span>
-
-<b>
-${money(getTotalCashTaken(r))}
-</b>
-
+<span><b>Total Cash Taken</b></span>
+<b>${money(getTotalCashTaken(r))}</b>
 </div>
 `
 :""
 }
 
 <div class="totalLine">
-<span>Drawer Cash / Balance</span>
+<span>Cash / Balance — Drawer Cash</span>
 <b>${money(r.cash)}</b>
 </div>
 
@@ -2444,30 +2455,29 @@ ${money(getTotalCashTaken(r))}
 </div>
 
 <div class="lastEdited">
-👤 Last Edited By: <b>${updatedBy}</b>
-<br>
-🕐 Last Edited: ${updatedAt}
+
+<b>📝 Last edited by:</b><br>
+${r.updatedBy||"Not available"}
+
+<br><br>
+
+<b>🕐 Last updated:</b><br>
+${formatUpdatedAt(r.updatedAt)}
+
 </div>
 
 <br>
 
 ${
-canEdit()
+isEditor()
 ?
 `
-<button
-class="edit"
-onclick="editEntry('${r.date}')"
->
+<button class="edit"
+onclick="editEntry('${r.date}')">
 ✏️ EDIT
 </button>
 `
-:
-`
-<span class="small">
-👁️ View only
-</span>
-`
+:""
 }
 
 </div>
@@ -2479,8 +2489,7 @@ onclick="editEntry('${r.date}')"
 };
 
 
-window.showAllHistory=
-function(){
+window.showAllHistory=function(){
 
 $("historyDate").value="";
 
@@ -2489,28 +2498,18 @@ displayHistory();
 };
 
 
-window.editEntry=
-function(date){
+window.editEntry=function(date){
 
-if(!canEdit()){
-
-alert(
-"View-only staff cannot edit records."
-);
-
+if(!isEditor())
 return;
 
-}
-
-$("entryDate").value=
-date;
+$("entryDate").value=date;
 
 loadExistingEntry();
 
 openPage(
 "entry",
-document
-.querySelectorAll("nav button")[1]
+document.querySelectorAll("nav button")[1]
 );
 
 window.scrollTo({
@@ -2522,19 +2521,17 @@ behavior:"smooth"
 
 
 /* =====================================================
-   REPORT YEARS
+REPORT YEARS
 ===================================================== */
 
 function setupReportYears(){
 
-const select=
-$("reportYear");
+const select=$("reportYear");
 
 select.innerHTML="";
 
 const current=
 new Date().getFullYear();
-
 
 for(
 let y=current-5;
@@ -2546,7 +2543,6 @@ const option=
 document.createElement("option");
 
 option.value=y;
-
 option.textContent=y;
 
 select.appendChild(option);
@@ -2555,25 +2551,374 @@ select.appendChild(option);
 
 select.value=current;
 
-$("reportMonth").value=
-new Date().getMonth();
+}
+
+
+/* =====================================================
+MONTH END YEARS
+===================================================== */
+
+function setupMonthEndYears(){
+
+const select=$("monthEndYear");
+
+select.innerHTML="";
+
+const current=
+new Date().getFullYear();
+
+for(
+let y=current-5;
+y<=current+2;
+y++
+){
+
+const option=
+document.createElement("option");
+
+option.value=y;
+option.textContent=y;
+
+select.appendChild(option);
+
+}
+
+select.value=current;
 
 }
 
 
 /* =====================================================
-   REPORT MODE
+PREVIOUS MONTH
 ===================================================== */
 
-window.setReportMode=
-function(mode){
+function getPreviousMonthEnd(year,month){
+
+let previousYear=year;
+let previousMonth=month-1;
+
+if(previousMonth<0){
+
+previousMonth=11;
+previousYear--;
+
+}
+
+return allMonthEnds.find(
+m=>
+Number(m.year)===previousYear &&
+Number(m.month)===previousMonth
+);
+
+}
+
+
+/* =====================================================
+MONTH END LOAD
+===================================================== */
+
+window.loadMonthEnd=function(){
+
+if(!$("monthEndYear"))
+return;
+
+const year=
+Number($("monthEndYear").value);
+
+const month=
+Number($("monthEndMonth").value);
+
+if(isNaN(year)||isNaN(month))
+return;
+
+const start=
+new Date(year,month,1);
+
+const end=
+new Date(year,month+1,0);
+
+const monthRecords=
+allRecords.filter(
+r=>
+r.date>=dateString(start)&&
+r.date<=dateString(end)
+);
+
+let drawerCash=0;
+let lastDate="";
+
+if(monthRecords.length){
+
+const sorted=
+[...monthRecords].sort(
+(a,b)=>
+(a.date||"").localeCompare(b.date||"")
+);
+
+const last=
+sorted[sorted.length-1];
+
+drawerCash=
+Number(last.cash||0);
+
+lastDate=last.date;
+
+}
+
+$("monthEndDrawerCash").innerText=
+money(drawerCash);
+
+$("monthEndCashDisplay").innerText=
+money(drawerCash);
+
+$("monthEndLastDate").innerText=
+lastDate
+?
+"Last daily drawer cash: "+lastDate
+:
+"No daily entry found for this month.";
+
+
+/* Existing month-end record */
+
+const record=
+allMonthEnds.find(
+m=>
+Number(m.year)===year &&
+Number(m.month)===month
+);
+
+if(record){
+
+$("staffWages").value=
+record.staffWages??"";
+
+$("directorWages").value=
+record.directorWages??"";
+
+$("bankDeposit").value=
+record.bankDeposit??"";
+
+$("extraPayment").value=
+record.extraPayment??"";
+
+}else{
+
+$("staffWages").value="";
+$("directorWages").value="";
+$("bankDeposit").value="";
+$("extraPayment").value="";
+
+}
+
+calculateMonthEnd();
+
+if(record){
+
+$("monthEndLastEdited").innerHTML=`
+
+<b>Last edited by:</b><br>
+${record.updatedBy||"Not available"}
+
+<br><br>
+
+<b>Last updated:</b><br>
+${formatUpdatedAt(record.updatedAt)}
+
+`;
+
+}else{
+
+$("monthEndLastEdited").innerText=
+"No month-end record saved.";
+
+}
+
+};
+
+
+/* =====================================================
+MONTH END CALCULATION
+===================================================== */
+
+window.calculateMonthEnd=function(){
+
+const year=
+Number($("monthEndYear").value);
+
+const month=
+Number($("monthEndMonth").value);
+
+const start=
+new Date(year,month,1);
+
+const end=
+new Date(year,month+1,0);
+
+const records=
+allRecords.filter(
+r=>
+r.date>=dateString(start)&&
+r.date<=dateString(end)
+);
+
+let drawerCash=0;
+
+if(records.length){
+
+const sorted=
+[...records].sort(
+(a,b)=>
+(a.date||"").localeCompare(b.date||"")
+);
+
+drawerCash=
+Number(
+sorted[sorted.length-1].cash||0
+);
+
+}
+
+const staff=num("staffWages");
+const director=num("directorWages");
+const bank=num("bankDeposit");
+const extra=num("extraPayment");
+
+const remaining=
+drawerCash-
+staff-
+director-
+bank-
+extra;
+
+$("monthEndCashDisplay").innerText=
+money(drawerCash);
+
+$("monthEndStaff").innerText=
+money(staff);
+
+$("monthEndDirector").innerText=
+money(director);
+
+$("monthEndBank").innerText=
+money(bank);
+
+$("monthEndExtra").innerText=
+money(extra);
+
+$("monthEndRemaining").innerText=
+money(remaining);
+
+$("nextMonthCarry").innerText=
+money(remaining);
+
+return {
+drawerCash,
+staff,
+director,
+bank,
+extra,
+remaining
+};
+
+};
+
+
+/* =====================================================
+SAVE MONTH END
+===================================================== */
+
+window.saveMonthEnd=async function(){
+
+if(!currentUser){
+
+$("monthEndMessage").innerText=
+"Please login first.";
+
+return;
+
+}
+
+if(!isEditor()){
+
+$("monthEndMessage").innerText=
+"❌ You have view-only access.";
+
+return;
+
+}
+
+const year=
+Number($("monthEndYear").value);
+
+const month=
+Number($("monthEndMonth").value);
+
+const key=
+monthKey(year,month);
+
+const result=
+calculateMonthEnd();
+
+const data={
+
+monthKey:key,
+
+year:year,
+
+month:month,
+
+drawerCash:result.drawerCash,
+
+staffWages:result.staff,
+
+directorWages:result.director,
+
+bankDeposit:result.bank,
+
+extraPayment:result.extra,
+
+remainingCash:result.remaining,
+
+updatedBy:currentUser.email,
+
+updatedAt:new Date().toISOString()
+
+};
+
+try{
+
+await setDoc(
+doc(db,"monthEnds",key),
+data,
+{merge:true}
+);
+
+$("monthEndMessage").innerText=
+"✅ Month end saved successfully.";
+
+}catch(error){
+
+console.error(error);
+
+$("monthEndMessage").innerText=
+"❌ Save failed: "+error.message;
+
+}
+
+};
+
+
+/* =====================================================
+REPORT MODE
+===================================================== */
+
+window.setReportMode=function(mode){
 
 reportMode=mode;
 
 document
-.querySelectorAll(
-".reportButtons button"
-)
+.querySelectorAll(".reportButtons button")
 .forEach(
 b=>b.classList.remove("active")
 );
@@ -2581,23 +2926,16 @@ b=>b.classList.remove("active")
 const map={
 
 weeks:"weekMode",
-
 month:"monthMode",
-
 "2months":"twoMonthMode",
-
 "3months":"threeMonthMode",
-
 "6months":"sixMonthMode",
-
 year:"yearMode",
-
 all:"allMode"
 
 };
 
-$(map[mode])
-.classList.add("active");
+$(map[mode]).classList.add("active");
 
 generateReport();
 
@@ -2605,23 +2943,15 @@ generateReport();
 
 
 /* =====================================================
-   REPORTING MONTH
+REPORTING MONTH
 ===================================================== */
 
-function reportingMonthStart(
-year,
-month
-){
+function reportingMonthStart(year,month){
 
 const first=
-new Date(
-year,
-month,
-1
-);
+new Date(year,month,1);
 
-const day=
-first.getDay();
+const day=first.getDay();
 
 const diff=
 day===0?6:day-1;
@@ -2630,19 +2960,14 @@ first.setDate(
 first.getDate()-diff
 );
 
-first.setHours(
-0,0,0,0
-);
+first.setHours(0,0,0,0);
 
 return first;
 
 }
 
 
-function nextReportingMonthStart(
-year,
-month
-){
+function nextReportingMonthStart(year,month){
 
 if(month===11){
 
@@ -2661,10 +2986,7 @@ month+1
 }
 
 
-function reportingMonthEnd(
-year,
-month
-){
+function reportingMonthEnd(year,month){
 
 const next=
 nextReportingMonthStart(
@@ -2681,30 +3003,23 @@ return next;
 }
 
 
-function getReportingWeeks(
-year,
-month
-){
+/* =====================================================
+WEEKS
+===================================================== */
+
+function getReportingWeeks(year,month){
 
 const start=
-reportingMonthStart(
-year,
-month
-);
+reportingMonthStart(year,month);
 
 const end=
-reportingMonthEnd(
-year,
-month
-);
+reportingMonthEnd(year,month);
 
 const weeks=[];
 
-let current=
-new Date(start);
+let current=new Date(start);
 
 let weekNumber=1;
-
 
 while(current<=end){
 
@@ -2718,17 +3033,11 @@ weekEnd.setDate(
 weekEnd.getDate()+6
 );
 
-
 weeks.push({
-
 number:weekNumber,
-
 start:weekStart,
-
 end:weekEnd
-
 });
-
 
 current.setDate(
 current.getDate()+7
@@ -2744,19 +3053,13 @@ return weeks;
 
 
 /* =====================================================
-   RECORDS BETWEEN
+RECORDS BETWEEN
 ===================================================== */
 
-function recordsBetween(
-start,
-end
-){
+function recordsBetween(start,end){
 
-const s=
-dateString(start);
-
-const e=
-dateString(end);
+const s=dateString(start);
+const e=dateString(end);
 
 return allRecords.filter(
 r=>r.date>=s&&r.date<=e
@@ -2766,7 +3069,7 @@ r=>r.date>=s&&r.date<=e
 
 
 /* =====================================================
-   SUM
+SUM
 ===================================================== */
 
 function sumRecords(records){
@@ -2784,7 +3087,6 @@ deliveryCard:0,
 cashTaken:0
 
 };
-
 
 records.forEach(r=>{
 
@@ -2817,20 +3119,16 @@ getTotalCashTaken(r);
 
 });
 
-
 return total;
 
 }
 
 
 /* =====================================================
-   REPORT
+GENERATE REPORT
 ===================================================== */
 
-window.generateReport=
-function(){
-
-if(!$("reportYear").value)return;
+window.generateReport=function(){
 
 const year=
 Number($("reportYear").value);
@@ -2841,26 +3139,18 @@ Number($("reportMonth").value);
 let start;
 let end;
 
-
 if(
 reportMode==="month"||
 reportMode==="weeks"
 ){
 
 start=
-reportingMonthStart(
-year,
-month
-);
+reportingMonthStart(year,month);
 
 end=
-reportingMonthEnd(
-year,
-month
-);
+reportingMonthEnd(year,month);
 
 }
-
 
 if(
 reportMode==="2months"||
@@ -2870,26 +3160,18 @@ reportMode==="6months"
 
 const months=
 Number(
-reportMode.replace(
-"months",
-""
-)
+reportMode.replace("months","")
 );
 
 start=
-reportingMonthStart(
-year,
-month
-);
+reportingMonthStart(year,month);
 
 let endMonth=
 month+months-1;
 
 let endYear=
 year+
-Math.floor(
-endMonth/12
-);
+Math.floor(endMonth/12);
 
 endMonth=
 endMonth%12;
@@ -2902,23 +3184,15 @@ endMonth
 
 }
 
-
 if(reportMode==="year"){
 
 start=
-reportingMonthStart(
-year,
-0
-);
+reportingMonthStart(year,0);
 
 end=
-reportingMonthEnd(
-year,
-11
-);
+reportingMonthEnd(year,11);
 
 }
-
 
 if(reportMode==="all"){
 
@@ -2930,13 +3204,8 @@ allRecords
 .filter(Boolean)
 .sort();
 
-start=
-parseDate(dates[0]);
-
-end=
-parseDate(
-dates[dates.length-1]
-);
+start=parseDate(dates[0]);
+end=parseDate(dates[dates.length-1]);
 
 }else{
 
@@ -2947,18 +3216,11 @@ end=new Date();
 
 }
 
-
 const records=
-recordsBetween(
-start,
-end
-);
+recordsBetween(start,end);
 
 const total=
 sumRecords(records);
-
-
-/* TOTALS */
 
 $("reportMain").innerText=
 money(total.mainTill);
@@ -2978,9 +3240,6 @@ money(total.cashTaken);
 $("reportDays").innerText=
 records.length;
 
-
-/* UBER */
-
 $("reportUber").innerText=
 money(total.uber);
 
@@ -2989,9 +3248,6 @@ money(total.uber*.30);
 
 $("reportUber70").innerText=
 money(total.uber*.70);
-
-
-/* DELIVEROO */
 
 $("reportDeliveroo").innerText=
 money(total.deliveroo);
@@ -3002,35 +3258,25 @@ money(total.deliveroo*.35);
 $("reportDeliveroo65").innerText=
 money(total.deliveroo*.65);
 
-
-/* DELIVERY */
-
 $("reportDeliveryCash").innerText=
 money(total.deliveryCash);
 
 $("reportDeliveryCard").innerText=
 money(total.deliveryCard);
 
-
-/* WEEKLY */
-
 if(
 reportMode==="weeks"||
 reportMode==="month"
 ){
 
-showWeeklyReport(
-year,
-month
-);
+showWeeklyReport(year,month);
 
 }else{
 
 $("weeklyTitle").innerText=
 "📅 Weekly Breakdown";
 
-$("weeklyReport").innerHTML=
-`
+$("weeklyReport").innerHTML=`
 <p>
 Select <b>WEEKLY</b> to see the Monday-Sunday breakdown.
 </p>
@@ -3038,41 +3284,26 @@ Select <b>WEEKLY</b> to see the Monday-Sunday breakdown.
 
 }
 
-
-/* CASH */
-
 showCashTakenDetails(records);
-
 showPersonTotals(records);
-
 showMonthSummary(year,month);
+showReportMonthEnd(year,month);
 
 };
 
 
 /* =====================================================
-   WEEKLY REPORT
+WEEKLY REPORT
 ===================================================== */
 
-function showWeeklyReport(
-year,
-month
-){
+function showWeeklyReport(year,month){
 
 const weeks=
-getReportingWeeks(
-year,
-month
-);
-
+getReportingWeeks(year,month);
 
 $("weeklyTitle").innerText=
 "📅 Weekly Report — "+
-new Date(
-year,
-month,
-1
-).toLocaleDateString(
+new Date(year,month,1).toLocaleDateString(
 "en-GB",
 {
 month:"long",
@@ -3080,20 +3311,14 @@ year:"numeric"
 }
 );
 
-
 $("weeklyReport").innerHTML=
-
 weeks.map(w=>{
 
 const records=
-recordsBetween(
-w.start,
-w.end
-);
+recordsBetween(w.start,w.end);
 
 const t=
 sumRecords(records);
-
 
 return `
 
@@ -3103,17 +3328,11 @@ return `
 
 Week ${w.number}:
 
-${dateString(w.start)
-.split("-")
-.reverse()
-.join("/")}
+${dateString(w.start).split("-").reverse().join("/")}
 
 →
 
-${dateString(w.end)
-.split("-")
-.reverse()
-.join("/")}
+${dateString(w.end).split("-").reverse().join("/")}
 
 </div>
 
@@ -3138,7 +3357,7 @@ ${dateString(w.end)
 </div>
 
 <div class="totalLine">
-<span>Drawer Cash / Balance</span>
+<span>Cash / Balance</span>
 <b>${money(t.cash)}</b>
 </div>
 
@@ -3192,24 +3411,19 @@ ${dateString(w.end)
 
 
 /* =====================================================
-   CASH TAKEN DETAILS
+CASH TAKEN DAILY
 ===================================================== */
 
-function showCashTakenDetails(
-records
-){
+function showCashTakenDetails(records){
 
 const cashRecords=
 records.filter(
-r=>
-getCashTakenEntries(r).length>0
+r=>getCashTakenEntries(r).length>0
 );
-
 
 if(!cashRecords.length){
 
-$("cashTakenDetails").innerHTML=
-`
+$("cashTakenDetails").innerHTML=`
 <p class="small">
 No cash was taken during this reporting period.
 </p>
@@ -3219,7 +3433,6 @@ return;
 
 }
 
-
 let html=`
 
 <table>
@@ -3227,14 +3440,12 @@ let html=`
 <thead>
 
 <tr>
-
 <th>Date</th>
 <th>Cash Taken 1</th>
 <th>Taken By</th>
 <th>Cash Taken 2</th>
 <th>Taken By</th>
 <th>Total</th>
-
 </tr>
 
 </thead>
@@ -3242,7 +3453,6 @@ let html=`
 <tbody>
 
 `;
-
 
 cashRecords.forEach(r=>{
 
@@ -3261,43 +3471,30 @@ amount:0,
 name:""
 };
 
-
 html+=`
 
 <tr>
 
+<td><b>${r.date||"-"}</b></td>
+
 <td>
-<b>${r.date||"-"}</b>
+${e1.amount>0?money(e1.amount):""}
 </td>
 
 <td>
-${e1.amount>0
-?money(e1.amount)
-:""}
+${e1.amount>0?(e1.name||"Unknown"):""}
 </td>
 
 <td>
-${e1.amount>0
-?(e1.name||"Unknown")
-:""}
+${e2.amount>0?money(e2.amount):""}
 </td>
 
 <td>
-${e2.amount>0
-?money(e2.amount)
-:""}
+${e2.amount>0?(e2.name||"Unknown"):""}
 </td>
 
 <td>
-${e2.amount>0
-?(e2.name||"Unknown")
-:""}
-</td>
-
-<td>
-<b>
-${money(getTotalCashTaken(r))}
-</b>
+<b>${money(getTotalCashTaken(r))}</b>
 </td>
 
 </tr>
@@ -3306,42 +3503,33 @@ ${money(getTotalCashTaken(r))}
 
 });
 
-
 html+=`
 
 </tbody>
-
 </table>
 `;
 
-
-$("cashTakenDetails").innerHTML=
-html;
+$("cashTakenDetails").innerHTML=html;
 
 }
 
 
 /* =====================================================
-   PERSON TOTALS
+PERSON TOTALS
 ===================================================== */
 
-function showPersonTotals(
-records
-){
+function showPersonTotals(records){
 
 const people={};
-
 
 records.forEach(r=>{
 
 const entries=
 getCashTakenEntries(r);
 
-
 entries.forEach(e=>{
 
-const name=
-e.name||"Unknown";
+const name=e.name||"Unknown";
 
 people[name]=
 (people[name]||0)+
@@ -3351,15 +3539,11 @@ Number(e.amount||0);
 
 });
 
-
-const names=
-Object.keys(people);
-
+const names=Object.keys(people);
 
 if(!names.length){
 
-$("personTotals").innerHTML=
-`
+$("personTotals").innerHTML=`
 <p class="small">
 No cash was taken during this reporting period.
 </p>
@@ -3369,9 +3553,7 @@ return;
 
 }
 
-
 $("personTotals").innerHTML=
-
 names
 .sort()
 .map(name=>`
@@ -3380,13 +3562,9 @@ names
 
 <div class="totalLine">
 
-<span>
-<b>${name}</b>
-</span>
+<span><b>${name}</b></span>
 
-<b>
-${money(people[name])}
-</b>
+<b>${money(people[name])}</b>
 
 </div>
 
@@ -3399,62 +3577,45 @@ ${money(people[name])}
 
 
 /* =====================================================
-   MONTH SUMMARY
+MONTH SUMMARY
 ===================================================== */
 
-function showMonthSummary(
-year,
-month
-){
+function showMonthSummary(year,month){
 
 const start=
-reportingMonthStart(
-year,
-month
-);
+reportingMonthStart(year,month);
 
 const end=
-reportingMonthEnd(
-year,
-month
-);
+reportingMonthEnd(year,month);
 
 const records=
-recordsBetween(
-start,
-end
-);
+recordsBetween(start,end);
 
 const t=
 sumRecords(records);
 
-
-const monthNameText=
-monthName(
-year,
-month
+const monthName=
+new Date(year,month,1).toLocaleDateString(
+"en-GB",
+{
+month:"long",
+year:"numeric"
+}
 );
-
 
 $("monthSummary").innerHTML=`
 
-<h3>${monthNameText}</h3>
+<h3>${monthName}</h3>
 
 <p class="small">
 
 Reporting period:
 
-${dateString(start)
-.split("-")
-.reverse()
-.join("/")}
+${dateString(start).split("-").reverse().join("/")}
 
 →
 
-${dateString(end)
-.split("-")
-.reverse()
-.join("/")}
+${dateString(end).split("-").reverse().join("/")}
 
 </p>
 
@@ -3479,7 +3640,7 @@ ${dateString(end)
 </div>
 
 <div class="totalLine">
-<span>Drawer Cash / Balance</span>
+<span>Cash / Balance</span>
 <b>${money(t.cash)}</b>
 </div>
 
@@ -3529,583 +3690,52 @@ ${dateString(end)
 
 
 /* =====================================================
-   MONTH-END YEAR SETUP
+REPORT MONTH END
 ===================================================== */
 
-function setupMonthEndYears(){
-
-const select=
-$("monthEndYear");
-
-select.innerHTML="";
-
-const current=
-new Date().getFullYear();
-
-for(
-let y=current-5;
-y<=current+2;
-y++
-){
-
-const option=
-document.createElement("option");
-
-option.value=y;
-
-option.textContent=y;
-
-select.appendChild(option);
-
-}
-
-select.value=current;
-
-$("monthEndMonth").value=
-new Date().getMonth();
-
-}
-
-
-/* =====================================================
-   LOAD MONTH-END RECORDS
-===================================================== */
-
-async function loadMonthEndRecords(){
-
-try{
-
-const snapshot=
-await getDocs(
-collection(
-db,
-"monthEndRecords"
-)
-);
-
-monthEndRecords=[];
-
-snapshot.forEach(item=>{
-
-monthEndRecords.push({
-
-id:item.id,
-
-...item.data()
-
-});
-
-});
-
-}catch(error){
-
-console.error(error);
-
-}
-
-}
-
-
-/* =====================================================
-   GET MONTH-END RECORD
-===================================================== */
-
-function getMonthEndRecord(
-year,
-month
-){
-
-const key=
-monthKey(year,month);
-
-return monthEndRecords.find(
-r=>r.monthKey===key
-);
-
-}
-
-
-/* =====================================================
-   PREVIOUS MONTH
-===================================================== */
-
-function previousMonth(
-year,
-month
-){
-
-if(month===0){
-
-return{
-year:year-1,
-month:11
-};
-
-}
-
-return{
-year:year,
-month:month-1
-};
-
-}
-
-
-/* =====================================================
-   GET OPENING CASH
-===================================================== */
-
-function getOpeningCash(
-year,
-month
-){
-
-const previous=
-previousMonth(
-year,
-month
-);
-
-const previousRecord=
-getMonthEndRecord(
-previous.year,
-previous.month
-);
-
-if(!previousRecord)
-return 0;
-
-return Number(
-previousRecord.remainingCash||0
-);
-
-
-/* =====================================================
-   MONTH DRAWER CASH
-===================================================== */
-
-function getMonthDrawerCash(
-year,
-month
-){
-
-const start=
-reportingMonthStart(
-year,
-month
-);
-
-const end=
-reportingMonthEnd(
-year,
-month
-);
-
-const records=
-recordsBetween(
-start,
-end
-);
-
-const total=
-sumRecords(records);
-
-/*
-   This is the accumulated daily Drawer Cash
-   for the reporting month.
-*/
-
-return Number(
-total.cash||0
-);
-
-
-/* =====================================================
-   CALCULATE MONTH END
-===================================================== */
-
-window.calculateMonthEnd=
-function(){
-
-const year=
-Number($("monthEndYear").value);
-
-const month=
-Number($("monthEndMonth").value);
-
-const opening=
-getOpeningCash(
-year,
-month
-);
-
-const drawer=
-getMonthDrawerCash(
-year,
-month
-);
-
-const totalAvailable=
-opening+drawer;
-
-const staff=
-num("staffWages");
-
-const director=
-num("directorWages");
-
-const bank=
-num("bankDeposit");
-
-const extra=
-num("extraCash");
-
-const totalPaid=
-staff+
-director+
-bank+
-extra;
-
-const remaining=
-totalAvailable-
-totalPaid;
-
-
-$("monthOpeningCash").innerText=
-money(opening);
-
-$("monthOpeningDisplay").innerText=
-money(opening);
-
-$("monthDrawerCash").innerText=
-money(drawer);
-
-$("monthTotalAvailable").innerText=
-money(totalAvailable);
-
-$("monthTotalPaid").innerText=
-money(totalPaid);
-
-$("monthRemaining").innerText=
-money(remaining);
-
-$("nextMonthOpening").innerText=
-money(remaining);
-
-};
-
-
-/* =====================================================
-   LOAD MONTH END
-===================================================== */
-
-window.loadMonthEnd=
-function(){
-
-if(!$("monthEndYear").value)
-return;
-
-const year=
-Number($("monthEndYear").value);
-
-const month=
-Number($("monthEndMonth").value);
-
-$("monthEndTitle").innerText=
-"Month-End Cash — "+
-monthName(year,month);
-
+function showReportMonthEnd(year,month){
 
 const record=
-getMonthEndRecord(
-year,
-month
-);
-
-
-if(record){
-
-$("staffWages").value=
-record.staffWages??"";
-
-$("directorWages").value=
-record.directorWages??"";
-
-$("bankDeposit").value=
-record.bankDeposit??"";
-
-$("extraCash").value=
-record.extraCash??"";
-
-$("extraDescription").value=
-record.extraDescription??"";
-
-}else{
-
-$("staffWages").value="";
-
-$("directorWages").value="";
-
-$("bankDeposit").value="";
-
-$("extraCash").value="";
-
-$("extraDescription").value="";
-
-}
-
-
-calculateMonthEnd();
-
-showMonthEndSummary(
-year,
-month
-);
-
-};
-
-
-/* =====================================================
-   SAVE MONTH END
-===================================================== */
-
-window.saveMonthEnd=
-async function(){
-
-if(!currentUser){
-
-$("monthEndMessage").innerText=
-"Please login first.";
-
-return;
-
-}
-
-if(!canEdit()){
-
-$("monthEndMessage").innerText=
-"👁️ View-only staff cannot edit month-end cash.";
-
-return;
-
-}
-
-
-const year=
-Number($("monthEndYear").value);
-
-const month=
-Number($("monthEndMonth").value);
-
-const opening=
-getOpeningCash(
-year,
-month
-);
-
-const drawer=
-getMonthDrawerCash(
-year,
-month
-);
-
-const totalAvailable=
-opening+drawer;
-
-const staff=
-num("staffWages");
-
-const director=
-num("directorWages");
-
-const bank=
-num("bankDeposit");
-
-const extra=
-num("extraCash");
-
-const totalPaid=
-staff+
-director+
-bank+
-extra;
-
-const remaining=
-totalAvailable-
-totalPaid;
-
-
-const key=
-monthKey(year,month);
-
-
-const data={
-
-monthKey:key,
-
-year:year,
-
-month:month,
-
-monthName:
-monthName(year,month),
-
-openingCash:opening,
-
-drawerCash:drawer,
-
-totalAvailable:totalAvailable,
-
-staffWages:staff,
-
-directorWages:director,
-
-bankDeposit:bank,
-
-extraCash:extra,
-
-extraDescription:
-$("extraDescription")
-.value
-.trim(),
-
-totalCashAccounted:
-totalPaid,
-
-remainingCash:remaining,
-
-updatedBy:
-currentUser.email,
-
-updatedAt:
-new Date().toISOString()
-
-};
-
-
-try{
-
-await setDoc(
-
-doc(
-db,
-"monthEndRecords",
-key
-),
-
-data,
-
-{merge:true}
-
-);
-
-$("monthEndMessage").innerText=
-"✅ Month-end cash saved successfully.";
-
-await loadMonthEndRecords();
-
-loadMonthEnd();
-
-updateHome();
-
-}catch(error){
-
-console.error(error);
-
-$("monthEndMessage").innerText=
-"❌ Save failed: "+error.message;
-
-}
-
-};
-
-
-/* =====================================================
-   MONTH END SUMMARY
-===================================================== */
-
-function showMonthEndSummary(
-year,
-month
-){
-
-const record=
-getMonthEndRecord(
-year,
-month
-);
-
-const opening=
-getOpeningCash(
-year,
-month
-);
-
-const drawer=
-getMonthDrawerCash(
-year,
-month
+allMonthEnds.find(
+m=>
+Number(m.year)===year &&
+Number(m.month)===month
 );
 
 if(!record){
 
-$("monthEndSummary").innerHTML=`
-
-<div class="totalLine">
-<span>Opening Cash Carried Forward</span>
-<b>${money(opening)}</b>
-</div>
-
-<div class="totalLine">
-<span>Daily Drawer Cash Accumulated</span>
-<b>${money(drawer)}</b>
-</div>
-
-<div class="totalLine">
-<span>Total Cash Available</span>
-<b>${money(opening+drawer)}</b>
-</div>
-
+$("reportMonthEnd").innerHTML=`
 <p class="small">
-Month-end cash has not been saved yet.
+No month-end settlement has been saved for this month.
 </p>
-
 `;
 
 return;
 
 }
 
+const nextYear=
+month===11?year+1:year;
 
-const updatedAt=
-record.updatedAt
-?
-new Date(record.updatedAt)
-.toLocaleString("en-GB")
-:
-"";
+const nextMonth=
+month===11?0:month+1;
 
+$("reportMonthEnd").innerHTML=`
 
-$("monthEndSummary").innerHTML=`
-
-<h3>${record.monthName||monthName(year,month)}</h3>
+<h3>
+${new Date(year,month,1).toLocaleDateString(
+"en-GB",
+{
+month:"long",
+year:"numeric"
+}
+)}
+</h3>
 
 <div class="totalLine">
-<span>Opening Cash Carried Forward</span>
-<b>${money(record.openingCash)}</b>
-</div>
-
-<div class="totalLine">
-<span>Daily Drawer Cash</span>
+<span>Drawer Cash</span>
 <b>${money(record.drawerCash)}</b>
 </div>
-
-<div class="totalLine">
-<span>Total Cash Available</span>
-<b>${money(record.totalAvailable)}</b>
-</div>
-
-<hr>
 
 <div class="totalLine">
 <span>Staff Wages</span>
@@ -4118,75 +3748,46 @@ $("monthEndSummary").innerHTML=`
 </div>
 
 <div class="totalLine">
-<span>Bank Cash Deposit</span>
+<span>Bank Deposit</span>
 <b>${money(record.bankDeposit)}</b>
 </div>
 
 <div class="totalLine">
 <span>Extra / Other</span>
-<b>${money(record.extraCash)}</b>
+<b>${money(record.extraPayment)}</b>
 </div>
 
-${
-record.extraDescription
-?
-`
-<p class="small">
-📝 ${record.extraDescription}
-</p>
-`
-:
-""
+<div class="totalLine">
+<span><b>Remaining Cash</b></span>
+<b>${money(record.remainingCash)}</b>
+</div>
+
+<div class="carryBox">
+
+<b>
+➡️ ${new Date(nextYear,nextMonth,1).toLocaleDateString(
+"en-GB",
+{
+month:"long",
+year:"numeric"
 }
-
-<div class="totalLine">
-<span>
-<b>Total Cash Accounted For</b>
-</span>
-<b>${money(record.totalCashAccounted)}</b>
-</div>
-
-<div class="remainingBox">
-
-<div class="totalLine">
-
-<span>
-💰 Remaining Cash
-</span>
-
-<b>
+)} Opening Cash:
 ${money(record.remainingCash)}
 </b>
 
 </div>
-
-</div>
-
-<div class="openingBox" style="margin-top:15px">
-
-<div class="totalLine">
-
-<span>
-🔄 Next Month Opening Cash
-</span>
-
-<b>
-${money(record.remainingCash)}
-</b>
-
-</div>
-
-</div>
-
-<div class="lastEdited">
-
-👤 Last Edited By:
-<b>${record.updatedBy||"Unknown"}</b>
 
 <br>
 
-🕐 Last Edited:
-${updatedAt}
+<div class="lastEdited">
+
+<b>Last edited by:</b><br>
+${record.updatedBy||"Not available"}
+
+<br><br>
+
+<b>Last updated:</b><br>
+${formatUpdatedAt(record.updatedAt)}
 
 </div>
 
@@ -4196,132 +3797,16 @@ ${updatedAt}
 
 
 /* =====================================================
-   UPDATE HOME MONTH-END
+DEFAULT REPORT
 ===================================================== */
 
-function updateHomeMonthEnd(){
+setTimeout(()=>{
 
-const now=
-new Date();
-
-const year=
-now.getFullYear();
-
-const month=
-now.getMonth();
-
-const opening=
-getOpeningCash(
-year,
-month
-);
-
-const drawer=
-getMonthDrawerCash(
-year,
-month
-);
-
-const record=
-getMonthEndRecord(
-year,
-month
-);
-
-const accounted=
-record
-?
-Number(record.totalCashAccounted||0)
-:
-0;
-
-const remaining=
-record
-?
-Number(record.remainingCash||0)
-:
-opening+drawer;
-
-
-$("homeMonthDrawer").innerText=
-money(drawer);
-
-$("homeOpeningCash").innerText=
-money(opening);
-
-$("homeMonthAccounted").innerText=
-money(accounted);
-
-$("homeMonthRemaining").innerText=
-money(remaining);
-
+if($("weekMode")){
+$("weekMode").classList.add("active");
 }
 
-
-/* =====================================================
-   APPLY VIEW-ONLY UI
-===================================================== */
-
-function applyPermissions(){
-
-if(canEdit()){
-
-$("dailySaveCard")
-.classList.remove("hidden");
-
-$("monthEndSaveCard")
-.classList.remove("hidden");
-
-}else{
-
-$("dailySaveCard")
-.classList.add("hidden");
-
-$("monthEndSaveCard")
-.classList.add("hidden");
-
-/*
-   Disable all daily/month-end input controls
-   for view-only staff.
-*/
-
-document
-.querySelectorAll(
-"#entry input,#entry textarea,#entry select"
-)
-.forEach(
-el=>{
-el.disabled=true;
-el.classList.add("readonly");
-}
-);
-
-document
-.querySelectorAll(
-"#monthEnd input,#monthEnd textarea,#monthEnd select"
-)
-.forEach(
-el=>{
-el.disabled=true;
-el.classList.add("readonly");
-}
-);
-
-}
-
-}
-
-
-/* =====================================================
-   WATCH FOR AUTH UI
-===================================================== */
-
-setTimeout(
-()=>{
-applyPermissions();
-},
-1000
-);
+},1000);
 
 </script>
 
