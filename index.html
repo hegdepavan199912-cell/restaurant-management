@@ -160,8 +160,6 @@ padding:8px 12px;
 border-radius:7px
 }
 
-/* NEW RESET BUTTON */
-
 .reset{
 width:100%;
 padding:14px;
@@ -317,8 +315,6 @@ font-weight:bold;
 margin-top:5px
 }
 
-/* RESET INFORMATION */
-
 .resetInfo{
 background:#fff7ed;
 border:1px solid #fed7aa;
@@ -327,6 +323,81 @@ border-radius:9px;
 margin-top:10px;
 font-size:13px;
 color:#9a3412
+}
+
+/* BANK MONTH END */
+
+.bankHero{
+background:#111827;
+color:white;
+padding:20px;
+border-radius:12px;
+margin-bottom:15px
+}
+
+.bankHero small{
+opacity:.8
+}
+
+.bankHero .amount{
+font-size:30px;
+font-weight:bold;
+margin-top:8px
+}
+
+.bankCalendar{
+width:100%;
+overflow-x:auto
+}
+
+.bankCalendar table{
+min-width:650px
+}
+
+.bankCalendar th{
+text-align:center
+}
+
+.bankCalendar td{
+vertical-align:top;
+height:75px;
+text-align:center;
+font-size:13px
+}
+
+.bankDay{
+font-weight:bold;
+font-size:15px;
+margin-bottom:5px
+}
+
+.bankAmount{
+font-weight:bold;
+font-size:13px
+}
+
+.bankEmpty{
+color:#d1d5db
+}
+
+.bankTotal{
+background:#f0fdf4;
+border:1px solid #bbf7d0;
+padding:16px;
+border-radius:10px
+}
+
+.bankTotalAmount{
+font-size:28px;
+font-weight:bold;
+margin-top:6px
+}
+
+.bankBreakdown{
+background:#f9fafb;
+padding:14px;
+border-radius:10px;
+margin-top:12px
 }
 
 @media(max-width:700px){
@@ -342,7 +413,8 @@ th,td{
 font-size:12px;
 padding:7px
 }
-.monthEndHero .amount{
+.monthEndHero .amount,
+.bankHero .amount{
 font-size:25px
 }
 }
@@ -354,37 +426,24 @@ font-size:25px
 <!-- LOGIN -->
 
 <div id="loginScreen" class="login">
-
 <div class="card">
 
 <h2>🍽️ Khan's Restaurant</h2>
-
 <p>Staff Login</p>
 
-<input
-id="email"
-type="email"
-placeholder="Personal Email"
->
+<input id="email" type="email" placeholder="Personal Email">
 
 <br><br>
 
-<input
-id="password"
-type="password"
-placeholder="Password"
->
+<input id="password" type="password" placeholder="Password">
 
 <br><br>
 
-<button class="save" onclick="login()">
-LOGIN
-</button>
+<button class="save" onclick="login()">LOGIN</button>
 
 <div id="loginMsg" class="message"></div>
 
 </div>
-
 </div>
 
 
@@ -393,7 +452,6 @@ LOGIN
 <div id="app" class="hidden">
 
 <header>
-
 <div class="container">
 
 <h2>🍽️ Khan's Restaurant</h2>
@@ -405,7 +463,6 @@ LOGIN
 </div>
 
 </div>
-
 </header>
 
 
@@ -431,6 +488,10 @@ LOGIN
 
 <button onclick="openPage('monthEnd',this)">
 📅 Month End
+</button>
+
+<button onclick="openPage('bankMonthEnd',this)">
+🏦 Bank Month End
 </button>
 
 </nav>
@@ -544,35 +605,18 @@ LOGIN
 <div class="formgrid">
 
 <div>
-
 <label>Date</label>
-
-<input
-id="entryDate"
-type="date"
-onchange="loadExistingEntry()"
->
-
+<input id="entryDate" type="date" onchange="loadExistingEntry()">
 </div>
 
 <div>
-
 <label>Day</label>
-
-<input
-id="entryDay"
-readonly
->
-
+<input id="entryDay" readonly>
 </div>
 
 </div>
 
-<div
-id="viewerNotice"
-class="small hidden"
-style="margin-top:10px"
->
+<div id="viewerNotice" class="small hidden" style="margin-top:10px">
 👀 View-only access. You can view the entry but cannot edit or save it.
 </div>
 
@@ -583,13 +627,8 @@ style="margin-top:10px"
 
 <h3>💷 Main Till / Total Sales</h3>
 
-<input
-id="mainTill"
-type="number"
-step="0.01"
-placeholder="Enter Main Till"
-oninput="calculateAll()"
->
+<input id="mainTill" type="number" step="0.01"
+placeholder="Enter Main Till" oninput="calculateAll()">
 
 </div>
 
@@ -642,13 +681,8 @@ Enter the amount from each of the 4 PDQ tabs.
 
 <h3>💰 Petty Cash</h3>
 
-<input
-id="pettyCash"
-type="number"
-step="0.01"
-placeholder="Petty Cash"
-oninput="calculateAll()"
->
+<input id="pettyCash" type="number" step="0.01"
+placeholder="Petty Cash" oninput="calculateAll()">
 
 </div>
 
@@ -666,7 +700,8 @@ That date will not appear in the Cash Taken Daily Details.
 
 <div>
 <label>Cash Taken 1</label>
-<input id="cashTaken1" type="number" step="0.01" placeholder="0.00" oninput="calculateAll()">
+<input id="cashTaken1" type="number" step="0.01"
+placeholder="0.00" oninput="calculateAll()">
 </div>
 
 <div>
@@ -676,7 +711,8 @@ That date will not appear in the Cash Taken Daily Details.
 
 <div>
 <label>Cash Taken 2</label>
-<input id="cashTaken2" type="number" step="0.01" placeholder="0.00" oninput="calculateAll()">
+<input id="cashTaken2" type="number" step="0.01"
+placeholder="0.00" oninput="calculateAll()">
 </div>
 
 <div>
@@ -770,11 +806,7 @@ Cash = Main Till − PDQ Total − Petty Cash − Total Cash Taken
 
 <label>Search Date</label>
 
-<input
-id="historyDate"
-type="date"
-onchange="displayHistory()"
->
+<input id="historyDate" type="date" onchange="displayHistory()">
 
 <br><br>
 
@@ -800,7 +832,8 @@ SHOW ALL
 <h3>Reporting Period</h3>
 
 <p class="small">
-Weekly reports are Monday to Sunday.
+Weekly reports follow Monday → Sunday, but only complete weeks
+belonging to the selected calendar month are shown.
 </p>
 
 <div class="formgrid">
@@ -808,7 +841,6 @@ Weekly reports are Monday to Sunday.
 <div>
 
 <label>Year</label>
-
 <select id="reportYear" onchange="generateReport()"></select>
 
 </div>
@@ -817,7 +849,7 @@ Weekly reports are Monday to Sunday.
 
 <label>Reporting Month</label>
 
-<select id="reportMonth" onchange="generateReport">
+<select id="reportMonth" onchange="generateReport()">
 
 <option value="0">January</option>
 <option value="1">February</option>
@@ -982,7 +1014,6 @@ ALL HISTORY
 <div class="card">
 
 <h3>💸 Cash Taken — Daily Details</h3>
-
 <div id="cashTakenDetails"></div>
 
 </div>
@@ -991,7 +1022,6 @@ ALL HISTORY
 <div class="card">
 
 <h3>👤 Cash Taken — Person Wise Total</h3>
-
 <div id="personTotals"></div>
 
 </div>
@@ -1000,7 +1030,6 @@ ALL HISTORY
 <div class="card">
 
 <h3>📊 Reporting Month Total</h3>
-
 <div id="monthSummary"></div>
 
 </div>
@@ -1019,21 +1048,18 @@ ALL HISTORY
 <h3>Month End Period</h3>
 
 <p class="small">
-Select the month. Month End Drawer Cash automatically comes from the selected month's Total Cash / Balance.
+Select the reporting month. Month End Drawer Cash automatically
+comes from that month's Total Cash / Balance.
 </p>
 
 <div class="formgrid">
 
 <div>
-
 <label>Year</label>
-
 <select id="monthEndYear" onchange="updateMonthEnd()"></select>
-
 </div>
 
 <div>
-
 <label>Month</label>
 
 <select id="monthEndMonth" onchange="updateMonthEnd()">
@@ -1079,66 +1105,34 @@ Total Cash / Balance — automatically from the selected reporting month
 
 <h3>💷 Month End Cash Payments</h3>
 
-<p class="small">
-Enter where the drawer cash was paid or deposited at month end.
-</p>
-
 <div class="formgrid">
 
 <div>
-
 <label>Cash Paid for Staff Wages</label>
-
-<input
-id="monthEndStaffWages"
-type="number"
-step="0.01"
-placeholder="0.00"
-oninput="calculateMonthEnd()"
->
-
+<input id="monthEndStaffWages" type="number"
+step="0.01" placeholder="0.00"
+oninput="calculateMonthEnd()">
 </div>
 
 <div>
-
 <label>Cash Paid for Director Wages</label>
-
-<input
-id="monthEndDirectorWages"
-type="number"
-step="0.01"
-placeholder="0.00"
-oninput="calculateMonthEnd()"
->
-
+<input id="monthEndDirectorWages" type="number"
+step="0.01" placeholder="0.00"
+oninput="calculateMonthEnd()">
 </div>
 
 <div>
-
 <label>Bank Cash Deposit</label>
-
-<input
-id="monthEndBankDeposit"
-type="number"
-step="0.01"
-placeholder="0.00"
-oninput="calculateMonthEnd()"
->
-
+<input id="monthEndBankDeposit" type="number"
+step="0.01" placeholder="0.00"
+oninput="calculateMonthEnd()">
 </div>
 
 <div>
-
 <label>Extra</label>
-
-<input
-id="monthEndExtra"
-type="number"
-step="0.01"
-placeholder="0.00"
-oninput="calculateMonthEnd()"
->
-
+<input id="monthEndExtra" type="number"
+step="0.01" placeholder="0.00"
+oninput="calculateMonthEnd()">
 </div>
 
 </div>
@@ -1151,87 +1145,46 @@ oninput="calculateMonthEnd()"
 <h3>🧮 Month End Calculation</h3>
 
 <div class="totalLine">
-
 <span>Total Cash / Balance</span>
-
-<b id="monthEndCalculationCash">
-£0.00
-</b>
-
+<b id="monthEndCalculationCash">£0.00</b>
 </div>
 
 <div class="totalLine">
-
 <span>Staff Wages</span>
-
-<b id="monthEndCalculationStaff">
-£0.00
-</b>
-
+<b id="monthEndCalculationStaff">£0.00</b>
 </div>
 
 <div class="totalLine">
-
 <span>Director Wages</span>
-
-<b id="monthEndCalculationDirector">
-£0.00
-</b>
-
+<b id="monthEndCalculationDirector">£0.00</b>
 </div>
 
 <div class="totalLine">
-
 <span>Bank Cash Deposit</span>
-
-<b id="monthEndCalculationBank">
-£0.00
-</b>
-
+<b id="monthEndCalculationBank">£0.00</b>
 </div>
 
 <div class="totalLine">
-
 <span>Extra</span>
-
-<b id="monthEndCalculationExtra">
-£0.00
-</b>
-
+<b id="monthEndCalculationExtra">£0.00</b>
 </div>
 
 <div class="total">
-
 <div class="totalLine">
-
 <span>TOTAL CASH USED</span>
-
-<b id="monthEndTotalUsed">
-£0.00
-</b>
-
+<b id="monthEndTotalUsed">£0.00</b>
+</div>
 </div>
 
-</div>
-
-<div class="total" style="margin-top:12px">
-
+<div class="total">
 <div class="totalLine">
-
 <span>REMAINING DRAWER CASH</span>
-
-<b id="monthEndRemaining">
-£0.00
-</b>
-
+<b id="monthEndRemaining">£0.00</b>
+</div>
 </div>
 
 </div>
 
-</div>
-
-
-<!-- CARRY FORWARD -->
 
 <div class="card">
 
@@ -1243,16 +1196,9 @@ oninput="calculateMonthEnd()"
 REMAINING CASH AUTOMATICALLY CARRIED FORWARD
 </div>
 
-<div
-class="carryAmount"
-id="nextMonthCarryForward"
->
+<div class="carryAmount" id="nextMonthCarryForward">
 £0.00
 </div>
-
-<p class="small">
-This amount becomes the previous month's carry-forward amount when the next month is selected.
-</p>
 
 </div>
 
@@ -1262,10 +1208,7 @@ This amount becomes the previous month's carry-forward amount when the next mont
 PREVIOUS MONTH CARRY FORWARD
 </div>
 
-<div
-class="carryAmount"
-id="previousMonthCarryForward"
->
+<div class="carryAmount" id="previousMonthCarryForward">
 £0.00
 </div>
 
@@ -1273,8 +1216,6 @@ id="previousMonthCarryForward"
 
 </div>
 
-
-<!-- SAVE + RESET -->
 
 <div id="monthEndSaveCard" class="card">
 
@@ -1287,8 +1228,8 @@ id="previousMonthCarryForward"
 </button>
 
 <div class="resetInfo">
-⚠️ Reset will clear the four Month End payment entries for the selected month. 
-It will not delete the Firebase record. You can then enter the corrected amounts and save again.
+⚠️ Reset clears the four Month End payment entries for the
+selected month. The Firebase record is not deleted.
 </div>
 
 <div id="monthEndSaveMessage" class="message"></div>
@@ -1298,12 +1239,10 @@ It will not delete the Firebase record. You can then enter the corrected amounts
 
 <div id="monthEndViewerNotice" class="card hidden">
 
-<p>
-👀 <b>View-only access.</b>
-</p>
+<p>👀 <b>View-only access.</b></p>
 
 <p class="small">
-You can view Month End information, but you cannot edit, reset or save it.
+You can view Month End information, but cannot edit, reset or save it.
 </p>
 
 </div>
@@ -1313,10 +1252,7 @@ You can view Month End information, but you cannot edit, reset or save it.
 
 <h3>📝 Month End Last Edited</h3>
 
-<div
-id="monthEndLastEdited"
-class="lastEdited"
->
+<div id="monthEndLastEdited" class="lastEdited">
 Not saved yet.
 </div>
 
@@ -1325,15 +1261,208 @@ Not saved yet.
 </section>
 
 
+<!-- BANK MONTH END -->
+
+<section id="bankMonthEnd" class="page">
+
+<h2>🏦 Bank Month End Calculation</h2>
+
+<div class="card">
+
+<h3>📅 Calendar Month</h3>
+
+<p class="small">
+This section follows the normal calendar month only:
+1st → last day of the selected month.
+It is completely separate from the Monday-Sunday Weekly Report.
+</p>
+
+<div class="formgrid">
+
+<div>
+
+<label>Year</label>
+
+<select id="bankYear" onchange="updateBankMonthEnd()"></select>
+
 </div>
+
+<div>
+
+<label>Month</label>
+
+<select id="bankMonth" onchange="updateBankMonthEnd()">
+
+<option value="0">January</option>
+<option value="1">February</option>
+<option value="2">March</option>
+<option value="3">April</option>
+<option value="4">May</option>
+<option value="5">June</option>
+<option value="6">July</option>
+<option value="7">August</option>
+<option value="8">September</option>
+<option value="9">October</option>
+<option value="10">November</option>
+<option value="11">December</option>
+
+</select>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="bankHero">
+
+<small>BANK MONTH TOTAL</small>
+
+<div class="amount" id="bankMonthTotal">
+£0.00
+</div>
+
+<p style="margin-bottom:0">
+Automatically calculated from daily entries for the selected
+calendar month.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>🧮 Automatic Bank Calculation</h3>
+
+<div class="totalLine">
+<span>PDQ Total</span>
+<b id="bankPDQ">£0.00</b>
+</div>
+
+<div class="totalLine">
+<span>Uber 70% After Commission</span>
+<b id="bankUber">£0.00</b>
+</div>
+
+<div class="totalLine">
+<span>Deliveroo 65% After Commission</span>
+<b id="bankDeliveroo">£0.00</b>
+</div>
+
+<div class="totalLine">
+<span>Delivery Card</span>
+<b id="bankDeliveryCard">£0.00</b>
+</div>
+
+<div class="total">
+
+<div class="totalLine">
+<span>TOTAL MONEY TO BANK</span>
+<b id="bankTotalCalculation">£0.00</b>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>📆 Calendar Daily Bank Details</h3>
+
+<div class="bankCalendar">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Sun</th>
+<th>Mon</th>
+<th>Tue</th>
+<th>Wed</th>
+<th>Thu</th>
+<th>Fri</th>
+<th>Sat</th>
+</tr>
+
+</thead>
+
+<tbody id="bankCalendarBody"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<div class="bankTotal">
+
+<div class="small">
+SELECTED CALENDAR MONTH
+</div>
+
+<div id="bankMonthLabel" style="font-weight:bold;margin-top:5px">
+-
+</div>
+
+<div class="bankTotalAmount" id="bankFinalTotal">
+£0.00
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>📊 Bank Month Breakdown</h3>
+
+<div class="bankBreakdown">
+
+<div class="totalLine">
+<span>Calendar Days</span>
+<b id="bankCalendarDays">0</b>
+</div>
+
+<div class="totalLine">
+<span>Days With Entries</span>
+<b id="bankEntryDays">0</b>
+</div>
+
+<div class="totalLine">
+<span>PDQ</span>
+<b id="bankBreakPDQ">£0.00</b>
+</div>
+
+<div class="totalLine">
+<span>Uber Net 70%</span>
+<b id="bankBreakUber">£0.00</b>
+</div>
+
+<div class="totalLine">
+<span>Deliveroo Net 65%</span>
+<b id="bankBreakDeliveroo">£0.00</b>
+</div>
+
+<div class="totalLine">
+<span>Delivery Card</span>
+<b id="bankBreakCard">£0.00</b>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
 </div>
 
 
 <script type="module">
 
-import {
-initializeApp
-}
+import {initializeApp}
 from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
@@ -1360,45 +1489,37 @@ from
 
 const firebaseConfig={
 
-apiKey:
-"AIzaSyBsmbLMNMFNoI2OpR0maR97XAlDZ39yxkg",
+apiKey:"AIzaSyBsmbLMNMFNoI2OpR0maR97XAlDZ39yxkg",
 
-authDomain:
-"khans-restaurant-46083.firebaseapp.com",
+authDomain:"khans-restaurant-46083.firebaseapp.com",
 
-projectId:
-"khans-restaurant-46083",
+projectId:"khans-restaurant-46083",
 
-storageBucket:
-"khans-restaurant-46083.firebasestorage.app",
+storageBucket:"khans-restaurant-46083.firebasestorage.app",
 
-messagingSenderId:
-"788410298373",
+messagingSenderId:"788410298373",
 
-appId:
-"1:788410298373:web:9f9806e6566d7911bc6c6c",
+appId:"1:788410298373:web:9f9806e6566d7911bc6c6c",
 
-measurementId:
-"G-8WJLEE7684"
+measurementId:"G-8WJLEE7684"
 
 };
 
 
-const firebaseApp=
-initializeApp(firebaseConfig);
+const firebaseApp=initializeApp(firebaseConfig);
 
-const auth=
-getAuth(firebaseApp);
+const auth=getAuth(firebaseApp);
 
-const db=
-getFirestore(firebaseApp);
+const db=getFirestore(firebaseApp);
 
 
 let currentUser=null;
 let allRecords=[];
 let reportMode="weeks";
+
 let unsubscribeRecords=null;
 let unsubscribeMonthEnd=null;
+
 let monthEndRecords={};
 
 
@@ -1424,8 +1545,7 @@ currentUser.email.toLowerCase()
 
 /* HELPERS */
 
-const $=id=>
-document.getElementById(id);
+const $=id=>document.getElementById(id);
 
 const num=id=>
 Number($(id).value)||0;
@@ -1449,8 +1569,16 @@ pad(date.getDate());
 
 
 function parseDate(s){
-
 return new Date(s+"T00:00:00");
+}
+
+
+function formatDateDisplay(date){
+
+return dateString(date)
+.split("-")
+.reverse()
+.join("/");
 
 }
 
@@ -1463,27 +1591,15 @@ const editor=isEditor();
 
 const badge=$("permissionBadge");
 
-const notice=$("viewerNotice");
-
-const saveCard=$("saveCard");
-
-const monthEndSaveCard=$("monthEndSaveCard");
-
-const monthEndViewerNotice=$("monthEndViewerNotice");
-
-
 if(editor){
 
 badge.innerText="✏️ EDIT ACCESS";
 badge.className="permissionBadge editorBadge";
 
-notice.classList.add("hidden");
-
-saveCard.classList.remove("hidden");
-
-monthEndSaveCard.classList.remove("hidden");
-
-monthEndViewerNotice.classList.add("hidden");
+$("viewerNotice").classList.add("hidden");
+$("saveCard").classList.remove("hidden");
+$("monthEndSaveCard").classList.remove("hidden");
+$("monthEndViewerNotice").classList.add("hidden");
 
 enableEntryFields();
 enableMonthEndFields();
@@ -1493,13 +1609,10 @@ enableMonthEndFields();
 badge.innerText="👀 VIEW ONLY";
 badge.className="permissionBadge viewerBadge";
 
-notice.classList.remove("hidden");
-
-saveCard.classList.add("hidden");
-
-monthEndSaveCard.classList.add("hidden");
-
-monthEndViewerNotice.classList.remove("hidden");
+$("viewerNotice").classList.remove("hidden");
+$("saveCard").classList.add("hidden");
+$("monthEndSaveCard").classList.add("hidden");
+$("monthEndViewerNotice").classList.remove("hidden");
 
 disableEntryFields();
 disableMonthEndFields();
@@ -1508,8 +1621,6 @@ disableMonthEndFields();
 
 }
 
-
-/* ENTRY FIELDS */
 
 function entryFieldIds(){
 
@@ -1537,8 +1648,7 @@ function disableEntryFields(){
 
 entryFieldIds().forEach(id=>{
 
-if($(id))
-$(id).disabled=true;
+if($(id)) $(id).disabled=true;
 
 });
 
@@ -1549,15 +1659,12 @@ function enableEntryFields(){
 
 entryFieldIds().forEach(id=>{
 
-if($(id))
-$(id).disabled=false;
+if($(id)) $(id).disabled=false;
 
 });
 
 }
 
-
-/* MONTH END FIELDS */
 
 function monthEndFieldIds(){
 
@@ -1575,8 +1682,7 @@ function disableMonthEndFields(){
 
 monthEndFieldIds().forEach(id=>{
 
-if($(id))
-$(id).disabled=true;
+if($(id)) $(id).disabled=true;
 
 });
 
@@ -1587,8 +1693,7 @@ function enableMonthEndFields(){
 
 monthEndFieldIds().forEach(id=>{
 
-if($(id))
-$(id).disabled=false;
+if($(id)) $(id).disabled=false;
 
 });
 
@@ -1614,9 +1719,7 @@ return;
 try{
 
 await signInWithEmailAndPassword(
-auth,
-email,
-password
+auth,email,password
 );
 
 $("loginMsg").innerText="";
@@ -1660,6 +1763,8 @@ dateString(new Date());
 
 setupReportYears();
 setupMonthEndYears();
+setupBankYears();
+
 setDay();
 setupPermissions();
 
@@ -1667,6 +1772,7 @@ await loadRecords();
 
 loadExistingEntry();
 updateMonthEnd();
+updateBankMonthEnd();
 
 }else{
 
@@ -1676,17 +1782,13 @@ $("loginScreen").classList.remove("hidden");
 $("app").classList.add("hidden");
 
 if(unsubscribeRecords){
-
 unsubscribeRecords();
 unsubscribeRecords=null;
-
 }
 
 if(unsubscribeMonthEnd){
-
 unsubscribeMonthEnd();
 unsubscribeMonthEnd=null;
-
 }
 
 }
@@ -1698,19 +1800,13 @@ unsubscribeMonthEnd=null;
 
 window.openPage=function(page,button){
 
-document
-.querySelectorAll(".page")
-.forEach(
-p=>p.classList.remove("active")
-);
+document.querySelectorAll(".page")
+.forEach(p=>p.classList.remove("active"));
 
 $(page).classList.add("active");
 
-document
-.querySelectorAll("nav button")
-.forEach(
-b=>b.classList.remove("active")
-);
+document.querySelectorAll("nav button")
+.forEach(b=>b.classList.remove("active"));
 
 if(button)
 button.classList.add("active");
@@ -1727,6 +1823,9 @@ generateReport();
 if(page==="monthEnd")
 updateMonthEnd();
 
+if(page==="bankMonthEnd")
+updateBankMonthEnd();
+
 };
 
 
@@ -1739,8 +1838,7 @@ const value=$("entryDate").value;
 if(!value)return;
 
 $("entryDay").value=
-parseDate(value)
-.toLocaleDateString(
+parseDate(value).toLocaleDateString(
 "en-GB",
 {weekday:"long"}
 );
@@ -1758,8 +1856,7 @@ num("pdq2")+
 num("pdq3")+
 num("pdq4");
 
-$("pdqTotal").innerText=
-money(total);
+$("pdqTotal").innerText=money(total);
 
 return total;
 
@@ -1774,8 +1871,7 @@ const total=
 num("cashTaken1")+
 num("cashTaken2");
 
-$("totalCashTaken").innerText=
-money(total);
+$("totalCashTaken").innerText=money(total);
 
 return total;
 
@@ -1795,8 +1891,7 @@ pdq-
 num("pettyCash")-
 taken;
 
-$("cashResult").innerText=
-money(cash);
+$("cashResult").innerText=money(cash);
 
 };
 
@@ -1804,8 +1899,6 @@ money(cash);
 /* LOAD RECORDS */
 
 async function loadRecords(){
-
-try{
 
 if(unsubscribeRecords)
 unsubscribeRecords();
@@ -1836,18 +1929,13 @@ displayHistory();
 generateReport();
 loadExistingEntry();
 updateMonthEnd();
+updateBankMonthEnd();
 
 },
 error=>{
 console.error(error);
 }
 );
-
-}catch(error){
-
-console.error(error);
-
-}
 
 }
 
@@ -1881,13 +1969,13 @@ $("pdq4").value=record.pdq4??"";
 $("pettyCash").value=record.pettyCash??"";
 
 $("cashTaken1").value=
-record.cashTaken1 ??
-record.cashTaken ??
+record.cashTaken1??
+record.cashTaken??
 "";
 
 $("takenBy1").value=
-record.takenBy1 ??
-record.takenBy ??
+record.takenBy1??
+record.takenBy??
 "";
 
 $("cashTaken2").value=
@@ -2059,9 +2147,7 @@ if(!record){
 "homeDeliverooSales",
 "homeDeliveroo35",
 "homeDeliveroo65"
-].forEach(
-id=>$(id).innerText="£0.00"
-);
+].forEach(id=>$(id).innerText="£0.00");
 
 return;
 
@@ -2093,19 +2179,17 @@ $("homeDeliveroo65").innerText=money(deliveroo*.65);
 }
 
 
-/* TOTAL CASH TAKEN */
+/* CASH TAKEN */
 
 function getTotalCashTaken(record){
 
 if(
-record.cashTaken1!==undefined ||
+record.cashTaken1!==undefined||
 record.cashTaken2!==undefined
 ){
 
-return(
-Number(record.cashTaken1||0)+
-Number(record.cashTaken2||0)
-);
+return Number(record.cashTaken1||0)+
+Number(record.cashTaken2||0);
 
 }
 
@@ -2114,17 +2198,12 @@ return Number(record.cashTaken||0);
 }
 
 
-/* CASH ENTRIES */
-
 function getCashTakenEntries(record){
 
 const entries=[];
 
-const amount1=
-Number(record.cashTaken1||0);
-
-const name1=
-(record.takenBy1||"").trim();
+const amount1=Number(record.cashTaken1||0);
+const name1=(record.takenBy1||"").trim();
 
 if(amount1>0){
 
@@ -2135,11 +2214,8 @@ name:name1||"Unknown"
 
 }
 
-const amount2=
-Number(record.cashTaken2||0);
-
-const name2=
-(record.takenBy2||"").trim();
+const amount2=Number(record.cashTaken2||0);
+const name2=(record.takenBy2||"").trim();
 
 if(amount2>0){
 
@@ -2151,7 +2227,7 @@ name:name2||"Unknown"
 }
 
 if(
-entries.length===0 &&
+entries.length===0&&
 Number(record.cashTaken||0)>0
 ){
 
@@ -2167,7 +2243,7 @@ return entries;
 }
 
 
-/* DATE */
+/* UPDATED */
 
 function formatUpdatedAt(value){
 
@@ -2209,14 +2285,8 @@ const search=$("historyDate").value;
 
 let records=allRecords;
 
-if(search){
-
-records=
-allRecords.filter(
-r=>r.date===search
-);
-
-}
+if(search)
+records=allRecords.filter(r=>r.date===search);
 
 if(!records.length){
 
@@ -2234,8 +2304,7 @@ return;
 $("historyList").innerHTML=
 records.map(r=>{
 
-const cashEntries=
-getCashTakenEntries(r);
+const cashEntries=getCashTakenEntries(r);
 
 return `
 
@@ -2267,15 +2336,11 @@ cashEntries.map(
 (e,i)=>`
 
 <div class="totalLine">
-
 <span>
-Cash Taken ${i+1}
-<br>
+Cash Taken ${i+1}<br>
 <small>${e.name}</small>
 </span>
-
 <b>${money(e.amount)}</b>
-
 </div>
 
 `
@@ -2288,68 +2353,46 @@ cashEntries.length
 ?
 `
 <div class="totalLine">
-
 <span><b>Total Cash Taken</b></span>
-
-<b>
-${money(getTotalCashTaken(r))}
-</b>
-
+<b>${money(getTotalCashTaken(r))}</b>
 </div>
 `
 :""
 }
 
 <div class="totalLine">
-
 <span>Cash / Balance</span>
-
 <b>${money(r.cash)}</b>
-
 </div>
 
 <div class="totalLine">
-
 <span>Uber</span>
-
 <b>${money(r.uber)}</b>
-
 </div>
 
 <div class="totalLine">
-
 <span>Deliveroo</span>
-
 <b>${money(r.deliveroo)}</b>
-
 </div>
 
 <div class="totalLine">
-
 <span>Delivery Cash</span>
-
 <b>${money(r.deliveryCash)}</b>
-
 </div>
 
 <div class="totalLine">
-
 <span>Delivery Card</span>
-
 <b>${money(r.deliveryCard)}</b>
-
 </div>
 
 <div class="lastEdited">
 
 <b>📝 Last edited by:</b><br>
-
-${r.updatedBy || "Not available"}
+${r.updatedBy||"Not available"}
 
 <br><br>
 
 <b>🕐 Last updated:</b><br>
-
 ${formatUpdatedAt(r.updatedAt)}
 
 </div>
@@ -2360,10 +2403,8 @@ ${
 isEditor()
 ?
 `
-<button
-class="edit"
-onclick="editEntry('${r.date}')"
->
+<button class="edit"
+onclick="editEntry('${r.date}')">
 ✏️ EDIT
 </button>
 `
@@ -2411,16 +2452,15 @@ behavior:"smooth"
 
 /* YEARS */
 
-function setupReportYears(){
+function fillYears(selectId){
 
-const select=$("reportYear");
+const select=$(selectId);
 
 select.innerHTML="";
 
 for(let y=2021;y<=2045;y++){
 
-const option=
-document.createElement("option");
+const option=document.createElement("option");
 
 option.value=y;
 option.textContent=y;
@@ -2429,14 +2469,19 @@ select.appendChild(option);
 
 }
 
-const current=
-new Date().getFullYear();
+const current=new Date().getFullYear();
 
-select.value=
-Math.min(
+select.value=Math.min(
 2045,
 Math.max(2021,current)
 );
+
+}
+
+
+function setupReportYears(){
+
+fillYears("reportYear");
 
 $("reportMonth").value=
 new Date().getMonth();
@@ -2446,32 +2491,19 @@ new Date().getMonth();
 
 function setupMonthEndYears(){
 
-const select=$("monthEndYear");
+fillYears("monthEndYear");
 
-select.innerHTML="";
-
-for(let y=2021;y<=2045;y++){
-
-const option=
-document.createElement("option");
-
-option.value=y;
-option.textContent=y;
-
-select.appendChild(option);
+$("monthEndMonth").value=
+new Date().getMonth();
 
 }
 
-const current=
-new Date().getFullYear();
 
-select.value=
-Math.min(
-2045,
-Math.max(2021,current)
-);
+function setupBankYears(){
 
-$("monthEndMonth").value=
+fillYears("bankYear");
+
+$("bankMonth").value=
 new Date().getMonth();
 
 }
@@ -2490,7 +2522,6 @@ b=>b.classList.remove("active")
 );
 
 const map={
-
 weeks:"weekMode",
 month:"monthMode",
 "2months":"twoMonthMode",
@@ -2498,7 +2529,6 @@ month:"monthMode",
 "6months":"sixMonthMode",
 year:"yearMode",
 all:"allMode"
-
 };
 
 $(map[mode]).classList.add("active");
@@ -2508,109 +2538,104 @@ generateReport();
 };
 
 
-/* REPORTING MONTH */
+/* CALENDAR MONTH START/END */
 
-function reportingMonthStart(year,month){
+function calendarMonthStart(year,month){
 
-const first=
-new Date(year,month,1);
-
-const day=first.getDay();
-
-const diff=
-day===0?6:day-1;
-
-first.setDate(
-first.getDate()-diff
-);
-
-first.setHours(0,0,0,0);
-
-return first;
+return new Date(year,month,1);
 
 }
 
 
-/* NEXT MONTH */
+function calendarMonthEnd(year,month){
 
-function nextReportingMonthStart(year,month){
-
-if(month===11){
-
-return reportingMonthStart(
-year+1,
-0
-);
-
-}
-
-return reportingMonthStart(
-year,
-month+1
-);
+return new Date(year,month+1,0);
 
 }
 
 
-/* MONTH END */
+/*
+   WEEKLY REPORT
 
-function reportingMonthEnd(year,month){
+   IMPORTANT:
+   Weeks are complete Monday-Sunday weeks
+   INSIDE the selected calendar month.
 
-const next=
-nextReportingMonthStart(
-year,
-month
-);
+   Therefore:
+   August 2026:
+   03-08 → 09-08
+   10-08 → 16-08
+   17-08 → 23-08
+   24-08 → 30-08
 
-next.setDate(
-next.getDate()-1
-);
-
-return next;
-
-}
-
-
-/* WEEKS */
+   27-07 → 02-08 is July.
+   31-08 → 06-09 is September.
+*/
 
 function getReportingWeeks(year,month){
 
-const start=
-reportingMonthStart(year,month);
+const first=
+calendarMonthStart(year,month);
 
-const end=
-reportingMonthEnd(year,month);
+const last=
+calendarMonthEnd(year,month);
 
 const weeks=[];
 
-let current=new Date(start);
+/* Find first Monday INSIDE the month */
+
+let firstMonday=new Date(first);
+
+const day=firstMonday.getDay();
+
+const daysToMonday=
+day===0?1:day===1?0:8-day;
+
+firstMonday.setDate(
+firstMonday.getDate()+daysToMonday
+);
+
+
+/* If there is no Monday in month */
+
+if(firstMonday>last)
+return weeks;
+
+
+let current=new Date(firstMonday);
+
 let weekNumber=1;
 
-while(current<=end){
+while(true){
 
-const weekStart=
-new Date(current);
+const weekStart=new Date(current);
 
-const weekEnd=
-new Date(current);
+const weekEnd=new Date(current);
 
 weekEnd.setDate(
 weekEnd.getDate()+6
 );
 
-weeks.push({
 
+/*
+   Only accept complete Monday-Sunday week
+   if Sunday is still inside selected month.
+*/
+
+if(weekEnd>last)
+break;
+
+weeks.push({
 number:weekNumber,
 start:weekStart,
 end:weekEnd
-
 });
+
+weekNumber++;
 
 current.setDate(
 current.getDate()+7
 );
-
-weekNumber++;
 
 }
 
@@ -2653,32 +2678,16 @@ cashTaken:0
 
 records.forEach(r=>{
 
-total.mainTill+=
-Number(r.mainTill||0);
+total.mainTill+=Number(r.mainTill||0);
+total.pdqTotal+=Number(r.pdqTotal||0);
+total.pettyCash+=Number(r.pettyCash||0);
+total.cash+=Number(r.cash||0);
+total.uber+=Number(r.uber||0);
+total.deliveroo+=Number(r.deliveroo||0);
+total.deliveryCash+=Number(r.deliveryCash||0);
+total.deliveryCard+=Number(r.deliveryCard||0);
 
-total.pdqTotal+=
-Number(r.pdqTotal||0);
-
-total.pettyCash+=
-Number(r.pettyCash||0);
-
-total.cash+=
-Number(r.cash||0);
-
-total.uber+=
-Number(r.uber||0);
-
-total.deliveroo+=
-Number(r.deliveroo||0);
-
-total.deliveryCash+=
-Number(r.deliveryCash||0);
-
-total.deliveryCard+=
-Number(r.deliveryCard||0);
-
-total.cashTaken+=
-getTotalCashTaken(r);
+total.cashTaken+=getTotalCashTaken(r);
 
 });
 
@@ -2691,11 +2700,11 @@ return total;
 
 window.generateReport=function(){
 
-const year=
-Number($("reportYear").value);
+if(!$("reportYear")||!$("reportMonth"))
+return;
 
-const month=
-Number($("reportMonth").value);
+const year=Number($("reportYear").value);
+const month=Number($("reportMonth").value);
 
 let start;
 let end;
@@ -2705,19 +2714,11 @@ reportMode==="month"||
 reportMode==="weeks"
 ){
 
-start=
-reportingMonthStart(
-year,
-month
-);
-
-end=
-reportingMonthEnd(
-year,
-month
-);
+start=calendarMonthStart(year,month);
+end=calendarMonthEnd(year,month);
 
 }
+
 
 if(
 reportMode==="2months"||
@@ -2725,53 +2726,32 @@ reportMode==="3months"||
 reportMode==="6months"
 ){
 
-const months=
-Number(
-reportMode.replace(
-"months",
-""
-)
+const months=Number(
+reportMode.replace("months","")
 );
 
-start=
-reportingMonthStart(
-year,
-month
-);
+start=calendarMonthStart(year,month);
 
-let endMonth=
-month+months-1;
+let endMonth=month+months-1;
 
 let endYear=
 year+
 Math.floor(endMonth/12);
 
-endMonth=
-endMonth%12;
+endMonth=endMonth%12;
 
-end=
-reportingMonthEnd(
-endYear,
-endMonth
-);
+end=calendarMonthEnd(endYear,endMonth);
 
 }
+
 
 if(reportMode==="year"){
 
-start=
-reportingMonthStart(
-year,
-0
-);
-
-end=
-reportingMonthEnd(
-year,
-11
-);
+start=calendarMonthStart(year,0);
+end=calendarMonthEnd(year,11);
 
 }
+
 
 if(reportMode==="all"){
 
@@ -2795,56 +2775,33 @@ end=new Date();
 
 }
 
-const records=
-recordsBetween(start,end);
 
-const total=
-sumRecords(records);
+const records=recordsBetween(start,end);
+const total=sumRecords(records);
 
 
 /* TOTALS */
 
-$("reportMain").innerText=
-money(total.mainTill);
-
-$("reportPDQ").innerText=
-money(total.pdqTotal);
-
-$("reportPetty").innerText=
-money(total.pettyCash);
-
-$("reportCash").innerText=
-money(total.cash);
-
-$("reportCashTaken").innerText=
-money(total.cashTaken);
-
-$("reportDays").innerText=
-records.length;
+$("reportMain").innerText=money(total.mainTill);
+$("reportPDQ").innerText=money(total.pdqTotal);
+$("reportPetty").innerText=money(total.pettyCash);
+$("reportCash").innerText=money(total.cash);
+$("reportCashTaken").innerText=money(total.cashTaken);
+$("reportDays").innerText=records.length;
 
 
 /* UBER */
 
-$("reportUber").innerText=
-money(total.uber);
-
-$("reportUber30").innerText=
-money(total.uber*.30);
-
-$("reportUber70").innerText=
-money(total.uber*.70);
+$("reportUber").innerText=money(total.uber);
+$("reportUber30").innerText=money(total.uber*.30);
+$("reportUber70").innerText=money(total.uber*.70);
 
 
 /* DELIVEROO */
 
-$("reportDeliveroo").innerText=
-money(total.deliveroo);
-
-$("reportDeliveroo35").innerText=
-money(total.deliveroo*.35);
-
-$("reportDeliveroo65").innerText=
-money(total.deliveroo*.65);
+$("reportDeliveroo").innerText=money(total.deliveroo);
+$("reportDeliveroo35").innerText=money(total.deliveroo*.35);
+$("reportDeliveroo65").innerText=money(total.deliveroo*.65);
 
 
 /* DELIVERY */
@@ -2858,10 +2815,7 @@ money(total.deliveryCard);
 
 /* WEEKLY */
 
-if(
-reportMode==="weeks"||
-reportMode==="month"
-){
+if(reportMode==="weeks"){
 
 showWeeklyReport(year,month);
 
@@ -2873,27 +2827,18 @@ $("weeklyTitle").innerText=
 $("weeklyReport").innerHTML=
 `
 <p>
-Select <b>WEEKLY</b> to see the Monday-Sunday breakdown.
+Select <b>WEEKLY</b> to see the complete
+Monday-Sunday weeks belonging to the selected
+calendar month.
 </p>
 `;
 
 }
 
 
-/* CASH DETAILS */
-
 showCashTakenDetails(records);
-
-
-/* PERSON TOTAL */
-
 showPersonTotals(records);
-
-
-/* MONTH */
-
 showMonthSummary(year,month);
-
 
 if(
 $("monthEndYear")&&
@@ -2909,20 +2854,15 @@ updateMonthEnd();
 };
 
 
-/* WEEKLY REPORT */
+/* WEEKLY */
 
 function showWeeklyReport(year,month){
 
 const weeks=
 getReportingWeeks(year,month);
 
-$("weeklyTitle").innerText=
-"📅 Weekly Report — "+
-new Date(
-year,
-month,
-1
-).toLocaleDateString(
+const monthName=
+new Date(year,month,1).toLocaleDateString(
 "en-GB",
 {
 month:"long",
@@ -2930,17 +2870,31 @@ year:"numeric"
 }
 );
 
+$("weeklyTitle").innerText=
+"📅 Weekly Report — "+monthName;
+
+
+if(!weeks.length){
+
+$("weeklyReport").innerHTML=
+`
+<p class="small">
+No complete Monday-Sunday week belongs to this calendar month.
+</p>
+`;
+
+return;
+
+}
+
+
 $("weeklyReport").innerHTML=
 weeks.map(w=>{
 
 const records=
-recordsBetween(
-w.start,
-w.end
-);
+recordsBetween(w.start,w.end);
 
-const t=
-sumRecords(records);
+const t=sumRecords(records);
 
 return `
 
@@ -2950,17 +2904,11 @@ return `
 
 Week ${w.number}:
 
-${dateString(w.start)
-.split("-")
-.reverse()
-.join("/")}
+${formatDateDisplay(w.start)}
 
 →
 
-${dateString(w.end)
-.split("-")
-.reverse()
-.join("/")}
+${formatDateDisplay(w.end)}
 
 </div>
 
@@ -3080,19 +3028,17 @@ let html=`
 <tbody>
 `;
 
+
 cashRecords.forEach(r=>{
 
-const entries=
-getCashTakenEntries(r);
+const entries=getCashTakenEntries(r);
 
-const e1=
-entries[0]||{
+const e1=entries[0]||{
 amount:0,
 name:""
 };
 
-const e2=
-entries[1]||{
+const e2=entries[1]||{
 amount:0,
 name:""
 };
@@ -3101,29 +3047,17 @@ html+=`
 
 <tr>
 
-<td>
-<b>${r.date||"-"}</b>
-</td>
+<td><b>${r.date||"-"}</b></td>
 
-<td>
-${e1.amount>0?money(e1.amount):""}
-</td>
+<td>${e1.amount>0?money(e1.amount):""}</td>
 
-<td>
-${e1.amount>0?(e1.name||"Unknown"):""}
-</td>
+<td>${e1.amount>0?(e1.name||"Unknown"):""}</td>
 
-<td>
-${e2.amount>0?money(e2.amount):""}
-</td>
+<td>${e2.amount>0?money(e2.amount):""}</td>
 
-<td>
-${e2.amount>0?(e2.name||"Unknown"):""}
-</td>
+<td>${e2.amount>0?(e2.name||"Unknown"):""}</td>
 
-<td>
-<b>${money(getTotalCashTaken(r))}</b>
-</td>
+<td><b>${money(getTotalCashTaken(r))}</b></td>
 
 </tr>
 
@@ -3132,9 +3066,7 @@ ${e2.amount>0?(e2.name||"Unknown"):""}
 });
 
 html+=`
-
 </tbody>
-
 </table>
 `;
 
@@ -3151,8 +3083,7 @@ const people={};
 
 records.forEach(r=>{
 
-const entries=
-getCashTakenEntries(r);
+const entries=getCashTakenEntries(r);
 
 entries.forEach(e=>{
 
@@ -3166,8 +3097,8 @@ Number(e.amount||0);
 
 });
 
-const names=
-Object.keys(people);
+
+const names=Object.keys(people);
 
 if(!names.length){
 
@@ -3181,6 +3112,7 @@ No cash was taken during this reporting period.
 return;
 
 }
+
 
 $("personTotals").innerHTML=
 names.sort().map(name=>`
@@ -3206,24 +3138,14 @@ names.sort().map(name=>`
 
 function showMonthSummary(year,month){
 
-const start=
-reportingMonthStart(year,month);
+const start=calendarMonthStart(year,month);
+const end=calendarMonthEnd(year,month);
 
-const end=
-reportingMonthEnd(year,month);
-
-const records=
-recordsBetween(start,end);
-
-const t=
-sumRecords(records);
+const records=recordsBetween(start,end);
+const t=sumRecords(records);
 
 const monthName=
-new Date(
-year,
-month,
-1
-).toLocaleDateString(
+new Date(year,month,1).toLocaleDateString(
 "en-GB",
 {
 month:"long",
@@ -3237,19 +3159,11 @@ $("monthSummary").innerHTML=`
 
 <p class="small">
 
-Reporting period:
+Calendar period:
 
-${dateString(start)
-.split("-")
-.reverse()
-.join("/")}
-
+${formatDateDisplay(start)}
 →
-
-${dateString(end)
-.split("-")
-.reverse()
-.join("/")}
+${formatDateDisplay(end)}
 
 </p>
 
@@ -3329,23 +3243,14 @@ ${dateString(end)
 
 function getMonthEndPeriod(){
 
-const year=
-Number($("monthEndYear").value);
-
-const month=
-Number($("monthEndMonth").value);
-
-const start=
-reportingMonthStart(year,month);
-
-const end=
-reportingMonthEnd(year,month);
+const year=Number($("monthEndYear").value);
+const month=Number($("monthEndMonth").value);
 
 return {
 year,
 month,
-start,
-end
+start:calendarMonthStart(year,month),
+end:calendarMonthEnd(year,month)
 };
 
 }
@@ -3353,10 +3258,7 @@ end
 
 window.updateMonthEnd=function(){
 
-if(
-!$("monthEndYear")||
-!$("monthEndMonth")
-)
+if(!$("monthEndYear")||!$("monthEndMonth"))
 return;
 
 const {
@@ -3364,43 +3266,24 @@ year,
 month,
 start,
 end
-}=
-getMonthEndPeriod();
+}=getMonthEndPeriod();
 
-
-const records=
-recordsBetween(start,end);
-
-const total=
-sumRecords(records);
-
-
-/* MONTH END DRAWER CASH */
+const records=recordsBetween(start,end);
+const total=sumRecords(records);
 
 $("monthEndTotalCash").innerText=
 money(total.cash);
 
-
-/* CALCULATION CASH */
-
 $("monthEndCalculationCash").innerText=
 money(total.cash);
 
-$("monthEndCalculationCash")
-.dataset.value=
+$("monthEndCalculationCash").dataset.value=
 String(total.cash);
 
-
-/* LOAD SAVED MONTH END */
-
 const key=
-year+
-"-"+
-pad(month+1);
+year+"-"+pad(month+1);
 
-const saved=
-monthEndRecords[key];
-
+const saved=monthEndRecords[key];
 
 if(saved){
 
@@ -3415,7 +3298,6 @@ saved.bankDeposit??"";
 
 $("monthEndExtra").value=
 saved.extra??"";
-
 
 $("monthEndLastEdited").innerHTML=
 `
@@ -3441,17 +3323,11 @@ $("monthEndLastEdited").innerHTML=
 }
 
 
-/* PREVIOUS MONTH */
-
 const previousKey=
-getPreviousMonthKey(
-year,
-month
-);
+getPreviousMonthKey(year,month);
 
 const previous=
 monthEndRecords[previousKey];
-
 
 if(previous){
 
@@ -3465,15 +3341,10 @@ $("previousMonthCarryForward").innerText=
 
 }
 
-
-/* CALCULATE */
-
 calculateMonthEnd();
 
 };
 
-
-/* PREVIOUS MONTH KEY */
 
 function getPreviousMonthKey(year,month){
 
@@ -3494,27 +3365,17 @@ pad(previousMonth+1);
 }
 
 
-/* CALCULATE MONTH END */
-
 function calculateMonthEnd(){
 
 const totalCash=
 Number(
-$("monthEndCalculationCash")
-.dataset.value||0
+$("monthEndCalculationCash").dataset.value||0
 );
 
-const staff=
-num("monthEndStaffWages");
-
-const director=
-num("monthEndDirectorWages");
-
-const bank=
-num("monthEndBankDeposit");
-
-const extra=
-num("monthEndExtra");
+const staff=num("monthEndStaffWages");
+const director=num("monthEndDirectorWages");
+const bank=num("monthEndBankDeposit");
+const extra=num("monthEndExtra");
 
 const totalUsed=
 staff+
@@ -3523,9 +3384,7 @@ bank+
 extra;
 
 const remaining=
-totalCash-
-totalUsed;
-
+totalCash-totalUsed;
 
 $("monthEndCalculationStaff").innerText=
 money(staff);
@@ -3551,8 +3410,6 @@ money(remaining);
 }
 
 
-/* SAVE MONTH END */
-
 window.saveMonthEnd=async function(){
 
 if(!currentUser){
@@ -3573,34 +3430,21 @@ return;
 
 }
 
-const {
-year,
-month
-}=
+const {year,month}=
 getMonthEndPeriod();
 
 const key=
-year+
-"-"+
-pad(month+1);
+year+"-"+pad(month+1);
 
 const totalCash=
 Number(
-$("monthEndCalculationCash")
-.dataset.value||0
+$("monthEndCalculationCash").dataset.value||0
 );
 
-const staff=
-num("monthEndStaffWages");
-
-const director=
-num("monthEndDirectorWages");
-
-const bank=
-num("monthEndBankDeposit");
-
-const extra=
-num("monthEndExtra");
+const staff=num("monthEndStaffWages");
+const director=num("monthEndDirectorWages");
+const bank=num("monthEndBankDeposit");
+const extra=num("monthEndExtra");
 
 const totalUsed=
 staff+
@@ -3609,13 +3453,12 @@ bank+
 extra;
 
 const remaining=
-totalCash-
-totalUsed;
+totalCash-totalUsed;
 
 const data={
 
-year:year,
-month:month,
+year,
+month,
 monthKey:key,
 
 totalCashBalance:totalCash,
@@ -3657,10 +3500,6 @@ $("monthEndSaveMessage").innerText=
 };
 
 
-/* =====================================================
-   NEW — RESET MONTH END
-===================================================== */
-
 window.resetMonthEnd=async function(){
 
 if(!currentUser){
@@ -3681,23 +3520,14 @@ return;
 
 }
 
-const {
-year,
-month
-}=
+const {year,month}=
 getMonthEndPeriod();
 
 const key=
-year+
-"-"+
-pad(month+1);
+year+"-"+pad(month+1);
 
 const monthName=
-new Date(
-year,
-month,
-1
-).toLocaleDateString(
+new Date(year,month,1).toLocaleDateString(
 "en-GB",
 {
 month:"long",
@@ -3705,9 +3535,10 @@ year:"numeric"
 }
 );
 
-const confirmed=
-confirm(
-"Reset Month End for "+monthName+" "+year+"?\n\n"+
+const confirmed=confirm(
+"Reset Month End for "+
+monthName+" "+year+
+"?\n\n"+
 "This will clear Staff Wages, Director Wages, Bank Deposit and Extra.\n\n"+
 "The Month End record will NOT be deleted."
 );
@@ -3715,23 +3546,15 @@ confirm(
 if(!confirmed)
 return;
 
-
-/*
-   Firestore delete is disabled by the current rules.
-   Therefore reset by overwriting the existing record
-   with zero values instead of deleting it.
-*/
-
 const totalCash=
 Number(
-$("monthEndCalculationCash")
-.dataset.value||0
+$("monthEndCalculationCash").dataset.value||0
 );
 
 const data={
 
-year:year,
-month:month,
+year,
+month,
 monthKey:key,
 
 totalCashBalance:totalCash,
@@ -3760,17 +3583,12 @@ data,
 {merge:true}
 );
 
-
-/* Clear fields immediately */
-
 $("monthEndStaffWages").value="";
 $("monthEndDirectorWages").value="";
 $("monthEndBankDeposit").value="";
 $("monthEndExtra").value="";
 
-
 calculateMonthEnd();
-
 
 $("monthEndSaveMessage").innerText=
 "✅ Month End reset successfully. You can now enter the corrected amounts.";
@@ -3814,16 +3632,308 @@ updateMonthEnd();
 
 },
 error=>{
-
 console.error(
 "Month End records error:",
 error
 );
-
 }
 );
 
 }
+
+
+/* =====================================================
+   BANK MONTH END
+===================================================== */
+
+
+/*
+   BANK CALCULATION
+
+   Normal calendar month:
+   1st → last day.
+
+   Bank total:
+   PDQ
+   + Uber 70%
+   + Deliveroo 65%
+   + Delivery Card
+
+   Delivery Cash is NOT included because it is cash.
+*/
+
+function getBankMonthPeriod(){
+
+const year=Number($("bankYear").value);
+const month=Number($("bankMonth").value);
+
+return {
+year,
+month,
+start:calendarMonthStart(year,month),
+end:calendarMonthEnd(year,month)
+};
+
+}
+
+
+window.updateBankMonthEnd=function(){
+
+if(!$("bankYear")||!$("bankMonth"))
+return;
+
+const {
+year,
+month,
+start,
+end
+}=getBankMonthPeriod();
+
+const records=
+recordsBetween(start,end);
+
+let pdq=0;
+let uberNet=0;
+let deliverooNet=0;
+let deliveryCard=0;
+
+records.forEach(r=>{
+
+pdq+=Number(
+r.pdqTotal||
+(
+Number(r.pdq1||0)+
+Number(r.pdq2||0)+
+Number(r.pdq3||0)+
+Number(r.pdq4||0)
+)
+);
+
+uberNet+=
+Number(r.uber||0)*0.70;
+
+deliverooNet+=
+Number(r.deliveroo||0)*0.65;
+
+deliveryCard+=
+Number(r.deliveryCard||0);
+
+});
+
+
+const total=
+pdq+
+uberNet+
+deliverooNet+
+deliveryCard;
+
+
+/* HERO */
+
+$("bankMonthTotal").innerText=
+money(total);
+
+$("bankFinalTotal").innerText=
+money(total);
+
+
+/* BREAKDOWN */
+
+$("bankPDQ").innerText=
+money(pdq);
+
+$("bankUber").innerText=
+money(uberNet);
+
+$("bankDeliveroo").innerText=
+money(deliverooNet);
+
+$("bankDeliveryCard").innerText=
+money(deliveryCard);
+
+$("bankTotalCalculation").innerText=
+money(total);
+
+
+/* LABEL */
+
+const monthName=
+new Date(year,month,1).toLocaleDateString(
+"en-GB",
+{
+month:"long",
+year:"numeric"
+}
+);
+
+$("bankMonthLabel").innerText=
+monthName+
+" — "+
+formatDateDisplay(start)+
+" → "+
+formatDateDisplay(end);
+
+
+/* BREAKDOWN */
+
+$("bankCalendarDays").innerText=
+new Date(year,month+1,0).getDate();
+
+$("bankEntryDays").innerText=
+records.length;
+
+$("bankBreakPDQ").innerText=
+money(pdq);
+
+$("bankBreakUber").innerText=
+money(uberNet);
+
+$("bankBreakDeliveroo").innerText=
+money(deliverooNet);
+
+$("bankBreakCard").innerText=
+money(deliveryCard);
+
+
+/* CALENDAR */
+
+renderBankCalendar(year,month);
+
+};
+
+
+/* BANK CALENDAR */
+
+function renderBankCalendar(year,month){
+
+const first=
+calendarMonthStart(year,month);
+
+const last=
+calendarMonthEnd(year,month);
+
+const firstDay=
+first.getDay();
+
+const totalDays=
+last.getDate();
+
+let html="";
+let dayNumber=1;
+
+
+/*
+   Sunday = 0
+   Monday = 1
+   ...
+   Saturday = 6
+*/
+
+while(dayNumber<=totalDays){
+
+html+="<tr>";
+
+for(let weekday=0;weekday<7;weekday++){
+
+if(
+(dayNumber===1&&weekday<firstDay)||
+dayNumber>totalDays
+){
+
+html+=`
+<td>
+<span class="bankEmpty">—</span>
+</td>
+`;
+
+continue;
+
+}
+
+const date=
+new Date(
+year,
+month,
+dayNumber
+);
+
+const key=dateString(date);
+
+const record=
+allRecords.find(
+r=>r.date===key
+);
+
+let dailyBank=0;
+
+if(record){
+
+const pdq=
+Number(
+record.pdqTotal||
+(
+Number(record.pdq1||0)+
+Number(record.pdq2||0)+
+Number(record.pdq3||0)+
+Number(record.pdq4||0)
+)
+);
+
+const uber=
+Number(record.uber||0)*0.70;
+
+const deliveroo=
+Number(record.deliveroo||0)*0.65;
+
+const card=
+Number(record.deliveryCard||0);
+
+dailyBank=
+pdq+
+uber+
+deliveroo+
+card;
+
+}
+
+html+=`
+
+<td>
+
+<div class="bankDay">
+${dayNumber}
+</div>
+
+${
+record
+?
+`
+<div class="bankAmount">
+${money(dailyBank)}
+</div>
+`
+:
+`
+<div class="bankEmpty">
+No entry
+</div>
+`
+}
+
+</td>
+`;
+
+dayNumber++;
+
+}
+
+html+="</tr>";
+
+}
+
+$("bankCalendarBody").innerHTML=html;
+
+};
 
 
 /* START MONTH END */
@@ -3835,11 +3945,8 @@ loadMonthEndRecords();
 
 setTimeout(()=>{
 
-if($("weekMode")){
-
+if($("weekMode"))
 setReportMode("weeks");
-
-}
 
 },500);
 
