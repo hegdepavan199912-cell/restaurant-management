@@ -160,6 +160,24 @@ padding:8px 12px;
 border-radius:7px
 }
 
+/* NEW RESET BUTTON */
+
+.reset{
+width:100%;
+padding:14px;
+background:#dc2626;
+color:white;
+border:0;
+border-radius:8px;
+font-weight:bold;
+font-size:16px;
+margin-top:10px
+}
+
+.reset:hover{
+background:#b91c1c
+}
+
 .message{
 font-weight:bold;
 margin-top:10px
@@ -297,6 +315,18 @@ margin-top:15px
 font-size:24px;
 font-weight:bold;
 margin-top:5px
+}
+
+/* RESET INFORMATION */
+
+.resetInfo{
+background:#fff7ed;
+border:1px solid #fed7aa;
+padding:12px;
+border-radius:9px;
+margin-top:10px;
+font-size:13px;
+color:#9a3412
 }
 
 @media(max-width:700px){
@@ -787,7 +817,7 @@ Weekly reports are Monday to Sunday.
 
 <label>Reporting Month</label>
 
-<select id="reportMonth" onchange="generateReport()">
+<select id="reportMonth" onchange="generateReport">
 
 <option value="0">January</option>
 <option value="1">February</option>
@@ -978,9 +1008,7 @@ ALL HISTORY
 </section>
 
 
-<!-- =====================================================
-     MONTH END
-===================================================== -->
+<!-- MONTH END -->
 
 <section id="monthEnd" class="page">
 
@@ -1032,8 +1060,6 @@ Select the month. Month End Drawer Cash automatically comes from the selected mo
 </div>
 
 
-<!-- ONLY MONTH END DRAWER CASH -->
-
 <div class="monthEndHero">
 
 <small>MONTH END DRAWER CASH</small>
@@ -1048,8 +1074,6 @@ Total Cash / Balance — automatically from the selected reporting month
 
 </div>
 
-
-<!-- MONTH END PAYMENTS -->
 
 <div class="card">
 
@@ -1121,8 +1145,6 @@ oninput="calculateMonthEnd()"
 
 </div>
 
-
-<!-- CALCULATION -->
 
 <div class="card">
 
@@ -1252,13 +1274,22 @@ id="previousMonthCarryForward"
 </div>
 
 
-<!-- SAVE -->
+<!-- SAVE + RESET -->
 
 <div id="monthEndSaveCard" class="card">
 
 <button class="save" onclick="saveMonthEnd()">
 💾 SAVE MONTH END
 </button>
+
+<button class="reset" onclick="resetMonthEnd()">
+🔄 RESET MONTH END
+</button>
+
+<div class="resetInfo">
+⚠️ Reset will clear the four Month End payment entries for the selected month. 
+It will not delete the Firebase record. You can then enter the corrected amounts and save again.
+</div>
 
 <div id="monthEndSaveMessage" class="message"></div>
 
@@ -1272,7 +1303,7 @@ id="previousMonthCarryForward"
 </p>
 
 <p class="small">
-You can view Month End information, but you cannot edit or save it.
+You can view Month End information, but you cannot edit, reset or save it.
 </p>
 
 </div>
@@ -1375,7 +1406,7 @@ let monthEndRecords={};
 
 const EDITORS=[
 "kj.hegde@hotmail.co.uk",
-"Vasimalisiddiee@yahoo.co.uk"
+"Vasimalisiddi@yahoo.uk"
 ];
 
 
@@ -2378,9 +2409,7 @@ behavior:"smooth"
 };
 
 
-/* =====================================================
-   YEARS — 2021 TO 2045
-===================================================== */
+/* YEARS */
 
 function setupReportYears(){
 
@@ -2414,8 +2443,6 @@ new Date().getMonth();
 
 }
 
-
-/* MONTH END YEARS */
 
 function setupMonthEndYears(){
 
@@ -2867,11 +2894,6 @@ showPersonTotals(records);
 
 showMonthSummary(year,month);
 
-
-/*
-   Keep Month End connected to the
-   selected reporting month.
-*/
 
 if(
 $("monthEndYear")&&
@@ -3329,15 +3351,6 @@ end
 }
 
 
-/*
-   IMPORTANT:
-
-   Month End Drawer Cash =
-   selected month's Total Cash / Balance.
-
-   It is NOT taken from the latest daily record.
-*/
-
 window.updateMonthEnd=function(){
 
 if(
@@ -3354,8 +3367,6 @@ end
 }=
 getMonthEndPeriod();
 
-
-/* SAME CALCULATION AS REPORTS */
 
 const records=
 recordsBetween(start,end);
@@ -3640,6 +3651,136 @@ console.error(error);
 
 $("monthEndSaveMessage").innerText=
 "❌ Save failed: "+error.message;
+
+}
+
+};
+
+
+/* =====================================================
+   NEW — RESET MONTH END
+===================================================== */
+
+window.resetMonthEnd=async function(){
+
+if(!currentUser){
+
+$("monthEndSaveMessage").innerText=
+"Please login first.";
+
+return;
+
+}
+
+if(!isEditor()){
+
+$("monthEndSaveMessage").innerText=
+"❌ You have view-only access.";
+
+return;
+
+}
+
+const {
+year,
+month
+}=
+getMonthEndPeriod();
+
+const key=
+year+
+"-"+
+pad(month+1);
+
+const monthName=
+new Date(
+year,
+month,
+1
+).toLocaleDateString(
+"en-GB",
+{
+month:"long",
+year:"numeric"
+}
+);
+
+const confirmed=
+confirm(
+"Reset Month End for "+monthName+" "+year+"?\n\n"+
+"This will clear Staff Wages, Director Wages, Bank Deposit and Extra.\n\n"+
+"The Month End record will NOT be deleted."
+);
+
+if(!confirmed)
+return;
+
+
+/*
+   Firestore delete is disabled by the current rules.
+   Therefore reset by overwriting the existing record
+   with zero values instead of deleting it.
+*/
+
+const totalCash=
+Number(
+$("monthEndCalculationCash")
+.dataset.value||0
+);
+
+const data={
+
+year:year,
+month:month,
+monthKey:key,
+
+totalCashBalance:totalCash,
+
+staffWages:0,
+directorWages:0,
+bankDeposit:0,
+extra:0,
+
+totalCashUsed:0,
+
+remainingCash:totalCash,
+
+updatedBy:currentUser.email,
+updatedAt:new Date().toISOString(),
+
+reset:true
+
+};
+
+try{
+
+await setDoc(
+doc(db,"monthEndRecords",key),
+data,
+{merge:true}
+);
+
+
+/* Clear fields immediately */
+
+$("monthEndStaffWages").value="";
+$("monthEndDirectorWages").value="";
+$("monthEndBankDeposit").value="";
+$("monthEndExtra").value="";
+
+
+calculateMonthEnd();
+
+
+$("monthEndSaveMessage").innerText=
+"✅ Month End reset successfully. You can now enter the corrected amounts.";
+
+}catch(error){
+
+console.error(error);
+
+$("monthEndSaveMessage").innerText=
+"❌ Reset failed: "+error.message;
 
 }
 
