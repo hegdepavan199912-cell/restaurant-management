@@ -281,9 +281,9 @@ font-size:13px;
 color:#4b5563
 }
 
-/* BANK MONTH END */
+/* MONTH END */
 
-.bankMonthHero{
+.monthEndHero{
 background:#111827;
 color:white;
 padding:20px;
@@ -291,25 +291,17 @@ border-radius:12px;
 margin-bottom:15px
 }
 
-.bankMonthHero small{
+.monthEndHero small{
 opacity:.8
 }
 
-.bankMonthHero .amount{
+.monthEndHero .amount{
 font-size:30px;
 font-weight:bold;
 margin-top:8px
 }
 
-.bankCalendar{
-background:#eff6ff;
-border:1px solid #bfdbfe;
-padding:14px;
-border-radius:10px;
-margin-top:12px
-}
-
-.bankRemaining{
+.carryBox{
 background:#f0fdf4;
 border:1px solid #bbf7d0;
 padding:16px;
@@ -317,8 +309,8 @@ border-radius:10px;
 margin-top:15px
 }
 
-.bankRemainingAmount{
-font-size:25px;
+.carryAmount{
+font-size:24px;
 font-weight:bold;
 margin-top:5px
 }
@@ -331,6 +323,48 @@ border-radius:9px;
 margin-top:10px;
 font-size:13px;
 color:#9a3412
+}
+
+/* BANK MONTH END */
+
+.bankHero{
+background:#111827;
+color:white;
+padding:20px;
+border-radius:12px;
+margin-bottom:15px
+}
+
+.bankHero small{
+opacity:.8
+}
+
+.bankHero .amount{
+font-size:30px;
+font-weight:bold;
+margin-top:8px
+}
+
+.bankCalendar{
+background:#eff6ff;
+border:1px solid #bfdbfe;
+padding:14px;
+border-radius:10px;
+margin-bottom:15px
+}
+
+.bankResult{
+background:#f0fdf4;
+border:1px solid #bbf7d0;
+padding:16px;
+border-radius:10px;
+margin-top:15px
+}
+
+.bankAmount{
+font-size:25px;
+font-weight:bold;
+margin-top:5px
 }
 
 @media(max-width:700px){
@@ -346,7 +380,8 @@ th,td{
 font-size:12px;
 padding:7px
 }
-.bankMonthHero .amount{
+.monthEndHero .amount,
+.bankHero .amount{
 font-size:25px
 }
 }
@@ -431,6 +466,10 @@ LOGIN
 
 <button onclick="openPage('reports',this)">
 📊 Reports
+</button>
+
+<button onclick="openPage('monthEnd',this)">
+📅 Month End
 </button>
 
 <button onclick="openPage('bankMonthEnd',this)">
@@ -804,7 +843,7 @@ SHOW ALL
 <h3>Reporting Period</h3>
 
 <p class="small">
-Weekly reports follow Monday to Sunday. Monthly totals follow the normal calendar month.
+Weekly reporting follows Monday to Sunday. Each month contains only the Monday-Sunday weeks assigned to that month.
 </p>
 
 <div class="formgrid">
@@ -1012,6 +1051,280 @@ ALL HISTORY
 </section>
 
 
+<!-- ORIGINAL MONTH END -->
+
+<section id="monthEnd" class="page">
+
+<h2>📅 Month End</h2>
+
+<div class="card">
+
+<h3>Month End Period</h3>
+
+<p class="small">
+Select the reporting month. Month End Drawer Cash automatically comes from that month's reporting Cash / Balance.
+</p>
+
+<div class="formgrid">
+
+<div>
+
+<label>Year</label>
+
+<select id="monthEndYear" onchange="updateMonthEnd()"></select>
+
+</div>
+
+<div>
+
+<label>Month</label>
+
+<select id="monthEndMonth" onchange="updateMonthEnd()">
+
+<option value="0">January</option>
+<option value="1">February</option>
+<option value="2">March</option>
+<option value="3">April</option>
+<option value="4">May</option>
+<option value="5">June</option>
+<option value="6">July</option>
+<option value="7">August</option>
+<option value="8">September</option>
+<option value="9">October</option>
+<option value="10">November</option>
+<option value="11">December</option>
+
+</select>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="monthEndHero">
+
+<small>MONTH END DRAWER CASH</small>
+
+<div class="amount" id="monthEndTotalCash">
+£0.00
+</div>
+
+<p style="margin-bottom:0">
+Total Cash / Balance — automatically from the selected reporting month
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>💷 Month End Cash Payments</h3>
+
+<p class="small">
+Enter where the drawer cash was paid or deposited at month end.
+</p>
+
+<div class="formgrid">
+
+<div>
+
+<label>Cash Paid for Staff Wages</label>
+
+<input
+id="monthEndStaffWages"
+type="number"
+step="0.01"
+placeholder="0.00"
+oninput="calculateMonthEnd()"
+>
+
+</div>
+
+<div>
+
+<label>Cash Paid for Director Wages</label>
+
+<input
+id="monthEndDirectorWages"
+type="number"
+step="0.01"
+placeholder="0.00"
+oninput="calculateMonthEnd()"
+>
+
+</div>
+
+<div>
+
+<label>Bank Cash Deposit</label>
+
+<input
+id="monthEndBankDeposit"
+type="number"
+step="0.01"
+placeholder="0.00"
+oninput="calculateMonthEnd()"
+>
+
+</div>
+
+<div>
+
+<label>Extra</label>
+
+<input
+id="monthEndExtra"
+type="number"
+step="0.01"
+placeholder="0.00"
+oninput="calculateMonthEnd()"
+>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>🧮 Month End Calculation</h3>
+
+<div class="totalLine">
+<span>Total Cash / Balance</span>
+<b id="monthEndCalculationCash">£0.00</b>
+</div>
+
+<div class="totalLine">
+<span>Staff Wages</span>
+<b id="monthEndCalculationStaff">£0.00</b>
+</div>
+
+<div class="totalLine">
+<span>Director Wages</span>
+<b id="monthEndCalculationDirector">£0.00</b>
+</div>
+
+<div class="totalLine">
+<span>Bank Cash Deposit</span>
+<b id="monthEndCalculationBank">£0.00</b>
+</div>
+
+<div class="totalLine">
+<span>Extra</span>
+<b id="monthEndCalculationExtra">£0.00</b>
+</div>
+
+<div class="total">
+
+<div class="totalLine">
+<span>TOTAL CASH USED</span>
+<b id="monthEndTotalUsed">£0.00</b>
+</div>
+
+</div>
+
+<div class="total" style="margin-top:12px">
+
+<div class="totalLine">
+<span>REMAINING DRAWER CASH</span>
+<b id="monthEndRemaining">£0.00</b>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>🔄 Next Month Carry Forward</h3>
+
+<div class="carryBox">
+
+<div class="small">
+REMAINING CASH AUTOMATICALLY CARRIED FORWARD
+</div>
+
+<div
+class="carryAmount"
+id="nextMonthCarryForward"
+>
+£0.00
+</div>
+
+<p class="small">
+This amount becomes the previous month's carry-forward amount when the next month is selected.
+</p>
+
+</div>
+
+<div class="carryBox">
+
+<div class="small">
+PREVIOUS MONTH CARRY FORWARD
+</div>
+
+<div
+class="carryAmount"
+id="previousMonthCarryForward"
+>
+£0.00
+</div>
+
+</div>
+
+</div>
+
+
+<div id="monthEndSaveCard" class="card">
+
+<button class="save" onclick="saveMonthEnd()">
+💾 SAVE MONTH END
+</button>
+
+<button class="reset" onclick="resetMonthEnd()">
+🔄 RESET MONTH END
+</button>
+
+<div class="resetInfo">
+⚠️ Reset will clear the four Month End payment entries for the selected month. It will not delete the Firebase record.
+</div>
+
+<div id="monthEndSaveMessage" class="message"></div>
+
+</div>
+
+
+<div id="monthEndViewerNotice" class="card hidden">
+
+<p>
+👀 <b>View-only access.</b>
+</p>
+
+<p class="small">
+You can view Month End information, but you cannot edit, reset or save it.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>📝 Month End Last Edited</h3>
+
+<div id="monthEndLastEdited" class="lastEdited">
+Not saved yet.
+</div>
+
+</div>
+
+</section>
+
+
 <!-- BANK MONTH END -->
 
 <section id="bankMonthEnd" class="page">
@@ -1023,7 +1336,8 @@ ALL HISTORY
 <h3>Calendar Month</h3>
 
 <p class="small">
-Bank Month End follows the normal calendar month: 1st day → last day of the selected month.
+This section is completely separate from the Weekly Reports.
+Bank Month End follows the normal calendar month: 1st day → last day of the month.
 </p>
 
 <div class="formgrid">
@@ -1061,98 +1375,54 @@ Bank Month End follows the normal calendar month: 1st day → last day of the se
 
 </div>
 
-<div class="bankCalendar">
-
-<b id="bankCalendarPeriod">
-Calendar period: 01/01/2026 → 31/01/2026
-</b>
-
-</div>
-
 </div>
 
 
-<div class="bankMonthHero">
+<div class="bankHero">
 
-<small>CALENDAR MONTH CASH / BALANCE</small>
+<small>BANK MONTH END CALENDAR PERIOD</small>
 
-<div class="amount" id="bankMonthTotalCash">
-£0.00
+<div class="amount" id="bankMonthEndPeriod">
+01/08/2026 → 31/08/2026
 </div>
 
 <p style="margin-bottom:0">
-Automatically calculated from daily records for the selected calendar month.
+Normal calendar month — automatically calculated
 </p>
 
 </div>
 
 
-<div class="card">
+<div class="grid">
 
-<h3>💷 Bank Month End Payments</h3>
-
-<p class="small">
-Enter how the calendar month's cash was used, paid or deposited.
-</p>
-
-<div class="formgrid">
-
-<div>
-
-<label>Cash Paid for Staff Wages</label>
-
-<input
-id="bankStaffWages"
-type="number"
-step="0.01"
-placeholder="0.00"
-oninput="calculateBankMonthEnd()"
->
-
+<div class="stat">
+<small>Main Till / Total Sales</small>
+<b id="bankMainTill">£0.00</b>
 </div>
 
-<div>
-
-<label>Cash Paid for Director Wages</label>
-
-<input
-id="bankDirectorWages"
-type="number"
-step="0.01"
-placeholder="0.00"
-oninput="calculateBankMonthEnd()"
->
-
+<div class="stat">
+<small>PDQ Total</small>
+<b id="bankPDQ">£0.00</b>
 </div>
 
-<div>
-
-<label>Bank Cash Deposit</label>
-
-<input
-id="bankCashDeposit"
-type="number"
-step="0.01"
-placeholder="0.00"
-oninput="calculateBankMonthEnd()"
->
-
+<div class="stat">
+<small>Petty Cash</small>
+<b id="bankPetty">£0.00</b>
 </div>
 
-<div>
-
-<label>Extra</label>
-
-<input
-id="bankExtra"
-type="number"
-step="0.01"
-placeholder="0.00"
-oninput="calculateBankMonthEnd()"
->
-
+<div class="stat">
+<small>Cash Taken</small>
+<b id="bankCashTaken">£0.00</b>
 </div>
 
+<div class="stat">
+<small>Cash / Balance</small>
+<b id="bankCashBalance">£0.00</b>
+</div>
+
+<div class="stat">
+<small>Days Entered</small>
+<b id="bankDays">0</b>
 </div>
 
 </div>
@@ -1160,131 +1430,114 @@ oninput="calculateBankMonthEnd()"
 
 <div class="card">
 
-<h3>🧮 Bank Month End Calculation</h3>
+<h3>🛵 Delivery</h3>
 
 <div class="totalLine">
-
-<span>Calendar Month Cash / Balance</span>
-
-<b id="bankCalculationCash">
-£0.00
-</b>
-
+<span>Uber</span>
+<b id="bankUber">£0.00</b>
 </div>
 
 <div class="totalLine">
-
-<span>Staff Wages</span>
-
-<b id="bankCalculationStaff">
-£0.00
-</b>
-
+<span>Uber 30% Commission</span>
+<b id="bankUber30">£0.00</b>
 </div>
 
 <div class="totalLine">
+<span>Uber 70% Remaining</span>
+<b id="bankUber70">£0.00</b>
+</div>
 
-<span>Director Wages</span>
+<br>
 
-<b id="bankCalculationDirector">
-£0.00
-</b>
-
+<div class="totalLine">
+<span>Deliveroo</span>
+<b id="bankDeliveroo">£0.00</b>
 </div>
 
 <div class="totalLine">
-
-<span>Bank Cash Deposit</span>
-
-<b id="bankCalculationDeposit">
-£0.00
-</b>
-
+<span>Deliveroo 35% Commission</span>
+<b id="bankDeliveroo35">£0.00</b>
 </div>
 
 <div class="totalLine">
+<span>Deliveroo 65% Remaining</span>
+<b id="bankDeliveroo65">£0.00</b>
+</div>
 
-<span>Extra</span>
+<div class="totalLine">
+<span>Delivery Cash</span>
+<b id="bankDeliveryCash">£0.00</b>
+</div>
 
-<b id="bankCalculationExtra">
-£0.00
+<div class="totalLine">
+<span>Delivery Card</span>
+<b id="bankDeliveryCard">£0.00</b>
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>🧮 Bank Month End Automatic Calculation</h3>
+
+<div class="totalLine">
+<span>Calendar Period</span>
+<b id="bankPeriodText">
+01/08/2026 → 31/08/2026
 </b>
+</div>
 
+<div class="totalLine">
+<span>Total Main Till</span>
+<b id="bankCalcMain">£0.00</b>
+</div>
+
+<div class="totalLine">
+<span>Total PDQ</span>
+<b id="bankCalcPDQ">£0.00</b>
+</div>
+
+<div class="totalLine">
+<span>Total Petty Cash</span>
+<b id="bankCalcPetty">£0.00</b>
+</div>
+
+<div class="totalLine">
+<span>Total Cash Taken</span>
+<b id="bankCalcTaken">£0.00</b>
 </div>
 
 <div class="total">
 
 <div class="totalLine">
-
-<span>TOTAL CASH USED</span>
-
-<b id="bankTotalUsed">
-£0.00
-</b>
-
+<span>TOTAL CASH / BALANCE</span>
+<b id="bankCalcCash">£0.00</b>
 </div>
 
 </div>
-
-<div class="bankRemaining">
-
-<div class="small">
-REMAINING CASH AFTER MONTH END
-</div>
-
-<div
-class="bankRemainingAmount"
-id="bankRemainingCash"
->
-£0.00
-</div>
-
-</div>
-
-</div>
-
-
-<div id="bankMonthEndSaveCard" class="card">
-
-<button class="save" onclick="saveBankMonthEnd()">
-💾 SAVE BANK MONTH END
-</button>
-
-<button class="reset" onclick="resetBankMonthEnd()">
-🔄 RESET BANK MONTH END
-</button>
-
-<div class="resetInfo">
-⚠️ Reset clears the four Bank Month End payment entries for the selected calendar month. The Firebase record is not deleted.
-</div>
-
-<div id="bankMonthEndMessage" class="message"></div>
-
-</div>
-
-
-<div id="bankMonthEndViewerNotice" class="card hidden">
-
-<p>
-👀 <b>View-only access.</b>
-</p>
-
-<p class="small">
-You can view Bank Month End information, but you cannot edit, reset or save it.
-</p>
 
 </div>
 
 
 <div class="card">
 
-<h3>📝 Bank Month End Last Edited</h3>
+<h3>💷 Bank Month End Summary</h3>
 
-<div
-id="bankMonthEndLastEdited"
-class="lastEdited"
->
-Not saved yet.
+<div class="bankResult">
+
+<div class="small">
+AUTOMATIC BANK MONTH END CASH / BALANCE
+</div>
+
+<div class="bankAmount" id="bankFinalBalance">
+£0.00
+</div>
+
+<p class="small">
+Calculated automatically from daily entries between the 1st and last day of the selected calendar month.
+</p>
+
 </div>
 
 </div>
@@ -1365,8 +1618,8 @@ let currentUser=null;
 let allRecords=[];
 let reportMode="weeks";
 let unsubscribeRecords=null;
-let unsubscribeBankMonthEnd=null;
-let bankMonthEndRecords={};
+let unsubscribeMonthEnd=null;
+let monthEndRecords={};
 
 
 /* EDITORS */
@@ -1444,9 +1697,9 @@ const notice=$("viewerNotice");
 
 const saveCard=$("saveCard");
 
-const bankSaveCard=$("bankMonthEndSaveCard");
+const monthEndSaveCard=$("monthEndSaveCard");
 
-const bankViewerNotice=$("bankMonthEndViewerNotice");
+const monthEndViewerNotice=$("monthEndViewerNotice");
 
 
 if(editor){
@@ -1458,12 +1711,12 @@ notice.classList.add("hidden");
 
 saveCard.classList.remove("hidden");
 
-bankSaveCard.classList.remove("hidden");
+monthEndSaveCard.classList.remove("hidden");
 
-bankViewerNotice.classList.add("hidden");
+monthEndViewerNotice.classList.add("hidden");
 
 enableEntryFields();
-enableBankMonthEndFields();
+enableMonthEndFields();
 
 }else{
 
@@ -1474,12 +1727,12 @@ notice.classList.remove("hidden");
 
 saveCard.classList.add("hidden");
 
-bankSaveCard.classList.add("hidden");
+monthEndSaveCard.classList.add("hidden");
 
-bankViewerNotice.classList.remove("hidden");
+monthEndViewerNotice.classList.remove("hidden");
 
 disableEntryFields();
-disableBankMonthEndFields();
+disableMonthEndFields();
 
 }
 
@@ -1534,23 +1787,23 @@ $(id).disabled=false;
 }
 
 
-/* BANK MONTH END FIELDS */
+/* MONTH END FIELDS */
 
-function bankMonthEndFieldIds(){
+function monthEndFieldIds(){
 
 return [
-"bankStaffWages",
-"bankDirectorWages",
-"bankCashDeposit",
-"bankExtra"
+"monthEndStaffWages",
+"monthEndDirectorWages",
+"monthEndBankDeposit",
+"monthEndExtra"
 ];
 
 }
 
 
-function disableBankMonthEndFields(){
+function disableMonthEndFields(){
 
-bankMonthEndFieldIds().forEach(id=>{
+monthEndFieldIds().forEach(id=>{
 
 if($(id))
 $(id).disabled=true;
@@ -1560,9 +1813,9 @@ $(id).disabled=true;
 }
 
 
-function enableBankMonthEndFields(){
+function enableMonthEndFields(){
 
-bankMonthEndFieldIds().forEach(id=>{
+monthEndFieldIds().forEach(id=>{
 
 if($(id))
 $(id).disabled=false;
@@ -1636,6 +1889,7 @@ $("entryDate").value=
 dateString(new Date());
 
 setupReportYears();
+setupMonthEndYears();
 setupBankMonthEndYears();
 
 setDay();
@@ -1644,6 +1898,7 @@ setupPermissions();
 await loadRecords();
 
 loadExistingEntry();
+updateMonthEnd();
 updateBankMonthEnd();
 
 }else{
@@ -1660,10 +1915,10 @@ unsubscribeRecords=null;
 
 }
 
-if(unsubscribeBankMonthEnd){
+if(unsubscribeMonthEnd){
 
-unsubscribeBankMonthEnd();
-unsubscribeBankMonthEnd=null;
+unsubscribeMonthEnd();
+unsubscribeMonthEnd=null;
 
 }
 
@@ -1702,9 +1957,11 @@ displayHistory();
 if(page==="reports")
 generateReport();
 
+if(page==="monthEnd")
+updateMonthEnd();
+
 if(page==="bankMonthEnd")
 updateBankMonthEnd();
-
 
 };
 
@@ -1814,6 +2071,7 @@ updateHome();
 displayHistory();
 generateReport();
 loadExistingEntry();
+updateMonthEnd();
 updateBankMonthEnd();
 
 },
@@ -2390,9 +2648,9 @@ behavior:"smooth"
 
 /* YEARS */
 
-function setupReportYears(){
+function fillYears(selectId){
 
-const select=$("reportYear");
+const select=$(selectId);
 
 select.innerHTML="";
 
@@ -2416,6 +2674,13 @@ Math.min(
 2045,
 Math.max(2021,current)
 );
+
+}
+
+
+function setupReportYears(){
+
+fillYears("reportYear");
 
 $("reportMonth").value=
 new Date().getMonth();
@@ -2423,32 +2688,19 @@ new Date().getMonth();
 }
 
 
-function setupBankMonthEndYears(){
+function setupMonthEndYears(){
 
-const select=$("bankMonthEndYear");
+fillYears("monthEndYear");
 
-select.innerHTML="";
-
-for(let y=2021;y<=2045;y++){
-
-const option=
-document.createElement("option");
-
-option.value=y;
-option.textContent=y;
-
-select.appendChild(option);
+$("monthEndMonth").value=
+new Date().getMonth();
 
 }
 
-const current=
-new Date().getFullYear();
 
-select.value=
-Math.min(
-2045,
-Math.max(2021,current)
-);
+function setupBankMonthEndYears(){
+
+fillYears("bankMonthEndYear");
 
 $("bankMonthEndMonth").value=
 new Date().getMonth();
@@ -2487,79 +2739,153 @@ generateReport();
 };
 
 
-/* NORMAL CALENDAR MONTH */
+/* =====================================================
+   REPORTING WEEK SYSTEM
 
-function calendarMonthStart(year,month){
+   IMPORTANT:
 
-return new Date(year,month,1);
+   A reporting month is made from complete
+   Monday-Sunday weeks whose SUNDAY belongs
+   to that calendar month.
+
+   August 2026:
+   03/08 → 09/08
+   10/08 → 16/08
+   17/08 → 23/08
+   24/08 → 30/08
+
+   July keeps:
+   27/07 → 02/08
+
+   September starts:
+   31/08 → 06/09
+===================================================== */
+
+function firstReportingWeekStart(year,month){
+
+const first=
+new Date(year,month,1);
+
+first.setHours(0,0,0,0);
+
+/*
+Sunday must be AFTER the 1st.
+This deliberately excludes a Sunday that belongs
+to the previous reporting week.
+*/
+
+let daysToSunday=
+7-first.getDay();
+
+if(daysToSunday===0)
+daysToSunday=7;
+
+const firstSunday=
+new Date(first);
+
+firstSunday.setDate(
+first.getDate()+daysToSunday
+);
+
+const start=
+new Date(firstSunday);
+
+start.setDate(
+start.getDate()-6
+);
+
+start.setHours(0,0,0,0);
+
+return start;
 
 }
 
 
-function calendarMonthEnd(year,month){
+function lastReportingWeekEnd(year,month){
 
-return new Date(
+const last=
+new Date(year,month+1,0);
+
+last.setHours(0,0,0,0);
+
+const day=
+last.getDay();
+
+/*
+Find the last Sunday that is inside
+the selected calendar month.
+*/
+
+const end=
+new Date(last);
+
+end.setDate(
+last.getDate()-day
+);
+
+end.setHours(0,0,0,0);
+
+return end;
+
+}
+
+
+function reportingMonthStart(year,month){
+
+return firstReportingWeekStart(
 year,
-month+1,
+month
+);
+
+}
+
+
+function reportingMonthEnd(year,month){
+
+return lastReportingWeekEnd(
+year,
+month
+);
+
+}
+
+
+function nextReportingMonthStart(year,month){
+
+if(month===11){
+
+return reportingMonthStart(
+year+1,
 0
 );
 
 }
 
-
-/* REPORTING WEEKS */
-
-function getReportingWeeks(year,month){
-
-const firstDay=
-new Date(year,month,1);
-
-const lastDay=
-new Date(year,month+1,0);
-
-const weeks=[];
-
-
-/*
-August 2026:
-03-09
-10-16
-17-23
-24-30
-
-The first/last partial weeks are NOT included.
-*/
-
-let firstMonday;
-
-if(firstDay.getDay()===1){
-
-firstMonday=new Date(firstDay);
-
-}else{
-
-const day=
-firstDay.getDay();
-
-const daysUntilMonday=
-day===0?1:8-day;
-
-firstMonday=
-new Date(firstDay);
-
-firstMonday.setDate(
-firstMonday.getDate()+daysUntilMonday
+return reportingMonthStart(
+year,
+month+1
 );
 
 }
 
 
-let current=
-new Date(firstMonday);
+/* WEEKS */
+
+function getReportingWeeks(year,month){
+
+const start=
+reportingMonthStart(year,month);
+
+const end=
+reportingMonthEnd(year,month);
+
+const weeks=[];
+
+let current=new Date(start);
 
 let weekNumber=1;
 
-while(true){
+while(current<=end){
 
 const weekStart=
 new Date(current);
@@ -2570,15 +2896,6 @@ new Date(current);
 weekEnd.setDate(
 weekEnd.getDate()+6
 );
-
-if(
-weekStart>lastDay ||
-weekEnd>lastDay
-){
-
-break;
-
-}
 
 weeks.push({
 
@@ -2669,36 +2986,28 @@ return total;
 }
 
 
-/* REPORT */
+/* =====================================================
+   REPORT RANGE
+===================================================== */
 
-window.generateReport=function(){
-
-const year=
-Number($("reportYear").value);
-
-const month=
-Number($("reportMonth").value);
+function getReportRange(year,month,mode){
 
 let start;
 let end;
 
 if(
-reportMode==="month"||
-reportMode==="weeks"
+mode==="month"||
+mode==="weeks"
 ){
 
-/*
-MONTH TOTAL = NORMAL CALENDAR MONTH
-*/
-
 start=
-calendarMonthStart(
+reportingMonthStart(
 year,
 month
 );
 
 end=
-calendarMonthEnd(
+reportingMonthEnd(
 year,
 month
 );
@@ -2706,60 +3015,57 @@ month
 }
 
 if(
-reportMode==="2months"||
-reportMode==="3months"||
-reportMode==="6months"
+mode==="2months"||
+mode==="3months"||
+mode==="6months"
 ){
 
 const months=
 Number(
-reportMode.replace(
-"months",
-""
-)
+mode.replace("months","")
 );
 
 start=
-calendarMonthStart(
+reportingMonthStart(
 year,
 month
 );
 
-let endMonth=
+let targetMonth=
 month+months-1;
 
-let endYear=
+let targetYear=
 year+
-Math.floor(endMonth/12);
+Math.floor(targetMonth/12);
 
-endMonth=
-endMonth%12;
+targetMonth=
+targetMonth%12;
 
 end=
-calendarMonthEnd(
-endYear,
-endMonth
+reportingMonthEnd(
+targetYear,
+targetMonth
 );
 
 }
 
-if(reportMode==="year"){
+if(mode==="year"){
 
 start=
-calendarMonthStart(
+reportingMonthStart(
 year,
 0
 );
 
 end=
-calendarMonthEnd(
+reportingMonthEnd(
 year,
 11
 );
 
 }
 
-if(reportMode==="all"){
+if(mode==="all"){
 
 if(allRecords.length){
 
@@ -2781,14 +3087,45 @@ end=new Date();
 
 }
 
+return {
+start,
+end
+};
+
+}
+
+
+/* REPORT */
+
+window.generateReport=function(){
+
+if(!$("reportYear")||!$("reportMonth"))
+return;
+
+const year=
+Number($("reportYear").value);
+
+const month=
+Number($("reportMonth").value);
+
+const range=
+getReportRange(
+year,
+month,
+reportMode
+);
+
 const records=
-recordsBetween(start,end);
+recordsBetween(
+range.start,
+range.end
+);
 
 const total=
 sumRecords(records);
 
 
-/* TOTALS */
+/* ALL REPORT TOTALS USE THE SAME RANGE */
 
 $("reportMain").innerText=
 money(total.mainTill);
@@ -2878,19 +3215,26 @@ showPersonTotals(records);
 
 /* MONTH TOTAL */
 
-showMonthSummary(year,month);
+showMonthSummary(
+year,
+month,
+range.start,
+range.end,
+records,
+total
+);
 
 
-/* BANK MONTH END */
+/* UPDATE MONTH END ONLY FOR SAME REPORTING MONTH */
 
 if(
-$("bankMonthEndYear")&&
-$("bankMonthEndMonth")&&
-Number($("bankMonthEndYear").value)===year&&
-Number($("bankMonthEndMonth").value)===month
+$("monthEndYear")&&
+$("monthEndMonth")&&
+Number($("monthEndYear").value)===year&&
+Number($("monthEndMonth").value)===month
 ){
 
-updateBankMonthEnd();
+updateMonthEnd();
 
 }
 
@@ -2917,19 +3261,6 @@ month:"long",
 year:"numeric"
 }
 );
-
-if(!weeks.length){
-
-$("weeklyReport").innerHTML=
-`
-<p class="small">
-No complete Monday-Sunday reporting week falls completely inside this calendar month.
-</p>
-`;
-
-return;
-
-}
 
 $("weeklyReport").innerHTML=
 weeks.map(w=>{
@@ -3199,25 +3530,14 @@ names.sort().map(name=>`
 
 /* MONTH SUMMARY */
 
-function showMonthSummary(year,month){
-
-/*
-IMPORTANT:
-This is NORMAL CALENDAR MONTH.
-August = 01/08 → 31/08.
-*/
-
-const start=
-calendarMonthStart(year,month);
-
-const end=
-calendarMonthEnd(year,month);
-
-const records=
-recordsBetween(start,end);
-
-const t=
-sumRecords(records);
+function showMonthSummary(
+year,
+month,
+start,
+end,
+records,
+t
+){
 
 const monthName=
 new Date(
@@ -3238,7 +3558,7 @@ $("monthSummary").innerHTML=`
 
 <p class="small">
 
-Calendar period:
+Reporting period:
 
 ${displayDate(start)}
 
@@ -3319,29 +3639,22 @@ ${displayDate(end)}
 
 
 /* =====================================================
-   BANK MONTH END
+   ORIGINAL MONTH END
 ===================================================== */
 
-
-/*
-BANK MONTH END ALWAYS USES NORMAL CALENDAR MONTH.
-Example:
-August 2026 = 01/08/2026 → 31/08/2026.
-*/
-
-function getBankMonthEndPeriod(){
+function getMonthEndPeriod(){
 
 const year=
-Number($("bankMonthEndYear").value);
+Number($("monthEndYear").value);
 
 const month=
-Number($("bankMonthEndMonth").value);
+Number($("monthEndMonth").value);
 
 const start=
-calendarMonthStart(year,month);
+reportingMonthStart(year,month);
 
 const end=
-calendarMonthEnd(year,month);
+reportingMonthEnd(year,month);
 
 return {
 year,
@@ -3353,13 +3666,11 @@ end
 }
 
 
-/* UPDATE BANK MONTH END */
-
-window.updateBankMonthEnd=function(){
+window.updateMonthEnd=function(){
 
 if(
-!$("bankMonthEndYear")||
-!$("bankMonthEndMonth")
+!$("monthEndYear")||
+!$("monthEndMonth")
 )
 return;
 
@@ -3369,19 +3680,8 @@ month,
 start,
 end
 }=
-getBankMonthEndPeriod();
+getMonthEndPeriod();
 
-
-/* CALENDAR PERIOD */
-
-$("bankCalendarPeriod").innerText=
-"Calendar period: "+
-displayDate(start)+
-" → "+
-displayDate(end);
-
-
-/* GET CALENDAR MONTH RECORDS */
 
 const records=
 recordsBetween(start,end);
@@ -3390,20 +3690,23 @@ const total=
 sumRecords(records);
 
 
-/* AUTOMATIC CASH */
+/* MONTH END DRAWER CASH */
 
-$("bankMonthTotalCash").innerText=
+$("monthEndTotalCash").innerText=
 money(total.cash);
 
-$("bankCalculationCash").innerText=
+
+/* CALCULATION CASH */
+
+$("monthEndCalculationCash").innerText=
 money(total.cash);
 
-$("bankCalculationCash")
+$("monthEndCalculationCash")
 .dataset.value=
 String(total.cash);
 
 
-/* LOAD SAVED BANK MONTH END */
+/* LOAD SAVED MONTH END */
 
 const key=
 year+
@@ -3411,25 +3714,25 @@ year+
 pad(month+1);
 
 const saved=
-bankMonthEndRecords[key];
+monthEndRecords[key];
 
 
 if(saved){
 
-$("bankStaffWages").value=
+$("monthEndStaffWages").value=
 saved.staffWages??"";
 
-$("bankDirectorWages").value=
+$("monthEndDirectorWages").value=
 saved.directorWages??"";
 
-$("bankCashDeposit").value=
+$("monthEndBankDeposit").value=
 saved.bankDeposit??"";
 
-$("bankExtra").value=
+$("monthEndExtra").value=
 saved.extra??"";
 
 
-$("bankMonthEndLastEdited").innerHTML=
+$("monthEndLastEdited").innerHTML=
 `
 <b>Last edited by:</b><br>
 ${saved.updatedBy||"Not available"}
@@ -3442,50 +3745,96 @@ ${formatUpdatedAt(saved.updatedAt)}
 
 }else{
 
-$("bankStaffWages").value="";
-$("bankDirectorWages").value="";
-$("bankCashDeposit").value="";
-$("bankExtra").value="";
+$("monthEndStaffWages").value="";
+$("monthEndDirectorWages").value="";
+$("monthEndBankDeposit").value="";
+$("monthEndExtra").value="";
 
-$("bankMonthEndLastEdited").innerHTML=
+$("monthEndLastEdited").innerHTML=
 "Not saved yet.";
+
+}
+
+
+/* PREVIOUS MONTH */
+
+const previousKey=
+getPreviousMonthKey(
+year,
+month
+);
+
+const previous=
+monthEndRecords[previousKey];
+
+
+if(previous){
+
+$("previousMonthCarryForward").innerText=
+money(previous.remainingCash);
+
+}else{
+
+$("previousMonthCarryForward").innerText=
+"£0.00";
 
 }
 
 
 /* CALCULATE */
 
-calculateBankMonthEnd();
+calculateMonthEnd();
 
 };
 
 
-/* CALCULATE BANK MONTH END */
+/* PREVIOUS MONTH KEY */
 
-window.calculateBankMonthEnd=function(){
+function getPreviousMonthKey(year,month){
+
+let previousYear=year;
+let previousMonth=month-1;
+
+if(previousMonth<0){
+
+previousMonth=11;
+previousYear--;
+
+}
+
+return previousYear+
+"-"+
+pad(previousMonth+1);
+
+}
+
+
+/* CALCULATE MONTH END */
+
+function calculateMonthEnd(){
 
 const totalCash=
 Number(
-$("bankCalculationCash")
+$("monthEndCalculationCash")
 .dataset.value||0
 );
 
 const staff=
-num("bankStaffWages");
+num("monthEndStaffWages");
 
 const director=
-num("bankDirectorWages");
+num("monthEndDirectorWages");
 
-const deposit=
-num("bankCashDeposit");
+const bank=
+num("monthEndBankDeposit");
 
 const extra=
-num("bankExtra");
+num("monthEndExtra");
 
 const totalUsed=
 staff+
 director+
-deposit+
+bank+
 extra;
 
 const remaining=
@@ -3493,34 +3842,37 @@ totalCash-
 totalUsed;
 
 
-$("bankCalculationStaff").innerText=
+$("monthEndCalculationStaff").innerText=
 money(staff);
 
-$("bankCalculationDirector").innerText=
+$("monthEndCalculationDirector").innerText=
 money(director);
 
-$("bankCalculationDeposit").innerText=
-money(deposit);
+$("monthEndCalculationBank").innerText=
+money(bank);
 
-$("bankCalculationExtra").innerText=
+$("monthEndCalculationExtra").innerText=
 money(extra);
 
-$("bankTotalUsed").innerText=
+$("monthEndTotalUsed").innerText=
 money(totalUsed);
 
-$("bankRemainingCash").innerText=
+$("monthEndRemaining").innerText=
 money(remaining);
 
-};
+$("nextMonthCarryForward").innerText=
+money(remaining);
+
+}
 
 
-/* SAVE BANK MONTH END */
+/* SAVE MONTH END */
 
-window.saveBankMonthEnd=async function(){
+window.saveMonthEnd=async function(){
 
 if(!currentUser){
 
-$("bankMonthEndMessage").innerText=
+$("monthEndSaveMessage").innerText=
 "Please login first.";
 
 return;
@@ -3529,7 +3881,7 @@ return;
 
 if(!isEditor()){
 
-$("bankMonthEndMessage").innerText=
+$("monthEndSaveMessage").innerText=
 "❌ You have view-only access.";
 
 return;
@@ -3540,7 +3892,7 @@ const {
 year,
 month
 }=
-getBankMonthEndPeriod();
+getMonthEndPeriod();
 
 const key=
 year+
@@ -3549,26 +3901,26 @@ pad(month+1);
 
 const totalCash=
 Number(
-$("bankCalculationCash")
+$("monthEndCalculationCash")
 .dataset.value||0
 );
 
 const staff=
-num("bankStaffWages");
+num("monthEndStaffWages");
 
 const director=
-num("bankDirectorWages");
+num("monthEndDirectorWages");
 
-const deposit=
-num("bankCashDeposit");
+const bank=
+num("monthEndBankDeposit");
 
 const extra=
-num("bankExtra");
+num("monthEndExtra");
 
 const totalUsed=
 staff+
 director+
-deposit+
+bank+
 extra;
 
 const remaining=
@@ -3581,21 +3933,11 @@ year:year,
 month:month,
 monthKey:key,
 
-calendarPeriodStart:
-dateString(
-calendarMonthStart(year,month)
-),
-
-calendarPeriodEnd:
-dateString(
-calendarMonthEnd(year,month)
-),
-
 totalCashBalance:totalCash,
 
 staffWages:staff,
 directorWages:director,
-bankDeposit:deposit,
+bankDeposit:bank,
 extra:extra,
 
 totalCashUsed:totalUsed,
@@ -3610,19 +3952,19 @@ updatedAt:new Date().toISOString()
 try{
 
 await setDoc(
-doc(db,"bankMonthEndRecords",key),
+doc(db,"monthEndRecords",key),
 data,
 {merge:true}
 );
 
-$("bankMonthEndMessage").innerText=
-"✅ Bank Month End saved successfully.";
+$("monthEndSaveMessage").innerText=
+"✅ Month End saved successfully.";
 
 }catch(error){
 
 console.error(error);
 
-$("bankMonthEndMessage").innerText=
+$("monthEndSaveMessage").innerText=
 "❌ Save failed: "+error.message;
 
 }
@@ -3630,13 +3972,13 @@ $("bankMonthEndMessage").innerText=
 };
 
 
-/* RESET BANK MONTH END */
+/* RESET MONTH END */
 
-window.resetBankMonthEnd=async function(){
+window.resetMonthEnd=async function(){
 
 if(!currentUser){
 
-$("bankMonthEndMessage").innerText=
+$("monthEndSaveMessage").innerText=
 "Please login first.";
 
 return;
@@ -3645,7 +3987,7 @@ return;
 
 if(!isEditor()){
 
-$("bankMonthEndMessage").innerText=
+$("monthEndSaveMessage").innerText=
 "❌ You have view-only access.";
 
 return;
@@ -3656,7 +3998,7 @@ const {
 year,
 month
 }=
-getBankMonthEndPeriod();
+getMonthEndPeriod();
 
 const key=
 year+
@@ -3678,19 +4020,17 @@ year:"numeric"
 
 const confirmed=
 confirm(
-"Reset Bank Month End for "+
-monthName+" "+year+"?\n\n"+
+"Reset Month End for "+monthName+" "+year+"?\n\n"+
 "This will clear Staff Wages, Director Wages, Bank Deposit and Extra.\n\n"+
-"The Bank Month End record will NOT be deleted."
+"The Month End record will NOT be deleted."
 );
 
 if(!confirmed)
 return;
 
-
 const totalCash=
 Number(
-$("bankCalculationCash")
+$("monthEndCalculationCash")
 .dataset.value||0
 );
 
@@ -3699,16 +4039,6 @@ const data={
 year:year,
 month:month,
 monthKey:key,
-
-calendarPeriodStart:
-dateString(
-calendarMonthStart(year,month)
-),
-
-calendarPeriodEnd:
-dateString(
-calendarMonthEnd(year,month)
-),
 
 totalCashBalance:totalCash,
 
@@ -3731,29 +4061,26 @@ reset:true
 try{
 
 await setDoc(
-doc(db,"bankMonthEndRecords",key),
+doc(db,"monthEndRecords",key),
 data,
 {merge:true}
 );
 
+$("monthEndStaffWages").value="";
+$("monthEndDirectorWages").value="";
+$("monthEndBankDeposit").value="";
+$("monthEndExtra").value="";
 
-/* CLEAR FIELDS */
+calculateMonthEnd();
 
-$("bankStaffWages").value="";
-$("bankDirectorWages").value="";
-$("bankCashDeposit").value="";
-$("bankExtra").value="";
-
-calculateBankMonthEnd();
-
-$("bankMonthEndMessage").innerText=
-"✅ Bank Month End reset successfully. You can now enter the corrected amounts.";
+$("monthEndSaveMessage").innerText=
+"✅ Month End reset successfully. You can now enter the corrected amounts.";
 
 }catch(error){
 
 console.error(error);
 
-$("bankMonthEndMessage").innerText=
+$("monthEndSaveMessage").innerText=
 "❌ Reset failed: "+error.message;
 
 }
@@ -3761,36 +4088,36 @@ $("bankMonthEndMessage").innerText=
 };
 
 
-/* LOAD BANK MONTH END RECORDS */
+/* LOAD MONTH END */
 
-function loadBankMonthEndRecords(){
+function loadMonthEndRecords(){
 
-if(unsubscribeBankMonthEnd)
-unsubscribeBankMonthEnd();
+if(unsubscribeMonthEnd)
+unsubscribeMonthEnd();
 
-unsubscribeBankMonthEnd=
+unsubscribeMonthEnd=
 onSnapshot(
-collection(db,"bankMonthEndRecords"),
+collection(db,"monthEndRecords"),
 snapshot=>{
 
-bankMonthEndRecords={};
+monthEndRecords={};
 
 snapshot.forEach(item=>{
 
-bankMonthEndRecords[item.id]={
+monthEndRecords[item.id]={
 id:item.id,
 ...item.data()
 };
 
 });
 
-updateBankMonthEnd();
+updateMonthEnd();
 
 },
 error=>{
 
 console.error(
-"Bank Month End records error:",
+"Month End records error:",
 error
 );
 
@@ -3800,9 +4127,166 @@ error
 }
 
 
-/* START BANK MONTH END */
+/* =====================================================
+   BANK MONTH END
+   NORMAL CALENDAR ONLY
+===================================================== */
 
-loadBankMonthEndRecords();
+function getBankCalendarPeriod(){
+
+const year=
+Number($("bankMonthEndYear").value);
+
+const month=
+Number($("bankMonthEndMonth").value);
+
+/*
+Normal calendar:
+1st day of selected month
+through
+last day of selected month.
+*/
+
+const start=
+new Date(
+year,
+month,
+1
+);
+
+start.setHours(0,0,0,0);
+
+const end=
+new Date(
+year,
+month+1,
+0
+);
+
+end.setHours(0,0,0,0);
+
+return {
+year,
+month,
+start,
+end
+};
+
+}
+
+
+window.updateBankMonthEnd=function(){
+
+if(
+!$("bankMonthEndYear")||
+!$("bankMonthEndMonth")
+)
+return;
+
+const {
+start,
+end
+}=
+getBankCalendarPeriod();
+
+const records=
+recordsBetween(
+start,
+end
+);
+
+const total=
+sumRecords(records);
+
+
+/* PERIOD */
+
+const period=
+displayDate(start)+
+" → "+
+displayDate(end);
+
+$("bankMonthEndPeriod").innerText=
+period;
+
+$("bankPeriodText").innerText=
+period;
+
+
+/* MAIN */
+
+$("bankMainTill").innerText=
+money(total.mainTill);
+
+$("bankPDQ").innerText=
+money(total.pdqTotal);
+
+$("bankPetty").innerText=
+money(total.pettyCash);
+
+$("bankCashTaken").innerText=
+money(total.cashTaken);
+
+$("bankCashBalance").innerText=
+money(total.cash);
+
+$("bankDays").innerText=
+records.length;
+
+
+/* DELIVERY */
+
+$("bankUber").innerText=
+money(total.uber);
+
+$("bankUber30").innerText=
+money(total.uber*.30);
+
+$("bankUber70").innerText=
+money(total.uber*.70);
+
+$("bankDeliveroo").innerText=
+money(total.deliveroo);
+
+$("bankDeliveroo35").innerText=
+money(total.deliveroo*.35);
+
+$("bankDeliveroo65").innerText=
+money(total.deliveroo*.65);
+
+$("bankDeliveryCash").innerText=
+money(total.deliveryCash);
+
+$("bankDeliveryCard").innerText=
+money(total.deliveryCard);
+
+
+/* CALCULATION */
+
+$("bankCalcMain").innerText=
+money(total.mainTill);
+
+$("bankCalcPDQ").innerText=
+money(total.pdqTotal);
+
+$("bankCalcPetty").innerText=
+money(total.pettyCash);
+
+$("bankCalcTaken").innerText=
+money(total.cashTaken);
+
+$("bankCalcCash").innerText=
+money(total.cash);
+
+$("bankFinalBalance").innerText=
+money(total.cash);
+
+};
+
+
+/* START MONTH END */
+
+loadMonthEndRecords();
 
 
 /* DEFAULT REPORT */
