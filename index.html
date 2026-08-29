@@ -301,15 +301,15 @@ font-weight:bold;
 margin-top:8px
 }
 
-.bankPeriod{
-background:#f3f4f6;
-border-radius:9px;
-padding:12px;
-margin-top:12px;
-font-weight:bold
+.bankCalendar{
+background:#eff6ff;
+border:1px solid #bfdbfe;
+padding:14px;
+border-radius:10px;
+margin-top:12px
 }
 
-.carryBox{
+.bankRemaining{
 background:#f0fdf4;
 border:1px solid #bbf7d0;
 padding:16px;
@@ -317,8 +317,8 @@ border-radius:10px;
 margin-top:15px
 }
 
-.carryAmount{
-font-size:24px;
+.bankRemainingAmount{
+font-size:25px;
 font-weight:bold;
 margin-top:5px
 }
@@ -804,8 +804,7 @@ SHOW ALL
 <h3>Reporting Period</h3>
 
 <p class="small">
-Weekly reports are Monday to Sunday.
-Reporting Month Total follows the normal calendar month.
+Weekly reports follow Monday to Sunday. Monthly totals follow the normal calendar month.
 </p>
 
 <div class="formgrid">
@@ -1002,8 +1001,6 @@ ALL HISTORY
 </div>
 
 
-<!-- NORMAL CALENDAR MONTH SUMMARY -->
-
 <div class="card">
 
 <h3>📊 Reporting Month Total</h3>
@@ -1015,9 +1012,7 @@ ALL HISTORY
 </section>
 
 
-<!-- =====================================================
-     BANK MONTH END
-===================================================== -->
+<!-- BANK MONTH END -->
 
 <section id="bankMonthEnd" class="page">
 
@@ -1028,7 +1023,7 @@ ALL HISTORY
 <h3>Calendar Month</h3>
 
 <p class="small">
-Bank Month End follows the normal calendar month — from the 1st day to the last day of the selected month.
+Bank Month End follows the normal calendar month: 1st day → last day of the selected month.
 </p>
 
 <div class="formgrid">
@@ -1066,23 +1061,27 @@ Bank Month End follows the normal calendar month — from the 1st day to the las
 
 </div>
 
+<div class="bankCalendar">
+
+<b id="bankCalendarPeriod">
+Calendar period: 01/01/2026 → 31/01/2026
+</b>
+
+</div>
+
 </div>
 
 
 <div class="bankMonthHero">
 
-<small>BANK MONTH END — TOTAL CASH / BALANCE</small>
+<small>CALENDAR MONTH CASH / BALANCE</small>
 
-<div class="amount" id="bankMonthEndTotalCash">
+<div class="amount" id="bankMonthTotalCash">
 £0.00
 </div>
 
-<div class="bankPeriod" id="bankMonthEndPeriod">
-Calendar period: 01/01/2026 → 31/01/2026
-</div>
-
 <p style="margin-bottom:0">
-Automatically calculated from daily entries for the selected calendar month.
+Automatically calculated from daily records for the selected calendar month.
 </p>
 
 </div>
@@ -1093,7 +1092,7 @@ Automatically calculated from daily entries for the selected calendar month.
 <h3>💷 Bank Month End Payments</h3>
 
 <p class="small">
-Enter where the month-end drawer cash was paid or deposited.
+Enter how the calendar month's cash was used, paid or deposited.
 </p>
 
 <div class="formgrid">
@@ -1165,7 +1164,7 @@ oninput="calculateBankMonthEnd()"
 
 <div class="totalLine">
 
-<span>Total Cash / Balance</span>
+<span>Calendar Month Cash / Balance</span>
 
 <b id="bankCalculationCash">
 £0.00
@@ -1227,55 +1226,15 @@ oninput="calculateBankMonthEnd()"
 
 </div>
 
-<div class="total" style="margin-top:12px">
-
-<div class="totalLine">
-
-<span>REMAINING DRAWER CASH</span>
-
-<b id="bankRemaining">
-£0.00
-</b>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="card">
-
-<h3>🔄 Next Month Carry Forward</h3>
-
-<div class="carryBox">
+<div class="bankRemaining">
 
 <div class="small">
-REMAINING CASH AUTOMATICALLY CARRIED FORWARD
+REMAINING CASH AFTER MONTH END
 </div>
 
 <div
-class="carryAmount"
-id="bankNextCarryForward"
->
-£0.00
-</div>
-
-<p class="small">
-This is the remaining cash after the selected calendar month's month-end calculation.
-</p>
-
-</div>
-
-<div class="carryBox">
-
-<div class="small">
-PREVIOUS CALENDAR MONTH CARRY FORWARD
-</div>
-
-<div
-class="carryAmount"
-id="bankPreviousCarryForward"
+class="bankRemainingAmount"
+id="bankRemainingCash"
 >
 £0.00
 </div>
@@ -1296,7 +1255,7 @@ id="bankPreviousCarryForward"
 </button>
 
 <div class="resetInfo">
-⚠️ Reset clears the four payment entries for the selected calendar month. The Firebase record is not deleted.
+⚠️ Reset clears the four Bank Month End payment entries for the selected calendar month. The Firebase record is not deleted.
 </div>
 
 <div id="bankMonthEndMessage" class="message"></div>
@@ -1391,6 +1350,7 @@ measurementId:
 
 };
 
+
 const firebaseApp=
 initializeApp(firebaseConfig);
 
@@ -1404,10 +1364,8 @@ getFirestore(firebaseApp);
 let currentUser=null;
 let allRecords=[];
 let reportMode="weeks";
-
 let unsubscribeRecords=null;
 let unsubscribeBankMonthEnd=null;
-
 let bankMonthEndRecords={};
 
 
@@ -1686,7 +1644,6 @@ setupPermissions();
 await loadRecords();
 
 loadExistingEntry();
-
 updateBankMonthEnd();
 
 }else{
@@ -1747,6 +1704,7 @@ generateReport();
 
 if(page==="bankMonthEnd")
 updateBankMonthEnd();
+
 
 };
 
@@ -2529,18 +2487,11 @@ generateReport();
 };
 
 
-/* =====================================================
-   NORMAL CALENDAR MONTH
-===================================================== */
+/* NORMAL CALENDAR MONTH */
 
 function calendarMonthStart(year,month){
 
-return new Date(
-year,
-month,
-1,
-0,0,0,0
-);
+return new Date(year,month,1);
 
 }
 
@@ -2550,87 +2501,57 @@ function calendarMonthEnd(year,month){
 return new Date(
 year,
 month+1,
-0,
-0,0,0,0
+0
 );
 
 }
 
 
-/* =====================================================
-   WEEKLY REPORT
-   COMPLETE MONDAY-SUNDAY WEEKS INSIDE CALENDAR MONTH
-===================================================== */
+/* REPORTING WEEKS */
 
 function getReportingWeeks(year,month){
 
-const monthStart=
-calendarMonthStart(year,month);
+const firstDay=
+new Date(year,month,1);
 
-const monthEnd=
-calendarMonthEnd(year,month);
+const lastDay=
+new Date(year,month+1,0);
 
 const weeks=[];
 
 
 /*
-First Monday ON OR AFTER the 1st of the month.
+August 2026:
+03-09
+10-16
+17-23
+24-30
+
+The first/last partial weeks are NOT included.
 */
 
-let firstMonday=
-new Date(monthStart);
+let firstMonday;
+
+if(firstDay.getDay()===1){
+
+firstMonday=new Date(firstDay);
+
+}else{
 
 const day=
-firstMonday.getDay();
+firstDay.getDay();
 
-/*
-Sunday = 0
-Monday = 1
-*/
+const daysUntilMonday=
+day===0?1:8-day;
 
-let daysToMonday;
-
-if(day===0){
-
-daysToMonday=1;
-
-}else{
-
-daysToMonday=
-(8-day)%7;
-
-}
+firstMonday=
+new Date(firstDay);
 
 firstMonday.setDate(
-firstMonday.getDate()+daysToMonday
+firstMonday.getDate()+daysUntilMonday
 );
-
-
-/*
-Last Sunday ON OR BEFORE the last day.
-*/
-
-let lastSunday=
-new Date(monthEnd);
-
-const endDay=
-lastSunday.getDay();
-
-let daysBack;
-
-if(endDay===0){
-
-daysBack=0;
-
-}else{
-
-daysBack=endDay;
 
 }
-
-lastSunday.setDate(
-lastSunday.getDate()-daysBack
-);
 
 
 let current=
@@ -2638,7 +2559,7 @@ new Date(firstMonday);
 
 let weekNumber=1;
 
-while(current<=lastSunday){
+while(true){
 
 const weekStart=
 new Date(current);
@@ -2650,7 +2571,14 @@ weekEnd.setDate(
 weekEnd.getDate()+6
 );
 
-if(weekEnd<=monthEnd){
+if(
+weekStart>lastDay ||
+weekEnd>lastDay
+){
+
+break;
+
+}
 
 weeks.push({
 
@@ -2659,8 +2587,6 @@ start:weekStart,
 end:weekEnd
 
 });
-
-}
 
 current.setDate(
 current.getDate()+7
@@ -2743,9 +2669,7 @@ return total;
 }
 
 
-/* =====================================================
-   REPORT
-===================================================== */
+/* REPORT */
 
 window.generateReport=function(){
 
@@ -2758,17 +2682,14 @@ Number($("reportMonth").value);
 let start;
 let end;
 
-
-/*
-MONTH / WEEKLY
-Calendar month is always:
-01 → last day
-*/
-
 if(
 reportMode==="month"||
 reportMode==="weeks"
 ){
+
+/*
+MONTH TOTAL = NORMAL CALENDAR MONTH
+*/
 
 start=
 calendarMonthStart(
@@ -2783,12 +2704,6 @@ month
 );
 
 }
-
-
-/*
-2 / 3 / 6 MONTHS
-Normal calendar months.
-*/
 
 if(
 reportMode==="2months"||
@@ -2828,12 +2743,6 @@ endMonth
 
 }
 
-
-/*
-YEAR
-01 January → 31 December
-*/
-
 if(reportMode==="year"){
 
 start=
@@ -2849,11 +2758,6 @@ year,
 );
 
 }
-
-
-/*
-ALL HISTORY
-*/
 
 if(reportMode==="all"){
 
@@ -2876,7 +2780,6 @@ end=new Date();
 }
 
 }
-
 
 const records=
 recordsBetween(start,end);
@@ -2939,12 +2842,12 @@ $("reportDeliveryCard").innerText=
 money(total.deliveryCard);
 
 
-/*
-WEEKLY
-Only the WEEKLY button shows the weekly breakdown.
-*/
+/* WEEKLY */
 
-if(reportMode==="weeks"){
+if(
+reportMode==="weeks"||
+reportMode==="month"
+){
 
 showWeeklyReport(year,month);
 
@@ -2973,26 +2876,36 @@ showCashTakenDetails(records);
 showPersonTotals(records);
 
 
-/*
-NORMAL CALENDAR MONTH SUMMARY
-*/
+/* MONTH TOTAL */
 
 showMonthSummary(year,month);
 
 
+/* BANK MONTH END */
+
+if(
+$("bankMonthEndYear")&&
+$("bankMonthEndMonth")&&
+Number($("bankMonthEndYear").value)===year&&
+Number($("bankMonthEndMonth").value)===month
+){
+
+updateBankMonthEnd();
+
+}
+
 };
 
 
-/* =====================================================
-   WEEKLY REPORT
-===================================================== */
+/* WEEKLY REPORT */
 
 function showWeeklyReport(year,month){
 
 const weeks=
 getReportingWeeks(year,month);
 
-const monthName=
+$("weeklyTitle").innerText=
+"📅 Weekly Report — "+
 new Date(
 year,
 month,
@@ -3005,37 +2918,18 @@ year:"numeric"
 }
 );
 
-$("weeklyTitle").innerText=
-"📅 Weekly Report — "+
-monthName;
-
-
-/*
-IMPORTANT:
-August 2026 gives:
-
-Week 1 03/08 → 09/08
-Week 2 10/08 → 16/08
-Week 3 17/08 → 23/08
-Week 4 24/08 → 30/08
-
-The 27/07 → 02/08 week is NOT included.
-The 31/08 → 06/09 week is NOT included.
-*/
-
 if(!weeks.length){
 
 $("weeklyReport").innerHTML=
 `
 <p class="small">
-No complete Monday-Sunday weeks fall inside this calendar month.
+No complete Monday-Sunday reporting week falls completely inside this calendar month.
 </p>
 `;
 
 return;
 
 }
-
 
 $("weeklyReport").innerHTML=
 weeks.map(w=>{
@@ -3303,12 +3197,15 @@ names.sort().map(name=>`
 }
 
 
-/* =====================================================
-   REPORTING MONTH TOTAL
-   NORMAL CALENDAR ONLY
-===================================================== */
+/* MONTH SUMMARY */
 
 function showMonthSummary(year,month){
+
+/*
+IMPORTANT:
+This is NORMAL CALENDAR MONTH.
+August = 01/08 → 31/08.
+*/
 
 const start=
 calendarMonthStart(year,month);
@@ -3423,8 +3320,14 @@ ${displayDate(end)}
 
 /* =====================================================
    BANK MONTH END
-   NORMAL CALENDAR MONTH
 ===================================================== */
+
+
+/*
+BANK MONTH END ALWAYS USES NORMAL CALENDAR MONTH.
+Example:
+August 2026 = 01/08/2026 → 31/08/2026.
+*/
 
 function getBankMonthEndPeriod(){
 
@@ -3469,16 +3372,16 @@ end
 getBankMonthEndPeriod();
 
 
-/*
-IMPORTANT:
-Bank Month End uses:
+/* CALENDAR PERIOD */
 
-01/month/year
-through
-last day/month/year
+$("bankCalendarPeriod").innerText=
+"Calendar period: "+
+displayDate(start)+
+" → "+
+displayDate(end);
 
-NOT Monday-Sunday.
-*/
+
+/* GET CALENDAR MONTH RECORDS */
 
 const records=
 recordsBetween(start,end);
@@ -3487,22 +3390,10 @@ const total=
 sumRecords(records);
 
 
-/* TOTAL CASH */
+/* AUTOMATIC CASH */
 
-$("bankMonthEndTotalCash").innerText=
+$("bankMonthTotalCash").innerText=
 money(total.cash);
-
-
-/* CALENDAR PERIOD */
-
-$("bankMonthEndPeriod").innerText=
-"Calendar period: "+
-displayDate(start)+
-" → "+
-displayDate(end);
-
-
-/* CALCULATION CASH */
 
 $("bankCalculationCash").innerText=
 money(total.cash);
@@ -3512,7 +3403,7 @@ $("bankCalculationCash")
 String(total.cash);
 
 
-/* LOAD SAVED RECORD */
+/* LOAD SAVED BANK MONTH END */
 
 const key=
 year+
@@ -3562,57 +3453,11 @@ $("bankMonthEndLastEdited").innerHTML=
 }
 
 
-/* PREVIOUS CALENDAR MONTH */
-
-const previousKey=
-getPreviousCalendarMonthKey(
-year,
-month
-);
-
-const previous=
-bankMonthEndRecords[previousKey];
-
-
-if(previous){
-
-$("bankPreviousCarryForward").innerText=
-money(previous.remainingCash);
-
-}else{
-
-$("bankPreviousCarryForward").innerText=
-"£0.00";
-
-}
-
-
 /* CALCULATE */
 
 calculateBankMonthEnd();
 
 };
-
-
-/* PREVIOUS CALENDAR MONTH KEY */
-
-function getPreviousCalendarMonthKey(year,month){
-
-let previousYear=year;
-let previousMonth=month-1;
-
-if(previousMonth<0){
-
-previousMonth=11;
-previousYear--;
-
-}
-
-return previousYear+
-"-"+
-pad(previousMonth+1);
-
-}
 
 
 /* CALCULATE BANK MONTH END */
@@ -3663,10 +3508,7 @@ money(extra);
 $("bankTotalUsed").innerText=
 money(totalUsed);
 
-$("bankRemaining").innerText=
-money(remaining);
-
-$("bankNextCarryForward").innerText=
+$("bankRemainingCash").innerText=
 money(remaining);
 
 };
@@ -3739,7 +3581,15 @@ year:year,
 month:month,
 monthKey:key,
 
-calendarMonth:true,
+calendarPeriodStart:
+dateString(
+calendarMonthStart(year,month)
+),
+
+calendarPeriodEnd:
+dateString(
+calendarMonthEnd(year,month)
+),
 
 totalCashBalance:totalCash,
 
@@ -3829,8 +3679,7 @@ year:"numeric"
 const confirmed=
 confirm(
 "Reset Bank Month End for "+
-monthName+" "+year+
-"?\n\n"+
+monthName+" "+year+"?\n\n"+
 "This will clear Staff Wages, Director Wages, Bank Deposit and Extra.\n\n"+
 "The Bank Month End record will NOT be deleted."
 );
@@ -3851,7 +3700,15 @@ year:year,
 month:month,
 monthKey:key,
 
-calendarMonth:true,
+calendarPeriodStart:
+dateString(
+calendarMonthStart(year,month)
+),
+
+calendarPeriodEnd:
+dateString(
+calendarMonthEnd(year,month)
+),
 
 totalCashBalance:totalCash,
 
@@ -3880,14 +3737,14 @@ data,
 );
 
 
+/* CLEAR FIELDS */
+
 $("bankStaffWages").value="";
 $("bankDirectorWages").value="";
 $("bankCashDeposit").value="";
 $("bankExtra").value="";
 
-
 calculateBankMonthEnd();
-
 
 $("bankMonthEndMessage").innerText=
 "✅ Bank Month End reset successfully. You can now enter the corrected amounts.";
