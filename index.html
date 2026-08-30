@@ -92,16 +92,23 @@ font-weight:bold;
 margin-bottom:6px
 }
 
-input,select{
+input,select,textarea{
 width:100%;
 padding:12px;
 border:1px solid #d1d5db;
 border-radius:8px;
-font-size:16px
+font-size:16px;
+font-family:Arial,Helvetica,sans-serif
+}
+
+textarea{
+min-height:100px;
+resize:vertical
 }
 
 input:disabled,
-select:disabled{
+select:disabled,
+textarea:disabled{
 background:#f3f4f6;
 color:#6b7280
 }
@@ -325,7 +332,7 @@ font-size:13px;
 color:#9a3412
 }
 
-/* NEW BANK MONTH END */
+/* BANK MONTH END */
 
 .bankHero{
 background:#111827;
@@ -367,8 +374,129 @@ font-weight:bold;
 margin-top:5px
 }
 
-@media(max-width:700px){
+/* EVENTS */
+
+.eventHeader{
+background:#111827;
+color:white;
+padding:20px;
+border-radius:12px;
+margin-bottom:15px
+}
+
+.eventHeader .amount{
+font-size:27px;
+font-weight:bold;
+margin-top:7px
+}
+
+.eventPeriod{
+background:#f3f4f6;
+padding:12px;
+border-radius:9px;
+font-weight:bold;
+margin-top:12px
+}
+
+.eventGrid{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:12px;
+overflow-x:auto;
+padding-bottom:5px
+}
+
+.eventCard{
+background:white;
+border:1px solid #d1d5db;
+border-radius:12px;
+padding:14px;
+min-width:210px;
+box-shadow:0 2px 6px rgba(0,0,0,.06)
+}
+
+.eventNumber{
+font-size:18px;
+font-weight:bold;
+margin-bottom:12px;
+padding-bottom:10px;
+border-bottom:1px solid #eee
+}
+
+.eventAmount{
+font-size:21px;
+font-weight:bold;
+margin-top:8px
+}
+
+.eventSave{
+width:100%;
+padding:13px;
+background:#15803d;
+color:white;
+border:0;
+border-radius:8px;
+font-weight:bold;
+margin-top:12px
+}
+
+.eventReset{
+width:100%;
+padding:11px;
+background:#dc2626;
+color:white;
+border:0;
+border-radius:8px;
+font-weight:bold;
+margin-top:8px
+}
+
+.eventInfo{
+background:#fff7ed;
+border:1px solid #fed7aa;
+padding:13px;
+border-radius:9px;
+font-size:13px;
+color:#9a3412;
+margin-bottom:15px
+}
+
+.eventSaved{
+background:#f0fdf4;
+border:1px solid #bbf7d0;
+padding:10px;
+border-radius:8px;
+margin-top:10px;
+font-size:12px;
+color:#166534
+}
+
+.eventTotalBox{
+background:#f9fafb;
+border:1px solid #ddd;
+padding:15px;
+border-radius:10px;
+margin-top:15px
+}
+
+.eventSeparate{
+background:#eff6ff;
+border:1px solid #bfdbfe;
+padding:13px;
+border-radius:9px;
+margin-bottom:15px;
+color:#1e40af;
+font-size:13px
+}
+
+@media(max-width:900px){
 .grid{grid-template-columns:repeat(2,1fr)}
+.eventGrid{
+grid-template-columns:repeat(5,210px)
+}
+}
+
+@media(max-width:700px){
 .pdq{grid-template-columns:repeat(2,1fr)}
 .cashgrid{grid-template-columns:1fr}
 }
@@ -376,13 +504,19 @@ margin-top:5px
 @media(max-width:520px){
 .formgrid{grid-template-columns:1fr}
 .grid{grid-template-columns:1fr 1fr}
+
 th,td{
 font-size:12px;
 padding:7px
 }
+
 .monthEndHero .amount,
 .bankHero .amount{
 font-size:25px
+}
+
+.eventHeader .amount{
+font-size:24px
 }
 }
 </style>
@@ -458,6 +592,10 @@ LOGIN
 
 <button onclick="openPage('reports',this)">
 📊 Reports
+</button>
+
+<button onclick="openPage('events',this)">
+🎉 Events
 </button>
 
 <button onclick="openPage('monthEnd',this)">
@@ -1021,6 +1159,555 @@ ALL HISTORY
 </section>
 
 
+<!-- =====================================================
+     EVENTS
+===================================================== -->
+
+<section id="events" class="page">
+
+<h2>🎉 Events</h2>
+
+<div class="eventHeader">
+
+<small>SEPARATE EVENT SECTION</small>
+
+<div class="amount">
+Event Management
+</div>
+
+<p style="margin-bottom:0">
+Events are completely separate from Daily Entry, Reports,
+Month End and Bank Month End.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>📅 Event Month</h3>
+
+<div class="formgrid">
+
+<div>
+
+<label>Year</label>
+
+<select id="eventYear" onchange="loadEventsForMonth()"></select>
+
+</div>
+
+<div>
+
+<label>Month</label>
+
+<select id="eventMonth" onchange="loadEventsForMonth()">
+
+<option value="0">January</option>
+<option value="1">February</option>
+<option value="2">March</option>
+<option value="3">April</option>
+<option value="4">May</option>
+<option value="5">June</option>
+<option value="6">July</option>
+<option value="7">August</option>
+<option value="8">September</option>
+<option value="9">October</option>
+<option value="10">November</option>
+<option value="11">December</option>
+
+</select>
+
+</div>
+
+</div>
+
+<div class="eventPeriod" id="eventPeriod">
+August 2026
+</div>
+
+</div>
+
+
+<div class="eventInfo">
+
+<b>⚠️ Important:</b>
+
+Event amounts are kept completely separate.
+
+They will NOT be added to:
+<br>• Daily Main Till
+<br>• PDQ
+<br>• Cash / Balance
+<br>• Uber
+<br>• Deliveroo
+<br>• Reports
+<br>• Old Month End
+<br>• Bank Month End
+
+</div>
+
+
+<div id="eventViewerNotice"
+class="card hidden">
+
+<p>
+👀 <b>View-only access.</b>
+</p>
+
+<p class="small">
+You can view Events but cannot edit or save them.
+</p>
+
+</div>
+
+
+<div class="eventGrid">
+
+<!-- EVENT 1 -->
+
+<div class="eventCard">
+
+<div class="eventNumber">
+EVENT 1
+</div>
+
+<label>Event Type</label>
+
+<select id="event1Type">
+
+<option value="">
+Select Type
+</option>
+
+<option value="Indoor Event">
+Indoor Event
+</option>
+
+<option value="Outdoor Event">
+Outdoor Event
+</option>
+
+</select>
+
+<br><br>
+
+<label>Event Details</label>
+
+<textarea id="event1Details"
+placeholder="Enter event details"></textarea>
+
+<br>
+
+<label>Total Amount (£)</label>
+
+<input id="event1Amount"
+type="number"
+step="0.01"
+placeholder="0.00"
+oninput="calculateEventTotals()">
+
+<br>
+
+<label>Payment Method</label>
+
+<select id="event1Payment">
+
+<option value="">
+Select Payment
+</option>
+
+<option value="Cash">
+Payment by Cash
+</option>
+
+<option value="Card">
+Payment by Card
+</option>
+
+</select>
+
+<button class="eventSave"
+onclick="saveEvent(1)">
+💾 SAVE EVENT 1
+</button>
+
+<button class="eventReset"
+onclick="resetEvent(1)">
+RESET
+</button>
+
+<div id="event1Saved"></div>
+
+</div>
+
+
+<!-- EVENT 2 -->
+
+<div class="eventCard">
+
+<div class="eventNumber">
+EVENT 2
+</div>
+
+<label>Event Type</label>
+
+<select id="event2Type">
+
+<option value="">
+Select Type
+</option>
+
+<option value="Indoor Event">
+Indoor Event
+</option>
+
+<option value="Outdoor Event">
+Outdoor Event
+</option>
+
+</select>
+
+<br><br>
+
+<label>Event Details</label>
+
+<textarea id="event2Details"
+placeholder="Enter event details"></textarea>
+
+<br>
+
+<label>Total Amount (£)</label>
+
+<input id="event2Amount"
+type="number"
+step="0.01"
+placeholder="0.00"
+oninput="calculateEventTotals()">
+
+<br>
+
+<label>Payment Method</label>
+
+<select id="event2Payment">
+
+<option value="">
+Select Payment
+</option>
+
+<option value="Cash">
+Payment by Cash
+</option>
+
+<option value="Card">
+Payment by Card
+</option>
+
+</select>
+
+<button class="eventSave"
+onclick="saveEvent(2)">
+💾 SAVE EVENT 2
+</button>
+
+<button class="eventReset"
+onclick="resetEvent(2)">
+RESET
+</button>
+
+<div id="event2Saved"></div>
+
+</div>
+
+
+<!-- EVENT 3 -->
+
+<div class="eventCard">
+
+<div class="eventNumber">
+EVENT 3
+</div>
+
+<label>Event Type</label>
+
+<select id="event3Type">
+
+<option value="">
+Select Type
+</option>
+
+<option value="Indoor Event">
+Indoor Event
+</option>
+
+<option value="Outdoor Event">
+Outdoor Event
+</option>
+
+</select>
+
+<br><br>
+
+<label>Event Details</label>
+
+<textarea id="event3Details"
+placeholder="Enter event details"></textarea>
+
+<br>
+
+<label>Total Amount (£)</label>
+
+<input id="event3Amount"
+type="number"
+step="0.01"
+placeholder="0.00"
+oninput="calculateEventTotals()">
+
+<br>
+
+<label>Payment Method</label>
+
+<select id="event3Payment">
+
+<option value="">
+Select Payment
+</option>
+
+<option value="Cash">
+Payment by Cash
+</option>
+
+<option value="Card">
+Payment by Card
+</option>
+
+</select>
+
+<button class="eventSave"
+onclick="saveEvent(3)">
+💾 SAVE EVENT 3
+</button>
+
+<button class="eventReset"
+onclick="resetEvent(3)">
+RESET
+</button>
+
+<div id="event3Saved"></div>
+
+</div>
+
+
+<!-- EVENT 4 -->
+
+<div class="eventCard">
+
+<div class="eventNumber">
+EVENT 4
+</div>
+
+<label>Event Type</label>
+
+<select id="event4Type">
+
+<option value="">
+Select Type
+</option>
+
+<option value="Indoor Event">
+Indoor Event
+</option>
+
+<option value="Outdoor Event">
+Outdoor Event
+</option>
+
+</select>
+
+<br><br>
+
+<label>Event Details</label>
+
+<textarea id="event4Details"
+placeholder="Enter event details"></textarea>
+
+<br>
+
+<label>Total Amount (£)</label>
+
+<input id="event4Amount"
+type="number"
+step="0.01"
+placeholder="0.00"
+oninput="calculateEventTotals()">
+
+<br>
+
+<label>Payment Method</label>
+
+<select id="event4Payment">
+
+<option value="">
+Select Payment
+</option>
+
+<option value="Cash">
+Payment by Cash
+</option>
+
+<option value="Card">
+Payment by Card
+</option>
+
+</select>
+
+<button class="eventSave"
+onclick="saveEvent(4)">
+💾 SAVE EVENT 4
+</button>
+
+<button class="eventReset"
+onclick="resetEvent(4)">
+RESET
+</button>
+
+<div id="event4Saved"></div>
+
+</div>
+
+
+<!-- EVENT 5 -->
+
+<div class="eventCard">
+
+<div class="eventNumber">
+EVENT 5
+</div>
+
+<label>Event Type</label>
+
+<select id="event5Type">
+
+<option value="">
+Select Type
+</option>
+
+<option value="Indoor Event">
+Indoor Event
+</option>
+
+<option value="Outdoor Event">
+Outdoor Event
+</option>
+
+</select>
+
+<br><br>
+
+<label>Event Details</label>
+
+<textarea id="event5Details"
+placeholder="Enter event details"></textarea>
+
+<br>
+
+<label>Total Amount (£)</label>
+
+<input id="event5Amount"
+type="number"
+step="0.01"
+placeholder="0.00"
+oninput="calculateEventTotals()">
+
+<br>
+
+<label>Payment Method</label>
+
+<select id="event5Payment">
+
+<option value="">
+Select Payment
+</option>
+
+<option value="Cash">
+Payment by Cash
+</option>
+
+<option value="Card">
+Payment by Card
+</option>
+
+</select>
+
+<button class="eventSave"
+onclick="saveEvent(5)">
+💾 SAVE EVENT 5
+</button>
+
+<button class="eventReset"
+onclick="resetEvent(5)">
+RESET
+</button>
+
+<div id="event5Saved"></div>
+
+</div>
+
+</div>
+
+
+<div class="eventTotalBox">
+
+<h3>📊 Event Summary</h3>
+
+<p class="small">
+This summary is only for Events.
+It does not affect any other section.
+</p>
+
+<div class="totalLine">
+<span>Indoor Events</span>
+<b id="eventIndoorTotal">£0.00</b>
+</div>
+
+<div class="totalLine">
+<span>Outdoor Events</span>
+<b id="eventOutdoorTotal">£0.00</b>
+</div>
+
+<div class="totalLine">
+<span>Payment by Cash</span>
+<b id="eventCashTotal">£0.00</b>
+</div>
+
+<div class="totalLine">
+<span>Payment by Card</span>
+<b id="eventCardTotal">£0.00</b>
+</div>
+
+<div class="total">
+
+<div class="totalLine">
+<span>TOTAL EVENT AMOUNT</span>
+<b id="eventGrandTotal">£0.00</b>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="eventSeparate">
+
+<b>🔒 Separate accounting:</b>
+
+The Event Total above is stored separately in Firebase
+and is never included in your restaurant daily/reporting calculations.
+</div>
+
+</section>
+
+
 <!-- OLD MONTH END -->
 
 <section id="monthEnd" class="page">
@@ -1500,9 +2187,13 @@ const db=getFirestore(firebaseApp);
 let currentUser=null;
 let allRecords=[];
 let reportMode="weeks";
+
 let unsubscribeRecords=null;
 let unsubscribeMonthEnd=null;
+let unsubscribeEvents=null;
+
 let monthEndRecords={};
+let eventRecords={};
 
 
 /* EDITORS */
@@ -1583,6 +2274,8 @@ const monthEndSaveCard=$("monthEndSaveCard");
 
 const monthEndViewerNotice=$("monthEndViewerNotice");
 
+const eventViewerNotice=$("eventViewerNotice");
+
 
 if(editor){
 
@@ -1597,8 +2290,11 @@ monthEndSaveCard.classList.remove("hidden");
 
 monthEndViewerNotice.classList.add("hidden");
 
+eventViewerNotice.classList.add("hidden");
+
 enableEntryFields();
 enableMonthEndFields();
+enableEventFields();
 
 }else{
 
@@ -1613,8 +2309,11 @@ monthEndSaveCard.classList.add("hidden");
 
 monthEndViewerNotice.classList.remove("hidden");
 
+eventViewerNotice.classList.remove("hidden");
+
 disableEntryFields();
 disableMonthEndFields();
+disableEventFields();
 
 }
 
@@ -1707,6 +2406,52 @@ $(id).disabled=false;
 }
 
 
+/* EVENT FIELDS */
+
+function eventFieldIds(){
+
+const ids=[];
+
+for(let i=1;i<=5;i++){
+
+ids.push(
+"event"+i+"Type",
+"event"+i+"Details",
+"event"+i+"Amount",
+"event"+i+"Payment"
+);
+
+}
+
+return ids;
+
+}
+
+
+function disableEventFields(){
+
+eventFieldIds().forEach(id=>{
+
+if($(id))
+$(id).disabled=true;
+
+});
+
+}
+
+
+function enableEventFields(){
+
+eventFieldIds().forEach(id=>{
+
+if($(id))
+$(id).disabled=false;
+
+});
+
+}
+
+
 /* LOGIN */
 
 window.login=async function(){
@@ -1773,6 +2518,7 @@ dateString(new Date());
 setupReportYears();
 setupMonthEndYears();
 setupBankMonthEndYears();
+setupEventYears();
 
 setDay();
 setupPermissions();
@@ -1782,6 +2528,7 @@ await loadRecords();
 loadExistingEntry();
 updateMonthEnd();
 updateBankMonthEnd();
+loadEventsForMonth();
 
 }else{
 
@@ -1801,6 +2548,13 @@ if(unsubscribeMonthEnd){
 
 unsubscribeMonthEnd();
 unsubscribeMonthEnd=null;
+
+}
+
+if(unsubscribeEvents){
+
+unsubscribeEvents();
+unsubscribeEvents=null;
 
 }
 
@@ -1838,6 +2592,9 @@ displayHistory();
 
 if(page==="reports")
 generateReport();
+
+if(page==="events")
+loadEventsForMonth();
 
 if(page==="monthEnd")
 updateMonthEnd();
@@ -2589,6 +3346,16 @@ new Date().getMonth();
 }
 
 
+function setupEventYears(){
+
+fillYears("eventYear");
+
+$("eventMonth").value=
+new Date().getMonth();
+
+}
+
+
 /* REPORT MODE */
 
 window.setReportMode=function(mode){
@@ -2620,13 +3387,7 @@ generateReport();
 };
 
 
-/* =====================================================
-   REPORTING CALENDAR
-   IMPORTANT:
-   August 2026 = 03/08/2026 → 30/08/2026
-   July keeps 27/07 → 02/08
-   September starts 31/08 → 06/09
-===================================================== */
+/* REPORTING CALENDAR */
 
 function reportingMonthStart(year,month){
 
@@ -2635,20 +3396,10 @@ new Date(year,month,1);
 
 const day=first.getDay();
 
-const diff=
-day===0?6:day-1;
-
-/*
-For reporting month, we want the first
-COMPLETE Monday inside the selected month.
-
-If the 1st is not Monday, move forward
-to the next Monday.
-*/
-
 if(day===1){
 
 first.setHours(0,0,0,0);
+
 return first;
 
 }
@@ -2667,10 +3418,6 @@ return first;
 }
 
 
-/*
-Last complete Sunday inside the month.
-*/
-
 function reportingMonthEnd(year,month){
 
 const last=
@@ -2682,12 +3429,6 @@ month+1,
 
 const day=last.getDay();
 
-/*
-Sunday = 0.
-If month ends Sunday, keep it.
-Otherwise move backwards to previous Sunday.
-*/
-
 last.setDate(
 last.getDate()-day
 );
@@ -2698,24 +3439,6 @@ return last;
 
 }
 
-
-/*
-Special previous reporting month end.
-
-This keeps the spillover week belonging
-to the previous calendar report.
-
-Example:
-
-July 2026:
-27/07 → 02/08
-
-August 2026:
-03/08 → 30/08
-
-September 2026:
-31/08 → 06/09
-*/
 
 function getReportingMonthWeekBoundary(year,month){
 
@@ -2889,15 +3612,6 @@ let start;
 let end;
 
 
-/*
-MONTH and WEEKLY:
-Use complete Monday-Sunday weeks
-inside selected calendar month.
-
-August 2026:
-03/08 → 30/08
-*/
-
 if(
 reportMode==="month"||
 reportMode==="weeks"
@@ -2917,11 +3631,6 @@ month
 
 }
 
-
-/*
-2 / 3 / 6 MONTHS:
-Combine the selected reporting months.
-*/
 
 if(
 reportMode==="2months"||
@@ -2962,12 +3671,6 @@ endMonth
 }
 
 
-/*
-YEAR:
-Complete reporting weeks from January
-through December.
-*/
-
 if(reportMode==="year"){
 
 start=
@@ -2984,8 +3687,6 @@ year,
 
 }
 
-
-/* ALL HISTORY */
 
 if(reportMode==="all"){
 
@@ -3017,8 +3718,6 @@ const total=
 sumRecords(records);
 
 
-/* TOTALS */
-
 $("reportMain").innerText=
 money(total.mainTill);
 
@@ -3038,8 +3737,6 @@ $("reportDays").innerText=
 records.length;
 
 
-/* UBER */
-
 $("reportUber").innerText=
 money(total.uber);
 
@@ -3049,8 +3746,6 @@ money(total.uber*.30);
 $("reportUber70").innerText=
 money(total.uber*.70);
 
-
-/* DELIVEROO */
 
 $("reportDeliveroo").innerText=
 money(total.deliveroo);
@@ -3062,16 +3757,12 @@ $("reportDeliveroo65").innerText=
 money(total.deliveroo*.65);
 
 
-/* DELIVERY */
-
 $("reportDeliveryCash").innerText=
 money(total.deliveryCash);
 
 $("reportDeliveryCard").innerText=
 money(total.deliveryCard);
 
-
-/* WEEKLY */
 
 if(
 reportMode==="weeks"||
@@ -3095,20 +3786,9 @@ Select <b>WEEKLY</b> to see the Monday-Sunday breakdown.
 }
 
 
-/* CASH DETAILS */
-
 showCashTakenDetails(records);
 
-
-/* PERSON TOTAL */
-
 showPersonTotals(records);
-
-
-/*
-MONTH SUMMARY MUST USE SAME REPORTING PERIOD.
-August = 03/08 → 30/08.
-*/
 
 showMonthSummary(year,month);
 
@@ -3432,16 +4112,6 @@ names.sort().map(name=>`
 
 function showMonthSummary(year,month){
 
-/*
-IMPORTANT:
-This is NOT normal calendar month.
-
-It follows reporting weeks.
-
-August 2026:
-03/08 → 30/08
-*/
-
 const start=
 reportingMonthStart(year,month);
 
@@ -3549,6 +4219,464 @@ ${displayDate(end)}
 </div>
 
 `;
+
+}
+
+
+/* =====================================================
+   EVENTS
+===================================================== */
+
+function getEventMonthKey(){
+
+const year=
+Number($("eventYear").value);
+
+const month=
+Number($("eventMonth").value);
+
+return year+"-"+pad(month+1);
+
+}
+
+
+function getEventMonthName(){
+
+const year=
+Number($("eventYear").value);
+
+const month=
+Number($("eventMonth").value);
+
+return new Date(
+year,
+month,
+1
+).toLocaleDateString(
+"en-GB",
+{
+month:"long",
+year:"numeric"
+}
+);
+
+}
+
+
+function clearEventForm(i){
+
+$("event"+i+"Type").value="";
+$("event"+i+"Details").value="";
+$("event"+i+"Amount").value="";
+$("event"+i+"Payment").value="";
+$("event"+i+"Saved").innerHTML="";
+
+}
+
+
+function displaySavedEvent(i,event){
+
+if(!event){
+
+$("event"+i+"Saved").innerHTML="";
+return;
+
+}
+
+$("event"+i+"Saved").innerHTML=
+`
+<div class="eventSaved">
+
+<b>✅ Saved</b><br>
+
+${event.eventType||"No type"}
+
+<br>
+
+${event.paymentMethod||"No payment method"}
+
+<br>
+
+<b>${money(event.amount)}</b>
+
+<br><br>
+
+${event.updatedBy||""}
+
+<br>
+
+${formatUpdatedAt(event.updatedAt)}
+
+</div>
+`;
+
+}
+
+
+function loadEventsForMonth(){
+
+if(
+!$("eventYear")||
+!$("eventMonth")
+)
+return;
+
+const key=
+getEventMonthKey();
+
+$("eventPeriod").innerText=
+getEventMonthName();
+
+for(let i=1;i<=5;i++){
+
+const event=
+eventRecords[
+key+"-event"+i
+];
+
+if(event){
+
+$("event"+i+"Type").value=
+event.eventType||"";
+
+$("event"+i+"Details").value=
+event.details||"";
+
+$("event"+i+"Amount").value=
+event.amount??"";
+
+$("event"+i+"Payment").value=
+event.paymentMethod||"";
+
+displaySavedEvent(i,event);
+
+}else{
+
+clearEventForm(i);
+
+}
+
+}
+
+calculateEventTotals();
+
+}
+
+
+window.loadEventsForMonth=
+loadEventsForMonth;
+
+
+window.saveEvent=async function(i){
+
+if(!currentUser){
+
+alert("Please login first.");
+
+return;
+
+}
+
+if(!isEditor()){
+
+alert("❌ You have view-only access.");
+
+return;
+
+}
+
+const key=
+getEventMonthKey();
+
+const type=
+$("event"+i+"Type").value;
+
+const details=
+$("event"+i+"Details").value.trim();
+
+const amount=
+Number(
+$("event"+i+"Amount").value
+)||0;
+
+const payment=
+$("event"+i+"Payment").value;
+
+if(!type){
+
+alert("Please select Indoor Event or Outdoor Event.");
+
+return;
+
+}
+
+if(!details){
+
+alert("Please enter Event Details.");
+
+return;
+
+}
+
+if(amount<=0){
+
+alert("Please enter the event amount.");
+
+return;
+
+}
+
+if(!payment){
+
+alert("Please select Cash or Card payment.");
+
+return;
+
+}
+
+const eventData={
+
+monthKey:key,
+
+eventNumber:i,
+
+eventType:type,
+
+details:details,
+
+amount:amount,
+
+paymentMethod:payment,
+
+updatedBy:currentUser.email,
+
+updatedAt:new Date().toISOString()
+
+};
+
+try{
+
+await setDoc(
+doc(
+db,
+"eventRecords",
+key+"-event"+i
+),
+eventData,
+{merge:true}
+);
+
+$("event"+i+"Saved").innerHTML=
+`
+<div class="eventSaved">
+<b>✅ Event saved successfully</b>
+</div>
+`;
+
+calculateEventTotals();
+
+}catch(error){
+
+console.error(error);
+
+alert(
+"❌ Event save failed: "+
+error.message
+);
+
+}
+
+};
+
+
+window.resetEvent=async function(i){
+
+if(!currentUser){
+
+alert("Please login first.");
+
+return;
+
+}
+
+if(!isEditor()){
+
+alert("❌ You have view-only access.");
+
+return;
+
+}
+
+const key=
+getEventMonthKey();
+
+const saved=
+eventRecords[
+key+"-event"+i
+];
+
+if(!saved){
+
+clearEventForm(i);
+
+return;
+
+}
+
+const confirmed=
+confirm(
+"Reset Event "+i+"?\n\n"+
+"The saved Firebase event will NOT be deleted.\n"+
+"It will be replaced with a blank event record."
+);
+
+if(!confirmed)
+return;
+
+const eventData={
+
+monthKey:key,
+
+eventNumber:i,
+
+eventType:"",
+
+details:"",
+
+amount:0,
+
+paymentMethod:"",
+
+updatedBy:currentUser.email,
+
+updatedAt:new Date().toISOString(),
+
+reset:true
+
+};
+
+try{
+
+await setDoc(
+doc(
+db,
+"eventRecords",
+key+"-event"+i
+),
+eventData,
+{merge:true}
+);
+
+clearEventForm(i);
+
+calculateEventTotals();
+
+}catch(error){
+
+console.error(error);
+
+alert(
+"❌ Reset failed: "+
+error.message
+);
+
+}
+
+};
+
+
+function calculateEventTotals(){
+
+let indoor=0;
+let outdoor=0;
+let cash=0;
+let card=0;
+
+for(let i=1;i<=5;i++){
+
+const type=
+$("event"+i+"Type")?.value||"";
+
+const amount=
+Number(
+$("event"+i+"Amount")?.value
+)||0;
+
+const payment=
+$("event"+i+"Payment")?.value||"";
+
+if(type==="Indoor Event")
+indoor+=amount;
+
+if(type==="Outdoor Event")
+outdoor+=amount;
+
+if(payment==="Cash")
+cash+=amount;
+
+if(payment==="Card")
+card+=amount;
+
+}
+
+const grand=
+indoor+outdoor;
+
+$("eventIndoorTotal").innerText=
+money(indoor);
+
+$("eventOutdoorTotal").innerText=
+money(outdoor);
+
+$("eventCashTotal").innerText=
+money(cash);
+
+$("eventCardTotal").innerText=
+money(card);
+
+$("eventGrandTotal").innerText=
+money(grand);
+
+}
+
+
+window.calculateEventTotals=
+calculateEventTotals;
+
+
+function loadEventRecords(){
+
+if(unsubscribeEvents)
+unsubscribeEvents();
+
+unsubscribeEvents=
+onSnapshot(
+collection(db,"eventRecords"),
+snapshot=>{
+
+eventRecords={};
+
+snapshot.forEach(item=>{
+
+eventRecords[item.id]={
+id:item.id,
+...item.data()
+};
+
+});
+
+loadEventsForMonth();
+
+},
+error=>{
+
+console.error(
+"Event records error:",
+error
+);
+
+}
+);
 
 }
 
@@ -4032,8 +5160,7 @@ error
 
 
 /* =====================================================
-   NEW BANK MONTH END
-   NORMAL CALENDAR MONTH ONLY
+   BANK MONTH END
 ===================================================== */
 
 function getBankMonthEndPeriod(){
@@ -4083,19 +5210,12 @@ end
 getBankMonthEndPeriod();
 
 
-/*
-NORMAL CALENDAR:
-August 2026 = 01/08 → 31/08
-*/
-
 const records=
 recordsBetween(start,end);
 
 const t=
 sumRecords(records);
 
-
-/* PERIOD */
 
 const period=
 displayDate(start)+
@@ -4109,13 +5229,9 @@ $("bankCalendarPeriod").innerText=
 period;
 
 
-/* TOTAL */
-
 $("bankMonthTotal").innerText=
 money(t.mainTill);
 
-
-/* AUTOMATIC DETAILS */
 
 $("bankMainTill").innerText=
 money(t.mainTill);
@@ -4145,18 +5261,6 @@ $("bankDeliveryCard").innerText=
 money(t.deliveryCard);
 
 
-/*
-BANK TOTAL
-
-PDQ
-+
-Uber 70%
-+
-Deliveroo 65%
-+
-Delivery Card
-*/
-
 const bankTotal=
 t.pdqTotal+
 (t.uber*.70)+
@@ -4185,6 +5289,8 @@ money(bankTotal);
 /* START */
 
 loadMonthEndRecords();
+
+loadEventRecords();
 
 
 /* DEFAULT REPORT */
