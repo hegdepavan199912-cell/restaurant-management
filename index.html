@@ -491,6 +491,7 @@ font-size:13px
 
 @media(max-width:900px){
 .grid{grid-template-columns:repeat(2,1fr)}
+
 .eventGrid{
 grid-template-columns:repeat(5,210px)
 }
@@ -951,7 +952,8 @@ SHOW ALL
 
 <p class="small">
 Weekly reporting follows Monday to Sunday.
-The selected calendar month contains only the complete Monday-Sunday weeks belonging to that month.
+Each reporting month contains exactly 4 reporting weeks.
+The first week starts on the Monday on or before the 1st of the selected month.
 </p>
 
 <div class="formgrid">
@@ -1159,9 +1161,7 @@ ALL HISTORY
 </section>
 
 
-<!-- =====================================================
-     EVENTS
-===================================================== -->
+<!-- EVENTS -->
 
 <section id="events" class="page">
 
@@ -2123,7 +2123,7 @@ For example, August 2026 is exactly:
 </p>
 
 <p class="small">
-This does NOT change the Reports section. Reports continue using the reporting-week calendar, where August 2026 is 03/08/2026 → 30/08/2026.
+This does NOT change the Reports section. Reports continue using the reporting-week calendar.
 </p>
 
 </div>
@@ -3387,31 +3387,76 @@ generateReport();
 };
 
 
-/* REPORTING CALENDAR */
+/* =====================================================
+   REPORTING CALENDAR
+   EXACTLY 4 WEEKS PER REPORTING MONTH
+===================================================== */
+
+/*
+   IMPORTANT REPORTING RULE:
+
+   1. Reporting Week always starts Monday.
+   2. Reporting Week always ends Sunday.
+   3. Week 1 starts on the Monday ON OR BEFORE
+      the 1st day of the selected month.
+   4. ONLY 4 weeks are included.
+   5. Therefore the reporting month ends after Week 4.
+
+   SEPTEMBER 2026:
+
+   Week 1 = 31/08/2026 → 06/09/2026
+   Week 2 = 07/09/2026 → 13/09/2026
+   Week 3 = 14/09/2026 → 20/09/2026
+   Week 4 = 21/09/2026 → 27/09/2026
+
+   28/09/2026 → 04/10/2026 belongs to OCTOBER.
+
+   AUGUST 2026:
+
+   Week 1 = 27/07/2026 → 02/08/2026
+   Week 2 = 03/08/2026 → 09/08/2026
+   Week 3 = 10/08/2026 → 16/08/2026
+   Week 4 = 17/08/2026 → 23/08/2026
+
+   24/08/2026 → 30/08/2026 is NOT included
+   in the August reporting month under the exact
+   4-week rule.
+*/
+
 
 function reportingMonthStart(year,month){
 
 const first=
-new Date(year,month,1);
-
-const day=first.getDay();
-
-if(day===1){
-
-first.setHours(0,0,0,0);
-
-return first;
-
-}
-
-const daysUntilMonday=
-day===0?1:8-day;
-
-first.setDate(
-first.getDate()+daysUntilMonday
+new Date(
+year,
+month,
+1
 );
 
-first.setHours(0,0,0,0);
+const day=
+first.getDay();
+
+/*
+   JavaScript:
+   Sunday = 0
+   Monday = 1
+   Tuesday = 2
+   ...
+   Saturday = 6
+*/
+
+const daysBack=
+day===0
+?6
+:day-1;
+
+first.setDate(
+first.getDate()-daysBack
+);
+
+first.setHours(
+0,0,0,0
+);
 
 return first;
 
@@ -3420,22 +3465,32 @@ return first;
 
 function reportingMonthEnd(year,month){
 
-const last=
-new Date(
+const start=
+reportingMonthStart(
 year,
-month+1,
-0
+month
 );
 
-const day=last.getDay();
+/*
+   Exactly 4 Monday-Sunday weeks.
 
-last.setDate(
-last.getDate()-day
+   4 weeks = 28 days.
+   Therefore the ending Sunday is:
+   start + 27 days.
+*/
+
+const end=
+new Date(start);
+
+end.setDate(
+end.getDate()+27
 );
 
-last.setHours(0,0,0,0);
+end.setHours(
+0,0,0,0
+);
 
-return last;
+return end;
 
 }
 
@@ -3443,12 +3498,21 @@ return last;
 function getReportingMonthWeekBoundary(year,month){
 
 const start=
-reportingMonthStart(year,month);
+reportingMonthStart(
+year,
+month
+);
 
 const end=
-reportingMonthEnd(year,month);
+reportingMonthEnd(
+year,
+month
+);
 
-return {start,end};
+return {
+start,
+end
+};
 
 }
 
@@ -3457,16 +3521,25 @@ return {start,end};
 
 function getReportingWeeks(year,month){
 
-const {start,end}=
-getReportingMonthWeekBoundary(year,month);
+const {
+start,
+end
+}=
+getReportingMonthWeekBoundary(
+year,
+month
+);
 
 const weeks=[];
 
-let current=new Date(start);
+let current=
+new Date(start);
 
+for(
 let weekNumber=1;
-
-while(current<=end){
+weekNumber<=4;
+weekNumber++
+){
 
 const weekStart=
 new Date(current);
@@ -3478,8 +3551,6 @@ weekEnd.setDate(
 weekEnd.getDate()+6
 );
 
-if(weekEnd<=end){
-
 weeks.push({
 
 number:weekNumber,
@@ -3488,13 +3559,9 @@ end:weekEnd
 
 });
 
-}
-
 current.setDate(
 current.getDate()+7
 );
-
-weekNumber++;
 
 }
 
@@ -3812,7 +3879,10 @@ updateMonthEnd();
 function showWeeklyReport(year,month){
 
 const weeks=
-getReportingWeeks(year,month);
+getReportingWeeks(
+year,
+month
+);
 
 $("weeklyTitle").innerText=
 "📅 Weekly Report — "+
@@ -3833,7 +3903,7 @@ if(!weeks.length){
 $("weeklyReport").innerHTML=
 `
 <p class="small">
-No complete Monday-Sunday reporting week exists for this month.
+No reporting weeks available.
 </p>
 `;
 
@@ -4113,13 +4183,22 @@ names.sort().map(name=>`
 function showMonthSummary(year,month){
 
 const start=
-reportingMonthStart(year,month);
+reportingMonthStart(
+year,
+month
+);
 
 const end=
-reportingMonthEnd(year,month);
+reportingMonthEnd(
+year,
+month
+);
 
 const records=
-recordsBetween(start,end);
+recordsBetween(
+start,
+end
+);
 
 const t=
 sumRecords(records);
@@ -4309,7 +4388,6 @@ ${formatUpdatedAt(event.updatedAt)}
 
 </div>
 `;
-
 }
 
 
@@ -4694,10 +4772,16 @@ const month=
 Number($("monthEndMonth").value);
 
 const start=
-reportingMonthStart(year,month);
+reportingMonthStart(
+year,
+month
+);
 
 const end=
-reportingMonthEnd(year,month);
+reportingMonthEnd(
+year,
+month
+);
 
 return {
 year,
@@ -4727,7 +4811,10 @@ getMonthEndPeriod();
 
 
 const records=
-recordsBetween(start,end);
+recordsBetween(
+start,
+end
+);
 
 const total=
 sumRecords(records);
@@ -5211,7 +5298,10 @@ getBankMonthEndPeriod();
 
 
 const records=
-recordsBetween(start,end);
+recordsBetween(
+start,
+end
+);
 
 const t=
 sumRecords(records);
