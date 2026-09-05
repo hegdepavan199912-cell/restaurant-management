@@ -953,7 +953,8 @@ SHOW ALL
 <p class="small">
 Weekly reporting follows Monday to Sunday.
 Each reporting month contains exactly 4 reporting weeks.
-The first week starts on the Monday on or before the 1st of the selected month.
+Reporting months use Khan's fixed 4-week reporting calendar.
+A reporting week may begin or end in the adjacent normal calendar month.
 </p>
 
 <div class="formgrid">
@@ -2200,7 +2201,7 @@ let eventRecords={};
 
 const EDITORS=[
 "kj.hegde@hotmail.co.uk",
-"Vasimalisiddi@yahoo.uk"
+"Vasimalisiddi@yahoo.co.uk"
 ];
 
 
@@ -3388,77 +3389,119 @@ generateReport();
 
 
 /* =====================================================
-   REPORTING CALENDAR
-   EXACTLY 4 WEEKS PER REPORTING MONTH
+   KHAN'S RESTAURANT REPORTING CALENDAR
+   FIXED 4-WEEK MONDAY-SUNDAY CYCLE
 ===================================================== */
 
 /*
-   IMPORTANT REPORTING RULE:
+   IMPORTANT:
 
-   1. Reporting Week always starts Monday.
-   2. Reporting Week always ends Sunday.
-   3. Week 1 starts on the Monday ON OR BEFORE
-      the 1st day of the selected month.
-   4. ONLY 4 weeks are included.
-   5. Therefore the reporting month ends after Week 4.
+   This reporting calendar is NOT the normal calendar.
 
-   SEPTEMBER 2026:
+   The business uses exactly FOUR Monday-Sunday
+   reporting weeks for each reporting month.
 
+   The anchor is:
+
+   AUGUST 2026 WEEK 1
+   03/08/2026 → 09/08/2026
+
+   Every reporting month is exactly 28 days
+   (4 complete Monday-Sunday weeks).
+
+   Therefore:
+
+   JULY 2026
+   Week 1 = 06/07/2026 → 12/07/2026
+   Week 2 = 13/07/2026 → 19/07/2026
+   Week 3 = 20/07/2026 → 26/07/2026
+   Week 4 = 27/07/2026 → 02/08/2026
+
+   AUGUST 2026
+   Week 1 = 03/08/2026 → 09/08/2026
+   Week 2 = 10/08/2026 → 16/08/2026
+   Week 3 = 17/08/2026 → 23/08/2026
+   Week 4 = 24/08/2026 → 30/08/2026
+
+   SEPTEMBER 2026
    Week 1 = 31/08/2026 → 06/09/2026
    Week 2 = 07/09/2026 → 13/09/2026
    Week 3 = 14/09/2026 → 20/09/2026
    Week 4 = 21/09/2026 → 27/09/2026
 
-   28/09/2026 → 04/10/2026 belongs to OCTOBER.
+   OCTOBER 2026
+   Week 1 = 28/09/2026 → 04/10/2026
 
-   AUGUST 2026:
-
-   Week 1 = 27/07/2026 → 02/08/2026
-   Week 2 = 03/08/2026 → 09/08/2026
-   Week 3 = 10/08/2026 → 16/08/2026
-   Week 4 = 17/08/2026 → 23/08/2026
-
-   24/08/2026 → 30/08/2026 is NOT included
-   in the August reporting month under the exact
-   4-week rule.
+   IMPORTANT:
+   Bank Month End DOES NOT use this calendar.
+   Bank Month End continues using normal calendar
+   months: 1st → last day of the month.
 */
+
+
+/*
+   REPORTING ANCHOR
+
+   August 2026 Week 1 begins on Monday 03/08/2026.
+
+   Every reporting month is 28 days after the previous
+   reporting month.
+
+   This gives:
+
+   July 2026:
+   06/07 → 02/08
+
+   August 2026:
+   03/08 → 30/08
+
+   September 2026:
+   31/08 → 27/09
+
+   October 2026:
+   28/09 → 25/10
+*/
+
+const REPORTING_ANCHOR_YEAR=2026;
+const REPORTING_ANCHOR_MONTH=7;
+const REPORTING_ANCHOR_DAY=3;
+
+
+function getReportingMonthIndex(year,month){
+
+return(
+(year-REPORTING_ANCHOR_YEAR)*12+
+(month-REPORTING_ANCHOR_MONTH)
+);
+
+}
 
 
 function reportingMonthStart(year,month){
 
-const first=
-new Date(
+const index=
+getReportingMonthIndex(
 year,
-month,
-1
+month
 );
 
-const day=
-first.getDay();
-
-/*
-   JavaScript:
-   Sunday = 0
-   Monday = 1
-   Tuesday = 2
-   ...
-   Saturday = 6
-*/
-
-const daysBack=
-day===0
-?6
-:day-1;
-
-first.setDate(
-first.getDate()-daysBack
+const start=
+new Date(
+REPORTING_ANCHOR_YEAR,
+REPORTING_ANCHOR_MONTH,
+REPORTING_ANCHOR_DAY
 );
 
-first.setHours(
+start.setDate(
+start.getDate()+
+(index*28)
+);
+
+start.setHours(
 0,0,0,0
 );
 
-return first;
+return start;
 
 }
 
@@ -3470,14 +3513,6 @@ reportingMonthStart(
 year,
 month
 );
-
-/*
-   Exactly 4 Monday-Sunday weeks.
-
-   4 weeks = 28 days.
-   Therefore the ending Sunday is:
-   start + 27 days.
-*/
 
 const end=
 new Date(start);
@@ -3522,8 +3557,7 @@ end
 function getReportingWeeks(year,month){
 
 const {
-start,
-end
+start
 }=
 getReportingMonthWeekBoundary(
 year,
@@ -3549,6 +3583,14 @@ new Date(current);
 
 weekEnd.setDate(
 weekEnd.getDate()+6
+);
+
+weekStart.setHours(
+0,0,0,0
+);
+
+weekEnd.setHours(
+0,0,0,0
 );
 
 weeks.push({
@@ -3587,7 +3629,11 @@ r=>r.date>=s&&r.date<=e
 }
 
 
-/* NORMAL CALENDAR MONTH */
+/* =====================================================
+   NORMAL CALENDAR MONTH
+   DO NOT CHANGE THIS SECTION
+   BANK MONTH END USES THIS ONLY
+===================================================== */
 
 function normalCalendarMonthStart(year,month){
 
@@ -3884,8 +3930,7 @@ year,
 month
 );
 
-$("weeklyTitle").innerText=
-"📅 Weekly Report — "+
+const monthName=
 new Date(
 year,
 month,
@@ -3897,6 +3942,11 @@ month:"long",
 year:"numeric"
 }
 );
+
+$("weeklyTitle").innerText=
+"📅 Weekly Report — "+
+monthName;
+
 
 if(!weeks.length){
 
@@ -4761,6 +4811,7 @@ error
 
 /* =====================================================
    OLD MONTH END
+   USES REPORTING CALENDAR
 ===================================================== */
 
 function getMonthEndPeriod(){
@@ -5248,6 +5299,7 @@ error
 
 /* =====================================================
    BANK MONTH END
+   COMPLETELY SEPARATE FROM REPORTING CALENDAR
 ===================================================== */
 
 function getBankMonthEndPeriod(){
@@ -5257,6 +5309,18 @@ Number($("bankMonthEndYear").value);
 
 const month=
 Number($("bankMonthEndMonth").value);
+
+
+/*
+   IMPORTANT:
+
+   Bank Month End NEVER calls:
+
+   reportingMonthStart()
+   reportingMonthEnd()
+
+   It uses only normal calendar dates.
+*/
 
 const start=
 normalCalendarMonthStart(
@@ -5296,6 +5360,24 @@ end
 }=
 getBankMonthEndPeriod();
 
+
+/*
+   BANK DATA RANGE:
+
+   Normal calendar month only.
+
+   Example:
+
+   August 2026
+   01/08/2026 → 31/08/2026
+
+   It does NOT use:
+
+   August reporting month
+   03/08/2026 → 30/08/2026
+
+   This separation is intentional.
+*/
 
 const records=
 recordsBetween(
