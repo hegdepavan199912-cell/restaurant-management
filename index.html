@@ -899,6 +899,26 @@ Cash = Main Till − PDQ Total − Petty Cash − Total Cash Taken
 <input id="deliveryCard" type="number" step="0.01" placeholder="0.00">
 </div>
 
+<div class="row">
+<label>Special Event 1 Cash</label>
+<input id="specialEvent1Cash" type="number" step="0.01" placeholder="0.00">
+</div>
+
+<div class="row">
+<label>Special Event 1 Card</label>
+<input id="specialEvent1Card" type="number" step="0.01" placeholder="0.00">
+</div>
+
+<div class="row">
+<label>Special Event 2 Cash</label>
+<input id="specialEvent2Cash" type="number" step="0.01" placeholder="0.00">
+</div>
+
+<div class="row">
+<label>Special Event 2 Card</label>
+<input id="specialEvent2Card" type="number" step="0.01" placeholder="0.00">
+</div>
+
 </div>
 
 
@@ -971,7 +991,7 @@ A reporting week may begin or end in the adjacent normal calendar month.
 
 <label>Reporting Month</label>
 
-<select id="reportMonth" onchange="generateReport()">
+<select id="reportMonth" onchange="generateReport">
 
 <option value="0">January</option>
 <option value="1">February</option>
@@ -991,7 +1011,6 @@ A reporting week may begin or end in the adjacent normal calendar month.
 </div>
 
 </div>
-
 
 <div class="reportButtons">
 
@@ -1117,6 +1136,56 @@ ALL HISTORY
 <div class="stat">
 <small>Delivery Card</small>
 <b id="reportDeliveryCard">£0.00</b>
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>🎉 Daily Special Events</h3>
+
+<div class="grid">
+
+<div class="stat">
+<small>Special Event 1 Cash</small>
+<b id="reportSpecialEvent1Cash">£0.00</b>
+</div>
+
+<div class="stat">
+<small>Special Event 1 Card</small>
+<b id="reportSpecialEvent1Card">£0.00</b>
+</div>
+
+<div class="stat">
+<small>Special Event 2 Cash</small>
+<b id="reportSpecialEvent2Cash">£0.00</b>
+</div>
+
+<div class="stat">
+<small>Special Event 2 Card</small>
+<b id="reportSpecialEvent2Card">£0.00</b>
+</div>
+
+</div>
+
+<div class="totalLine">
+<span>Total Special Event Cash</span>
+<b id="reportSpecialEventCash">£0.00</b>
+</div>
+
+<div class="totalLine">
+<span>Total Special Event Card</span>
+<b id="reportSpecialEventCard">£0.00</b>
+</div>
+
+<div class="total">
+
+<div class="totalLine">
+<span>FINAL SPECIAL EVENT TOTAL</span>
+<b id="reportSpecialEventTotal">£0.00</b>
+</div>
+
 </div>
 
 </div>
@@ -1776,6 +1845,44 @@ Total Cash / Balance — automatically from the selected reporting month
 </div>
 
 
+<!-- NEW MONTH END CASH SOURCES -->
+
+<div class="card">
+
+<h3>💷 Month End Cash Sources</h3>
+
+<div class="totalLine">
+<span>Month End Drawer Cash</span>
+<b id="monthEndSourceDrawerCash">£0.00</b>
+</div>
+
+<div class="totalLine">
+<span>Delivery Cash</span>
+<b id="monthEndSourceDeliveryCash">£0.00</b>
+</div>
+
+<div class="totalLine">
+<span>Special Event 1 Cash</span>
+<b id="monthEndSourceSpecialEvent1Cash">£0.00</b>
+</div>
+
+<div class="totalLine">
+<span>Special Event 2 Cash</span>
+<b id="monthEndSourceSpecialEvent2Cash">£0.00</b>
+</div>
+
+<div class="total">
+
+<div class="totalLine">
+<span>FINAL TOTAL CASH AVAILABLE</span>
+<b id="monthEndSourceFinalTotal">£0.00</b>
+</div>
+
+</div>
+
+</div>
+
+
 <div class="card">
 
 <h3>💷 Month End Cash Payments</h3>
@@ -1820,7 +1927,7 @@ oninput="calculateMonthEnd()">
 <h3>🧮 Month End Calculation</h3>
 
 <div class="totalLine">
-<span>Total Cash / Balance</span>
+<span>FINAL TOTAL CASH AVAILABLE</span>
 <b id="monthEndCalculationCash">£0.00</b>
 </div>
 
@@ -2339,7 +2446,11 @@ return [
 "uber",
 "deliveroo",
 "deliveryCash",
-"deliveryCard"
+"deliveryCard",
+"specialEvent1Cash",
+"specialEvent1Card",
+"specialEvent2Cash",
+"specialEvent2Card"
 ];
 
 }
@@ -2779,6 +2890,18 @@ $("deliveroo").value=record.deliveroo??"";
 $("deliveryCash").value=record.deliveryCash??"";
 $("deliveryCard").value=record.deliveryCard??"";
 
+$("specialEvent1Cash").value=
+record.specialEvent1Cash??"";
+
+$("specialEvent1Card").value=
+record.specialEvent1Card??"";
+
+$("specialEvent2Cash").value=
+record.specialEvent2Cash??"";
+
+$("specialEvent2Card").value=
+record.specialEvent2Card??"";
+
 calculateAll();
 
 };
@@ -2802,7 +2925,11 @@ function clearForm(){
 "uber",
 "deliveroo",
 "deliveryCash",
-"deliveryCard"
+"deliveryCard",
+"specialEvent1Cash",
+"specialEvent1Card",
+"specialEvent2Cash",
+"specialEvent2Card"
 ].forEach(id=>$(id).value="");
 
 }
@@ -2882,6 +3009,11 @@ deliveroo:num("deliveroo"),
 
 deliveryCash:num("deliveryCash"),
 deliveryCard:num("deliveryCard"),
+
+specialEvent1Cash:num("specialEvent1Cash"),
+specialEvent1Card:num("specialEvent1Card"),
+specialEvent2Cash:num("specialEvent2Cash"),
+specialEvent2Card:num("specialEvent2Card"),
 
 updatedBy:currentUser.email,
 updatedAt:new Date().toISOString()
@@ -3046,6 +3178,27 @@ return entries;
 }
 
 
+/* SPECIAL EVENT TOTALS */
+
+function getSpecialEventTotals(total){
+
+const cash=
+Number(total.specialEvent1Cash||0)+
+Number(total.specialEvent2Cash||0);
+
+const card=
+Number(total.specialEvent1Card||0)+
+Number(total.specialEvent2Card||0);
+
+return{
+cash:cash,
+card:card,
+total:cash+card
+};
+
+}
+
+
 /* UPDATED TIME */
 
 function formatUpdatedAt(value){
@@ -3115,6 +3268,17 @@ records.map(r=>{
 
 const cashEntries=
 getCashTakenEntries(r);
+
+const specialCash=
+Number(r.specialEvent1Cash||0)+
+Number(r.specialEvent2Cash||0);
+
+const specialCard=
+Number(r.specialEvent1Card||0)+
+Number(r.specialEvent2Card||0);
+
+const specialTotal=
+specialCash+specialCard;
 
 return `
 
@@ -3216,6 +3380,66 @@ ${money(getTotalCashTaken(r))}
 <span>Delivery Card</span>
 
 <b>${money(r.deliveryCard)}</b>
+
+</div>
+
+<div class="totalLine">
+
+<span>Special Event 1 Cash</span>
+
+<b>${money(r.specialEvent1Cash)}</b>
+
+</div>
+
+<div class="totalLine">
+
+<span>Special Event 1 Card</span>
+
+<b>${money(r.specialEvent1Card)}</b>
+
+</div>
+
+<div class="totalLine">
+
+<span>Special Event 2 Cash</span>
+
+<b>${money(r.specialEvent2Cash)}</b>
+
+</div>
+
+<div class="totalLine">
+
+<span>Special Event 2 Card</span>
+
+<b>${money(r.specialEvent2Card)}</b>
+
+</div>
+
+<div class="totalLine">
+
+<span>Total Special Event Cash</span>
+
+<b>${money(specialCash)}</b>
+
+</div>
+
+<div class="totalLine">
+
+<span>Total Special Event Card</span>
+
+<b>${money(specialCard)}</b>
+
+</div>
+
+<div class="total">
+
+<div class="totalLine">
+
+<span>FINAL SPECIAL EVENT TOTAL</span>
+
+<b>${money(specialTotal)}</b>
+
+</div>
 
 </div>
 
@@ -3388,79 +3612,7 @@ generateReport();
 };
 
 
-/* =====================================================
-   KHAN'S RESTAURANT REPORTING CALENDAR
-   FIXED 4-WEEK MONDAY-SUNDAY CYCLE
-===================================================== */
-
-/*
-   IMPORTANT:
-
-   This reporting calendar is NOT the normal calendar.
-
-   The business uses exactly FOUR Monday-Sunday
-   reporting weeks for each reporting month.
-
-   The anchor is:
-
-   AUGUST 2026 WEEK 1
-   03/08/2026 → 09/08/2026
-
-   Every reporting month is exactly 28 days
-   (4 complete Monday-Sunday weeks).
-
-   Therefore:
-
-   JULY 2026
-   Week 1 = 06/07/2026 → 12/07/2026
-   Week 2 = 13/07/2026 → 19/07/2026
-   Week 3 = 20/07/2026 → 26/07/2026
-   Week 4 = 27/07/2026 → 02/08/2026
-
-   AUGUST 2026
-   Week 1 = 03/08/2026 → 09/08/2026
-   Week 2 = 10/08/2026 → 16/08/2026
-   Week 3 = 17/08/2026 → 23/08/2026
-   Week 4 = 24/08/2026 → 30/08/2026
-
-   SEPTEMBER 2026
-   Week 1 = 31/08/2026 → 06/09/2026
-   Week 2 = 07/09/2026 → 13/09/2026
-   Week 3 = 14/09/2026 → 20/09/2026
-   Week 4 = 21/09/2026 → 27/09/2026
-
-   OCTOBER 2026
-   Week 1 = 28/09/2026 → 04/10/2026
-
-   IMPORTANT:
-   Bank Month End DOES NOT use this calendar.
-   Bank Month End continues using normal calendar
-   months: 1st → last day of the month.
-*/
-
-
-/*
-   REPORTING ANCHOR
-
-   August 2026 Week 1 begins on Monday 03/08/2026.
-
-   Every reporting month is 28 days after the previous
-   reporting month.
-
-   This gives:
-
-   July 2026:
-   06/07 → 02/08
-
-   August 2026:
-   03/08 → 30/08
-
-   September 2026:
-   31/08 → 27/09
-
-   October 2026:
-   28/09 → 25/10
-*/
+/* REPORTING CALENDAR */
 
 const REPORTING_ANCHOR_YEAR=2026;
 const REPORTING_ANCHOR_MONTH=7;
@@ -3629,11 +3781,7 @@ r=>r.date>=s&&r.date<=e
 }
 
 
-/* =====================================================
-   NORMAL CALENDAR MONTH
-   DO NOT CHANGE THIS SECTION
-   BANK MONTH END USES THIS ONLY
-===================================================== */
+/* NORMAL CALENDAR MONTH */
 
 function normalCalendarMonthStart(year,month){
 
@@ -3671,6 +3819,12 @@ uber:0,
 deliveroo:0,
 deliveryCash:0,
 deliveryCard:0,
+
+specialEvent1Cash:0,
+specialEvent1Card:0,
+specialEvent2Cash:0,
+specialEvent2Card:0,
+
 cashTaken:0
 
 };
@@ -3700,6 +3854,18 @@ Number(r.deliveryCash||0);
 
 total.deliveryCard+=
 Number(r.deliveryCard||0);
+
+total.specialEvent1Cash+=
+Number(r.specialEvent1Cash||0);
+
+total.specialEvent1Card+=
+Number(r.specialEvent1Card||0);
+
+total.specialEvent2Cash+=
+Number(r.specialEvent2Cash||0);
+
+total.specialEvent2Card+=
+Number(r.specialEvent2Card||0);
 
 total.cashTaken+=
 getTotalCashTaken(r);
@@ -3830,6 +3996,9 @@ recordsBetween(start,end);
 const total=
 sumRecords(records);
 
+const special=
+getSpecialEventTotals(total);
+
 
 $("reportMain").innerText=
 money(total.mainTill);
@@ -3875,6 +4044,28 @@ money(total.deliveryCash);
 
 $("reportDeliveryCard").innerText=
 money(total.deliveryCard);
+
+
+$("reportSpecialEvent1Cash").innerText=
+money(total.specialEvent1Cash);
+
+$("reportSpecialEvent1Card").innerText=
+money(total.specialEvent1Card);
+
+$("reportSpecialEvent2Cash").innerText=
+money(total.specialEvent2Cash);
+
+$("reportSpecialEvent2Card").innerText=
+money(total.specialEvent2Card);
+
+$("reportSpecialEventCash").innerText=
+money(special.cash);
+
+$("reportSpecialEventCard").innerText=
+money(special.card);
+
+$("reportSpecialEventTotal").innerText=
+money(special.total);
 
 
 if(
@@ -3974,6 +4165,9 @@ w.end
 const t=
 sumRecords(records);
 
+const special=
+getSpecialEventTotals(t);
+
 return `
 
 <div class="weekCard">
@@ -4053,6 +4247,45 @@ ${displayDate(w.end)}
 <div class="totalLine">
 <span>Delivery Card</span>
 <b>${money(t.deliveryCard)}</b>
+</div>
+
+<div class="totalLine">
+<span>Special Event 1 Cash</span>
+<b>${money(t.specialEvent1Cash)}</b>
+</div>
+
+<div class="totalLine">
+<span>Special Event 1 Card</span>
+<b>${money(t.specialEvent1Card)}</b>
+</div>
+
+<div class="totalLine">
+<span>Special Event 2 Cash</span>
+<b>${money(t.specialEvent2Cash)}</b>
+</div>
+
+<div class="totalLine">
+<span>Special Event 2 Card</span>
+<b>${money(t.specialEvent2Card)}</b>
+</div>
+
+<div class="totalLine">
+<span>Total Special Event Cash</span>
+<b>${money(special.cash)}</b>
+</div>
+
+<div class="totalLine">
+<span>Total Special Event Card</span>
+<b>${money(special.card)}</b>
+</div>
+
+<div class="total">
+
+<div class="totalLine">
+<span>FINAL SPECIAL EVENT TOTAL</span>
+<b>${money(special.total)}</b>
+</div>
+
 </div>
 
 </div>
@@ -4253,6 +4486,9 @@ end
 const t=
 sumRecords(records);
 
+const special=
+getSpecialEventTotals(t);
+
 const monthName=
 new Date(
 year,
@@ -4345,6 +4581,45 @@ ${displayDate(end)}
 <div class="totalLine">
 <span>Delivery Card</span>
 <b>${money(t.deliveryCard)}</b>
+</div>
+
+<div class="totalLine">
+<span>Special Event 1 Cash</span>
+<b>${money(t.specialEvent1Cash)}</b>
+</div>
+
+<div class="totalLine">
+<span>Special Event 1 Card</span>
+<b>${money(t.specialEvent1Card)}</b>
+</div>
+
+<div class="totalLine">
+<span>Special Event 2 Cash</span>
+<b>${money(t.specialEvent2Cash)}</b>
+</div>
+
+<div class="totalLine">
+<span>Special Event 2 Card</span>
+<b>${money(t.specialEvent2Card)}</b>
+</div>
+
+<div class="totalLine">
+<span>Total Special Event Cash</span>
+<b>${money(special.cash)}</b>
+</div>
+
+<div class="totalLine">
+<span>Total Special Event Card</span>
+<b>${money(special.card)}</b>
+</div>
+
+<div class="total">
+
+<div class="totalLine">
+<span>FINAL SPECIAL EVENT TOTAL</span>
+<b>${money(special.total)}</b>
+</div>
+
 </div>
 
 `;
@@ -4871,15 +5146,71 @@ const total=
 sumRecords(records);
 
 
+/*
+IMPORTANT:
+
+Existing Cash / Balance remains completely separate.
+
+Month End now has four cash sources:
+
+1. Drawer Cash
+2. Delivery Cash
+3. Special Event 1 Cash
+4. Special Event 2 Cash
+
+Only their combined value is used as the
+FINAL TOTAL CASH AVAILABLE for Month End deductions.
+*/
+
+const drawerCash=
+Number(total.cash||0);
+
+const deliveryCash=
+Number(total.deliveryCash||0);
+
+const specialEvent1Cash=
+Number(total.specialEvent1Cash||0);
+
+const specialEvent2Cash=
+Number(total.specialEvent2Cash||0);
+
+const finalTotalCash=
+drawerCash+
+deliveryCash+
+specialEvent1Cash+
+specialEvent2Cash;
+
+
 $("monthEndTotalCash").innerText=
-money(total.cash);
+money(drawerCash);
+
+
+/* SEPARATE CASH SOURCES */
+
+$("monthEndSourceDrawerCash").innerText=
+money(drawerCash);
+
+$("monthEndSourceDeliveryCash").innerText=
+money(deliveryCash);
+
+$("monthEndSourceSpecialEvent1Cash").innerText=
+money(specialEvent1Cash);
+
+$("monthEndSourceSpecialEvent2Cash").innerText=
+money(specialEvent2Cash);
+
+$("monthEndSourceFinalTotal").innerText=
+money(finalTotalCash);
+
+
+/* FINAL CASH POOL */
 
 $("monthEndCalculationCash").innerText=
-money(total.cash);
+money(finalTotalCash);
 
 $("monthEndCalculationCash")
 .dataset.value=
-String(total.cash);
+String(finalTotalCash);
 
 
 const key=
@@ -5060,7 +5391,9 @@ return;
 
 const {
 year,
-month
+month,
+start,
+end
 }=
 getMonthEndPeriod();
 
@@ -5069,11 +5402,36 @@ year+
 "-"+
 pad(month+1);
 
-const totalCash=
-Number(
-$("monthEndCalculationCash")
-.dataset.value||0
+
+/* CALCULATE ALL CASH SOURCES AGAIN */
+
+const records=
+recordsBetween(
+start,
+end
 );
+
+const total=
+sumRecords(records);
+
+const drawerCash=
+Number(total.cash||0);
+
+const deliveryCash=
+Number(total.deliveryCash||0);
+
+const specialEvent1Cash=
+Number(total.specialEvent1Cash||0);
+
+const specialEvent2Cash=
+Number(total.specialEvent2Cash||0);
+
+const totalCash=
+drawerCash+
+deliveryCash+
+specialEvent1Cash+
+specialEvent2Cash;
+
 
 const staff=
 num("monthEndStaffWages");
@@ -5102,6 +5460,19 @@ const data={
 year:year,
 month:month,
 monthKey:key,
+
+/* SEPARATE CASH SOURCES */
+
+drawerCash:drawerCash,
+deliveryCash:deliveryCash,
+specialEvent1Cash:specialEvent1Cash,
+specialEvent2Cash:specialEvent2Cash,
+
+/* FINAL COMBINED CASH */
+
+totalCashAvailable:totalCash,
+
+/* BACKWARD COMPATIBILITY */
 
 totalCashBalance:totalCash,
 
@@ -5166,7 +5537,9 @@ return;
 
 const {
 year,
-month
+month,
+start,
+end
 }=
 getMonthEndPeriod();
 
@@ -5198,17 +5571,49 @@ confirm(
 if(!confirmed)
 return;
 
-const totalCash=
-Number(
-$("monthEndCalculationCash")
-.dataset.value||0
+
+/* RECALCULATE CASH SOURCES */
+
+const records=
+recordsBetween(
+start,
+end
 );
+
+const total=
+sumRecords(records);
+
+const drawerCash=
+Number(total.cash||0);
+
+const deliveryCash=
+Number(total.deliveryCash||0);
+
+const specialEvent1Cash=
+Number(total.specialEvent1Cash||0);
+
+const specialEvent2Cash=
+Number(total.specialEvent2Cash||0);
+
+const totalCash=
+drawerCash+
+deliveryCash+
+specialEvent1Cash+
+specialEvent2Cash;
+
 
 const data={
 
 year:year,
 month:month,
 monthKey:key,
+
+drawerCash:drawerCash,
+deliveryCash:deliveryCash,
+specialEvent1Cash:specialEvent1Cash,
+specialEvent2Cash:specialEvent2Cash,
+
+totalCashAvailable:totalCash,
 
 totalCashBalance:totalCash,
 
@@ -5310,18 +5715,6 @@ Number($("bankMonthEndYear").value);
 const month=
 Number($("bankMonthEndMonth").value);
 
-
-/*
-   IMPORTANT:
-
-   Bank Month End NEVER calls:
-
-   reportingMonthStart()
-   reportingMonthEnd()
-
-   It uses only normal calendar dates.
-*/
-
 const start=
 normalCalendarMonthStart(
 year,
@@ -5360,24 +5753,6 @@ end
 }=
 getBankMonthEndPeriod();
 
-
-/*
-   BANK DATA RANGE:
-
-   Normal calendar month only.
-
-   Example:
-
-   August 2026
-   01/08/2026 → 31/08/2026
-
-   It does NOT use:
-
-   August reporting month
-   03/08/2026 → 30/08/2026
-
-   This separation is intentional.
-*/
 
 const records=
 recordsBetween(
