@@ -1344,7 +1344,7 @@ EVENT 1
 
 <label>Event Type</label>
 
-<select id="event1Type">
+<select id="event1Type" onchange="calculateEventTotals()">
 
 <option value="">
 Select Type
@@ -1379,9 +1379,20 @@ oninput="calculateEventTotals()">
 
 <br>
 
+<label>Total Event Expenses (£)</label>
+
+<input id="event1Expense"
+type="number"
+step="0.01"
+min="0"
+placeholder="0.00"
+oninput="calculateEventTotals()">
+
+<br>
+
 <label>Payment Method</label>
 
-<select id="event1Payment">
+<select id="event1Payment" onchange="calculateEventTotals()">
 
 <option value="">
 Select Payment
@@ -1422,7 +1433,7 @@ EVENT 2
 
 <label>Event Type</label>
 
-<select id="event2Type">
+<select id="event2Type" onchange="calculateEventTotals()">
 
 <option value="">
 Select Type
@@ -1457,9 +1468,20 @@ oninput="calculateEventTotals()">
 
 <br>
 
+<label>Total Event Expenses (£)</label>
+
+<input id="event2Expense"
+type="number"
+step="0.01"
+min="0"
+placeholder="0.00"
+oninput="calculateEventTotals()">
+
+<br>
+
 <label>Payment Method</label>
 
-<select id="event2Payment">
+<select id="event2Payment" onchange="calculateEventTotals()">
 
 <option value="">
 Select Payment
@@ -1500,7 +1522,7 @@ EVENT 3
 
 <label>Event Type</label>
 
-<select id="event3Type">
+<select id="event3Type" onchange="calculateEventTotals()">
 
 <option value="">
 Select Type
@@ -1535,9 +1557,20 @@ oninput="calculateEventTotals()">
 
 <br>
 
+<label>Total Event Expenses (£)</label>
+
+<input id="event3Expense"
+type="number"
+step="0.01"
+min="0"
+placeholder="0.00"
+oninput="calculateEventTotals()">
+
+<br>
+
 <label>Payment Method</label>
 
-<select id="event3Payment">
+<select id="event3Payment" onchange="calculateEventTotals()">
 
 <option value="">
 Select Payment
@@ -1578,7 +1611,7 @@ EVENT 4
 
 <label>Event Type</label>
 
-<select id="event4Type">
+<select id="event4Type" onchange="calculateEventTotals()">
 
 <option value="">
 Select Type
@@ -1613,9 +1646,20 @@ oninput="calculateEventTotals()">
 
 <br>
 
+<label>Total Event Expenses (£)</label>
+
+<input id="event4Expense"
+type="number"
+step="0.01"
+min="0"
+placeholder="0.00"
+oninput="calculateEventTotals()">
+
+<br>
+
 <label>Payment Method</label>
 
-<select id="event4Payment">
+<select id="event4Payment" onchange="calculateEventTotals()">
 
 <option value="">
 Select Payment
@@ -1656,7 +1700,7 @@ EVENT 5
 
 <label>Event Type</label>
 
-<select id="event5Type">
+<select id="event5Type" onchange="calculateEventTotals()">
 
 <option value="">
 Select Type
@@ -1691,9 +1735,20 @@ oninput="calculateEventTotals()">
 
 <br>
 
+<label>Total Event Expenses (£)</label>
+
+<input id="event5Expense"
+type="number"
+step="0.01"
+min="0"
+placeholder="0.00"
+oninput="calculateEventTotals()">
+
+<br>
+
 <label>Payment Method</label>
 
-<select id="event5Payment">
+<select id="event5Payment" onchange="calculateEventTotals()">
 
 <option value="">
 Select Payment
@@ -1755,11 +1810,21 @@ It does not affect any other section.
 <b id="eventCardTotal">£0.00</b>
 </div>
 
+<div class="totalLine">
+<span>TOTAL EVENT INCOME</span>
+<b id="eventGrandTotal">£0.00</b>
+</div>
+
+<div class="totalLine">
+<span>TOTAL EVENT EXPENSES</span>
+<b id="eventExpenseTotal">£0.00</b>
+</div>
+
 <div class="total">
 
 <div class="totalLine">
-<span>TOTAL EVENT AMOUNT</span>
-<b id="eventGrandTotal">£0.00</b>
+<span>NET EVENT BALANCE</span>
+<b id="eventNetTotal">£0.00</b>
 </div>
 
 </div>
@@ -1771,8 +1836,8 @@ It does not affect any other section.
 
 <b>🔒 Separate accounting:</b>
 
-The Event Total above is stored separately in Firebase
-and is never included in your restaurant daily/reporting calculations.
+Event income and expenses are stored separately in Firebase.
+The net event balance is calculated automatically and is never included in restaurant daily/reporting calculations.
 </div>
 
 </section>
@@ -1789,7 +1854,7 @@ and is never included in your restaurant daily/reporting calculations.
 <h3>Month End Period</h3>
 
 <p class="small">
-Old Month End format. The drawer cash automatically comes from the selected reporting month's Cash / Balance.
+Month End uses the normal calendar month, from the 1st through the final day of the selected month.
 </p>
 
 <div class="formgrid">
@@ -1839,7 +1904,7 @@ Old Month End format. The drawer cash automatically comes from the selected repo
 </div>
 
 <p style="margin-bottom:0">
-Total Cash / Balance — automatically from the selected reporting month
+Total Cash / Balance — automatically from the selected calendar month
 </p>
 
 </div>
@@ -4672,6 +4737,7 @@ function clearEventForm(i){
 $("event"+i+"Type").value="";
 $("event"+i+"Details").value="";
 $("event"+i+"Amount").value="";
+$("event"+i+"Expense").value="";
 $("event"+i+"Payment").value="";
 $("event"+i+"Saved").innerHTML="";
 
@@ -4701,7 +4767,11 @@ ${event.paymentMethod||"No payment method"}
 
 <br>
 
-<b>${money(event.amount)}</b>
+<b>Event Amount: ${money(event.amount)}</b>
+
+<br>
+
+<b>Event Expenses: ${money(event.expense||0)}</b>
 
 <br><br>
 
@@ -4747,6 +4817,9 @@ event.details||"";
 
 $("event"+i+"Amount").value=
 event.amount??"";
+
+$("event"+i+"Expense").value=
+event.expense??"";
 
 $("event"+i+"Payment").value=
 event.paymentMethod||"";
@@ -4802,8 +4875,21 @@ Number(
 $("event"+i+"Amount").value
 )||0;
 
+const expense=
+Number(
+$("event"+i+"Expense").value
+)||0;
+
 const payment=
 $("event"+i+"Payment").value;
+
+if(expense<0){
+
+alert("Event expenses cannot be negative.");
+
+return;
+
+}
 
 if(!type){
 
@@ -4848,6 +4934,8 @@ eventType:type,
 details:details,
 
 amount:amount,
+
+expense:expense,
 
 paymentMethod:payment,
 
@@ -4948,6 +5036,8 @@ details:"",
 
 amount:0,
 
+expense:0,
+
 paymentMethod:"",
 
 updatedBy:currentUser.email,
@@ -4994,6 +5084,7 @@ let indoor=0;
 let outdoor=0;
 let cash=0;
 let card=0;
+let expenses=0;
 
 for(let i=1;i<=5;i++){
 
@@ -5003,6 +5094,11 @@ $("event"+i+"Type")?.value||"";
 const amount=
 Number(
 $("event"+i+"Amount")?.value
+)||0;
+
+const expense=
+Number(
+$("event"+i+"Expense")?.value
 )||0;
 
 const payment=
@@ -5020,25 +5116,28 @@ cash+=amount;
 if(payment==="Card")
 card+=amount;
 
+expenses+=expense;
+
 }
 
 const grand=
 indoor+outdoor;
 
-$("eventIndoorTotal").innerText=
-money(indoor);
+const net=grand-expenses;
 
-$("eventOutdoorTotal").innerText=
-money(outdoor);
+$("eventIndoorTotal").innerText=money(indoor);
 
-$("eventCashTotal").innerText=
-money(cash);
+$("eventOutdoorTotal").innerText=money(outdoor);
 
-$("eventCardTotal").innerText=
-money(card);
+$("eventCashTotal").innerText=money(cash);
 
-$("eventGrandTotal").innerText=
-money(grand);
+$("eventCardTotal").innerText=money(card);
+
+$("eventGrandTotal").innerText=money(grand);
+
+$("eventExpenseTotal").innerText=money(expenses);
+
+$("eventNetTotal").innerText=money(net);
 
 }
 
@@ -5085,8 +5184,8 @@ error
 
 
 /* =====================================================
-   OLD MONTH END
-   USES REPORTING CALENDAR
+   MONTH END
+   USES NORMAL CALENDAR MONTH (1ST TO LAST DAY)
 ===================================================== */
 
 function getMonthEndPeriod(){
@@ -5098,13 +5197,13 @@ const month=
 Number($("monthEndMonth").value);
 
 const start=
-reportingMonthStart(
+normalCalendarMonthStart(
 year,
 month
 );
 
 const end=
-reportingMonthEnd(
+normalCalendarMonthEnd(
 year,
 month
 );
