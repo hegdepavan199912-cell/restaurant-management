@@ -288,7 +288,7 @@ font-size:13px;
 color:#4b5563
 }
 
-/* OLD MONTH END */
+/* MONTH END */
 
 .monthEndHero{
 background:#111827;
@@ -520,6 +520,82 @@ font-size:25px
 font-size:24px
 }
 }
+
+
+/* =====================================================
+   KHAN'S RESTAURANT — MODERN MANAGEMENT UI REFRESH
+   Visual-only overrides; existing IDs and workflows retained.
+===================================================== */
+:root{
+ --ink:#17212b;--muted:#718096;--navy:#102b3f;--navy2:#183e54;
+ --teal:#087f73;--teal2:#0e9b87;--gold:#d6a84f;--paper:#f3f6f8;
+ --line:#e3eaf0;--white:#fff;--shadow:0 10px 28px rgba(22,43,58,.07);
+}
+html{scroll-behavior:smooth}
+body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:var(--paper);color:var(--ink);line-height:1.5}
+header{background:linear-gradient(120deg,#0c2638 0%,#16465a 62%,#087f73 100%);color:#fff;padding:24px 0 30px;position:relative;overflow:hidden;box-shadow:0 8px 24px rgba(12,38,56,.16)}
+header:after{content:"";position:absolute;width:360px;height:360px;border:1px solid rgba(255,255,255,.12);border-radius:50%;right:-100px;top:-220px;box-shadow:0 0 0 35px rgba(255,255,255,.035),0 0 0 75px rgba(255,255,255,.025)}
+header .container{position:relative;z-index:1;max-width:1440px;padding:0 28px}
+header h2{font-size:clamp(23px,3vw,31px);letter-spacing:-.7px;margin:0 0 5px;font-weight:800}
+header small{color:rgba(255,255,255,.75);font-size:13px;letter-spacing:.2px}
+#permissionBadge{margin-top:12px;background:rgba(255,255,255,.13);color:#fff;border:1px solid rgba(255,255,255,.18)}
+.container{max-width:1440px;padding:22px 28px;margin:auto}
+nav{position:sticky;top:10px;z-index:20;display:flex;gap:7px;overflow-x:auto;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);padding:9px;border:1px solid rgba(220,229,236,.9);border-radius:15px;margin:-42px 0 28px;box-shadow:0 12px 30px rgba(18,43,59,.12);scrollbar-width:thin}
+nav button{flex:0 0 auto;border:0;background:transparent;color:#526475;padding:11px 15px;border-radius:10px;font-size:13px;font-weight:750;transition:all .18s ease}
+nav button:hover{background:#edf4f5;color:var(--teal)}
+nav button.active{background:linear-gradient(135deg,var(--navy),var(--teal));color:white;box-shadow:0 5px 12px rgba(8,127,115,.2)}
+.page{animation:pageIn .24s ease}
+@keyframes pageIn{from{opacity:.55;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.page>h2{font-size:25px;letter-spacing:-.55px;font-weight:800;color:#183448;margin:4px 0 20px}
+.page h3{font-size:16px;color:#203b4d;font-weight:800;letter-spacing:-.15px}
+.card,.stat,.history,.eventCard,.weekCard,.eventTotalBox{background:var(--white);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:19px;margin-bottom:17px}
+.grid{gap:16px}
+.stat{position:relative;overflow:hidden;min-height:112px;padding:20px}
+.stat:after{content:"";position:absolute;width:90px;height:90px;border-radius:50%;right:-35px;top:-35px;background:rgba(8,127,115,.055)}
+.stat small{color:var(--muted);font-weight:650;font-size:12px;letter-spacing:.35px;text-transform:uppercase}
+.stat b{font-size:clamp(20px,2vw,27px);color:#173b4d;letter-spacing:-.6px;margin-top:10px}
+input,select,textarea{border:1px solid #d8e2e9;background:#fbfdfe;color:#243746;border-radius:10px;padding:12px 13px;outline:none;transition:border .15s,box-shadow .15s;font-size:14px}
+input:focus,select:focus,textarea:focus{border-color:#159889;box-shadow:0 0 0 3px rgba(21,152,137,.12);background:#fff}
+label{font-size:12px;color:#455b6a;font-weight:750;letter-spacing:.15px;margin-bottom:7px}
+button{cursor:pointer;transition:transform .15s,filter .15s,box-shadow .15s}
+button:hover{filter:brightness(1.04)}
+button:active{transform:translateY(1px)}
+.save,.eventSave{background:linear-gradient(135deg,#087f73,#0b9b87);border:0;border-radius:10px;box-shadow:0 6px 14px rgba(8,127,115,.16);font-size:14px;padding:13px 16px}
+.primary{background:var(--navy);border-radius:9px}
+.edit{background:#2875a5;border-radius:8px}
+.reset,.eventReset{border-radius:9px}
+.total{background:linear-gradient(120deg,#102b3f,#176b69);border-radius:12px;padding:16px}
+.totalLine{border-bottom-color:rgba(130,153,165,.18);font-size:14px}
+.totalLine:last-child{border-bottom:0}
+table{border-collapse:separate;border-spacing:0;border-radius:12px;overflow:hidden;border:1px solid var(--line);font-size:13px}
+th{background:#edf3f6;color:#385064;font-size:11px;text-transform:uppercase;letter-spacing:.45px;font-weight:800}
+th,td{padding:12px 13px;border-bottom:1px solid #e9eef2}
+tr:last-child td{border-bottom:0}
+tbody tr:hover{background:#f7fbfb}
+.person{background:#f2f7f8;border:1px solid #e4edef}
+.small{color:#778795}
+.login{max-width:440px;margin:8vh auto;padding:18px}
+.login .card{padding:32px;border-radius:20px;box-shadow:0 24px 65px rgba(16,43,63,.13)}
+.login h2{color:var(--navy);font-size:25px;letter-spacing:-.5px;margin-top:4px}
+.login p{color:var(--muted);margin-bottom:22px}
+.login input{margin-bottom:2px}
+.monthEndHero,.bankHero,.eventHeader{background:linear-gradient(120deg,#102b3f,#176b69);border:0;border-radius:17px;padding:24px;box-shadow:0 12px 28px rgba(16,43,63,.14)}
+.monthEndHero .amount,.bankHero .amount,.eventHeader .amount{font-size:clamp(27px,4vw,36px);letter-spacing:-1px}
+.carryBox{border-radius:13px;background:#effaf6;border-color:#cdeee1}
+.bankAuto{border-radius:13px;background:#f0f7fb;border-color:#d8eaf4}
+.eventInfo,.resetInfo{border-radius:12px}
+.eventGrid{grid-template-columns:repeat(5,minmax(220px,1fr));gap:14px;overflow-x:auto;padding:3px 2px 14px}
+.eventCard{min-width:220px;padding:17px}
+.eventNumber{color:#0b756e;font-size:14px;letter-spacing:.7px}
+.eventTotalBox{padding:20px}
+.eventSaved{border-radius:10px}
+.reportButtons button{border:1px solid var(--line);background:#f4f7f9;color:#425767;border-radius:9px}
+.reportButtons button.active{background:var(--navy);color:#fff}
+.weekCard{background:#fbfdfe}
+.message{font-size:13px}
+@media(max-width:900px){.container{padding:18px}.eventGrid{grid-template-columns:repeat(5,220px)}}
+@media(max-width:600px){header .container{padding:0 18px}.container{padding:15px}nav{margin-top:-34px;margin-bottom:22px;border-radius:12px}nav button{padding:10px 12px;font-size:12px}.page>h2{font-size:22px}.card,.stat,.history{padding:15px}.grid{gap:10px}.stat{min-height:100px;padding:14px}.stat b{font-size:19px}.login{margin:5vh auto;padding:12px}.login .card{padding:24px}.monthEndHero,.bankHero,.eventHeader{padding:19px}}
+
 </style>
 </head>
 
@@ -564,7 +640,7 @@ LOGIN
 
 <h2>🍽️ Khan's Restaurant</h2>
 
-<small id="headerDate"></small>
+<small id="headerDate">Restaurant Management Dashboard</small>
 
 <div>
 <span id="permissionBadge" class="permissionBadge"></span>
@@ -1344,7 +1420,7 @@ EVENT 1
 
 <label>Event Type</label>
 
-<select id="event1Type" onchange="calculateEventTotals()">
+<select id="event1Type">
 
 <option value="">
 Select Type
@@ -1379,7 +1455,7 @@ oninput="calculateEventTotals()">
 
 <br>
 
-<label>Total Event Expenses (£)</label>
+<label>Event Expenses (£)</label>
 
 <input id="event1Expense"
 type="number"
@@ -1392,7 +1468,7 @@ oninput="calculateEventTotals()">
 
 <label>Payment Method</label>
 
-<select id="event1Payment" onchange="calculateEventTotals()">
+<select id="event1Payment">
 
 <option value="">
 Select Payment
@@ -1433,7 +1509,7 @@ EVENT 2
 
 <label>Event Type</label>
 
-<select id="event2Type" onchange="calculateEventTotals()">
+<select id="event2Type">
 
 <option value="">
 Select Type
@@ -1468,7 +1544,7 @@ oninput="calculateEventTotals()">
 
 <br>
 
-<label>Total Event Expenses (£)</label>
+<label>Event Expenses (£)</label>
 
 <input id="event2Expense"
 type="number"
@@ -1481,7 +1557,7 @@ oninput="calculateEventTotals()">
 
 <label>Payment Method</label>
 
-<select id="event2Payment" onchange="calculateEventTotals()">
+<select id="event2Payment">
 
 <option value="">
 Select Payment
@@ -1522,7 +1598,7 @@ EVENT 3
 
 <label>Event Type</label>
 
-<select id="event3Type" onchange="calculateEventTotals()">
+<select id="event3Type">
 
 <option value="">
 Select Type
@@ -1557,7 +1633,7 @@ oninput="calculateEventTotals()">
 
 <br>
 
-<label>Total Event Expenses (£)</label>
+<label>Event Expenses (£)</label>
 
 <input id="event3Expense"
 type="number"
@@ -1570,7 +1646,7 @@ oninput="calculateEventTotals()">
 
 <label>Payment Method</label>
 
-<select id="event3Payment" onchange="calculateEventTotals()">
+<select id="event3Payment">
 
 <option value="">
 Select Payment
@@ -1611,7 +1687,7 @@ EVENT 4
 
 <label>Event Type</label>
 
-<select id="event4Type" onchange="calculateEventTotals()">
+<select id="event4Type">
 
 <option value="">
 Select Type
@@ -1646,7 +1722,7 @@ oninput="calculateEventTotals()">
 
 <br>
 
-<label>Total Event Expenses (£)</label>
+<label>Event Expenses (£)</label>
 
 <input id="event4Expense"
 type="number"
@@ -1659,7 +1735,7 @@ oninput="calculateEventTotals()">
 
 <label>Payment Method</label>
 
-<select id="event4Payment" onchange="calculateEventTotals()">
+<select id="event4Payment">
 
 <option value="">
 Select Payment
@@ -1700,7 +1776,7 @@ EVENT 5
 
 <label>Event Type</label>
 
-<select id="event5Type" onchange="calculateEventTotals()">
+<select id="event5Type">
 
 <option value="">
 Select Type
@@ -1735,7 +1811,7 @@ oninput="calculateEventTotals()">
 
 <br>
 
-<label>Total Event Expenses (£)</label>
+<label>Event Expenses (£)</label>
 
 <input id="event5Expense"
 type="number"
@@ -1748,7 +1824,7 @@ oninput="calculateEventTotals()">
 
 <label>Payment Method</label>
 
-<select id="event5Payment" onchange="calculateEventTotals()">
+<select id="event5Payment">
 
 <option value="">
 Select Payment
@@ -1811,20 +1887,20 @@ It does not affect any other section.
 </div>
 
 <div class="totalLine">
-<span>TOTAL EVENT INCOME</span>
-<b id="eventGrandTotal">£0.00</b>
+<span>Total Event Expenses</span>
+<b id="eventExpenseTotal">£0.00</b>
 </div>
 
 <div class="totalLine">
-<span>TOTAL EVENT EXPENSES</span>
-<b id="eventExpenseTotal">£0.00</b>
+<span>Net Event Amount</span>
+<b id="eventNetTotal">£0.00</b>
 </div>
 
 <div class="total">
 
 <div class="totalLine">
-<span>NET EVENT BALANCE</span>
-<b id="eventNetTotal">£0.00</b>
+<span>TOTAL EVENT AMOUNT</span>
+<b id="eventGrandTotal">£0.00</b>
 </div>
 
 </div>
@@ -1836,8 +1912,8 @@ It does not affect any other section.
 
 <b>🔒 Separate accounting:</b>
 
-Event income and expenses are stored separately in Firebase.
-The net event balance is calculated automatically and is never included in restaurant daily/reporting calculations.
+The Event Total above is stored separately in Firebase
+and is never included in your restaurant daily/reporting calculations.
 </div>
 
 </section>
@@ -1854,7 +1930,7 @@ The net event balance is calculated automatically and is never included in resta
 <h3>Month End Period</h3>
 
 <p class="small">
-Month End uses the normal calendar month, from the 1st through the final day of the selected month.
+Old Month End format. The drawer cash automatically comes from the selected reporting month's Cash / Balance.
 </p>
 
 <div class="formgrid">
@@ -1904,7 +1980,7 @@ Month End uses the normal calendar month, from the 1st through the final day of 
 </div>
 
 <p style="margin-bottom:0">
-Total Cash / Balance — automatically from the selected calendar month
+Total Cash / Balance — automatically from the selected reporting month
 </p>
 
 </div>
@@ -4767,11 +4843,11 @@ ${event.paymentMethod||"No payment method"}
 
 <br>
 
-<b>Event Amount: ${money(event.amount)}</b>
-
+<b>Income: ${money(event.amount)}</b>
 <br>
-
-<b>Event Expenses: ${money(event.expense||0)}</b>
+Expenses: ${money(event.expense||0)}
+<br>
+Net: <b>${money((Number(event.amount)||0)-(Number(event.expense)||0))}</b>
 
 <br><br>
 
@@ -4819,7 +4895,7 @@ $("event"+i+"Amount").value=
 event.amount??"";
 
 $("event"+i+"Expense").value=
-event.expense??"";
+event.expense??0;
 
 $("event"+i+"Payment").value=
 event.paymentMethod||"";
@@ -4882,14 +4958,6 @@ $("event"+i+"Expense").value
 
 const payment=
 $("event"+i+"Payment").value;
-
-if(expense<0){
-
-alert("Event expenses cannot be negative.");
-
-return;
-
-}
 
 if(!type){
 
@@ -5088,56 +5156,29 @@ let expenses=0;
 
 for(let i=1;i<=5;i++){
 
-const type=
-$("event"+i+"Type")?.value||"";
+const type=$("event"+i+"Type")?.value||"";
+const amount=Number($("event"+i+"Amount")?.value)||0;
+const expense=Number($("event"+i+"Expense")?.value)||0;
+const payment=$("event"+i+"Payment")?.value||"";
 
-const amount=
-Number(
-$("event"+i+"Amount")?.value
-)||0;
-
-const expense=
-Number(
-$("event"+i+"Expense")?.value
-)||0;
-
-const payment=
-$("event"+i+"Payment")?.value||"";
-
-if(type==="Indoor Event")
-indoor+=amount;
-
-if(type==="Outdoor Event")
-outdoor+=amount;
-
-if(payment==="Cash")
-cash+=amount;
-
-if(payment==="Card")
-card+=amount;
-
+if(type==="Indoor Event") indoor+=amount;
+if(type==="Outdoor Event") outdoor+=amount;
+if(payment==="Cash") cash+=amount;
+if(payment==="Card") card+=amount;
 expenses+=expense;
 
 }
 
-const grand=
-indoor+outdoor;
-
+const grand=indoor+outdoor;
 const net=grand-expenses;
 
 $("eventIndoorTotal").innerText=money(indoor);
-
 $("eventOutdoorTotal").innerText=money(outdoor);
-
 $("eventCashTotal").innerText=money(cash);
-
 $("eventCardTotal").innerText=money(card);
-
-$("eventGrandTotal").innerText=money(grand);
-
 $("eventExpenseTotal").innerText=money(expenses);
-
 $("eventNetTotal").innerText=money(net);
+$("eventGrandTotal").innerText=money(grand);
 
 }
 
@@ -5184,8 +5225,7 @@ error
 
 
 /* =====================================================
-   MONTH END
-   USES NORMAL CALENDAR MONTH (1ST TO LAST DAY)
+   MONTH END - TRUE CALENDAR MONTH (1st to final day)
 ===================================================== */
 
 function getMonthEndPeriod(){
@@ -5207,6 +5247,9 @@ normalCalendarMonthEnd(
 year,
 month
 );
+
+start.setHours(0,0,0,0);
+end.setHours(23,59,59,999);
 
 return {
 year,
@@ -5955,3 +5998,4 @@ setReportMode("weeks");
 
 </body>
 </html>
+
