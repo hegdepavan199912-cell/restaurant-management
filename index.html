@@ -523,13 +523,13 @@ font-size:24px
 
 
 /* =====================================================
-   KHAN'S RESTAURANT — MODERN MANAGEMENT UI REFRESH
-   Visual-only overrides; existing IDs and workflows retained.
+  KHAN'S RESTAURANT — MODERN MANAGEMENT UI REFRESH
+  Visual-only overrides; existing IDs and workflows retained.
 ===================================================== */
 :root{
- --ink:#17212b;--muted:#718096;--navy:#102b3f;--navy2:#183e54;
- --teal:#087f73;--teal2:#0e9b87;--gold:#d6a84f;--paper:#f3f6f8;
- --line:#e3eaf0;--white:#fff;--shadow:0 10px 28px rgba(22,43,58,.07);
+--ink:#17212b;--muted:#718096;--navy:#102b3f;--navy2:#183e54;
+--teal:#087f73;--teal2:#0e9b87;--gold:#d6a84f;--paper:#f3f6f8;
+--line:#e3eaf0;--white:#fff;--shadow:0 10px 28px rgba(22,43,58,.07);
 }
 html{scroll-behavior:smooth}
 body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:var(--paper);color:var(--ink);line-height:1.5}
@@ -1466,6 +1466,25 @@ oninput="calculateEventTotals()">
 
 <br>
 
+<label>Cash Used For</label>
+
+<input id="event1CashUsedFor"
+type="text"
+placeholder="What was the cash used for?">
+
+<br>
+
+<label>Cash Used (£)</label>
+
+<input id="event1CashUsed"
+type="number"
+step="0.01"
+min="0"
+placeholder="0.00"
+oninput="calculateEventTotals()">
+
+<br>
+
 <label>Payment Method</label>
 
 <select id="event1Payment">
@@ -1547,6 +1566,25 @@ oninput="calculateEventTotals()">
 <label>Event Expenses (£)</label>
 
 <input id="event2Expense"
+type="number"
+step="0.01"
+min="0"
+placeholder="0.00"
+oninput="calculateEventTotals()">
+
+<br>
+
+<label>Cash Used For</label>
+
+<input id="event2CashUsedFor"
+type="text"
+placeholder="What was the cash used for?">
+
+<br>
+
+<label>Cash Used (£)</label>
+
+<input id="event2CashUsed"
 type="number"
 step="0.01"
 min="0"
@@ -1644,6 +1682,25 @@ oninput="calculateEventTotals()">
 
 <br>
 
+<label>Cash Used For</label>
+
+<input id="event3CashUsedFor"
+type="text"
+placeholder="What was the cash used for?">
+
+<br>
+
+<label>Cash Used (£)</label>
+
+<input id="event3CashUsed"
+type="number"
+step="0.01"
+min="0"
+placeholder="0.00"
+oninput="calculateEventTotals()">
+
+<br>
+
 <label>Payment Method</label>
 
 <select id="event3Payment">
@@ -1725,6 +1782,25 @@ oninput="calculateEventTotals()">
 <label>Event Expenses (£)</label>
 
 <input id="event4Expense"
+type="number"
+step="0.01"
+min="0"
+placeholder="0.00"
+oninput="calculateEventTotals()">
+
+<br>
+
+<label>Cash Used For</label>
+
+<input id="event4CashUsedFor"
+type="text"
+placeholder="What was the cash used for?">
+
+<br>
+
+<label>Cash Used (£)</label>
+
+<input id="event4CashUsed"
 type="number"
 step="0.01"
 min="0"
@@ -1822,6 +1898,25 @@ oninput="calculateEventTotals()">
 
 <br>
 
+<label>Cash Used For</label>
+
+<input id="event5CashUsedFor"
+type="text"
+placeholder="What was the cash used for?">
+
+<br>
+
+<label>Cash Used (£)</label>
+
+<input id="event5CashUsed"
+type="number"
+step="0.01"
+min="0"
+placeholder="0.00"
+oninput="calculateEventTotals()">
+
+<br>
+
 <label>Payment Method</label>
 
 <select id="event5Payment">
@@ -1892,6 +1987,16 @@ It does not affect any other section.
 </div>
 
 <div class="totalLine">
+<span>Total Cash Used</span>
+<b id="eventCashUsedTotal">£0.00</b>
+</div>
+
+<div class="totalLine">
+<span>Previous Month Balance Carried Forward</span>
+<b id="eventCarryForward">£0.00</b>
+</div>
+
+<div class="totalLine">
 <span>Net Event Amount</span>
 <b id="eventNetTotal">£0.00</b>
 </div>
@@ -1901,6 +2006,11 @@ It does not affect any other section.
 <div class="totalLine">
 <span>TOTAL EVENT AMOUNT</span>
 <b id="eventGrandTotal">£0.00</b>
+</div>
+
+<div class="totalLine">
+<span>BALANCE EVENT AMOUNT</span>
+<b id="eventBalanceTotal">£0.00</b>
 </div>
 
 </div>
@@ -4769,7 +4879,7 @@ ${displayDate(end)}
 
 
 /* =====================================================
-   EVENTS
+  EVENTS
 ===================================================== */
 
 function getEventMonthKey(){
@@ -4814,8 +4924,23 @@ $("event"+i+"Type").value="";
 $("event"+i+"Details").value="";
 $("event"+i+"Amount").value="";
 $("event"+i+"Expense").value="";
+$("event"+i+"CashUsedFor").value="";
+$("event"+i+"CashUsed").value="";
 $("event"+i+"Payment").value="";
 $("event"+i+"Saved").innerHTML="";
+
+}
+
+
+function escapeEventText(value){
+
+return String(value??"").replace(/[&<>"']/g,char=>({
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+"\"":"&quot;",
+"'":"&#39;"
+}[char]));
 
 }
 
@@ -4847,7 +4972,11 @@ ${event.paymentMethod||"No payment method"}
 <br>
 Expenses: ${money(event.expense||0)}
 <br>
-Net: <b>${money((Number(event.amount)||0)-(Number(event.expense)||0))}</b>
+Cash used for: ${escapeEventText(event.cashUsedFor||"Not specified")}
+<br>
+Cash used: ${money(event.cashUsed||0)}
+<br>
+Balance after cash used: <b>${money((Number(event.amount)||0)-(Number(event.cashUsed)||0))}</b>
 
 <br><br>
 
@@ -4896,6 +5025,12 @@ event.amount??"";
 
 $("event"+i+"Expense").value=
 event.expense??0;
+
+$("event"+i+"CashUsedFor").value=
+event.cashUsedFor||"";
+
+$("event"+i+"CashUsed").value=
+event.cashUsed??0;
 
 $("event"+i+"Payment").value=
 event.paymentMethod||"";
@@ -4956,6 +5091,14 @@ Number(
 $("event"+i+"Expense").value
 )||0;
 
+const cashUsedFor=
+$("event"+i+"CashUsedFor").value.trim();
+
+const cashUsed=
+Number(
+$("event"+i+"CashUsed").value
+)||0;
+
 const payment=
 $("event"+i+"Payment").value;
 
@@ -5004,6 +5147,10 @@ details:details,
 amount:amount,
 
 expense:expense,
+
+cashUsedFor:cashUsedFor,
+
+cashUsed:cashUsed,
 
 paymentMethod:payment,
 
@@ -5106,6 +5253,10 @@ amount:0,
 
 expense:0,
 
+cashUsedFor:"",
+
+cashUsed:0,
+
 paymentMethod:"",
 
 updatedBy:currentUser.email,
@@ -5153,12 +5304,14 @@ let outdoor=0;
 let cash=0;
 let card=0;
 let expenses=0;
+let cashUsed=0;
 
 for(let i=1;i<=5;i++){
 
 const type=$("event"+i+"Type")?.value||"";
 const amount=Number($("event"+i+"Amount")?.value)||0;
 const expense=Number($("event"+i+"Expense")?.value)||0;
+const used=Number($("event"+i+"CashUsed")?.value)||0;
 const payment=$("event"+i+"Payment")?.value||"";
 
 if(type==="Indoor Event") indoor+=amount;
@@ -5166,19 +5319,50 @@ if(type==="Outdoor Event") outdoor+=amount;
 if(payment==="Cash") cash+=amount;
 if(payment==="Card") card+=amount;
 expenses+=expense;
+cashUsed+=used;
 
 }
 
 const grand=indoor+outdoor;
 const net=grand-expenses;
+const carryForward=getEventCarryForward();
+const balance=carryForward+grand-cashUsed;
 
 $("eventIndoorTotal").innerText=money(indoor);
 $("eventOutdoorTotal").innerText=money(outdoor);
 $("eventCashTotal").innerText=money(cash);
 $("eventCardTotal").innerText=money(card);
 $("eventExpenseTotal").innerText=money(expenses);
+$("eventCashUsedTotal").innerText=money(cashUsed);
+$("eventCarryForward").innerText=money(carryForward);
 $("eventNetTotal").innerText=money(net);
 $("eventGrandTotal").innerText=money(grand);
+$("eventBalanceTotal").innerText=money(balance);
+
+}
+
+
+function getEventCarryForward(){
+
+const selectedYear=Number($("eventYear").value);
+const selectedMonth=Number($("eventMonth").value);
+let carriedBalance=0;
+
+// Sum all saved event income less cash used in months before the selected month.
+for(const [id,event] of Object.entries(eventRecords)){
+
+const match=id.match(/^(\d{4})-(\d{2})-event\d+$/);
+if(!match) continue;
+
+const year=Number(match[1]);
+const month=Number(match[2])-1;
+if(year>selectedYear || (year===selectedYear && month>=selectedMonth)) continue;
+
+carriedBalance += (Number(event.amount)||0)-(Number(event.cashUsed)||0);
+
+}
+
+return carriedBalance;
 
 }
 
@@ -5225,7 +5409,7 @@ error
 
 
 /* =====================================================
-   MONTH END - TRUE CALENDAR MONTH (1st to final day)
+  MONTH END - TRUE CALENDAR MONTH (1st to final day)
 ===================================================== */
 
 function getMonthEndPeriod(){
@@ -5845,8 +6029,8 @@ error
 
 
 /* =====================================================
-   BANK MONTH END
-   COMPLETELY SEPARATE FROM REPORTING CALENDAR
+  BANK MONTH END
+  COMPLETELY SEPARATE FROM REPORTING CALENDAR
 ===================================================== */
 
 function getBankMonthEndPeriod(){
@@ -5998,4 +6182,3 @@ setReportMode("weeks");
 
 </body>
 </html>
-
