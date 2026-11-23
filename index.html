@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -397,7 +397,6 @@ border-radius:9px;
 font-weight:bold;
 margin-top:12px
 }
-
 .eventGrid{
 display:grid;
 grid-template-columns:repeat(5,1fr);
@@ -637,7 +636,6 @@ LOGIN
 <header>
 
 <div class="container">
-
 <h2>🍽️ Khan's Restaurant</h2>
 
 <small id="headerDate">Restaurant Management Dashboard</small>
@@ -1037,7 +1035,6 @@ SHOW ALL
 
 
 <!-- REPORTS -->
-
 <section id="reports" class="page">
 
 <h2>📊 Reports</h2>
@@ -1117,7 +1114,6 @@ MONTH TOTAL
 <button id="allMode" onclick="setReportMode('all')">
 ALL HISTORY
 </button>
-
 </div>
 
 </div>
@@ -1276,7 +1272,6 @@ ALL HISTORY
 <div id="weeklyReport"></div>
 
 </div>
-
 
 <div class="card">
 
@@ -1437,7 +1432,6 @@ Outdoor Event
 </select>
 
 <br><br>
-
 <label>Event Details</label>
 
 <textarea id="event1Details"
@@ -1837,7 +1831,6 @@ Outdoor Event
 placeholder="Enter event details"></textarea>
 
 <br>
-
 <label>Event Date</label>
 
 <input id="event4Date" type="date" required>
@@ -1997,7 +1990,6 @@ oninput="calculateEventTotals()">
 <br>
 
 <label>Event Expenses (£)</label>
-
 <input id="event5Expense"
 type="number"
 step="0.01"
@@ -2282,7 +2274,13 @@ oninput="calculateMonthEnd()">
 </div>
 
 <div>
-<label>Extra</label>
+<label>Extra Cash Used For</label>
+<input id="monthEndExtraCashUsedFor" type="text"
+placeholder="Enter the reason for extra cash used">
+</div>
+
+<div>
+<label>Extra (£)</label>
 <input id="monthEndExtra" type="number"
 step="0.01" placeholder="0.00"
 oninput="calculateMonthEnd()">
@@ -2311,7 +2309,6 @@ oninput="calculateMonthEnd()">
 <span>Director Wages</span>
 <b id="monthEndCalculationDirector">£0.00</b>
 </div>
-
 <div class="totalLine">
 <span>Bank Cash Deposit</span>
 <b id="monthEndCalculationBank">£0.00</b>
@@ -2391,7 +2388,6 @@ PREVIOUS MONTH CARRY FORWARD
 <div id="monthEndSaveMessage" class="message"></div>
 
 </div>
-
 
 <div id="monthEndViewerNotice" class="card hidden">
 
@@ -2550,7 +2546,6 @@ Automatically calculated from the normal calendar month.
 </div>
 
 </div>
-
 
 <div class="card">
 
@@ -2859,6 +2854,7 @@ return [
 "monthEndStaffWages",
 "monthEndDirectorWages",
 "monthEndBankDeposit",
+"monthEndExtraCashUsedFor",
 "monthEndExtra"
 ];
 
@@ -2950,7 +2946,6 @@ $("loginMsg").innerText=
 return;
 
 }
-
 try{
 
 await signInWithEmailAndPassword(
@@ -3350,7 +3345,6 @@ num("pettyCash")-
 totalCashTaken;
 
 const data={
-
 date:date,
 day:$("entryDay").value,
 
@@ -3911,7 +3905,6 @@ Math.max(2021,current)
 
 }
 
-
 function setupReportYears(){
 
 fillYears("reportYear");
@@ -4150,7 +4143,6 @@ r=>r.date>=s&&r.date<=e
 );
 
 }
-
 
 /* NORMAL CALENDAR MONTH */
 
@@ -4550,7 +4542,6 @@ Week ${w.number}:
 ${displayDate(w.start)}
 
 →
-
 ${displayDate(w.end)}
 
 </div>
@@ -5110,7 +5101,6 @@ ${event.updatedBy||""}
 <br>
 
 ${formatUpdatedAt(event.updatedAt)}
-
 </div>
 `;
 }
@@ -5270,7 +5260,6 @@ alert("Please select the Event Date.");
 return;
 
 }
-
 if(advancePayment<0){
 
 alert("Advance Payment Received cannot be negative.");
@@ -5590,7 +5579,6 @@ error
 ===================================================== */
 
 function getMonthEndPeriod(){
-
 const year=
 Number($("monthEndYear").value);
 
@@ -5670,7 +5658,6 @@ Number(total.cash||0);
 
 const deliveryCash=
 Number(total.deliveryCash||0);
-
 const specialEvent1Cash=
 Number(total.specialEvent1Cash||0);
 
@@ -5736,6 +5723,9 @@ saved.directorWages??"";
 $("monthEndBankDeposit").value=
 saved.bankDeposit??"";
 
+$("monthEndExtraCashUsedFor").value=
+saved.extraCashUsedFor??"";
+
 $("monthEndExtra").value=
 saved.extra??"";
 
@@ -5756,6 +5746,7 @@ ${formatUpdatedAt(saved.updatedAt)}
 $("monthEndStaffWages").value="";
 $("monthEndDirectorWages").value="";
 $("monthEndBankDeposit").value="";
+$("monthEndExtraCashUsedFor").value="";
 $("monthEndExtra").value="";
 
 $("monthEndLastEdited").innerHTML=
@@ -5982,10 +5973,10 @@ totalCashBalance:totalCash,
 staffWages:staff,
 directorWages:director,
 bankDeposit:bank,
+extraCashUsedFor:$("monthEndExtraCashUsedFor").value.trim(),
 extra:extra,
 
 totalCashUsed:totalUsed,
-
 remainingCash:remaining,
 
 updatedBy:currentUser.email,
@@ -6067,7 +6058,7 @@ year:"numeric"
 const confirmed=
 confirm(
 "Reset Month End for "+monthName+" "+year+"?\n\n"+
-"This will clear Staff Wages, Director Wages, Bank Deposit and Extra.\n\n"+
+"This will clear Staff Wages, Director Wages, Bank Deposit, Extra Cash Used For and Extra.\n\n"+
 "The Month End record will NOT be deleted."
 );
 
@@ -6123,6 +6114,7 @@ totalCashBalance:totalCash,
 staffWages:0,
 directorWages:0,
 bankDeposit:0,
+extraCashUsedFor:"",
 extra:0,
 
 totalCashUsed:0,
@@ -6147,6 +6139,7 @@ data,
 $("monthEndStaffWages").value="";
 $("monthEndDirectorWages").value="";
 $("monthEndBankDeposit").value="";
+$("monthEndExtraCashUsedFor").value="";
 $("monthEndExtra").value="";
 
 calculateMonthEnd();
@@ -6223,7 +6216,6 @@ normalCalendarMonthStart(
 year,
 month
 );
-
 const end=
 normalCalendarMonthEnd(
 year,
@@ -6303,7 +6295,6 @@ money(t.deliveroo);
 
 $("bankDeliverooCommission").innerText=
 money(t.deliveroo*.35);
-
 $("bankDeliverooRemaining").innerText=
 money(t.deliveroo*.65);
 
