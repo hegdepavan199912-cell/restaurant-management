@@ -397,6 +397,7 @@ border-radius:9px;
 font-weight:bold;
 margin-top:12px
 }
+
 .eventGrid{
 display:grid;
 grid-template-columns:repeat(5,1fr);
@@ -595,6 +596,21 @@ tbody tr:hover{background:#f7fbfb}
 @media(max-width:900px){.container{padding:18px}.eventGrid{grid-template-columns:repeat(5,220px)}}
 @media(max-width:600px){header .container{padding:0 18px}.container{padding:15px}nav{margin-top:-34px;margin-bottom:22px;border-radius:12px}nav button{padding:10px 12px;font-size:12px}.page>h2{font-size:22px}.card,.stat,.history{padding:15px}.grid{gap:10px}.stat{min-height:100px;padding:14px}.stat b{font-size:19px}.login{margin:5vh auto;padding:12px}.login .card{padding:24px}.monthEndHero,.bankHero,.eventHeader{padding:19px}}
 
+
+.statementHero{background:linear-gradient(120deg,#102b3f,#176b69);color:#fff;border-radius:17px;padding:24px;margin-bottom:16px;box-shadow:0 12px 28px rgba(16,43,63,.14)}
+.statementHero small{opacity:.82;letter-spacing:.7px;font-weight:700}
+.statementHero .amount{font-size:clamp(30px,5vw,42px);font-weight:900;margin-top:8px;letter-spacing:-1px}
+.statementGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.statementPanel{background:#fff;border:1px solid #dce5e9;border-radius:15px;padding:18px;margin-bottom:15px;box-shadow:0 5px 18px rgba(16,43,63,.06)}
+.statementPanel h3{margin-top:0}
+.statementLine{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #edf1f3}
+.statementLine:last-child{border-bottom:0}
+.statementLine b{font-variant-numeric:tabular-nums;white-space:nowrap}
+.statementTotal{background:#eef7f5;border:1px solid #cde7e1;border-radius:11px;padding:14px;margin-top:12px;font-weight:800}
+.statementProfit{background:#102b3f;color:#fff;border-radius:15px;padding:20px;margin-top:14px}
+.statementProfit .amount{font-size:clamp(27px,4vw,36px);font-weight:900;margin-top:6px}
+.statementNote{font-size:12px;color:#687987;line-height:1.5}
+@media(max-width:600px){.statementGrid{grid-template-columns:1fr}.statementPanel{padding:15px}}
 </style>
 </head>
 
@@ -636,6 +652,7 @@ LOGIN
 <header>
 
 <div class="container">
+
 <h2>🍽️ Khan's Restaurant</h2>
 
 <small id="headerDate">Restaurant Management Dashboard</small>
@@ -681,6 +698,10 @@ LOGIN
 🏦 Bank Month End
 </button>
 
+<button onclick="openPage('monthEndStatement',this)">
+📈 Month End Statement
+</button>
+
 </nav>
 
 
@@ -691,7 +712,6 @@ LOGIN
 <h2>Today's Summary</h2>
 
 <div class="grid">
-
 <div class="stat">
 <small>Main Till / Total Sales</small>
 <b id="homeMain">£0.00</b>
@@ -1016,7 +1036,6 @@ Cash = Main Till − PDQ Total − Petty Cash − Total Cash Taken
 <h2>📚 History</h2>
 
 <div class="card">
-
 <label>Search Date</label>
 
 <input id="historyDate" type="date" onchange="displayHistory()">
@@ -1035,6 +1054,7 @@ SHOW ALL
 
 
 <!-- REPORTS -->
+
 <section id="reports" class="page">
 
 <h2>📊 Reports</h2>
@@ -1080,7 +1100,6 @@ A reporting week may begin or end in the adjacent normal calendar month.
 <option value="11">December</option>
 
 </select>
-
 </div>
 
 </div>
@@ -1114,6 +1133,7 @@ MONTH TOTAL
 <button id="allMode" onclick="setReportMode('all')">
 ALL HISTORY
 </button>
+
 </div>
 
 </div>
@@ -1209,7 +1229,6 @@ ALL HISTORY
 <small>Delivery Card</small>
 <b id="reportDeliveryCard">£0.00</b>
 </div>
-
 </div>
 
 
@@ -1272,6 +1291,7 @@ ALL HISTORY
 <div id="weeklyReport"></div>
 
 </div>
+
 
 <div class="card">
 
@@ -1432,6 +1452,7 @@ Outdoor Event
 </select>
 
 <br><br>
+
 <label>Event Details</label>
 
 <textarea id="event1Details"
@@ -1467,7 +1488,6 @@ oninput="calculateEventTotals()">
 <br>
 
 <label>Event Expenses (£)</label>
-
 <input id="event1Expense"
 type="number"
 step="0.01"
@@ -1504,7 +1524,7 @@ oninput="calculateEventTotals()">
 
 <label>Payment Method</label>
 
-<select id="event1Payment">
+<select id="event1Payment" onchange="calculateEventTotals()">
 
 <option value="">
 Select Payment
@@ -1635,7 +1655,7 @@ oninput="calculateEventTotals()">
 
 <label>Payment Method</label>
 
-<select id="event2Payment">
+<select id="event2Payment" onchange="calculateEventTotals()">
 
 <option value="">
 Select Payment
@@ -1662,7 +1682,6 @@ RESET
 </button>
 
 <div id="event2Saved"></div>
-
 </div>
 
 
@@ -1727,7 +1746,6 @@ placeholder="0.00"
 oninput="calculateEventTotals()">
 
 <br>
-
 <label>Event Expenses (£)</label>
 
 <input id="event3Expense"
@@ -1766,7 +1784,7 @@ oninput="calculateEventTotals()">
 
 <label>Payment Method</label>
 
-<select id="event3Payment">
+<select id="event3Payment" onchange="calculateEventTotals()">
 
 <option value="">
 Select Payment
@@ -1831,6 +1849,7 @@ Outdoor Event
 placeholder="Enter event details"></textarea>
 
 <br>
+
 <label>Event Date</label>
 
 <input id="event4Date" type="date" required>
@@ -1896,7 +1915,7 @@ oninput="calculateEventTotals()">
 
 <label>Payment Method</label>
 
-<select id="event4Payment">
+<select id="event4Payment" onchange="calculateEventTotals()">
 
 <option value="">
 Select Payment
@@ -1921,7 +1940,6 @@ onclick="saveEvent(4)">
 onclick="resetEvent(4)">
 RESET
 </button>
-
 <div id="event4Saved"></div>
 
 </div>
@@ -1986,10 +2004,10 @@ step="0.01"
 min="0"
 placeholder="0.00"
 oninput="calculateEventTotals()">
-
 <br>
 
 <label>Event Expenses (£)</label>
+
 <input id="event5Expense"
 type="number"
 step="0.01"
@@ -2026,7 +2044,7 @@ oninput="calculateEventTotals()">
 
 <label>Payment Method</label>
 
-<select id="event5Payment">
+<select id="event5Payment" onchange="calculateEventTotals()">
 
 <option value="">
 Select Payment
@@ -2245,7 +2263,6 @@ Total Cash / Balance — automatically from the selected reporting month
 
 </div>
 
-
 <div class="card">
 
 <h3>💷 Month End Cash Payments</h3>
@@ -2274,13 +2291,7 @@ oninput="calculateMonthEnd()">
 </div>
 
 <div>
-<label>Extra Cash Used For</label>
-<input id="monthEndExtraCashUsedFor" type="text"
-placeholder="Enter the reason for extra cash used">
-</div>
-
-<div>
-<label>Extra (£)</label>
+<label>Extra</label>
 <input id="monthEndExtra" type="number"
 step="0.01" placeholder="0.00"
 oninput="calculateMonthEnd()">
@@ -2309,6 +2320,7 @@ oninput="calculateMonthEnd()">
 <span>Director Wages</span>
 <b id="monthEndCalculationDirector">£0.00</b>
 </div>
+
 <div class="totalLine">
 <span>Bank Cash Deposit</span>
 <b id="monthEndCalculationBank">£0.00</b>
@@ -2380,7 +2392,6 @@ PREVIOUS MONTH CARRY FORWARD
 <button class="reset" onclick="resetMonthEnd()">
 🔄 RESET MONTH END
 </button>
-
 <div class="resetInfo">
 ⚠️ Reset clears the four Month End payment entries but does not delete the Firebase record.
 </div>
@@ -2388,6 +2399,7 @@ PREVIOUS MONTH CARRY FORWARD
 <div id="monthEndSaveMessage" class="message"></div>
 
 </div>
+
 
 <div id="monthEndViewerNotice" class="card hidden">
 
@@ -2509,7 +2521,6 @@ Automatically calculated from the normal calendar month.
 <span>PDQ Total</span>
 <b id="bankPDQ">£0.00</b>
 </div>
-
 <div class="totalLine">
 <span>Uber Sales</span>
 <b id="bankUber">£0.00</b>
@@ -2546,6 +2557,7 @@ Automatically calculated from the normal calendar month.
 </div>
 
 </div>
+
 
 <div class="card">
 
@@ -2604,6 +2616,70 @@ This does NOT change the Reports section. Reports continue using the reporting-w
 
 </section>
 
+<!-- MONTH END PROFIT & LOSS STATEMENT -->
+<section id="monthEndStatement" class="page">
+  <h2>📈 Month End Statement — Profit &amp; Loss</h2>
+
+  <div class="card">
+    <h3>Statement Period</h3>
+    <p class="small">This statement is calculated automatically from Daily Entry, saved Events and Month End expenses for the selected calendar month.</p>
+    <div class="formgrid">
+      <div>
+        <label>Year</label>
+        <select id="statementYear" onchange="updateMonthEndStatement()"></select>
+      </div>
+      <div>
+        <label>Month</label>
+        <select id="statementMonth" onchange="updateMonthEndStatement()">
+          <option value="0">January</option><option value="1">February</option>
+          <option value="2">March</option><option value="3">April</option>
+          <option value="4">May</option><option value="5">June</option>
+          <option value="6">July</option><option value="7">August</option>
+          <option value="8">September</option><option value="9">October</option>
+          <option value="10">November</option><option value="11">December</option>
+        </select>
+      </div>
+    </div>
+    <div class="bankPeriod" id="statementPeriod">Calendar month</div>
+  </div>
+
+  <div class="statementHero">
+    <small>NET PROFIT / (LOSS)</small>
+    <div class="amount" id="statementNetProfit">£0.00</div>
+    <div id="statementProfitStatus">Income less expenses</div>
+  </div>
+
+  <div class="statementGrid">
+    <div class="statementPanel">
+      <h3>💷 Source of Income</h3>
+      <div class="statementLine"><span>PDQ Total</span><b id="statementPDQ">£0.00</b></div>
+      <div class="statementLine"><span>Uber — 70% Remaining</span><b id="statementUber">£0.00</b></div>
+      <div class="statementLine"><span>Deliveroo — 65% Remaining</span><b id="statementDeliveroo">£0.00</b></div>
+      <div class="statementLine"><span>Delivery Card</span><b id="statementDeliveryCard">£0.00</b></div>
+      <div class="statementLine"><span>Event Card Payments</span><b id="statementEventCard">£0.00</b></div>
+      <div class="statementTotal statementLine"><span>TOTAL SOURCE OF INCOME</span><b id="statementTotalIncome">£0.00</b></div>
+    </div>
+
+    <div class="statementPanel">
+      <h3>💸 Expenses</h3>
+      <div class="statementLine"><span>Cash Paid for Staff Wages</span><b id="statementStaffWages">£0.00</b></div>
+      <div class="statementLine"><span>Cash Paid for Director Wages</span><b id="statementDirectorWages">£0.00</b></div>
+      <div class="statementLine"><span>Extra Cash Used</span><b id="statementExtraCash">£0.00</b></div>
+      <div class="statementTotal statementLine"><span>TOTAL EXPENSES</span><b id="statementTotalExpenses">£0.00</b></div>
+      <p class="statementNote">Expenses include the Month End cash amounts entered for staff wages, director wages and extra cash used. Bank cash deposit is not treated as an expense.</p>
+    </div>
+  </div>
+
+  <div class="statementProfit">
+    <small>PROFIT &amp; LOSS SUMMARY</small>
+    <div class="statementLine"><span>Total Source of Income</span><b id="statementSummaryIncome">£0.00</b></div>
+    <div class="statementLine"><span>Total Expenses</span><b id="statementSummaryExpenses">£0.00</b></div>
+    <div class="amount" id="statementSummaryProfit">£0.00</div>
+    <div id="statementSummaryLabel">Net Profit / (Loss)</div>
+  </div>
+  <p class="statementNote">Automatic formula: Total Source of Income − Total Expenses = Net Profit / (Loss). Event Card Payments are included when an event is saved with Payment Method set to Card.</p>
+</section>
+
 </div>
 </div>
 
@@ -2639,7 +2715,6 @@ apiKey:"AIzaSyBsmbLMNMFNoI2OpR0maR97XAlDZ39yxkg",
 authDomain:"khans-restaurant-46083.firebaseapp.com",
 
 projectId:"khans-restaurant-46083",
-
 storageBucket:"khans-restaurant-46083.firebasestorage.app",
 
 messagingSenderId:"788410298373",
@@ -2705,7 +2780,6 @@ function pad(n){
 return String(n).padStart(2,"0");
 }
 
-
 function dateString(date){
 
 return date.getFullYear()+"-"+
@@ -2769,7 +2843,6 @@ eventViewerNotice.classList.add("hidden");
 enableEntryFields();
 enableMonthEndFields();
 enableEventFields();
-
 }else{
 
 badge.innerText="👀 VIEW ONLY";
@@ -2854,7 +2927,6 @@ return [
 "monthEndStaffWages",
 "monthEndDirectorWages",
 "monthEndBankDeposit",
-"monthEndExtraCashUsedFor",
 "monthEndExtra"
 ];
 
@@ -2946,6 +3018,7 @@ $("loginMsg").innerText=
 return;
 
 }
+
 try{
 
 await signInWithEmailAndPassword(
@@ -2964,7 +3037,6 @@ $("loginMsg").innerText=
 }
 
 };
-
 
 /* AUTH */
 
@@ -2997,6 +3069,7 @@ setupReportYears();
 setupMonthEndYears();
 setupBankMonthEndYears();
 setupEventYears();
+setupStatementYears();
 
 setDay();
 setupPermissions();
@@ -3007,6 +3080,7 @@ loadExistingEntry();
 updateMonthEnd();
 updateBankMonthEnd();
 loadEventsForMonth();
+updateMonthEndStatement();
 
 }else{
 
@@ -3191,6 +3265,7 @@ generateReport();
 loadExistingEntry();
 updateMonthEnd();
 updateBankMonthEnd();
+updateMonthEndStatement();
 
 },
 error=>{
@@ -3345,6 +3420,7 @@ num("pettyCash")-
 totalCashTaken;
 
 const data={
+
 date:date,
 day:$("entryDay").value,
 
@@ -3675,7 +3751,6 @@ cashEntries.map(
 (e,i)=>`
 
 <div class="totalLine">
-
 <span>
 Cash Taken ${i+1}
 <br>
@@ -3805,7 +3880,6 @@ ${money(getTotalCashTaken(r))}
 <b>${money(specialTotal)}</b>
 
 </div>
-
 </div>
 
 <div class="lastEdited">
@@ -3905,6 +3979,7 @@ Math.max(2021,current)
 
 }
 
+
 function setupReportYears(){
 
 fillYears("reportYear");
@@ -3932,6 +4007,11 @@ fillYears("bankMonthEndYear");
 $("bankMonthEndMonth").value=
 new Date().getMonth();
 
+}
+
+function setupStatementYears(){
+fillYears("statementYear");
+$("statementMonth").value=new Date().getMonth();
 }
 
 
@@ -4144,6 +4224,7 @@ r=>r.date>=s&&r.date<=e
 
 }
 
+
 /* NORMAL CALENDAR MONTH */
 
 function normalCalendarMonthStart(year,month){
@@ -4187,7 +4268,6 @@ specialEvent1Cash:0,
 specialEvent1Card:0,
 specialEvent2Cash:0,
 specialEvent2Card:0,
-
 cashTaken:0
 
 };
@@ -4252,7 +4332,6 @@ Number($("reportMonth").value);
 
 let start;
 let end;
-
 
 if(
 reportMode==="month"||
@@ -4512,7 +4591,6 @@ No reporting weeks available.
 `;
 
 return;
-
 }
 
 
@@ -4542,6 +4620,7 @@ Week ${w.number}:
 ${displayDate(w.start)}
 
 →
+
 ${displayDate(w.end)}
 
 </div>
@@ -4771,7 +4850,6 @@ function showPersonTotals(records){
 const people={};
 
 records.forEach(r=>{
-
 const entries=
 getCashTakenEntries(r);
 
@@ -5101,6 +5179,7 @@ ${event.updatedBy||""}
 <br>
 
 ${formatUpdatedAt(event.updatedAt)}
+
 </div>
 `;
 }
@@ -5160,7 +5239,6 @@ $("event"+i+"Payment").value=
 event.paymentMethod||"";
 
 displaySavedEvent(i,event);
-
 }else{
 
 clearEventForm(i);
@@ -5225,7 +5303,6 @@ $("event"+i+"Expense").value
 
 const cashUsedFor=
 $("event"+i+"CashUsedFor").value.trim();
-
 const cashUsedDate=
 $("event"+i+"CashUsedDate").value;
 
@@ -5260,6 +5337,7 @@ alert("Please select the Event Date.");
 return;
 
 }
+
 if(advancePayment<0){
 
 alert("Advance Payment Received cannot be negative.");
@@ -5289,7 +5367,6 @@ const eventData={
 monthKey:key,
 
 eventNumber:i,
-
 eventType:type,
 
 details:details,
@@ -5354,7 +5431,6 @@ error.message
 window.resetEvent=async function(i){
 
 if(!currentUser){
-
 alert("Please login first.");
 
 return;
@@ -5504,6 +5580,7 @@ $("eventCarryForward").innerText=money(carryForward);
 $("eventNetTotal").innerText=money(net);
 $("eventGrandTotal").innerText=money(grand);
 $("eventBalanceTotal").innerText=money(balance);
+updateMonthEndStatement();
 
 }
 
@@ -5548,7 +5625,6 @@ collection(db,"eventRecords"),
 snapshot=>{
 
 eventRecords={};
-
 snapshot.forEach(item=>{
 
 eventRecords[item.id]={
@@ -5559,6 +5635,7 @@ id:item.id,
 });
 
 loadEventsForMonth();
+updateMonthEndStatement();
 
 },
 error=>{
@@ -5579,6 +5656,7 @@ error
 ===================================================== */
 
 function getMonthEndPeriod(){
+
 const year=
 Number($("monthEndYear").value);
 
@@ -5611,7 +5689,6 @@ end
 
 
 window.updateMonthEnd=function(){
-
 if(
 !$("monthEndYear")||
 !$("monthEndMonth")
@@ -5658,6 +5735,7 @@ Number(total.cash||0);
 
 const deliveryCash=
 Number(total.deliveryCash||0);
+
 const specialEvent1Cash=
 Number(total.specialEvent1Cash||0);
 
@@ -5723,9 +5801,6 @@ saved.directorWages??"";
 $("monthEndBankDeposit").value=
 saved.bankDeposit??"";
 
-$("monthEndExtraCashUsedFor").value=
-saved.extraCashUsedFor??"";
-
 $("monthEndExtra").value=
 saved.extra??"";
 
@@ -5746,7 +5821,6 @@ ${formatUpdatedAt(saved.updatedAt)}
 $("monthEndStaffWages").value="";
 $("monthEndDirectorWages").value="";
 $("monthEndBankDeposit").value="";
-$("monthEndExtraCashUsedFor").value="";
 $("monthEndExtra").value="";
 
 $("monthEndLastEdited").innerHTML=
@@ -5857,6 +5931,7 @@ money(remaining);
 
 $("nextMonthCarryForward").innerText=
 money(remaining);
+updateMonthEndStatement();
 
 }
 
@@ -5873,7 +5948,6 @@ $("monthEndSaveMessage").innerText=
 return;
 
 }
-
 if(!isEditor()){
 
 $("monthEndSaveMessage").innerText=
@@ -5938,7 +6012,6 @@ num("monthEndBankDeposit");
 
 const extra=
 num("monthEndExtra");
-
 const totalUsed=
 staff+
 director+
@@ -5973,10 +6046,10 @@ totalCashBalance:totalCash,
 staffWages:staff,
 directorWages:director,
 bankDeposit:bank,
-extraCashUsedFor:$("monthEndExtraCashUsedFor").value.trim(),
 extra:extra,
 
 totalCashUsed:totalUsed,
+
 remainingCash:remaining,
 
 updatedBy:currentUser.email,
@@ -6003,7 +6076,6 @@ $("monthEndSaveMessage").innerText=
 "❌ Save failed: "+error.message;
 
 }
-
 };
 
 
@@ -6058,7 +6130,7 @@ year:"numeric"
 const confirmed=
 confirm(
 "Reset Month End for "+monthName+" "+year+"?\n\n"+
-"This will clear Staff Wages, Director Wages, Bank Deposit, Extra Cash Used For and Extra.\n\n"+
+"This will clear Staff Wages, Director Wages, Bank Deposit and Extra.\n\n"+
 "The Month End record will NOT be deleted."
 );
 
@@ -6114,7 +6186,6 @@ totalCashBalance:totalCash,
 staffWages:0,
 directorWages:0,
 bankDeposit:0,
-extraCashUsedFor:"",
 extra:0,
 
 totalCashUsed:0,
@@ -6139,7 +6210,6 @@ data,
 $("monthEndStaffWages").value="";
 $("monthEndDirectorWages").value="";
 $("monthEndBankDeposit").value="";
-$("monthEndExtraCashUsedFor").value="";
 $("monthEndExtra").value="";
 
 calculateMonthEnd();
@@ -6183,6 +6253,7 @@ id:item.id,
 });
 
 updateMonthEnd();
+updateMonthEndStatement();
 
 },
 error=>{
@@ -6216,6 +6287,7 @@ normalCalendarMonthStart(
 year,
 month
 );
+
 const end=
 normalCalendarMonthEnd(
 year,
@@ -6263,7 +6335,6 @@ const period=
 displayDate(start)+
 " → "+
 displayDate(end);
-
 $("bankMonthPeriod").innerText=
 period;
 
@@ -6295,6 +6366,7 @@ money(t.deliveroo);
 
 $("bankDeliverooCommission").innerText=
 money(t.deliveroo*.35);
+
 $("bankDeliverooRemaining").innerText=
 money(t.deliveroo*.65);
 
@@ -6326,6 +6398,95 @@ money(bankTotal);
 
 };
 
+
+/* =====================================================
+   MONTH END STATEMENT — AUTOMATIC PROFIT & LOSS
+===================================================== */
+
+function getStatementPeriod(){
+  const year=Number($("statementYear").value);
+  const month=Number($("statementMonth").value);
+  const start=normalCalendarMonthStart(year,month);
+  const end=normalCalendarMonthEnd(year,month);
+  return {year,month,start,end};
+}
+
+window.updateMonthEndStatement=function(){
+  if(!$("statementYear")||!$("statementMonth")) return;
+
+  const {year,month,start,end}=getStatementPeriod();
+  const records=recordsBetween(start,end);
+  const t=sumRecords(records);
+
+  const pdq=Number(t.pdqTotal||0);
+  const uber=Number(t.uber||0)*0.70;
+  const deliveroo=Number(t.deliveroo||0)*0.65;
+  const deliveryCard=Number(t.deliveryCard||0);
+
+  const monthKey=year+"-"+pad(month+1);
+  let eventCard=0;
+  for(const event of Object.values(eventRecords||{})){
+    if(event.monthKey===monthKey && event.paymentMethod==="Card" && !event.reset){
+      eventCard+=Number(event.amount||0);
+    }
+  }
+
+  // Reflect the currently edited event forms when they are for this month.
+  if($("eventYear") && $("eventMonth") &&
+     Number($("eventYear").value)===year &&
+     Number($("eventMonth").value)===month){
+    let savedForSelectedMonth=0;
+    for(let i=1;i<=5;i++){
+      const saved=eventRecords[monthKey+"-event"+i];
+      if(saved && saved.paymentMethod==="Card" && !saved.reset){
+        savedForSelectedMonth+=Number(saved.amount||0);
+      }
+      const payment=$("event"+i+"Payment")?.value||"";
+      const amount=Number($("event"+i+"Amount")?.value)||0;
+      if(payment==="Card") eventCard+=amount;
+    }
+    eventCard-=savedForSelectedMonth;
+  }
+
+  const totalIncome=pdq+uber+deliveroo+deliveryCard+eventCard;
+
+  const savedMonthEnd=monthEndRecords[monthKey]||{};
+  const sameMonth=Number($("monthEndYear")?.value)===year &&
+                  Number($("monthEndMonth")?.value)===month;
+  const staff=sameMonth && $("monthEndStaffWages")
+    ? num("monthEndStaffWages") : Number(savedMonthEnd.staffWages||0);
+  const director=sameMonth && $("monthEndDirectorWages")
+    ? num("monthEndDirectorWages") : Number(savedMonthEnd.directorWages||0);
+  const extra=sameMonth && $("monthEndExtra")
+    ? num("monthEndExtra") : Number(savedMonthEnd.extra||0);
+
+  const totalExpenses=staff+director+extra;
+  const profit=totalIncome-totalExpenses;
+
+  $("statementPeriod").innerText=displayDate(start)+" → "+displayDate(end);
+  $("statementPDQ").innerText=money(pdq);
+  $("statementUber").innerText=money(uber);
+  $("statementDeliveroo").innerText=money(deliveroo);
+  $("statementDeliveryCard").innerText=money(deliveryCard);
+  $("statementEventCard").innerText=money(eventCard);
+  $("statementTotalIncome").innerText=money(totalIncome);
+
+  $("statementStaffWages").innerText=money(staff);
+  $("statementDirectorWages").innerText=money(director);
+  $("statementExtraCash").innerText=money(extra);
+  $("statementTotalExpenses").innerText=money(totalExpenses);
+
+  $("statementSummaryIncome").innerText=money(totalIncome);
+  $("statementSummaryExpenses").innerText=money(totalExpenses);
+  $("statementNetProfit").innerText=money(profit);
+  $("statementSummaryProfit").innerText=money(profit);
+
+  const label=profit<0 ? "Net Loss" : "Net Profit";
+  $("statementProfitStatus").innerText=label;
+  $("statementSummaryLabel").innerText=label;
+  $("statementNetProfit").style.color=profit<0 ? "#ffd4d4" : "#ffffff";
+  $("statementSummaryProfit").style.color=profit<0 ? "#ffd4d4" : "#ffffff";
+};
 
 /* START */
 
