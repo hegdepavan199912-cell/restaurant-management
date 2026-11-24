@@ -1,4 +1,4 @@
-DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -612,24 +612,27 @@ tbody tr:hover{background:#f7fbfb}
 .statementNote{font-size:12px;color:#687987;line-height:1.5}
 @media(max-width:600px){.statementGrid{grid-template-columns:1fr}.statementPanel{padding:15px}}
  
-/* Professional Month End Statement charts */
-.statementCharts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:16px 0}
-.statementChartCard{background:#fff;border:1px solid #dce5e9;border-radius:16px;padding:18px;box-shadow:0 5px 18px rgba(16,43,63,.06);min-width:0}
-.statementChartCard h3{margin:0 0 5px;color:#173447}
-.statementChartSub{font-size:12px;color:#71808b;margin:0 0 16px}
-.donutLayout{display:flex;align-items:center;justify-content:center;gap:22px;flex-wrap:wrap}
-.donutChart{width:180px;height:180px;border-radius:50%;position:relative;flex:0 0 180px;background:#e8edf0}
-.donutChart:after{content:"";position:absolute;inset:27%;background:#fff;border-radius:50%;box-shadow:0 0 0 1px #edf1f3}
-.donutCenter{position:absolute;z-index:1;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;pointer-events:none}
-.donutCenter strong{font-size:17px;color:#173447;font-variant-numeric:tabular-nums}
-.donutCenter span{font-size:10px;color:#71808b;text-transform:uppercase;letter-spacing:.7px;margin-top:3px}
-.donutLegend{display:grid;gap:9px;min-width:145px;flex:1}
-.donutLegendItem{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;color:#536572}
-.donutLegendName{display:flex;align-items:center;gap:7px;min-width:0}
-.donutSwatch{width:9px;height:9px;border-radius:3px;flex:0 0 9px}
-.donutLegendItem b{color:#1f2937;white-space:nowrap;font-variant-numeric:tabular-nums}
+/* Professional Month End Statement column charts */
+.statementCharts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:16px 0}
+.statementChartCard{background:linear-gradient(180deg,#fff 0%,#fbfdfe 100%);border:1px solid #dce5e9;border-radius:17px;padding:19px;box-shadow:0 7px 22px rgba(16,43,63,.065);min-width:0}
+.statementChartCard h3{margin:0 0 5px;color:#173447;font-size:16px;font-weight:800}
+.statementChartSub{font-size:12px;color:#71808b;margin:0 0 14px}
+.columnChartTotal{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:10px 12px;margin-bottom:12px;background:#f1f7f8;border:1px solid #e2ecee;border-radius:11px}
+.columnChartTotal span{font-size:11px;color:#71808b;font-weight:700;text-transform:uppercase;letter-spacing:.55px}
+.columnChartTotal strong{font-size:18px;color:#173447;font-weight:900;font-variant-numeric:tabular-nums}
+.columnChart{height:225px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;align-items:stretch;padding:10px 5px 0;border-bottom:1px solid #dce5e9;background:repeating-linear-gradient(to top,transparent 0,transparent 55px,#edf2f4 56px,#edf2f4 57px);}
+.columnChart[data-count="4"]{grid-template-columns:repeat(4,minmax(0,1fr))}
+.columnChart[data-count="3"]{grid-template-columns:repeat(3,minmax(0,1fr))}
+.columnChart[data-count="2"]{grid-template-columns:repeat(2,minmax(0,1fr))}
+.columnChart[data-count="1"]{grid-template-columns:1fr}
+.columnChartItem{height:100%;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:7px}
+.columnChartValue{font-size:10px;line-height:1.2;font-weight:800;color:#435563;text-align:center;white-space:nowrap;font-variant-numeric:tabular-nums}
+.columnChartTrack{height:155px;width:100%;display:flex;align-items:flex-end;justify-content:center;min-width:0}
+.columnChartBar{width:min(34px,72%);min-height:3px;border-radius:7px 7px 2px 2px;box-shadow:0 4px 10px rgba(16,43,63,.12);transition:height .25s ease;}
+.columnChartLabel{height:30px;max-width:100%;font-size:10px;line-height:1.25;color:#647582;text-align:center;overflow-wrap:anywhere;display:flex;align-items:flex-start;justify-content:center}
+.columnChartEmpty{height:225px;display:flex;align-items:center;justify-content:center;text-align:center;color:#87949d;font-size:13px;background:#f8fafb;border:1px dashed #dce5e9;border-radius:12px}
 .statementManualInput{max-width:145px;text-align:right;padding:8px 10px;font-weight:700}
-@media(max-width:700px){.statementCharts{grid-template-columns:1fr}.donutChart{width:155px;height:155px;flex-basis:155px}.donutLayout{gap:15px}}
+@media(max-width:700px){.statementCharts{grid-template-columns:1fr}.statementChartCard{padding:16px}.columnChart{gap:7px}.columnChartValue{font-size:9px}.columnChartLabel{font-size:9px}}
  
 </style>
 </head>
@@ -2697,23 +2700,15 @@ This does NOT change the Reports section. Reports continue using the reporting-w
   <div class="statementCharts">
     <div class="statementChartCard">
       <h3>💷 Income Breakdown</h3>
-      <p class="statementChartSub">Share of total income for the selected month</p>
-      <div class="donutLayout">
-        <div class="donutChart" id="statementIncomeDonut">
-          <div class="donutCenter"><strong id="statementIncomeDonutTotal">£0.00</strong><span>Total income</span></div>
-        </div>
-        <div class="donutLegend" id="statementIncomeLegend"></div>
-      </div>
+      <p class="statementChartSub">Monthly income by source</p>
+      <div class="columnChartTotal"><span>Total income</span><strong id="statementIncomeChartTotal">£0.00</strong></div>
+      <div class="columnChart" id="statementIncomeColumns" aria-label="Income by source column chart"></div>
     </div>
     <div class="statementChartCard">
       <h3>💸 Expense Breakdown</h3>
-      <p class="statementChartSub">Share of total expenses for the selected month</p>
-      <div class="donutLayout">
-        <div class="donutChart" id="statementExpenseDonut">
-          <div class="donutCenter"><strong id="statementExpenseDonutTotal">£0.00</strong><span>Total expenses</span></div>
-        </div>
-        <div class="donutLegend" id="statementExpenseLegend"></div>
-      </div>
+      <p class="statementChartSub">Monthly expenses by category</p>
+      <div class="columnChartTotal"><span>Total expenses</span><strong id="statementExpenseChartTotal">£0.00</strong></div>
+      <div class="columnChart" id="statementExpenseColumns" aria-label="Expenses by category column chart"></div>
     </div>
   </div>
  
@@ -6458,39 +6453,31 @@ function getStatementPeriod(){
   return {year,month,start,end};
 }
  
-function renderStatementDonut(chartId,legendId,totalId,items,total){
+function renderStatementColumnChart(chartId,totalId,items,total){
   const chart=$(chartId);
-  const legend=$(legendId);
   const totalNode=$(totalId);
-  if(!chart||!legend||!totalNode) return;
- 
-  const positive=items.filter(item=>Number(item.value)>0);
-  const sum=positive.reduce((acc,item)=>acc+Number(item.value),0);
+  if(!chart||!totalNode) return;
+
+  const values=items.map(item=>({...item,value:Math.max(0,Number(item.value)||0)}));
+  const maxValue=Math.max(0,...values.map(item=>item.value));
   totalNode.innerText=money(total||0);
- 
-  if(sum<=0){
-    chart.style.background="#e8edf0";
-    legend.innerHTML='<div class="statementNote">No amounts entered for this period.</div>';
+
+  if(maxValue<=0){
+    chart.removeAttribute("data-count");
+    chart.innerHTML='<div class="columnChartEmpty" style="grid-column:1/-1">No amounts entered for this period.</div>';
     return;
   }
- 
-  let cursor=0;
-  const stops=[];
-  positive.forEach(item=>{
-    const start=(cursor/sum)*100;
-    cursor+=Number(item.value);
-    const end=(cursor/sum)*100;
-    stops.push(`${item.color} ${start}% ${end}%`);
-  });
-  chart.style.background=`conic-gradient(${stops.join(",")})`;
-  legend.innerHTML=items.map(item=>{
-    const value=Number(item.value)||0;
-    if(value<=0) return "";
-    const percent=(value/sum*100).toFixed(1);
-    return `<div class="donutLegendItem"><span class="donutLegendName"><i class="donutSwatch" style="background:${item.color}"></i>${item.label} <small>(${percent}%)</small></span><b>${money(value)}</b></div>`;
+
+  chart.dataset.count=String(values.length);
+  chart.innerHTML=values.map(item=>{
+    const height=item.value>0?Math.max(4,(item.value/maxValue)*100):0;
+    const bar=item.value>0
+      ? `<div class="columnChartBar" style="height:${height}%;background:linear-gradient(180deg,${item.color},${item.color}cc)" title="${item.label}: ${money(item.value)}"></div>`
+      : '<div class="columnChartBar" style="height:2px;background:#dce5e9"></div>';
+    return `<div class="columnChartItem"><div class="columnChartValue">${money(item.value)}</div><div class="columnChartTrack">${bar}</div><div class="columnChartLabel" title="${item.label}">${item.label}</div></div>`;
   }).join("");
 }
- 
+
 window.saveStatementBankOutgoing=async function(){
   const input=$("statementBankOutgoing");
   if(!input) return;
@@ -6598,14 +6585,14 @@ window.updateMonthEndStatement=function(){
   $("statementExtraCash").innerText=money(extra);
   $("statementTotalExpenses").innerText=money(totalExpenses);
  
-  renderStatementDonut("statementIncomeDonut","statementIncomeLegend","statementIncomeDonutTotal",[
+  renderStatementColumnChart("statementIncomeColumns","statementIncomeChartTotal",[
     {label:"PDQ Total",value:pdq,color:"#2563eb"},
     {label:"Uber",value:uber,color:"#0f9d78"},
     {label:"Deliveroo",value:deliveroo,color:"#f59e0b"},
     {label:"Delivery Card",value:deliveryCard,color:"#8b5cf6"},
     {label:"Event Card",value:eventCard,color:"#e05d8c"}
   ],totalIncome);
-  renderStatementDonut("statementExpenseDonut","statementExpenseLegend","statementExpenseDonutTotal",[
+  renderStatementColumnChart("statementExpenseColumns","statementExpenseChartTotal",[
     {label:"Staff Wages",value:staff,color:"#2563eb"},
     {label:"Director Wages",value:director,color:"#0f9d78"},
     {label:"Extra Cash Used",value:extra,color:"#f59e0b"},
