@@ -5610,7 +5610,7 @@ cashUsed+=used;
 const grand=indoor+outdoor;
 const net=grand-expenses;
 const carryForward=getEventCarryForward();
-const balance=carryForward+grand-advanceTotal-cashUsed;
+const balance=carryForward+cash-advanceTotal-cashUsed;
  
 $("eventIndoorTotal").innerText=money(indoor);
 $("eventOutdoorTotal").innerText=money(outdoor);
@@ -5643,6 +5643,9 @@ if(!match) continue;
 const year=Number(match[1]);
 const month=Number(match[2])-1;
 if(year>selectedYear || (year===selectedYear && month>=selectedMonth)) continue;
+ 
+// Card-paid event income is not cash and must never enter the carry-forward.
+if(event.paymentMethod==="Card") continue;
  
 carriedBalance += (Number(event.amount)||0)-(Number(event.advancePayment)||0)-(Number(event.cashUsed)||0);
  
@@ -6458,17 +6461,17 @@ function renderStatementColumnChart(chartId,totalId,items,total){
   const chart=$(chartId);
   const totalNode=$(totalId);
   if(!chart||!totalNode) return;
-
+ 
   const values=items.map(item=>({...item,value:Math.max(0,Number(item.value)||0)}));
   const maxValue=Math.max(0,...values.map(item=>item.value));
   totalNode.innerText=money(total||0);
-
+ 
   if(maxValue<=0){
     chart.removeAttribute("data-count");
     chart.innerHTML='<div class="columnChartEmpty" style="grid-column:1/-1">No amounts entered for this period.</div>';
     return;
   }
-
+ 
   chart.dataset.count=String(values.length);
   chart.innerHTML=values.map(item=>{
     const height=item.value>0?Math.max(4,(item.value/maxValue)*100):0;
@@ -6478,7 +6481,7 @@ function renderStatementColumnChart(chartId,totalId,items,total){
     return `<div class="columnChartItem"><div class="columnChartValue">${money(item.value)}</div><div class="columnChartTrack">${bar}</div><div class="columnChartLabel" title="${item.label}">${item.label}</div></div>`;
   }).join("");
 }
-
+ 
 window.saveStatementBankOutgoing=async function(){
   const input=$("statementBankOutgoing");
   if(!input) return;
@@ -6553,7 +6556,7 @@ window.updateMonthEndStatement=function(){
   }
  
   const totalIncome=pdq+uber+deliveroo+deliveryCard+eventCard;
-
+ 
   // Match Month End's FINAL TOTAL CASH AVAILABLE calculation for this selected month.
   const finalTotalCashAvailable=
     Number(t.cash||0)+
