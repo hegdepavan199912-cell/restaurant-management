@@ -2680,6 +2680,7 @@ This does NOT change the Reports section. Reports continue using the reporting-w
       <div class="statementLine"><span>Deliveroo — 65% Remaining</span><b id="statementDeliveroo">£0.00</b></div>
       <div class="statementLine"><span>Delivery Card</span><b id="statementDeliveryCard">£0.00</b></div>
       <div class="statementLine"><span>Event Card Payments</span><b id="statementEventCard">£0.00</b></div>
+      <div class="statementTotal statementLine"><span>FINAL TOTAL CASH AVAILABLE</span><b id="statementFinalCashAvailable">£0.00</b></div>
       <div class="statementTotal statementLine"><span>TOTAL SOURCE OF INCOME</span><b id="statementTotalIncome">£0.00</b></div>
     </div>
  
@@ -6552,6 +6553,13 @@ window.updateMonthEndStatement=function(){
   }
  
   const totalIncome=pdq+uber+deliveroo+deliveryCard+eventCard;
+
+  // Match Month End's FINAL TOTAL CASH AVAILABLE calculation for this selected month.
+  const finalTotalCashAvailable=
+    Number(t.cash||0)+
+    Number(t.deliveryCash||0)+
+    Number(t.specialEvent1Cash||0)+
+    Number(t.specialEvent2Cash||0);
  
   const savedMonthEnd=monthEndRecords[monthKey]||{};
   const sameMonth=Number($("monthEndYear")?.value)===year &&
@@ -6578,6 +6586,7 @@ window.updateMonthEndStatement=function(){
   $("statementDeliveroo").innerText=money(deliveroo);
   $("statementDeliveryCard").innerText=money(deliveryCard);
   $("statementEventCard").innerText=money(eventCard);
+  $("statementFinalCashAvailable").innerText=money(finalTotalCashAvailable);
   $("statementTotalIncome").innerText=money(totalIncome);
  
   $("statementStaffWages").innerText=money(staff);
